@@ -149,6 +149,78 @@ test.describe('ad slots', () => {
   });
 });
 
+/**
+ * Tailwind's dark variant follows prefers-color-scheme on its own, which
+ * ignores the toggle. When those two disagreed, prose-invert painted white
+ * text on a white page. Every combination is checked here.
+ */
+test.describe('the theme follows the toggle, not just the system', () => {
+  test.skip(!postPath, 'no posts in this build');
+
+  /** Ask the browser to resolve any colour syntax to sRGB, then measure it. */
+  const relativeLuminance = async (page: import('@playwright/test').Page, css: string) =>
+    page.evaluate((colour) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 1;
+      const ctx = canvas.getContext('2d')!;
+      ctx.fillStyle = colour;
+      ctx.fillRect(0, 0, 1, 1);
+      const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+      const lin = (c: number) => {
+        const v = c / 255;
+        return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+      };
+      return 0.2126 * lin(r!) + 0.7152 * lin(g!) + 0.0722 * lin(b!);
+    }, css);
+
+  for (const system of ['light', 'dark'] as const) {
+    for (const chosen of [null, 'light', 'dark'] as const) {
+      test(`system ${system}, chosen ${chosen ?? 'nothing'}`, async ({ page }) => {
+        await page.emulateMedia({ colorScheme: system });
+        if (chosen) {
+          await page.addInitScript((v) => {
+            try {
+              localStorage.setItem('a2z-theme', v as string);
+            } catch {
+              /* storage blocked */
+            }
+          }, chosen);
+        }
+        await page.goto(postPath!);
+
+        const { bg, body, prose, heading } = await page.evaluate(() => {
+          const rgb = (el: Element, prop: string) =>
+            getComputedStyle(el).getPropertyValue(prop);
+          return {
+            bg: rgb(document.body, 'background-color'),
+            body: rgb(document.body, 'color'),
+            prose: rgb(document.querySelector('article .prose p')!, 'color'),
+            heading: rgb(document.querySelector('article .prose h2')!, 'color'),
+          };
+        });
+
+        const effective = chosen ?? system;
+        const bgLum = await relativeLuminance(page, bg);
+        // The page background must match the theme that is actually in force.
+        if (effective === 'dark') expect(bgLum, `bg ${bg}`).toBeLessThan(0.2);
+        else expect(bgLum, `bg ${bg}`).toBeGreaterThan(0.7);
+
+        // And every kind of text must contrast against it, not against the
+        // theme the operating system happens to prefer.
+        for (const [name, colour] of [
+          ['body', body],
+          ['prose', prose],
+          ['heading', heading],
+        ] as const) {
+          const lum = await relativeLuminance(page, colour);
+          const ratio = (Math.max(lum, bgLum) + 0.05) / (Math.min(lum, bgLum) + 0.05);
+          expect(ratio, `${name} ${colour} on ${bg}`).toBeGreaterThanOrEqual(4.5);
+        }
+      });
+    }
+  }
+});
+
 test.describe('dark mode', () => {
   test('the dark scheme applies and persists', async ({ page }) => {
     await page.goto('/');

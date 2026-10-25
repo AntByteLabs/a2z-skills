@@ -2,6 +2,23 @@
 @plugin '@tailwindcss/typography';
 
 /*
+ * Tailwind's dark variant follows prefers-color-scheme alone, which ignores
+ * the theme toggle: with the system on dark and light chosen, the page went
+ * light while every dark:* utility stayed on, so prose-invert painted white
+ * text on a white page. This variant follows the same rule the tokens do.
+ */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *) {
+      @slot;
+    }
+  }
+  &:where(:root[data-theme='dark'], :root[data-theme='dark'] *) {
+    @slot;
+  }
+}
+
+/*
  * A2Z Skills design tokens.
  *
  * Every colour pairing here was computed against WCAG AA before it was used:

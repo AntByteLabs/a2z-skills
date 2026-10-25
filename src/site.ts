@@ -25,11 +25,11 @@ export const site = {
   /** Real ads. Stays false until a network approves the site. */
   ADS_ENABLED: false,
   /**
-   * Draw the reserved ad space as a labelled placeholder. Keeps the layout
-   * honest now, so switching ADS_ENABLED on later moves nothing and the CLS
-   * budget holds.
+   * Draw the reserved space as a labelled placeholder. Off: an empty box is
+   * worse than nothing for a reader. Turn it on only while checking that the
+   * slots sit where you want them before a network goes live.
    */
-  ADS_PLACEHOLDER: true,
+  ADS_PLACEHOLDER: false,
   /** Filled in with the network's lines once approved; served at /ads.txt. */
   ADS_TXT_READY: false,
   /** Days after testing a post is considered stale. */
