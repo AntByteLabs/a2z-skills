@@ -251,7 +251,7 @@ const tools = [
           : await startBuild(env);
       return text({
         published: post.slug,
-        url: `${SITE}/${post.slug}/`,
+        liveUrl: `${SITE}/${post.slug}/`,
         ...result,
         warnings: check.warnings,
         build,
