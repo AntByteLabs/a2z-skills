@@ -1,0 +1,198 @@
+---
+title: Cloudflare Workers custom domain not working
+description: 'Four things block a Workers custom domain, and none of them says so plainly. Here is each error as it appears, and what it actually means.'
+pillar: websites-hosting
+type: fix
+tags: [cloudflare, workers, dns, deployment]
+author: devchandra-shrestha
+publishedAt: 2026-10-25
+quickAnswer: "A Workers custom domain only attaches if the domain's zone is on the same Cloudflare account, which means its nameservers must point at Cloudflare. Adding the domain is not enough: until the registrar's nameservers change, the zone stays pending and the route will not work."
+testedOn:
+  date: 2026-10-25
+  versions:
+    wrangler: '4.152.0'
+    Node.js: '26.11.1'
+    macOS: '27.2'
+  device: Mac, Apple silicon
+  testedBy: Devchandra Shrestha
+faq:
+  - q: 'Do I have to move my whole domain to Cloudflare just to use a Worker?'
+    a: 'For a custom domain on the apex, yes. The zone has to be on the same Cloudflare account, which means Cloudflare nameservers. If you cannot move the nameservers, a Worker route on a subdomain of a zone you already have there is the way round it.'
+  - q: 'How long does the zone stay pending after I change nameservers?'
+    a: 'Cloudflare rechecks periodically and you can trigger a check from the dashboard. In our experience it is minutes rather than hours, but registrars publish nameserver changes on their own schedule, so plan for it to be slow rather than instant.'
+  - q: 'Is a workers.dev URL safe to leave up once the real domain is live?'
+    a: 'It is, as long as it is not indexable. A `_headers` rule matching the workers.dev host with `X-Robots-Tag: noindex` keeps it out of search results so it cannot compete with the real domain for the same content.'
+  - q: 'Why did my first deploy say the Worker had no subdomain?'
+    a: 'Because the account had never had Workers opened on it. A workers.dev subdomain is created the first time you visit Workers & Pages in the dashboard, or you can set the name directly over the API.'
+draft: true
+---
+
+Adding a domain to Cloudflare and having a Worker answer on it are two
+different states. Four things sit between them, and each one reports itself in a
+way that points somewhere else. We hit all four in an afternoon putting a static
+site on Workers, which is the sort of job the
+[websites and hosting](/topics/websites-hosting/) guides cover.
+
+## Check the zone is on the same account first
+
+A Workers custom domain needs the domain's zone to live on the same Cloudflare
+account as the Worker. Pointing DNS at Cloudflare is not the same thing. The
+zone has to be on the account, which in practice means the registrar's
+nameservers are Cloudflare's.
+
+Check that before you deploy:
+
+<Steps>
+  <Step title="List the zones on the account">
+    In the dashboard, Websites shows every zone on the account. If the domain is
+    not in that list, a `custom_domain` route in `wrangler.json` cannot work. We
+    took ours out rather than watch the deploy fail on it.
+  </Step>
+  <Step title="Look at the status, not just the name">
+    A zone that has been added but never pointed at Cloudflare sits at pending.
+    Pending is not active: the registrar's nameservers still answer for the
+    domain, so nothing you deploy is reachable on it.
+  </Step>
+  <Step title="Compare the nameservers">
+    Cloudflare gives each zone a pair, such as `gloria.ns.cloudflare.com` and
+    `margo.ns.cloudflare.com`. Compare them with what the domain actually
+    publishes:
+
+    ```bash
+    dig +short yourdomain.com NS
+    ```
+
+    If that comes back with your registrar's own nameservers, the change has not
+    been made, or has not propagated yet.
+
+  </Step>
+</Steps>
+
+<Callout type="note">
+  The domain we were deploying returned `dns1.registrar-servers.com` and
+  `dns2.registrar-servers.com`, which is Namecheap's default. Adding the zone to Cloudflare
+  does not touch that. It has to be changed at the registrar.
+</Callout>
+
+## Deploy to workers.dev while the zone is pending
+
+A Worker with `workers_dev` enabled gets a URL straight away, so there is no
+need to wait for DNS before testing the real build. Keep that URL out of search
+results, though, or it will compete with your own domain for the same pages. In
+`public/_headers`:
+
+```txt
+https://:version.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex
+```
+
+We read the response header back off the live deploy to check: it returned
+`x-robots-tag: noindex` on the workers.dev host. The rule matches that hostname
+only, so the custom domain is unaffected once it exists.
+
+## Fix the login error that mentions cookies
+
+Before any of that, `wrangler login` can fail in a way that reads like a
+Cloudflare outage:
+
+```text
+✘ [ERROR] OAuth error: request_forbidden
+    The request is not allowed. No CSRF value available in the session cookie.
+```
+
+Nothing is wrong with your account. The OAuth page needs an existing
+`dash.cloudflare.com` session in whichever browser it opens, and it opens your
+default one. Sign in to Cloudflare in a different browser and this is the error
+you get.
+
+Pick the browser yourself:
+
+```bash
+npx wrangler login --browser=false
+```
+
+That prints the authorisation link instead of opening it. Sign in to
+`dash.cloudflare.com` in the browser you want to use, paste the link there and
+approve it. `wrangler whoami` then reports the account.
+
+## Create the workers.dev subdomain if the account has never had one
+
+On an account where Workers has never been opened there is no workers.dev
+subdomain at all, and the API says so if you ask it directly:
+
+```text
+HTTP 404: 10007: You do not have a workers.dev subdomain.
+Opening the Workers & Pages landing page for the first time will create a
+workers.dev subdomain automatically
+```
+
+Visiting that dashboard page once creates it. To choose the name instead, set it
+over the API:
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/subdomain" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  --data '{"subdomain":"yourname"}'
+```
+
+It is account-wide, and every Worker URL on the account is built from it, so
+pick a name you can live with.
+
+## Once the zone is active, add the route and redeploy
+
+With the zone active, put the route back and deploy again:
+
+```jsonc
+{
+  "routes": [{ "pattern": "yourdomain.com", "custom_domain": true }],
+}
+```
+
+A custom domain cannot redirect `www` to the apex. That is a Redirect Rule in
+the dashboard, free to add, and it is not a line in `_redirects`. And
+`_redirects` and `_headers` do work on Workers static assets, which a lot of
+advice still treats as a Pages-only feature; the limits are 2,000 static
+redirects, 100 dynamic ones and 100 header rules.
+
+<WhatBroke>
+  Three things went wrong, none of them documented where we were looking.
+
+The CSRF error above cost the most time. It names cookies, so it reads like a
+Cloudflare fault, when the cause is the session in the browser.
+
+The missing workers.dev subdomain only surfaced when we queried
+`/workers/subdomain` directly. Deploying without noticing would have left a
+Worker with no reachable URL.
+
+The asset upload also failed part way through and recovered on its own. On a
+deploy of 68 files, wrangler printed:
+
+```text
+Uploaded 46 of 68 assets
+Asset upload failed. Retrying... 1 of 5 attempts.
+Uploaded 68 of 68 assets
+✨ Success! Uploaded 68 files (31.49 sec)
+```
+
+That is wrangler's own retry doing what it is there for. Worth seeing once
+before you meet it in CI and cancel a deploy that was going to succeed.
+
+</WhatBroke>
+
+## What to check at the end
+
+Four commands tell you whether it worked, and they are quicker than clicking
+through the dashboard:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' https://yourdomain.com/
+curl -s -o /dev/null -w '%{http_code} -> %{redirect_url}\n' https://yourdomain.com/about
+curl -sI https://yourdomain.com/ | grep -i x-robots-tag
+dig +short yourdomain.com NS
+```
+
+The second should show a 307 to the trailing-slash form if you set
+`html_handling` to `force-trailing-slash`. The third should return nothing on
+the real domain. If `dig` still shows the registrar, none of the rest matters
+yet.
