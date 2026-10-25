@@ -1,0 +1,70 @@
+name: Post brief
+description: The brief for one post, before anything is written.
+title: 'Post: '
+labels: [content, brief]
+body:
+  - type: input
+    id: keyword
+    attributes:
+      label: Target keyword
+      description: The phrase a reader would actually type, as they would type it.
+      placeholder: excel xlookup not working
+    validations:
+      required: true
+  - type: dropdown
+    id: pillar
+    attributes:
+      label: Pillar
+      options:
+        - windows-mac
+        - phones
+        - excel-office
+        - ai-tools
+        - websites-hosting
+        - automation
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Post type
+      description: how-to, fix and review must be tested on a real machine.
+      options: [how-to, fix, comparison, review, explainer, list, asset]
+    validations:
+      required: true
+  - type: textarea
+    id: intent
+    attributes:
+      label: What the reader is trying to do
+      description: One or two sentences. What state is their machine in when they search this?
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: What the top results miss
+      description: Read the first three results. What do they get wrong, skip, or leave untested?
+    validations:
+      required: true
+  - type: input
+    id: setup
+    attributes:
+      label: Test setup needed
+      description: The machine, OS build and app versions this needs to be tried on.
+      placeholder: Windows 11 25H2, Excel 2510, desktop PC
+  - type: input
+    id: money
+    attributes:
+      label: Money page to link
+      description: The comparison or review this post should send readers to, if any.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before closing this issue
+      options:
+        - label: Tested on a real machine, with versions and errors recorded
+        - label: Drafted, then run through /humanizer
+        - label: Edited by a person
+        - label: npm run validate passes
+        - label: Preview URL read on a phone
+        - label: Two or three inbound links added from older posts

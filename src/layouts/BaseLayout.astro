@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import SEO from '../components/seo/SEO.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import Header from '../components/site/Header.astro';
+import Footer from '../components/site/Footer.astro';
+import { website } from '../lib/schema';
+import { site } from '../site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  seoTitle?: string;
+  image?: string;
+  noindex?: boolean;
+  publishedAt?: Date;
+  updatedAt?: Date;
+  ogType?: 'website' | 'article';
+  wide?: boolean;
+}
+
+const { wide = false, ...seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.locale} class="scheme-light dark:scheme-dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#1b2436" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link
+      rel="preload"
+      href="/fonts/bricolage-grotesque-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <SEO {...seo} />
+    <JsonLd data={website()} />
+    <!-- Theme is applied before first paint so the page never flashes. -->
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('a2z-theme');
+        if (saved === 'dark' || saved === 'light') {
+          document.documentElement.dataset.theme = saved;
+        }
+      } catch {
+        // Storage unavailable: fall back to the system colour scheme.
+      }
+    </script>
+    <slot name="head" />
+  </head>
+  <body class="min-h-dvh flex flex-col bg-paper text-ink">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-paper focus:px-3 focus:py-2 focus:shadow"
+    >
+      Skip to content
+    </a>
+    <Header />
+    <main id="main" class={wide ? 'flex-1' : 'flex-1 w-full'}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

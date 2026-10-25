@@ -1,0 +1,29 @@
+---
+/**
+ * Fixed-height container so turning ads on cannot move the page.
+ * Renders nothing at all while site.ADS_ENABLED is false.
+ */
+import { site } from '../../site';
+
+interface Props {
+  position: 'after-answer' | 'mid-article' | 'end-article' | 'sidebar';
+}
+const { position } = Astro.props;
+
+const minHeight = {
+  'after-answer': 'min-h-[250px]',
+  'mid-article': 'min-h-[280px]',
+  'end-article': 'min-h-[280px]',
+  sidebar: 'min-h-[600px]',
+}[position];
+---
+
+{site.ADS_ENABLED && (
+  <aside
+    class={`not-prose my-6 flex items-center justify-center rounded border border-dashed border-rule text-xs text-ink-faint ${minHeight}`}
+    data-ad-slot={position}
+    aria-label="Advertisement"
+  >
+    <slot />
+  </aside>
+)}

@@ -1,0 +1,83 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PostCard from '../../components/cards/PostCard.astro';
+import { profilePage, breadcrumbs } from '../../lib/schema';
+import { postsByAuthor } from '../../lib/posts';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const authors = await getCollection('authors');
+  return authors.map((author) => ({ params: { id: author.id }, props: { author } }));
+}) satisfies GetStaticPaths;
+
+const { author } = Astro.props as { author: CollectionEntry<'authors'> };
+const posts = await postsByAuthor(author.id);
+const path = `/authors/${author.id}/`;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: author.data.name, path },
+];
+const description =
+  `${author.data.name}, ${author.data.role} at A2Z Skills. ${author.data.bio}`.slice(
+    0,
+    158,
+  );
+---
+
+<BaseLayout
+  title={`${author.data.name} — ${author.data.role}`}
+  description={description}
+  path={path}
+>
+  <JsonLd
+    slot="head"
+    data={profilePage({
+      name: author.data.name,
+      role: author.data.role,
+      bio: author.data.bio,
+      path,
+      avatar: author.data.avatar,
+      sameAs: author.data.sameAs,
+    })}
+  />
+  <JsonLd slot="head" data={breadcrumbs(crumbs)} />
+  <div class="mx-auto max-w-3xl px-gutter py-6">
+    <Breadcrumbs crumbs={crumbs} />
+    <header class="mt-4 flex flex-wrap items-center gap-4">
+      <img
+        src={author.data.avatar}
+        alt=""
+        width="80"
+        height="80"
+        class="h-20 w-20 rounded-full bg-paper-sunk object-cover"
+      />
+      <div>
+        <h1 class="font-display text-3xl font-bold">{author.data.name}</h1>
+        <p class="text-ink-soft">{author.data.role}</p>
+      </div>
+    </header>
+    <p class="mt-4 max-w-measure text-lg">{author.data.bio}</p>
+    <ul class="mt-3 flex flex-wrap gap-3 text-sm">
+      {author.data.sameAs.map((url) => (
+        <li>
+          <a href={url} rel="me noopener">
+            {new URL(url).hostname.replace('www.', '')}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <section class="mt-8" aria-labelledby="by-author">
+      <h2 id="by-author" class="font-display text-xl font-semibold">
+        {posts.length} {posts.length === 1 ? 'guide' : 'guides'} by {author.data.name}
+      </h2>
+      <div class="mt-2">
+        {posts.map((p) => (
+          <PostCard post={p} showPillar={true} />
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

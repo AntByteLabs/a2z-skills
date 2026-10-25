@@ -1,0 +1,26 @@
+---
+import type { Post } from '../../lib/posts';
+import { postPath } from '../../lib/posts';
+interface Props {
+  posts: Post[];
+}
+const { posts } = Astro.props;
+---
+
+{posts.length > 0 && (
+  <section class="not-prose my-8" aria-labelledby="related">
+    <h2 id="related" class="font-display text-xl font-semibold">
+      Read next
+    </h2>
+    <ul class="mt-3 grid gap-3 sm:grid-cols-2">
+      {posts.map((p) => (
+        <li class="rounded-card border border-rule p-3">
+          <a href={postPath(p)} class="font-semibold no-underline hover:underline">
+            {p.data.title}
+          </a>
+          <p class="mt-1 text-sm text-ink-soft">{p.data.quickAnswer.slice(0, 110)}…</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

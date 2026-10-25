@@ -1,0 +1,27 @@
+---
+import { render } from 'astro:content';
+import PostLayout from '../layouts/PostLayout.astro';
+import Steps from '../components/post/Steps.astro';
+import Step from '../components/post/Step.astro';
+import Callout from '../components/post/Callout.astro';
+import WhatBroke from '../components/post/WhatBroke.astro';
+import ComparisonTable from '../components/money/ComparisonTable.astro';
+import ToolCard from '../components/money/ToolCard.astro';
+import AdSlot from '../components/money/AdSlot.astro';
+import { livePosts, type Post } from '../lib/posts';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await livePosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props as { post: Post };
+const { Content, headings } = await render(post);
+// Components available to every MDX body without an import in the post.
+const components = { Steps, Step, Callout, WhatBroke, ComparisonTable, ToolCard, AdSlot };
+---
+
+<PostLayout post={post} headings={headings} body={post.body ?? ''}>
+  <Content components={components} />
+</PostLayout>

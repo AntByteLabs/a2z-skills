@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/cards/PostCard.astro';
+import PillarCard from '../components/cards/PillarCard.astro';
+import NewsletterForm from '../components/site/NewsletterForm.astro';
+import { livePosts } from '../lib/posts';
+import { site } from '../site';
+
+const posts = await livePosts();
+const pillars = (await getCollection('pillars')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const countFor = (id: string) => posts.filter((p) => p.data.pillar === id).length;
+const latest = posts.slice(0, site.postsPerPage);
+---
+
+<BaseLayout
+  title={`${site.name} — ${site.tagline}`}
+  description={site.description}
+  path="/"
+>
+  <section class="mx-auto max-w-6xl px-gutter pt-10 pb-6">
+    <h1 class="max-w-3xl font-display text-4xl font-bold sm:text-5xl">
+      Tech fixes that were actually tried before they were published.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+      Every guide lists the versions it was tested on, the device it ran on, and what went
+      wrong on the way. Windows, Mac, phones, Excel, AI tools, websites and automation.
+    </p>
+    <form action="/search/" method="get" role="search" class="mt-6 flex max-w-md gap-2">
+      <label class="sr-only" for="home-q">
+        Search guides
+      </label>
+      <input
+        id="home-q"
+        name="q"
+        type="search"
+        placeholder="What is broken?"
+        class="min-w-0 flex-1 rounded border border-rule bg-paper px-3 py-2 text-base"
+      />
+      <button
+        type="submit"
+        class="rounded bg-brand-deep px-4 py-2 font-semibold text-paper"
+      >
+        Search
+      </button>
+    </form>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-gutter py-6" aria-labelledby="topics">
+    <h2 id="topics" class="font-display text-2xl font-semibold">
+      Start with a topic
+    </h2>
+    <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {pillars.map((p) => (
+        <PillarCard pillar={p} count={countFor(p.id)} />
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-gutter py-6" aria-labelledby="latest">
+    <h2 id="latest" class="font-display text-2xl font-semibold">
+      Latest guides
+    </h2>
+    {latest.length === 0 ? (
+      <p class="mt-3 text-ink-soft">The first guides are being tested now.</p>
+    ) : (
+      <div class="mt-2">
+        {latest.map((p) => (
+          <PostCard post={p} showPillar={true} />
+        ))}
+      </div>
+    )}
+  </section>
+
+  <section class="mx-auto max-w-2xl px-gutter py-10">
+    <NewsletterForm source="home" />
+  </section>
+</BaseLayout>

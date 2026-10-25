@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PillarCard from '../../components/cards/PillarCard.astro';
+import { collectionPage, breadcrumbs } from '../../lib/schema';
+import { livePosts } from '../../lib/posts';
+
+const pillars = (await getCollection('pillars')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const posts = await livePosts();
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Topics', path: '/topics/' },
+];
+---
+
+<BaseLayout
+  title="All topics"
+  description="Every topic on A2Z Skills: Windows and Mac, phones, Excel and Office, AI tools, websites and hosting, and automation. Pick the area you are stuck in."
+  path="/topics/"
+>
+  <JsonLd
+    slot="head"
+    data={collectionPage({
+      name: 'All topics',
+      description: 'The six areas A2Z Skills covers.',
+      path: '/topics/',
+    })}
+  />
+  <JsonLd slot="head" data={breadcrumbs(crumbs)} />
+  <div class="mx-auto max-w-6xl px-gutter py-6">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-3 font-display text-3xl font-bold">All topics</h1>
+    <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {pillars.map((p) => (
+        <PillarCard pillar={p} count={posts.filter((x) => x.data.pillar === p.id).length} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,141 @@
+# A2Z Skills — house rules
+
+Static Astro site on `a2zskillsewa.com`, served from Cloudflare Workers static
+assets. Everything runs on a free tier. Read this before writing anything into
+the repo.
+
+## The one rule
+
+**A person tests every procedure before it is published.** You may draft, edit,
+scaffold, check and open pull requests. You may not invent a step, a version
+number, an error message, a price or a menu path. If a fact is missing, ask for
+it — never fill the gap.
+
+## Commands
+
+| Command                           | What it does                                            |
+| --------------------------------- | ------------------------------------------------------- |
+| `npm run new -- "the keyword"`    | Scaffolds a post folder, slug and blueprint             |
+| `npm run validate`                | The quality gate. Must pass before a PR                 |
+| `npm run build`                   | `astro check` → build → Pagefind → asset count → budget |
+| `npm run links`                   | Broken internal links in `dist/`                        |
+| `npm test`                        | Playwright smoke tests against `dist/`                  |
+| `npm run suggest-links -- <slug>` | Older posts that should link to a new one               |
+| `npm run stale`                   | Posts past their re-test date                           |
+| `npm run icons`                   | Re-renders the PNG icons from `public/favicon.svg`      |
+| `npm run lhci`                    | Lighthouse budgets (needs `CHROME_PATH` locally)        |
+
+Build with `INCLUDE_DRAFTS=1 npm run build` to render drafts locally. Production
+builds drop them.
+
+## Voice
+
+Write the way one competent person explains something to another who is stuck.
+
+- Short sentences. One idea each. Plain words.
+- Say what happened, not how significant it was.
+- No second-person hype ("unlock", "supercharge", "effortlessly").
+- British spelling.
+- Name the thing: "click **File → Account**", not "navigate to the account area".
+- Numbers and versions exactly as the screen shows them.
+- Opinions are welcome and must be the writer's own, from the test.
+
+**Before any prose is committed, run `/humanizer` on it.** `validate` warns on
+the patterns it exists to remove; the skill does the rewriting. `validate` fails
+outright on the banned filler phrases listed in `scripts/validate-content.ts`.
+
+## The post blueprint
+
+Every post is assembled in this order. The template renders most of it from
+frontmatter, so the fields are not optional decoration.
+
+1. Breadcrumbs, H1, author byline, published and updated dates
+2. `quickAnswer` — the answer in two or three sentences, quotable on its own
+3. `testedOn` — versions, device, date, tester
+4. Affiliate disclosure, automatically, when `affiliates` is set
+5. Table of contents, from the H2s
+6. Body: `Steps`/`Step`, `Callout`, `ComparisonTable`, `ToolCard`
+7. `WhatBroke` — the real errors hit during testing. This is the section
+   competitors do not have. Never skip it on a tested post.
+8. Downloads, FAQ, author box, newsletter, related posts
+
+Components are passed in by the route, so a post body uses them without an
+import.
+
+## Frontmatter
+
+Full schema in `src/content.config.ts`. It is enforced at build time; a post
+that breaks it fails the build rather than publishing thin.
+
+- `description` — 120 to 160 characters, exactly
+- `title` — 65 characters or fewer; add `seoTitle` (60 max) only to override
+- `type` — `how-to` | `fix` | `comparison` | `review` | `explainer` | `list` | `asset`
+- `testedOn` — **required** for `how-to`, `fix` and `review`
+- **Always double-quote strings.** YAML reads `#` as a comment and breaks on
+  `: `, which silently truncates a description to nothing.
+
+## Slugs
+
+Lowercase, hyphens, 3 to 6 words, main keyword first, no years, no stop words.
+`excel-xlookup-not-working`, never `how-to-fix-xlookup-in-excel-2026`.
+
+Changing a published slug requires a line in `public/_redirects` **in the same
+pull request**. `validate` compares against the last commit and fails without it.
+
+## Linking
+
+- Every post links to its hub (`/topics/<pillar>/`) and to at least two other posts.
+- A new post gets two or three links added from older posts in the same pillar,
+  the same day. `npm run suggest-links -- <slug>` finds the sentences.
+- Affiliate links go through `/go/<slug>/`, carry `rel="sponsored nofollow"`,
+  and need a line in `_redirects` plus the slug in `affiliates`.
+
+## Design
+
+Design changes go through the installed skills, not by hand:
+
+- `/hallmark` for a new page or section, `/hallmark audit <path>` to check one.
+- `/impeccable critique`, `/impeccable polish`, `/impeccable audit` for review
+  passes on existing templates.
+- Colours, type and spacing live in `@theme` in `src/styles/global.css`. Use the
+  generated utilities (`text-ink`, `bg-paper`, `border-rule`), never raw hex.
+- Buttons use `bg-brand-deep text-paper`: `bg-brand` with white text fails WCAG
+  contrast, and that pairing flips correctly in dark mode.
+- Never add a web font. One display face is self-hosted and preloaded; body text
+  is the system stack.
+
+## Performance budget
+
+Enforced in CI. Lighthouse mobile must stay at 95+ (it is currently 100), LCP
+under 2.0 s, CLS under 0.05, JS under 30 KB and CSS under 25 KB per page,
+measured gzipped by `scripts/check-budget.ts`.
+
+Islands are limited to the table of contents, theme toggle, newsletter form and
+search. Anything else ships as HTML. Images go through Astro's pipeline with
+explicit dimensions.
+
+## Money
+
+- `site.ADS_ENABLED` is `false`. Ad slots render nothing until a network is
+  approved. Do not switch it on.
+- No ads on comparison or review pages: affiliate links earn more there.
+- Never fabricate a rating, a price or a discount code.
+
+## What not to touch
+
+- `wrangler.json` routes and the D1 binding, without being asked.
+- `public/_headers` cache rules — they are what keeps repeat visits fast.
+- `site.ts` flags.
+- Anything under `.github/workflows/` without saying what changed and why.
+
+## Publishing
+
+1. Brief: open a post-brief issue.
+2. `npm run new -- "<keyword>"` on a branch named `post/<slug>`.
+3. A person tests it and records versions, device, date and every error.
+4. Draft into `index.mdx`, then `/humanizer`.
+5. A person edits: cut filler, verify every step, write `WhatBroke`.
+6. `npm run validate && npm run build && npm test`.
+7. Read the PR preview URL once, on a phone.
+8. Merge. The deploy pings IndexNow.
+9. Add the two or three inbound links the same day.

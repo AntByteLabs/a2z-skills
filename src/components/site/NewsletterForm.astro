@@ -1,0 +1,100 @@
+---
+interface Props {
+  compact?: boolean;
+  source?: string;
+  magnet?: string;
+}
+const { compact = false, source = 'inline', magnet = '' } = Astro.props;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+const id = `nl-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<form
+  method="POST"
+  action="/api/subscribe"
+  class:list={[
+    'not-prose',
+    compact ? 'mt-3' : 'mt-6 rounded-card border border-rule bg-paper-sunk p-4',
+  ]}
+  data-newsletter
+>
+  {!compact && (
+    <p class="font-display text-base font-semibold">Get the next tested guide by email</p>
+  )}
+  <label class="sr-only" for={id}>
+    Email address
+  </label>
+  <div class="mt-2 flex flex-col gap-2 sm:flex-row">
+    <input
+      id={id}
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      inputmode="email"
+      placeholder="you@example.com"
+      class="min-w-0 flex-1 rounded border border-rule bg-paper px-3 py-2 text-base"
+    />
+    <button
+      type="submit"
+      class="rounded bg-brand-deep px-4 py-2 font-semibold text-paper hover:bg-brand"
+    >
+      Subscribe
+    </button>
+  </div>
+  <!-- Bots fill this; people never see it. -->
+  <div aria-hidden="true" class="absolute h-0 w-0 overflow-hidden">
+    <label for={`${id}-website`}>Website</label>
+    <input
+      id={`${id}-website`}
+      type="text"
+      name="website"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
+  <input type="hidden" name="path" value={Astro.url.pathname} />
+  <input type="hidden" name="source" value={source} />
+  <input type="hidden" name="magnet" value={magnet} />
+  {siteKey && (
+    <div class="cf-turnstile mt-2" data-sitekey={siteKey} data-size="flexible"></div>
+  )}
+  <p class="mt-2 text-xs text-ink-faint">
+    One email a week. No sharing, no selling, unsubscribe in one click.
+  </p>
+  <p class="mt-2 hidden text-sm text-good" data-newsletter-ok>
+    Thanks — check your inbox.
+  </p>
+  <p class="mt-2 hidden text-sm text-bad" data-newsletter-err>
+    That did not go through. Try again?
+  </p>
+</form>
+{siteKey && (
+  <script
+    is:inline
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+  ></script>
+)}
+<script>
+  // Progressive enhancement: the form posts normally without JavaScript.
+  document.querySelectorAll('form[data-newsletter]').forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const f = form as HTMLFormElement;
+      const ok = f.querySelector('[data-newsletter-ok]');
+      const err = f.querySelector('[data-newsletter-err]');
+      ok?.classList.add('hidden');
+      err?.classList.add('hidden');
+      try {
+        const res = await fetch(f.action, { method: 'POST', body: new FormData(f) });
+        if (!res.ok) throw new Error(String(res.status));
+        f.reset();
+        ok?.classList.remove('hidden');
+      } catch {
+        err?.classList.remove('hidden');
+      }
+    });
+  });
+</script>

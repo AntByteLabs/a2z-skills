@@ -1,0 +1,8 @@
+# [source] [destination] [code]
+# Limits: 2,000 static + 100 dynamic rules, 1,000 chars per rule.
+#
+# Affiliate redirects. One line per tool, 302 so the target can change.
+# /go/example/ https://example.com/?ref=a2zskills 302
+#
+# Slug changes. Every renamed post needs a line here in the same pull request;
+# scripts/validate-content.ts fails the build if one is missing.

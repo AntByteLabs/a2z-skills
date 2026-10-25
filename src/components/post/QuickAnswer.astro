@@ -1,0 +1,12 @@
+---
+/** The answer, in the first screen. Written to be quotable by search engines. */
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<div class="not-prose rounded-card border-l-4 border-brand bg-paper-sunk p-4">
+  <p class="text-xs font-semibold uppercase tracking-wide text-ink-soft">Short answer</p>
+  <p class="mt-1 text-lg leading-snug">{text}</p>
+</div>

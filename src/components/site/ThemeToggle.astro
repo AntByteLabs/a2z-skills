@@ -1,0 +1,29 @@
+---
+---
+
+<button
+  type="button"
+  id="theme-toggle"
+  class="rounded border border-rule px-2.5 py-1.5 text-sm text-ink-soft hover:text-ink"
+  aria-label="Switch between light and dark"
+>
+  <span aria-hidden="true" data-theme-icon>
+    ◐
+  </span>
+</button>
+<script>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const dark = root.dataset.theme
+      ? root.dataset.theme === 'dark'
+      : matchMedia('(prefers-color-scheme: dark)').matches;
+    const next = dark ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('a2z-theme', next);
+    } catch {
+      // Private mode or blocked storage: the choice just does not persist.
+    }
+  });
+</script>

@@ -1,0 +1,19 @@
+---
+import { formatDate } from '../../lib/format';
+interface Props {
+  publishedAt: Date;
+  updatedAt?: Date;
+  readingMinutes: number;
+}
+const { publishedAt, updatedAt, readingMinutes } = Astro.props;
+---
+
+<p class="not-prose flex flex-wrap items-center gap-x-3 text-sm text-ink-soft">
+  <time datetime={publishedAt.toISOString()}>Published {formatDate(publishedAt)}</time>
+  {updatedAt && (
+    <time datetime={updatedAt.toISOString()} class="text-ink">
+      Updated {formatDate(updatedAt)}
+    </time>
+  )}
+  <span>{readingMinutes} min read</span>
+</p>

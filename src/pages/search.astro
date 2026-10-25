@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Search from '../components/site/Search.astro';
+---
+
+<BaseLayout
+  title="Search"
+  description="Search every tested guide on A2Z Skills by error message, tool name or task."
+  path="/search/"
+  noindex={true}
+>
+  <div class="mx-auto max-w-3xl px-gutter py-8">
+    <h1 class="font-display text-3xl font-bold">Search</h1>
+    <div class="mt-6">
+      <Search />
+    </div>
+  </div>
+</BaseLayout>

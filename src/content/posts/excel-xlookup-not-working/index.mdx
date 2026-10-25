@@ -1,0 +1,80 @@
+---
+title: XLOOKUP not working in Excel
+description: 'XLOOKUP returning #N/A or #NAME usually means one of four things. Here is how to tell which, in the order that takes the least time.'
+pillar: excel-office
+type: fix
+tags: [excel, xlookup, formulas]
+author: editor
+publishedAt: 2026-10-25
+quickAnswer: 'XLOOKUP returns #NAME? when your Excel version does not have the function, and #N/A when the lookup value is not in the lookup array. The usual cause of #N/A is that one side is text and the other is a number, which Excel does not treat as a match.'
+testedOn:
+  date: 2026-10-25
+  versions:
+    Windows 11: 25H2
+    Excel: '2510'
+  device: Desktop PC
+faq:
+  - q: Does XLOOKUP exist in Excel 2019?
+    a: 'No. XLOOKUP needs Microsoft 365 or Excel 2021 and later. Excel 2019 and earlier return #NAME? and you need INDEX/MATCH instead.'
+  - q: Why does XLOOKUP work on my colleague's machine but not mine?
+    a: Almost always a version difference. Check File then Account then About Excel on both machines and compare the build numbers.
+  - q: Can XLOOKUP match on two columns at once?
+    a: Yes, by concatenating the columns inside the arguments, but a helper column is faster to debug and recalculates more quickly on large sheets.
+draft: true
+---
+
+<Callout type="warning" title="Template fixture">
+  This post exists to exercise the templates during the build. It is marked `draft: true`
+  and never ships. Replace it with a tested post before launch.
+</Callout>
+
+More fixes like this one are in [Excel & Office](/topics/excel-office/). If you
+are choosing tools rather than fixing a formula, read
+[n8n vs Make vs Zapier](/n8n-vs-make-vs-zapier/).
+
+Four things cause almost every XLOOKUP failure. Check them in this order,
+because the first two take ten seconds each and the last one takes a minute.
+
+## Check which error you are getting
+
+The error tells you which half of the problem you have. `#NAME?` is about your
+Excel; `#N/A` is about your data.
+
+<Steps>
+  <Step title="Read the error, not the formula">
+    Click the cell and look at the error itself. `#NAME?` means Excel does not recognise the
+    function. `#N/A` means it ran and found nothing.
+  </Step>
+  <Step title="Confirm your Excel version">
+    Go to **File → Account → About Excel**. XLOOKUP needs Microsoft 365 or Excel 2021. On
+    anything older, the function does not exist.
+  </Step>
+  <Step title="Compare the data types">
+    Put `=ISTEXT(A2)` beside your lookup value and `=ISTEXT(D2)` beside the first cell of
+    your lookup array. If one says TRUE and the other FALSE, that is your answer.
+  </Step>
+</Steps>
+
+## Fix a type mismatch
+
+Numbers stored as text are the most common cause. Select the column, open
+**Data → Text to Columns**, and click Finish without changing anything: Excel
+re-reads the column and converts what it can.
+
+<Callout type="tip">
+  Wrap the lookup value in `VALUE()` as a quick test. If the formula starts working, the
+  column was text and needs converting properly.
+</Callout>
+
+## Fix a range that moved
+
+If the formula worked yesterday and not today, a row insert may have shifted the
+lookup array. Turn the range into a table with **Ctrl+T** and refer to the table
+columns by name; the reference then follows the data.
+
+<WhatBroke>
+  On the test machine, Text to Columns converted the column but left two cells with a
+  trailing non-breaking space, which still failed to match. `=CODE(RIGHT(A2,1))` returned
+  160 rather than 32, which is the giveaway. `TRIM()` does not remove character 160;
+  `SUBSTITUTE(A2, CHAR(160), "")` does.
+</WhatBroke>

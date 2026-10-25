@@ -1,0 +1,71 @@
+---
+title: n8n vs Make vs Zapier
+description: Three automation tools priced in completely different ways. Which one costs least for your volume, and which one you can actually self-host.
+pillar: automation
+type: comparison
+tags: [n8n, make, zapier, automation]
+author: editor
+publishedAt: 2026-10-25
+quickAnswer: Pick n8n if you want to self-host and pay nothing per run. Pick Make if you want a visual builder with cheap per-operation pricing. Pick Zapier if you need the widest app library and will pay for it. The pricing models differ so much that the cheapest tool depends entirely on your run volume.
+affiliates: [make, zapier]
+faq:
+  - q: Can n8n really be self-hosted for free?
+    a: Yes. The community edition is source-available and free to run on your own server. You pay for the server, and you maintain it yourself.
+  - q: Which one is easiest if I have never automated anything?
+    a: Zapier, by a clear margin. Its templates cover the common office tasks and it asks fewer questions before the first working automation.
+  - q: What happens to my automations if I stop paying?
+    a: They stop running. Make and Zapier both disable scenarios above the free limits, and the history stays readable so you can export it.
+heroImage: ./hero.webp
+heroAlt: 'Placeholder photograph standing in for the real hero image'
+draft: true
+---
+
+<Callout type="warning" title="Template fixture">
+  This post exists to exercise the comparison components during the build. It is marked
+  `draft: true` and never ships. Re-check every price and limit on the day a real version is
+  published.
+</Callout>
+
+More automation guides are in [Automation](/topics/automation/), and
+[XLOOKUP not working in Excel](/excel-xlookup-not-working/) is the kind of task
+worth automating away.
+
+The three tools are priced so differently that "which is cheapest" has no single
+answer. It depends on how many steps your automations run.
+
+<ComparisonTable
+  caption="Re-check every figure on the day of publishing."
+  columns={['Pricing unit', 'Self-host', 'Free tier', 'Best for']}
+  rows={[
+    {
+      name: 'n8n',
+      cells: ['Per execution or self-hosted', true, 'Unlimited self-hosted', 'Developers'],
+    },
+    {
+      name: 'Make',
+      slug: 'make',
+      cells: ['Per operation', false, '1,000 ops/month', 'Visual builders'],
+    },
+    {
+      name: 'Zapier',
+      slug: 'zapier',
+      cells: ['Per task', false, '100 tasks/month', 'Office teams'],
+    },
+  ]}
+/>
+
+## Where each one wins
+
+<ToolCard
+  name="Make"
+  slug="make"
+  bestFor="Visual multi-step flows on a budget"
+  verdict="Operations are cheap and the canvas shows the whole flow at once. The error handling is fiddlier than Zapier's, and complex routers get hard to read."
+/>
+
+<ToolCard
+  name="Zapier"
+  slug="zapier"
+  bestFor="The widest app library, fastest start"
+  verdict="Nothing else connects to as many apps. You pay per task, so a chatty automation gets expensive quickly."
+/>

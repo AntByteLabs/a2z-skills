@@ -1,0 +1,43 @@
+---
+import NewsletterForm from './NewsletterForm.astro';
+import { site } from '../../site';
+import { getCollection } from 'astro:content';
+
+const pages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 border-t border-rule bg-paper-sunk">
+  <div class="mx-auto grid max-w-6xl gap-8 px-gutter py-10 md:grid-cols-3">
+    <div>
+      <p class="font-display text-lg font-bold">{site.name}</p>
+      <p class="mt-1 text-sm text-ink-soft">{site.tagline}</p>
+      <p class="mt-4 text-sm text-ink-soft">
+        Published by <a href={site.publisher.url}>{site.publisher.name}</a>.
+      </p>
+    </div>
+    <nav aria-label="Site information">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-soft">The site</h2>
+      <ul class="mt-2 space-y-1 text-sm">
+        {pages.map((p) => (
+          <li>
+            <a href={`/${p.id}/`}>{p.data.title}</a>
+          </li>
+        ))}
+        <li>
+          <a href="/rss.xml">RSS feed</a>
+        </li>
+      </ul>
+    </nav>
+    <div>
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-soft">
+        One tested guide a week
+      </h2>
+      <NewsletterForm compact={true} source="footer" />
+    </div>
+  </div>
+  <div class="border-t border-rule px-gutter py-4 text-center text-xs text-ink-faint">
+    © {year} {site.publisher.name}. Guides are tested on real machines; versions are listed
+    on every post.
+  </div>
+</footer>

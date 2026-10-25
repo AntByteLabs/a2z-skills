@@ -1,0 +1,35 @@
+---
+import type { Post } from '../../lib/posts';
+import { postPath } from '../../lib/posts';
+import { formatDate } from '../../lib/format';
+
+interface Props {
+  post: Post;
+  showPillar?: boolean;
+}
+const { post, showPillar = false } = Astro.props;
+const { data } = post;
+const stamp = data.updatedAt ?? data.publishedAt;
+---
+
+<article class="group border-b border-rule py-4">
+  <h3 class="font-display text-lg font-semibold">
+    <a href={postPath(post)} class="no-underline group-hover:underline">
+      {data.title}
+    </a>
+  </h3>
+  <p class="mt-1 text-sm text-ink-soft">{data.description}</p>
+  <p class="mt-2 flex flex-wrap items-center gap-x-3 text-xs text-ink-faint">
+    <span class="rounded bg-paper-sunk px-1.5 py-0.5 font-medium uppercase tracking-wide">
+      {data.type}
+    </span>
+    {showPillar && (
+      <a href={`/topics/${data.pillar}/`} class="no-underline">
+        {data.pillar}
+      </a>
+    )}
+    <time datetime={stamp.toISOString()}>
+      {data.updatedAt ? `Updated ${formatDate(stamp)}` : formatDate(stamp)}
+    </time>
+  </p>
+</article>

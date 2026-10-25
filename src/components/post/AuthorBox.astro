@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  author: CollectionEntry<'authors'>;
+}
+const { author } = Astro.props;
+---
+
+<section class="not-prose my-8 flex gap-4 rounded-card border border-rule p-4">
+  <img
+    src={author.data.avatar}
+    alt=""
+    width="56"
+    height="56"
+    loading="lazy"
+    decoding="async"
+    class="h-14 w-14 shrink-0 rounded-full bg-paper-sunk object-cover"
+  />
+  <div>
+    <p class="font-display font-semibold">
+      <a href={`/authors/${author.id}/`} class="no-underline">
+        {author.data.name}
+      </a>
+      <span class="ml-1 text-sm font-normal text-ink-soft">{author.data.role}</span>
+    </p>
+    <p class="mt-1 text-sm text-ink-soft">{author.data.bio}</p>
+  </div>
+</section>

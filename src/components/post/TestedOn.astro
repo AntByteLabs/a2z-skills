@@ -1,0 +1,34 @@
+---
+import { formatDate } from '../../lib/format';
+interface Props {
+  testedOn: {
+    date: Date;
+    versions: Record<string, string>;
+    device?: string;
+    testedBy?: string;
+  };
+  author: string;
+}
+const { testedOn, author } = Astro.props;
+const by = testedOn.testedBy ?? author;
+---
+
+<div class="not-prose mt-4 rounded-card border border-rule p-4 text-sm">
+  <p class="font-semibold">
+    Tested on {formatDate(testedOn.date)} by {by}
+  </p>
+  <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
+    {Object.entries(testedOn.versions).map(([name, version]) => (
+      <>
+        <dt class="text-ink-soft">{name}</dt>
+        <dd class="font-mono">{version}</dd>
+      </>
+    ))}
+    {testedOn.device && (
+      <>
+        <dt class="text-ink-soft">Device</dt>
+        <dd>{testedOn.device}</dd>
+      </>
+    )}
+  </dl>
+</div>

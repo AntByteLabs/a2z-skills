@@ -1,0 +1,51 @@
+---
+interface Row {
+  name: string;
+  slug?: string;
+  cells: (string | number | boolean)[];
+}
+interface Props {
+  columns: string[];
+  rows: Row[];
+  caption?: string;
+}
+const { columns, rows, caption } = Astro.props;
+const mark = (v: string | number | boolean) =>
+  typeof v === 'boolean' ? (v ? 'Yes' : 'No') : String(v);
+---
+
+<figure class="not-prose my-6 overflow-x-auto">
+  <table class="w-full border-collapse text-sm">
+    {caption && <caption class="pb-2 text-left text-ink-soft">{caption}</caption>}
+    <thead>
+      <tr class="border-b-2 border-rule text-left">
+        <th scope="col" class="py-2 pr-3 font-semibold">
+          Tool
+        </th>
+        {columns.map((c) => (
+          <th scope="col" class="py-2 pr-3 font-semibold">
+            {c}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr class="border-b border-rule align-top">
+          <th scope="row" class="py-2 pr-3 text-left font-medium">
+            {r.slug ? (
+              <a href={`/go/${r.slug}/`} rel="sponsored nofollow noopener">
+                {r.name}
+              </a>
+            ) : (
+              r.name
+            )}
+          </th>
+          {r.cells.map((cell) => (
+            <td class="py-2 pr-3">{mark(cell)}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</figure>

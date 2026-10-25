@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  pillar: CollectionEntry<'pillars'>;
+  count: number;
+}
+const { pillar, count } = Astro.props;
+---
+
+<a
+  href={`/topics/${pillar.id}/`}
+  class="block rounded-card border border-rule p-4 no-underline transition-colors hover:bg-paper-sunk"
+  style={`border-left: 3px solid ${pillar.data.accent}`}
+>
+  <h3 class="font-display text-base font-semibold text-ink">{pillar.data.name}</h3>
+  <p class="mt-1 text-sm text-ink-soft">{pillar.data.description}</p>
+  <p class="mt-2 text-xs text-ink-faint">
+    {count} {count === 1 ? 'guide' : 'guides'}
+  </p>
+</a>

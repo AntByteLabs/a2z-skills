@@ -1,0 +1,17 @@
+---
+interface Props {
+  title?: string;
+}
+const { title } = Astro.props;
+---
+
+<li class="relative pl-10 [counter-increment:step]">
+  <span
+    aria-hidden="true"
+    class="absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-full bg-brand-deep text-sm font-bold text-paper before:content-[counter(step)]"
+  ></span>
+  {title && <p class="font-display font-semibold">{title}</p>}
+  <div class="prose prose-sm max-w-none dark:prose-invert">
+    <slot />
+  </div>
+</li>

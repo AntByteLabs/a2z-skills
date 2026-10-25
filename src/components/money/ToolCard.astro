@@ -1,0 +1,31 @@
+---
+interface Props {
+  name: string;
+  /** Slug used in /go/{slug}/, not the destination URL. */
+  slug: string;
+  price?: string;
+  bestFor?: string;
+  verdict?: string;
+}
+const { name, slug, price, bestFor, verdict } = Astro.props;
+---
+
+<div class="not-prose my-4 rounded-card border border-rule p-4">
+  <div class="flex flex-wrap items-baseline justify-between gap-2">
+    <h3 class="font-display text-lg font-semibold">{name}</h3>
+    {price && <p class="font-mono text-sm text-ink-soft">{price}</p>}
+  </div>
+  {bestFor && (
+    <p class="mt-1 text-sm">
+      <span class="text-ink-soft">Best for:</span> {bestFor}
+    </p>
+  )}
+  {verdict && <p class="mt-2 text-sm">{verdict}</p>}
+  <a
+    href={`/go/${slug}/`}
+    rel="sponsored nofollow noopener"
+    class="mt-3 inline-block rounded bg-brand-deep px-3 py-1.5 text-sm font-semibold text-paper no-underline hover:bg-brand"
+  >
+    Visit {name}
+  </a>
+</div>

@@ -1,0 +1,51 @@
+---
+/**
+ * Pagefind UI. The index is built after `astro build`, so the bundle is only
+ * requested on /search/ and only once the reader focuses the box.
+ */
+---
+
+<div id="search" class="min-h-[6rem]">
+  <label for="search-input" class="block text-sm font-semibold">
+    Search every guide
+  </label>
+  <input
+    id="search-input"
+    type="search"
+    autocomplete="off"
+    placeholder="xlookup, printer offline, slow mac…"
+    class="mt-2 w-full rounded border border-rule bg-paper px-3 py-2 text-base"
+  />
+  <div id="search-results" class="mt-4" aria-live="polite"></div>
+</div>
+<script>
+  const input = document.getElementById('search-input') as HTMLInputElement | null;
+  let booted = false;
+
+  async function boot() {
+    if (booted || !input) return;
+    booted = true;
+    // Stylesheet and bundle are only fetched once the reader means to search.
+    const css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = '/pagefind/pagefind-ui.css';
+    document.head.appendChild(css);
+    // Pagefind is generated after astro build, so the path is kept out of Vite's graph.
+    const bundle = '/pagefind/pagefind-ui.js';
+    const { PagefindUI } = await import(/* @vite-ignore */ bundle);
+    const ui = new PagefindUI({
+      element: '#search',
+      showSubResults: true,
+      showImages: false,
+      excerptLength: 25,
+      resetStyles: false,
+    });
+    // Hand over the typed query to Pagefind's own input.
+    const value = input.value;
+    input.remove();
+    if (value) ui.triggerSearch(value);
+  }
+
+  input?.addEventListener('focus', boot, { once: true });
+  input?.addEventListener('input', boot, { once: true });
+</script>

@@ -1,0 +1,25 @@
+---
+interface Props {
+  items: { label: string; file: string }[];
+}
+const { items } = Astro.props;
+---
+
+{items.length > 0 && (
+  <section class="not-prose my-8 rounded-card border border-rule p-4">
+    <h2 class="font-display text-lg font-semibold">Files from this guide</h2>
+    <ul class="mt-2 space-y-1">
+      {items.map((d) => (
+        <li>
+          <a href={`/downloads/${d.file}`} download>
+            {d.label}
+          </a>
+          <span class="text-xs text-ink-faint">
+            {' '}
+            ({d.file.split('.').pop()?.toUpperCase()})
+          </span>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

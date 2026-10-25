@@ -1,0 +1,58 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { site } from '../../site';
+import { getCollection } from 'astro:content';
+
+const pillars = (await getCollection('pillars')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const here = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-40 border-b border-rule bg-paper/90 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center gap-4 px-gutter py-3">
+    <a href="/" class="font-display text-lg font-bold tracking-tight no-underline">
+      {site.name}
+    </a>
+    <nav aria-label="Topics" class="hidden flex-1 md:block">
+      <ul class="flex flex-wrap items-center gap-4 text-sm">
+        {pillars.map((p) => (
+          <li>
+            <a
+              href={`/topics/${p.id}/`}
+              class:list={[
+                'no-underline hover:underline',
+                here.startsWith(`/topics/${p.id}`)
+                  ? 'text-ink font-semibold'
+                  : 'text-ink-soft',
+              ]}
+            >
+              {p.data.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="ml-auto flex items-center gap-2">
+      <a
+        href="/search/"
+        class="rounded border border-rule px-2.5 py-1.5 text-sm no-underline text-ink-soft hover:text-ink"
+        aria-label="Search the site"
+      >
+        Search
+      </a>
+      <ThemeToggle />
+    </div>
+  </div>
+  <nav aria-label="Topics" class="border-t border-rule md:hidden">
+    <ul class="flex gap-4 overflow-x-auto px-gutter py-2 text-sm">
+      {pillars.map((p) => (
+        <li class="shrink-0">
+          <a href={`/topics/${p.id}/`} class="no-underline text-ink-soft">
+            {p.data.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
