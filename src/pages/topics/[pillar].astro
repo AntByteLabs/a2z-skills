@@ -47,10 +47,12 @@ const crumbs = [
     })}
   />
   <JsonLd slot="head" data={breadcrumbs(crumbs)} />
-  <div class="mx-auto max-w-4xl px-gutter py-6">
+  <div class="shell max-w-4xl py-5">
     <Breadcrumbs crumbs={crumbs} />
-    <h1 class="mt-3 font-display text-3xl font-bold">{pillar.data.title}</h1>
-    <div class="prose prose-lg mt-4 max-w-measure dark:prose-invert">
+    <h1 class="mt-2 font-display text-[1.6rem] font-bold leading-tight sm:text-3xl">
+      {pillar.data.title}
+    </h1>
+    <div class="prose mt-3 max-w-measure dark:prose-invert sm:prose-lg">
       <Content />
     </div>
 
@@ -73,7 +75,9 @@ const crumbs = [
     )}
 
     {posts.length === 0 ? (
-      <p class="mt-8 text-ink-soft">Guides for this topic are being tested now.</p>
+      <p class="mt-7 rounded-card border border-dashed border-rule p-4 text-ink-soft">
+        Guides for this topic are being tested now.
+      </p>
     ) : (
       groups.map((g) => {
         const inGroup = posts.filter((p) => g.types.includes(p.data.type));

@@ -14,12 +14,14 @@ const id = `nl-${Math.random().toString(36).slice(2, 8)}`;
   action="/api/subscribe"
   class:list={[
     'not-prose',
-    compact ? 'mt-3' : 'mt-6 rounded-card border border-rule bg-paper-sunk p-4',
+    compact ? 'mt-3' : 'mt-5 rounded-card border border-rule bg-paper-sunk p-4 sm:p-5',
   ]}
   data-newsletter
 >
   {!compact && (
-    <p class="font-display text-base font-semibold">Get the next tested guide by email</p>
+    <p class="font-display text-base font-semibold sm:text-lg">
+      Get the next tested guide by email
+    </p>
   )}
   <label class="sr-only" for={id}>
     Email address
@@ -33,11 +35,11 @@ const id = `nl-${Math.random().toString(36).slice(2, 8)}`;
       autocomplete="email"
       inputmode="email"
       placeholder="you@example.com"
-      class="min-w-0 flex-1 rounded border border-rule bg-paper px-3 py-2 text-base"
+      class="min-w-0 flex-1 rounded-pill border border-rule bg-paper px-4 py-2.5 text-base"
     />
     <button
       type="submit"
-      class="rounded bg-brand-deep px-4 py-2 font-semibold text-paper hover:bg-brand"
+      class="rounded-pill bg-brand-deep px-4 py-2.5 font-semibold text-paper transition-colors hover:bg-brand"
     >
       Subscribe
     </button>

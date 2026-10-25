@@ -44,7 +44,7 @@ const description =
     })}
   />
   <JsonLd slot="head" data={breadcrumbs(crumbs)} />
-  <div class="mx-auto max-w-3xl px-gutter py-6">
+  <div class="shell max-w-3xl py-5">
     <Breadcrumbs crumbs={crumbs} />
     <header class="mt-4 flex flex-wrap items-center gap-4">
       <img
@@ -55,7 +55,7 @@ const description =
         class="h-20 w-20 rounded-full bg-paper-sunk object-cover"
       />
       <div>
-        <h1 class="font-display text-3xl font-bold">{author.data.name}</h1>
+        <h1 class="font-display text-[1.6rem] font-bold sm:text-3xl">{author.data.name}</h1>
         <p class="text-ink-soft">{author.data.role}</p>
       </div>
     </header>

@@ -2,23 +2,40 @@
 /**
  * Rendered as ordinary page content. No FAQPage markup: Google stopped
  * showing those rich results for most sites, so it is weight without benefit.
+ *
+ * FAQ answers come from frontmatter, which is a plain string, so `backticks`
+ * would otherwise print as literal characters. They are turned into real code
+ * spans here, because writers reach for them without thinking about it.
  */
 interface Props {
   items: { q: string; a: string }[];
 }
 const { items } = Astro.props;
+
+const escapeHtml = (s: string) =>
+  s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
+const withCode = (answer: string) =>
+  escapeHtml(answer).replace(
+    /`([^`]+)`/g,
+    '<code class="rounded bg-paper px-1.5 py-0.5 font-mono text-[0.9em] font-medium">$1</code>',
+  );
 ---
 
 {items.length > 0 && (
   <section class="my-8" aria-labelledby="faq">
-    <h2 id="faq" class="font-display text-2xl font-semibold">
+    <h2 id="faq" class="font-display text-xl font-semibold sm:text-2xl">
       Questions people also ask
     </h2>
-    <dl class="mt-4 divide-y divide-rule">
+    <dl class="mt-3 divide-y divide-rule rounded-card border border-rule bg-paper-sunk px-4">
       {items.map((item) => (
-        <div class="py-3">
+        <div class="py-3.5">
           <dt class="font-semibold">{item.q}</dt>
-          <dd class="mt-1 text-ink-soft">{item.a}</dd>
+          <dd class="mt-1 text-ink-soft" set:html={withCode(item.a)} />
         </div>
       ))}
     </dl>

@@ -1,7 +1,12 @@
 ---
 /**
- * Fixed-height container so turning ads on cannot move the page.
- * Renders nothing at all while site.ADS_ENABLED is false.
+ * Reserved ad space. Three states:
+ *   ADS_ENABLED      — the network's code renders in the slot
+ *   ADS_PLACEHOLDER  — a labelled dashed box at the real height
+ *   neither          — nothing at all
+ *
+ * The height is fixed in every state, so turning ads on later shifts nothing
+ * and the 0.05 CLS budget holds.
  */
 import { site } from '../../site';
 
@@ -10,20 +15,44 @@ interface Props {
 }
 const { position } = Astro.props;
 
-const minHeight = {
-  'after-answer': 'min-h-[250px]',
-  'mid-article': 'min-h-[280px]',
-  'end-article': 'min-h-[280px]',
-  sidebar: 'min-h-[600px]',
+const slot = {
+  'after-answer': {
+    h: 'min-h-[250px]',
+    label: 'After the answer',
+    size: '300×250 / responsive',
+  },
+  'mid-article': { h: 'min-h-[280px]', label: 'Mid article', size: '336×280 / responsive' },
+  'end-article': {
+    h: 'min-h-[280px]',
+    label: 'End of article',
+    size: '336×280 / responsive',
+  },
+  sidebar: { h: 'min-h-[600px]', label: 'Sidebar', size: '300×600' },
 }[position];
+
+const show = site.ADS_ENABLED || site.ADS_PLACEHOLDER;
 ---
 
-{site.ADS_ENABLED && (
+{show && (
   <aside
-    class={`not-prose my-6 flex items-center justify-center rounded border border-dashed border-rule text-xs text-ink-faint ${minHeight}`}
+    class:list={[
+      'not-prose my-6 flex flex-col items-center justify-center gap-1 rounded-card text-center',
+      slot.h,
+      site.ADS_ENABLED
+        ? 'bg-paper-sunk'
+        : 'border border-dashed border-rule bg-paper-sunk/60 text-ink-faint',
+    ]}
     data-ad-slot={position}
     aria-label="Advertisement"
   >
-    <slot />
+    {site.ADS_ENABLED ? (
+      <slot />
+    ) : (
+      <>
+        <span class="text-xs font-semibold uppercase tracking-wide">Ad slot</span>
+        <span class="text-xs">{slot.label}</span>
+        <span class="font-mono text-[0.6875rem]">{slot.size}</span>
+      </>
+    )}
   </aside>
 )}

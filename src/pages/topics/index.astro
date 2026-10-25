@@ -31,10 +31,10 @@ const crumbs = [
     })}
   />
   <JsonLd slot="head" data={breadcrumbs(crumbs)} />
-  <div class="mx-auto max-w-6xl px-gutter py-6">
+  <div class="shell py-5">
     <Breadcrumbs crumbs={crumbs} />
-    <h1 class="mt-3 font-display text-3xl font-bold">All topics</h1>
-    <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <h1 class="mt-2 font-display text-[1.6rem] font-bold sm:text-3xl">All topics</h1>
+    <div class="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
       {pillars.map((p) => (
         <PillarCard pillar={p} count={posts.filter((x) => x.data.pillar === p.id).length} />
       ))}

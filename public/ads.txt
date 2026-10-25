@@ -1,0 +1,8 @@
+# ads.txt — https://iabtechlab.com/ads-txt/
+#
+# Empty on purpose. No ad network has approved the site yet, so there is
+# nothing authorised to sell this inventory. When one does, paste the lines
+# they give you below, exactly as they give them, and set ADS_ENABLED in
+# src/site.ts to true.
+#
+# Format: <domain>, <publisher id>, DIRECT|RESELLER, <certification id>

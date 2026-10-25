@@ -75,21 +75,35 @@ const article = blogPosting({
   <JsonLd data={article} slot="head" />
   <JsonLd data={breadcrumbs(crumbs)} slot="head" />
 
-  <div class="mx-auto grid max-w-6xl gap-8 px-gutter py-6 lg:grid-cols-[minmax(0,1fr)_16rem]">
-    <article>
+  <div class="shell grid gap-8 py-5 lg:grid-cols-[minmax(0,1fr)_17rem]">
+    <article class="min-w-0">
       <Breadcrumbs crumbs={crumbs} />
 
-      <h1 class="mt-3 font-display text-3xl font-bold sm:text-4xl">{data.title}</h1>
+      <div class="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+        <span class="pill">{data.type}</span>
+        {pillar && (
+          <a href={`/topics/${pillar.id}/`} class="pill no-underline hover:text-ink">
+            {pillar.data.name}
+          </a>
+        )}
+      </div>
 
-      <div class="mt-3 flex flex-wrap items-center gap-3">
-        <img
-          src={author.data.avatar}
-          alt=""
-          width="32"
-          height="32"
-          class="h-8 w-8 rounded-full bg-paper-sunk object-cover"
-        />
-        <a href={`/authors/${author.id}/`} class="text-sm font-medium no-underline">
+      <h1 class="mt-2 font-display text-[1.6rem] font-bold leading-[1.15] sm:text-4xl">
+        {data.title}
+      </h1>
+
+      <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <a
+          href={`/authors/${author.id}/`}
+          class="flex items-center gap-2 text-sm font-medium no-underline hover:underline"
+        >
+          <img
+            src={author.data.avatar}
+            alt=""
+            width="28"
+            height="28"
+            class="h-7 w-7 rounded-full bg-paper-sunk object-cover"
+          />
           {author.data.name}
         </a>
         <LastUpdated
@@ -99,7 +113,7 @@ const article = blogPosting({
         />
       </div>
 
-      <div class="mt-5">
+      <div class="mt-4">
         <QuickAnswer text={data.quickAnswer} />
       </div>
 
@@ -116,13 +130,13 @@ const article = blogPosting({
           sizes="(min-width: 1024px) 760px, 100vw"
           loading="eager"
           fetchpriority="high"
-          class="mt-6 rounded-card border border-rule"
+          class="mt-5 rounded-card border border-rule"
         />
       )}
 
       <Toc headings={headings} />
 
-      <div class="prose prose-lg max-w-measure dark:prose-invert prose-headings:font-display prose-a:text-brand-deep prose-pre:rounded-card">
+      <div class="prose max-w-measure dark:prose-invert sm:prose-lg prose-headings:font-display prose-headings:tracking-tight prose-h2:mt-8 prose-h2:mb-3 prose-p:leading-relaxed prose-a:text-brand-deep prose-code:before:content-none prose-code:after:content-none [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-paper-sunk [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:font-medium prose-pre:rounded-card prose-pre:border prose-pre:border-rule prose-img:rounded-card prose-table:text-sm">
         <slot />
       </div>
 
@@ -135,7 +149,7 @@ const article = blogPosting({
       <RelatedPosts posts={related} />
     </article>
 
-    <aside class="hidden lg:block">
+    <aside class="hidden min-w-0 lg:block">
       <div class="sticky top-24 space-y-6">
         {pillar && (
           <div class="rounded-card border border-rule p-4">

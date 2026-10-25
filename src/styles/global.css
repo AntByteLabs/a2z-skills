@@ -3,31 +3,51 @@
 
 /*
  * A2Z Skills design tokens.
- * Neutrals are tinted, never pure grey. One display face for headings,
- * system stack for body text, so only one font file is ever downloaded.
+ *
+ * Every colour pairing here was computed against WCAG AA before it was used:
+ * body text at 7:1 or better, the faintest text at 4.87:1 on the *sunk*
+ * surface (the harder of the two), and the warm accent at 5.08:1. Buttons use
+ * brand-deep with paper text, which is 8.99:1 in light mode and flips to a
+ * light blue with dark text in the dark scheme. Do not nudge a lightness value
+ * without re-running the check in scripts/check-contrast.ts.
+ *
+ * Paper is warm rather than white, radii are generous and the spacing scale is
+ * tight: the site should feel like a well-set page, not a dashboard.
  */
 @theme {
   --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  --color-ink: oklch(0.21 0.02 258);
-  --color-ink-soft: oklch(0.44 0.02 258);
-  --color-ink-faint: oklch(0.53 0.015 258);
-  --color-paper: oklch(0.99 0.004 95);
-  --color-paper-sunk: oklch(0.96 0.008 95);
-  --color-rule: oklch(0.89 0.01 258);
+  --color-ink: oklch(0.235 0.022 265);
+  --color-ink-soft: oklch(0.455 0.02 265);
+  --color-ink-faint: oklch(0.525 0.016 265);
+  --color-paper: oklch(0.993 0.006 85);
+  --color-paper-sunk: oklch(0.965 0.012 85);
+  --color-rule: oklch(0.885 0.012 85);
 
-  --color-brand: oklch(0.52 0.16 252);
-  --color-brand-deep: oklch(0.38 0.13 252);
-  --color-signal: oklch(0.64 0.17 48);
-  --color-good: oklch(0.56 0.13 155);
-  --color-warn: oklch(0.7 0.16 75);
-  --color-bad: oklch(0.55 0.19 25);
+  --color-brand: oklch(0.52 0.15 255);
+  --color-brand-deep: oklch(0.405 0.135 258);
+  --color-brand-wash: oklch(0.955 0.025 255);
+  --color-accent: oklch(0.53 0.15 45);
+  --color-accent-edge: oklch(0.62 0.16 45);
+  --color-good: oklch(0.47 0.12 155);
+  --color-warn: oklch(0.52 0.13 75);
+  --color-bad: oklch(0.5 0.18 25);
 
-  --radius-card: 0.5rem;
-  --spacing-gutter: 1.25rem;
-  --text-measure: 68ch;
+  --radius-card: 0.75rem;
+  --radius-pill: 999px;
+  --spacing-gutter: 1rem;
+  --text-measure: 66ch;
+
+  --shadow-card: 0 1px 2px oklch(0.235 0.022 265 / 0.05);
+  --shadow-lift: 0 4px 16px oklch(0.235 0.022 265 / 0.08);
+}
+
+@media (min-width: 640px) {
+  @theme {
+    --spacing-gutter: 1.5rem;
+  }
 }
 
 @layer base {
@@ -38,7 +58,7 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 4.5rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -58,9 +78,16 @@
     background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-size: 1.0625rem;
-    line-height: 1.65;
+    font-size: 1rem;
+    line-height: 1.6;
     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (min-width: 640px) {
+    body {
+      font-size: 1.0625rem;
+    }
   }
 
   h1,
@@ -69,12 +96,13 @@
   h4 {
     font-family: var(--font-display);
     font-weight: 650;
-    letter-spacing: -0.015em;
-    line-height: 1.15;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
     text-wrap: balance;
   }
 
-  p {
+  p,
+  li {
     text-wrap: pretty;
   }
 
@@ -87,40 +115,72 @@
   :focus-visible {
     outline: 2px solid var(--color-brand);
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: 4px;
   }
 
-  /* Images always reserve their space: CLS budget is 0.05. */
+  /* Images always reserve their space: the CLS budget is 0.05. */
   img,
   video,
   iframe {
     max-width: 100%;
     height: auto;
   }
+
+  /* Every tappable thing clears 44px on a phone without looking chunky. */
+  @media (pointer: coarse) {
+    a:not(.prose a),
+    button,
+    summary,
+    input[type='submit'] {
+      min-height: 44px;
+    }
+    nav a,
+    button,
+    summary {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --color-ink: oklch(0.94 0.008 258);
-    --color-ink-soft: oklch(0.76 0.015 258);
-    --color-ink-faint: oklch(0.64 0.015 258);
-    --color-paper: oklch(0.19 0.015 258);
-    --color-paper-sunk: oklch(0.24 0.018 258);
-    --color-rule: oklch(0.33 0.02 258);
-    --color-brand: oklch(0.72 0.13 252);
-    --color-brand-deep: oklch(0.8 0.11 252);
+    --color-ink: oklch(0.945 0.008 262);
+    --color-ink-soft: oklch(0.775 0.014 262);
+    --color-ink-faint: oklch(0.655 0.014 262);
+    --color-paper: oklch(0.205 0.016 262);
+    --color-paper-sunk: oklch(0.255 0.018 262);
+    --color-rule: oklch(0.345 0.02 262);
+    --color-brand: oklch(0.76 0.12 255);
+    --color-brand-deep: oklch(0.82 0.1 255);
+    --color-brand-wash: oklch(0.29 0.04 255);
+    --color-accent: oklch(0.78 0.12 45);
+    --color-accent-edge: oklch(0.7 0.14 45);
+    --color-good: oklch(0.78 0.12 155);
+    --color-warn: oklch(0.82 0.12 75);
+    --color-bad: oklch(0.75 0.14 25);
+    --shadow-card: 0 1px 2px oklch(0 0 0 / 0.3);
+    --shadow-lift: 0 4px 16px oklch(0 0 0 / 0.4);
   }
 }
 
 :root[data-theme='dark'] {
-  --color-ink: oklch(0.94 0.008 258);
-  --color-ink-soft: oklch(0.76 0.015 258);
-  --color-ink-faint: oklch(0.64 0.015 258);
-  --color-paper: oklch(0.19 0.015 258);
-  --color-paper-sunk: oklch(0.24 0.018 258);
-  --color-rule: oklch(0.33 0.02 258);
-  --color-brand: oklch(0.72 0.13 252);
-  --color-brand-deep: oklch(0.8 0.11 252);
+  --color-ink: oklch(0.945 0.008 262);
+  --color-ink-soft: oklch(0.775 0.014 262);
+  --color-ink-faint: oklch(0.655 0.014 262);
+  --color-paper: oklch(0.205 0.016 262);
+  --color-paper-sunk: oklch(0.255 0.018 262);
+  --color-rule: oklch(0.345 0.02 262);
+  --color-brand: oklch(0.76 0.12 255);
+  --color-brand-deep: oklch(0.82 0.1 255);
+  --color-brand-wash: oklch(0.29 0.04 255);
+  --color-accent: oklch(0.78 0.12 45);
+  --color-accent-edge: oklch(0.7 0.14 45);
+  --color-good: oklch(0.78 0.12 155);
+  --color-warn: oklch(0.82 0.12 75);
+  --color-bad: oklch(0.75 0.14 25);
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.3);
+  --shadow-lift: 0 4px 16px oklch(0 0 0 / 0.4);
 }
 
 @font-face {
@@ -133,4 +193,32 @@
 
 @utility measure {
   max-width: var(--text-measure);
+}
+
+/* The page frame, so every template agrees on gutters and width. */
+@utility shell {
+  margin-inline: auto;
+  max-width: 72rem;
+  padding-inline: var(--spacing-gutter);
+}
+
+@utility card {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  box-shadow: var(--shadow-card);
+}
+
+/* A small, calm label: post type, counts, tested-on badges. */
+@utility pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-paper-sunk);
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--color-ink-soft);
 }

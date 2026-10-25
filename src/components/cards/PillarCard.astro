@@ -9,12 +9,24 @@ const { pillar, count } = Astro.props;
 
 <a
   href={`/topics/${pillar.id}/`}
-  class="block rounded-card border border-rule p-4 no-underline transition-colors hover:bg-paper-sunk"
-  style={`border-left: 3px solid ${pillar.data.accent}`}
+  class="card group flex items-start gap-3 p-3.5 no-underline transition-shadow hover:shadow-lift"
 >
-  <h3 class="font-display text-base font-semibold text-ink">{pillar.data.name}</h3>
-  <p class="mt-1 text-sm text-ink-soft">{pillar.data.description}</p>
-  <p class="mt-2 text-xs text-ink-faint">
-    {count} {count === 1 ? 'guide' : 'guides'}
-  </p>
+  <span
+    aria-hidden="true"
+    class="mt-0.5 h-8 w-1.5 shrink-0 rounded-pill"
+    style={`background:${pillar.data.accent}`}
+  ></span>
+  <span class="min-w-0">
+    <span class="flex flex-wrap items-baseline gap-x-2">
+      <span class="font-display text-base font-semibold text-ink group-hover:text-brand-deep">
+        {pillar.data.name}
+      </span>
+      <span class="pill">
+        {count} {count === 1 ? 'guide' : 'guides'}
+      </span>
+    </span>
+    <span class="mt-1 block line-clamp-2 text-sm text-ink-soft">
+      {pillar.data.description}
+    </span>
+  </span>
 </a>

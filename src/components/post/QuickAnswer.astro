@@ -6,7 +6,12 @@ interface Props {
 const { text } = Astro.props;
 ---
 
-<div class="not-prose rounded-card border-l-4 border-brand bg-paper-sunk p-4">
-  <p class="text-xs font-semibold uppercase tracking-wide text-ink-soft">Short answer</p>
-  <p class="mt-1 text-lg leading-snug">{text}</p>
+<div class="not-prose rounded-card border border-brand/25 bg-brand-wash p-4">
+  <p class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-brand-deep">
+    <svg aria-hidden="true" viewBox="0 0 14 14" class="h-3.5 w-3.5" fill="currentColor">
+      <path d="M7 0a7 7 0 1 0 0 14A7 7 0 0 0 7 0Zm.9 10.6H6.1V9.2h1.8v1.4Zm0-2.4H6.1l-.2-5h2.2l-.2 5Z" />
+    </svg>
+    Short answer
+  </p>
+  <p class="mt-1.5 text-base leading-snug sm:text-lg">{text}</p>
 </div>

@@ -7,24 +7,30 @@ const pillars = (await getCollection('pillars')).sort(
   (a, b) => a.data.order - b.data.order,
 );
 const here = Astro.url.pathname;
+const onPillar = (id: string) => here.startsWith(`/topics/${id}`);
 ---
 
-<header class="sticky top-0 z-40 border-b border-rule bg-paper/90 backdrop-blur">
-  <div class="mx-auto flex max-w-6xl items-center gap-4 px-gutter py-3">
-    <a href="/" class="font-display text-lg font-bold tracking-tight no-underline">
+<header class="sticky top-0 z-40 border-b border-rule bg-paper/85 backdrop-blur-md">
+  <div class="shell flex h-14 items-center gap-3">
+    <a
+      href="/"
+      class="shrink-0 font-display text-base font-bold tracking-tight no-underline sm:text-lg"
+    >
       {site.name}
     </a>
-    <nav aria-label="Topics" class="hidden flex-1 md:block">
-      <ul class="flex flex-wrap items-center gap-4 text-sm">
+
+    <nav aria-label="Topics" class="hidden min-w-0 flex-1 lg:block">
+      <ul class="flex items-center gap-1 text-sm">
         {pillars.map((p) => (
           <li>
             <a
               href={`/topics/${p.id}/`}
+              aria-current={onPillar(p.id) ? 'page' : undefined}
               class:list={[
-                'no-underline hover:underline',
-                here.startsWith(`/topics/${p.id}`)
-                  ? 'text-ink font-semibold'
-                  : 'text-ink-soft',
+                'rounded-pill px-2.5 py-1.5 no-underline transition-colors',
+                onPillar(p.id)
+                  ? 'bg-brand-wash font-semibold text-brand-deep'
+                  : 'text-ink-soft hover:bg-paper-sunk hover:text-ink',
               ]}
             >
               {p.data.name}
@@ -33,22 +39,44 @@ const here = Astro.url.pathname;
         ))}
       </ul>
     </nav>
-    <div class="ml-auto flex items-center gap-2">
+
+    <div class="ml-auto flex shrink-0 items-center gap-1.5">
       <a
         href="/search/"
-        class="rounded border border-rule px-2.5 py-1.5 text-sm no-underline text-ink-soft hover:text-ink"
-        aria-label="Search the site"
+        class="flex items-center gap-1.5 rounded-pill border border-rule px-3 py-1.5 text-sm no-underline text-ink-soft transition-colors hover:bg-paper-sunk hover:text-ink"
       >
-        Search
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 16 16"
+          class="h-3.5 w-3.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="7" cy="7" r="4.5" />
+          <path d="M10.5 10.5 14 14" stroke-linecap="round" />
+        </svg>
+        <span class="sr-only sm:not-sr-only">Search</span>
       </a>
       <ThemeToggle />
     </div>
   </div>
-  <nav aria-label="Topics" class="border-t border-rule md:hidden">
-    <ul class="flex gap-4 overflow-x-auto px-gutter py-2 text-sm">
+
+  <!-- Phones and tablets: the same topics as a scrollable row. -->
+  <nav aria-label="Topics" class="border-t border-rule lg:hidden">
+    <ul class="flex gap-1.5 overflow-x-auto px-gutter py-2 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {pillars.map((p) => (
         <li class="shrink-0">
-          <a href={`/topics/${p.id}/`} class="no-underline text-ink-soft">
+          <a
+            href={`/topics/${p.id}/`}
+            aria-current={onPillar(p.id) ? 'page' : undefined}
+            class:list={[
+              'rounded-pill border px-3 py-1.5 no-underline',
+              onPillar(p.id)
+                ? 'border-brand-deep bg-brand-wash font-semibold text-brand-deep'
+                : 'border-rule text-ink-soft',
+            ]}
+          >
             {p.data.name}
           </a>
         </li>

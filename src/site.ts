@@ -22,8 +22,16 @@ export const site = {
   email: 'hello@a2zskillsewa.com',
   editorEmail: 'editor@a2zskillsewa.com',
   postsPerPage: 12,
-  /** Ad slots render nothing until an ad network is approved. */
+  /** Real ads. Stays false until a network approves the site. */
   ADS_ENABLED: false,
+  /**
+   * Draw the reserved ad space as a labelled placeholder. Keeps the layout
+   * honest now, so switching ADS_ENABLED on later moves nothing and the CLS
+   * budget holds.
+   */
+  ADS_PLACEHOLDER: true,
+  /** Filled in with the network's lines once approved; served at /ads.txt. */
+  ADS_TXT_READY: false,
   /** Days after testing a post is considered stale. */
   RETEST_DAYS: 120,
 } as const;

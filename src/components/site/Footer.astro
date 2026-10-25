@@ -7,8 +7,8 @@ const pages = (await getCollection('pages')).sort((a, b) => a.data.order - b.dat
 const year = new Date().getFullYear();
 ---
 
-<footer class="mt-16 border-t border-rule bg-paper-sunk">
-  <div class="mx-auto grid max-w-6xl gap-8 px-gutter py-10 md:grid-cols-3">
+<footer class="mt-12 border-t border-rule bg-paper-sunk">
+  <div class="shell grid gap-7 py-8 md:grid-cols-3">
     <div>
       <p class="font-display text-lg font-bold">{site.name}</p>
       <p class="mt-1 text-sm text-ink-soft">{site.tagline}</p>
@@ -36,7 +36,7 @@ const year = new Date().getFullYear();
       <NewsletterForm compact={true} source="footer" />
     </div>
   </div>
-  <div class="border-t border-rule px-gutter py-4 text-center text-xs text-ink-faint">
+  <div class="border-t border-rule px-gutter py-3.5 text-center text-xs text-ink-faint">
     © {year} {site.publisher.name}. Guides are tested on real machines; versions are listed
     on every post.
   </div>

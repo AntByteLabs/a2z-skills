@@ -6,10 +6,10 @@ interface Props {
 const { crumbs } = Astro.props;
 ---
 
-<nav aria-label="Breadcrumb" class="text-sm text-ink-soft">
-  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+<nav aria-label="Breadcrumb" class="min-w-0 text-sm text-ink-soft">
+  <ol class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
     {crumbs.map((c, i) => (
-      <li class="flex items-center gap-2">
+      <li class="flex min-w-0 items-center gap-2">
         {i < crumbs.length - 1 ? (
           <a href={c.path} class="hover:underline">
             {c.name}

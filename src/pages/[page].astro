@@ -25,16 +25,16 @@ const crumbs = [
   path={path}
   noindex={page.data.noindex}
 >
-  <div class="mx-auto max-w-3xl px-gutter py-6">
+  <div class="shell max-w-3xl py-5">
     <Breadcrumbs crumbs={crumbs} />
-    <h1 class="mt-3 font-display text-3xl font-bold">{page.data.title}</h1>
+    <h1 class="mt-2 font-display text-[1.6rem] font-bold sm:text-3xl">{page.data.title}</h1>
     <p class="mt-2 text-sm text-ink-faint">
       Last updated{' '}
       <time datetime={page.data.updatedAt.toISOString()}>
         {formatDate(page.data.updatedAt)}
       </time>
     </p>
-    <div class="prose prose-lg mt-6 max-w-measure dark:prose-invert">
+    <div class="prose mt-5 max-w-measure dark:prose-invert sm:prose-lg">
       <Content />
     </div>
   </div>
