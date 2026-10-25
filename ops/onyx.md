@@ -10,8 +10,8 @@ Onyx ships two deployment modes, and neither fits the Always Free box:
 **Lite** (`docker-compose.onyx-lite.yml`) is an overlay that moves the model
 servers, OpenSearch, Redis, the object store and the background worker to
 inactive profiles, sets `DISABLE_VECTOR_DB=true`, and uses Postgres for caching
-and file storage. Its own header says it plainly: *"connectors and RAG search are
-disabled"*. That leaves a chat UI — about 700 MB of Postgres, API and web server
+and file storage. Its own header says it plainly: _"connectors and RAG search are
+disabled"_. That leaves a chat UI — about 700 MB of Postgres, API and web server
 for no document search, which is the only reason we wanted Onyx.
 
 **Standard** is the useful one, and needs OpenSearch plus two PyTorch model

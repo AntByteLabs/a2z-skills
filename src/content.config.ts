@@ -68,7 +68,7 @@ const authors = defineCollection({
     role: z.string(),
     bio: z.string().min(60),
     avatar: z.string(),
-    sameAs: z.array(z.url()).min(1),
+    sameAs: z.array(z.url()).default([]),
     email: z.email().optional(),
   }),
 });

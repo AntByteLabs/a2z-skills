@@ -114,9 +114,10 @@ export const profilePage = (a: {
     description: a.bio,
     image: a.avatar,
     url: absolute(a.path),
-    sameAs: a.sameAs,
     worksFor: { '@id': ORG_ID },
   };
+  // Only claim sameAs when there is a real profile to point at.
+  if (a.sameAs.length) person.sameAs = a.sameAs;
   return {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',

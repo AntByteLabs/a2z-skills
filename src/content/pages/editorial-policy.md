@@ -46,6 +46,17 @@ reviews, rankings or links, and sponsored content, if we ever run it, will be
 labelled as such in the headline. See the
 [affiliate disclosure](/affiliate-disclosure/).
 
+## Who is accountable
+
+Every post names its author, and each author has a page with what they test and
+how to reach them: [Devchandra Shrestha](/authors/devchandra-shrestha/),
+[Krishna Pokharel](/authors/krishna-pokharel/) and
+[Ronit Karki](/authors/ronit-karki/). The editor, Devchandra Shrestha, signs off
+on everything published and is accountable for corrections.
+
+The site is published by AntByte Labs. How we handle the one piece of personal
+data we collect is set out in the [privacy policy](/privacy/).
+
 ## Comments and contact
 
 Reach the editor at

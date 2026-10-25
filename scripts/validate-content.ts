@@ -260,6 +260,26 @@ const run = async () => {
       fail(rel, 'placeholder', 'A TODO, FIXME or Lorem ipsum is still in the file.');
   }
 
+  // --- Authors need a profile link for E-E-A-T ----------------------------
+  for (const id of authorIds) {
+    const raw = JSON.parse(await readFile(join(AUTHORS_DIR, `${id}.json`), 'utf8')) as {
+      sameAs?: string[];
+      avatar?: string;
+    };
+    if (!raw.sameAs?.length)
+      warn(
+        `src/content/authors/${id}.json`,
+        'author-profile',
+        'No sameAs link. Add a LinkedIn, GitHub or other profile: it is the strongest author signal there is.',
+      );
+    if (raw.avatar && raw.avatar.endsWith('.svg'))
+      warn(
+        `src/content/authors/${id}.json`,
+        'author-photo',
+        'The avatar is a generated placeholder. A real photograph of the person is worth more.',
+      );
+  }
+
   // --- Placeholders anywhere in content ----------------------------------
   for (const [dir, ext, ids] of [
     [PAGES_DIR, '.md', pageIds],

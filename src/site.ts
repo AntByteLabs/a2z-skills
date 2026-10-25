@@ -11,7 +11,7 @@ export const site = {
     'Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.',
   locale: 'en',
   publisher: {
-    name: 'Antbyte Labs',
+    name: 'AntByte Labs',
     url: 'https://antbytelabs.com',
   },
   social: {

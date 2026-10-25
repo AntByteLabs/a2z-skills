@@ -6,7 +6,13 @@ order: 3
 ---
 
 Some links on this site are affiliate links. If you buy something through one,
-we may be paid a commission by the seller. You pay the same price either way.
+AntByte Labs may be paid a commission by the seller. You pay the same price
+either way.
+
+This disclosure is made to satisfy the US Federal Trade Commission's
+endorsement guides, the UK Competition and Markets Authority's rules on paid
+promotion, and the equivalent rules elsewhere: where there is money behind a
+link, it is labelled before you click it, not in a footer.
 
 ## What that pays for
 

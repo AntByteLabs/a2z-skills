@@ -24,9 +24,22 @@ If a guide has none of that, it is an explainer, and it says so.
 
 ## Who publishes this
 
-A2Z Skills is published by TODO Antbyte Labs — confirm the legal entity name and
-the country it operates from. Write two or three sentences here about the team
-and the kit the testing runs on.
+A2Z Skills is published by **AntByte Labs**, a small software and web studio
+operating from Nepal, which also builds and maintains client sites and internal
+tools. The same people who ship that work write these guides, which is why the
+posts are about problems we hit in real projects rather than whatever is
+trending.
+
+Three of us write here:
+
+- [Devchandra Shrestha](/authors/devchandra-shrestha/) — editor; Windows, macOS,
+  domains and hosting.
+- [Krishna Pokharel](/authors/krishna-pokharel/) — Excel, Word and phones.
+- [Ronit Karki](/authors/ronit-karki/) — AI tools and automation.
+
+Testing runs on our own machines: a Windows 11 desktop, a Mac, and Android and
+iPhone handsets kept on current and one-behind OS versions, because that is what
+readers are actually running.
 
 ## Corrections
 
