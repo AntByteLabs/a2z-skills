@@ -29,7 +29,6 @@ import {
   listPostSlugs,
   postPath,
   slugify,
-  splitPost,
   type Frontmatter,
 } from './posts';
 
@@ -358,9 +357,9 @@ const tools = [
       const files: { path: string; content: string | { base64: string } }[] = [
         { path: file, content: { base64 } },
       ];
-      let frontmatter = post.frontmatter;
-      if (args.setHero !== false && name === 'hero') {
-        frontmatter = {
+      const asHero = args.setHero !== false && name === 'hero';
+      if (asHero) {
+        const frontmatter = {
           ...post.frontmatter,
           heroImage: `./${name}.${kind}`,
           heroAlt: String(args.alt),
@@ -376,12 +375,11 @@ const tools = [
         uploaded: file,
         bytes: bytes.byteLength,
         format: kind,
-        heroSet: args.setHero !== false && name === 'hero',
+        heroSet: asHero,
         ...result,
-        note:
-          name === 'hero'
-            ? 'Astro generates the AVIF and WebP sizes at build.'
-            : `Use it in the body: import img from './${name}.${kind}' then <Image src={img} alt="…" />`,
+        note: asHero
+          ? 'Astro generates the AVIF and WebP sizes at build.'
+          : `Use it in the body: import img from './${name}.${kind}' then <Image src={img} alt="…" />`,
       });
     },
   },
