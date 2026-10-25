@@ -30,7 +30,7 @@ jobs:
 
       - name: Open one issue for the batch
         if: steps.stale.outputs.count != '0'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const rows = require('./stale.json');
