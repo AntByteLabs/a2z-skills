@@ -68,12 +68,17 @@ Account `Antbytelabs` (`629321f5712e07a21d5e7cd04e93c095`).
   table left empty.
 - Actions secrets `CLOUDFLARE_ACCOUNT_ID` and `INDEXNOW_KEY` set.
 - `workers_dev: true`, no custom domain route yet.
+- workers.dev subdomain **`a2zskills`** registered on the account (it had none:
+  Workers had never been opened there). The site will land at
+  `https://a2z-skills.a2zskills.workers.dev`, which the `_headers` rule
+  noindexes so it cannot compete with the real domain.
 
 **Still to do, in order:**
 
-1. **`npx wrangler login`** once, then `npx wrangler deploy`. This publishes to
-   `a2z-skills.<your-subdomain>.workers.dev`, which is noindexed by the
-   `_headers` rule so it cannot compete with the real domain.
+1. **`npx wrangler login`** once, then `npx wrangler deploy`. Deploying needs a
+   credential this machine does not have, and it cannot be worked around: the
+   asset upload API has to read the built files from disk, so it must run here
+   with either an OAuth login or `CLOUDFLARE_API_TOKEN` in the environment.
 2. **`CLOUDFLARE_API_TOKEN`** as an Actions secret, so CI can deploy. Create it
    at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
    with **Account → Workers Scripts: Edit** and **Account → D1: Edit**, scoped to
