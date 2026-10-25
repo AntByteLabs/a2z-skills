@@ -15,10 +15,12 @@
     {
       "binding": "DB",
       "database_name": "a2z-skills",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "database_id": "bcec55b5-ecda-44ab-90f5-840fef081100",
       "migrations_dir": "worker/migrations"
     }
   ],
-  "observability": { "enabled": true },
-  "routes": [{ "pattern": "a2zskillsewa.com", "custom_domain": true }]
+  "observability": {
+    "enabled": true
+  },
+  "workers_dev": true
 }

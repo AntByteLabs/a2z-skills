@@ -55,33 +55,49 @@ no hub link or fewer than two internal links, an affiliate link without a
 disclosure or a redirect, a renamed slug with no redirect, banned filler, and any
 leftover `TODO`.
 
-## Cloudflare setup, once
+## Cloudflare setup
 
-Nothing below has been done yet. Each step is safe to stop after.
+Account `Antbytelabs` (`629321f5712e07a21d5e7cd04e93c095`).
 
-1. **Move DNS to Cloudflare.** Workers custom domains only work on Cloudflare
-   nameservers. Add `a2zskillsewa.com` as a zone, then change the nameservers at
-   the registrar. Free.
-2. **Create the D1 database** and put the id in `wrangler.json`:
-   ```bash
-   npx wrangler d1 create a2z-skills
-   npx wrangler d1 migrations apply a2z-skills --remote
-   ```
-   The deploy workflow refuses to run while the placeholder id is still there.
-3. **Turnstile**: create a widget, set `PUBLIC_TURNSTILE_SITE_KEY` as an Actions
-   secret and the secret key as a Worker secret:
+**Done:**
+
+- D1 database `a2z-skills` created, id `bcec55b5-ecda-44ab-90f5-840fef081100`,
+  set in `wrangler.json`. The `0001_subscribers.sql` schema is applied and
+  recorded in the `d1_migrations` ledger, so `wrangler d1 migrations apply` will
+  not re-run it. The upsert path was tested against the live database and the
+  table left empty.
+- Actions secrets `CLOUDFLARE_ACCOUNT_ID` and `INDEXNOW_KEY` set.
+- `workers_dev: true`, no custom domain route yet.
+
+**Still to do, in order:**
+
+1. **`npx wrangler login`** once, then `npx wrangler deploy`. This publishes to
+   `a2z-skills.<your-subdomain>.workers.dev`, which is noindexed by the
+   `_headers` rule so it cannot compete with the real domain.
+2. **`CLOUDFLARE_API_TOKEN`** as an Actions secret, so CI can deploy. Create it
+   at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
+   with **Account → Workers Scripts: Edit** and **Account → D1: Edit**, scoped to
+   this account only. Cloudflare shows the value once:
+   `gh secret set CLOUDFLARE_API_TOKEN`.
+3. **Bring `a2zskillsewa.com` onto this account.** It is _not_ a zone here yet —
+   the ten zones on the account are other sites. Add it in the dashboard, then
+   point the registrar's nameservers at the pair Cloudflare gives you. Until
+   that is done, no custom domain and no DNS-verified Search Console property.
+4. **Add the custom domain** once the zone is active: put
+   `"routes": [{ "pattern": "a2zskillsewa.com", "custom_domain": true }]` back in
+   `wrangler.json` and deploy.
+5. **Redirect `www`** to the apex with a free Redirect Rule in the dashboard.
+   Workers custom domains cannot do it, and it is not a `_redirects` line.
+6. **Turnstile**: create a widget, set `PUBLIC_TURNSTILE_SITE_KEY` as an Actions
+   secret and the secret key on the Worker:
    ```bash
    npx wrangler secret put TURNSTILE_SECRET
    ```
    Without it the form still works, protected only by the honeypot.
-4. **Deploy**: `npx wrangler deploy`. The custom domain route in `wrangler.json`
-   attaches `a2zskillsewa.com` once the zone is on Cloudflare.
-5. **Redirect `www`** to the apex with a free Redirect Rule in the dashboard.
-   Workers custom domains cannot do it, and it is not a `_redirects` line.
-6. **Email routing**: forward `hello@` and `editor@` to a real inbox. Free.
-7. **Verify** Search Console (domain property, DNS record), Bing Webmaster
+7. **Email routing**: forward `hello@` and `editor@` to a real inbox. Free.
+8. **Verify** Search Console (domain property, DNS record), Bing Webmaster
    Tools, Ahrefs Webmaster Tools. Submit `/sitemap-index.xml`.
-8. **Turn on Cloudflare Web Analytics** for the zone.
+9. **Turn on Cloudflare Web Analytics** for the zone.
 
 ### GitHub Actions secrets
 
