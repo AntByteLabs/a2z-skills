@@ -63,7 +63,9 @@ export const readFile = async (env: Env, path: string) => {
       env,
       `/repos/${OWNER}/${REPO}/contents/${encodeURI(path)}?ref=${BRANCH}`,
     );
-    const bytes = Uint8Array.from(atob(file.content.replace(/\n/g, '')), (c) => c.charCodeAt(0));
+    const bytes = Uint8Array.from(atob(file.content.replace(/\n/g, '')), (c) =>
+      c.charCodeAt(0),
+    );
     return { text: new TextDecoder().decode(bytes), sha: file.sha };
   } catch (error) {
     if (String(error).includes('404')) return null;
@@ -80,7 +82,9 @@ export const writeFile = async (
 ) => {
   const existing = await readFile(env, path).catch(() => null);
   const base64 =
-    typeof content === 'string' ? toBase64(new TextEncoder().encode(content)) : content.base64;
+    typeof content === 'string'
+      ? toBase64(new TextEncoder().encode(content))
+      : content.base64;
   const result = await api<{ commit: { sha: string; html_url: string } }>(
     env,
     `/repos/${OWNER}/${REPO}/contents/${encodeURI(path)}`,
@@ -136,7 +140,12 @@ export const commitFiles = async (
             : { content: f.content.base64, encoding: 'base64' },
         ),
       });
-      return { path: f.path, mode: '100644' as const, type: 'blob' as const, sha: blob.sha };
+      return {
+        path: f.path,
+        mode: '100644' as const,
+        type: 'blob' as const,
+        sha: blob.sha,
+      };
     }),
   );
 
@@ -147,7 +156,10 @@ export const commitFiles = async (
   const newCommit = await api<{ sha: string; html_url: string }>(
     env,
     `/repos/${OWNER}/${REPO}/git/commits`,
-    { method: 'POST', body: JSON.stringify({ message, tree: newTree.sha, parents: [head] }) },
+    {
+      method: 'POST',
+      body: JSON.stringify({ message, tree: newTree.sha, parents: [head] }),
+    },
   );
   await api(env, `/repos/${OWNER}/${REPO}/git/refs/heads/${BRANCH}`, {
     method: 'PATCH',
@@ -180,7 +192,11 @@ export const startBuild = async (env: Env) => {
       body: JSON.stringify({}),
     },
   );
-  const body = (await res.json()) as { success?: boolean; result?: { build_uuid?: string }; errors?: unknown };
+  const body = (await res.json()) as {
+    success?: boolean;
+    result?: { build_uuid?: string };
+    errors?: unknown;
+  };
   if (!res.ok || body.success === false) {
     return { started: false, reason: JSON.stringify(body.errors ?? body).slice(0, 300) };
   }

@@ -40,7 +40,12 @@ type Json = Record<string, unknown>;
 type ToolResult = { content: { type: 'text'; text: string }[]; isError?: boolean };
 
 const text = (value: unknown): ToolResult => ({
-  content: [{ type: 'text', text: typeof value === 'string' ? value : JSON.stringify(value, null, 2) }],
+  content: [
+    {
+      type: 'text',
+      text: typeof value === 'string' ? value : JSON.stringify(value, null, 2),
+    },
+  ],
 });
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -111,7 +116,10 @@ const tools = [
         type: { type: 'string', enum: [...TYPES] },
         author: { type: 'string', description: 'An author id, e.g. devchandra-shrestha.' },
         description: { type: 'string', description: '120 to 160 characters.' },
-        quickAnswer: { type: 'string', description: 'The answer in two or three sentences, 300 characters at most.' },
+        quickAnswer: {
+          type: 'string',
+          description: 'The answer in two or three sentences, 300 characters at most.',
+        },
         body: { type: 'string', description: 'MDX body. Omitted means the blueprint.' },
         tags: { type: 'array', items: { type: 'string' } },
       },
@@ -120,7 +128,9 @@ const tools = [
     handler: async (env: Env, args: Json) => {
       const slug = slugify(String(args.keyword));
       if (slug.split('-').length < 3)
-        return text(`"${slug}" is only ${slug.split('-').length} word(s). Give a fuller keyword phrase.`);
+        return text(
+          `"${slug}" is only ${slug.split('-').length} word(s). Give a fuller keyword phrase.`,
+        );
       if (await getPost(env, slug)) return text(`A post already exists at ${slug}.`);
 
       const keyword = String(args.keyword);
@@ -150,8 +160,7 @@ const tools = [
         created: slug,
         ...result,
         check,
-        next:
-          'Fill anything the check lists, then publish_post. A how-to, fix or review also needs testedOn before it can go live.',
+        next: 'Fill anything the check lists, then publish_post. A how-to, fix or review also needs testedOn before it can go live.',
       });
     },
   },
@@ -163,9 +172,15 @@ const tools = [
       type: 'object',
       properties: {
         slug: { type: 'string' },
-        frontmatter: { type: 'object', description: 'Fields to merge in. Pass null to remove one.' },
+        frontmatter: {
+          type: 'object',
+          description: 'Fields to merge in. Pass null to remove one.',
+        },
         body: { type: 'string', description: 'Replaces the body entirely.' },
-        appendBody: { type: 'string', description: 'Added to the end of the body instead.' },
+        appendBody: {
+          type: 'string',
+          description: 'Added to the end of the body instead.',
+        },
         message: { type: 'string', description: 'Commit message.' },
       },
       required: ['slug'],
@@ -181,7 +196,8 @@ const tools = [
       }
       let body = post.body;
       if (typeof args.body === 'string') body = args.body;
-      if (typeof args.appendBody === 'string') body = `${body.trimEnd()}\n\n${args.appendBody}\n`;
+      if (typeof args.appendBody === 'string')
+        body = `${body.trimEnd()}\n\n${args.appendBody}\n`;
 
       const check = checkPost(frontmatter, body, post.slug);
       const result = await writeFile(
@@ -201,7 +217,10 @@ const tools = [
       type: 'object',
       properties: {
         slug: { type: 'string' },
-        deploy: { type: 'boolean', description: 'Start a build straight away (default true).' },
+        deploy: {
+          type: 'boolean',
+          description: 'Start a build straight away (default true).',
+        },
       },
       required: ['slug'],
     },
@@ -227,7 +246,10 @@ const tools = [
         joinPost(frontmatter, post.body),
         `Publish: ${post.frontmatter.title ?? post.slug}`,
       );
-      const build = args.deploy === false ? { started: false, reason: 'deploy not requested' } : await startBuild(env);
+      const build =
+        args.deploy === false
+          ? { started: false, reason: 'deploy not requested' }
+          : await startBuild(env);
       return text({
         published: post.slug,
         url: `${SITE}/${post.slug}/`,
@@ -266,11 +288,20 @@ const tools = [
       type: 'object',
       properties: {
         slug: { type: 'string', description: 'The post to attach it to.' },
-        alt: { type: 'string', description: 'What the image shows, not that it is an image.' },
-        base64: { type: 'string', description: 'Raw base64 of the file, no data: prefix needed.' },
+        alt: {
+          type: 'string',
+          description: 'What the image shows, not that it is an image.',
+        },
+        base64: {
+          type: 'string',
+          description: 'Raw base64 of the file, no data: prefix needed.',
+        },
         url: { type: 'string', description: 'A public https URL to fetch instead.' },
         name: { type: 'string', description: 'File name without extension. Default hero.' },
-        setHero: { type: 'boolean', description: 'Set heroImage and heroAlt (default true).' },
+        setHero: {
+          type: 'boolean',
+          description: 'Set heroImage and heroAlt (default true).',
+        },
       },
       required: ['slug', 'alt'],
     },
@@ -287,7 +318,9 @@ const tools = [
         });
         bytes = Uint8Array.from(atob(raw.replace(/\s/g, '')), (c) => c.charCodeAt(0));
       } else if (typeof args.url === 'string' && /^https:\/\//.test(args.url)) {
-        const res = await fetch(args.url, { headers: { 'User-Agent': 'a2z-skills-mcp/1.0' } });
+        const res = await fetch(args.url, {
+          headers: { 'User-Agent': 'a2z-skills-mcp/1.0' },
+        });
         if (!res.ok) return text(`The host returned ${res.status} for that URL.`);
         mime = res.headers.get('content-type') ?? '';
         bytes = new Uint8Array(await res.arrayBuffer());
@@ -296,10 +329,14 @@ const tools = [
       }
 
       if (bytes.byteLength > 10 * 1024 * 1024)
-        return text(`${(bytes.byteLength / 1024 / 1024).toFixed(1)} MB is over the 10 MB cap.`);
+        return text(
+          `${(bytes.byteLength / 1024 / 1024).toFixed(1)} MB is over the 10 MB cap.`,
+        );
 
       // Trust the bytes, not the header: check the magic numbers.
-      const sig = [...bytes.slice(0, 12)].map((b) => b.toString(16).padStart(2, '0')).join('');
+      const sig = [...bytes.slice(0, 12)]
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('');
       const kind = sig.startsWith('89504e47')
         ? 'png'
         : sig.startsWith('ffd8ff')
@@ -309,7 +346,10 @@ const tools = [
             : sig.slice(16, 24) === '66747970'
               ? 'avif'
               : null;
-      if (!kind) return text(`Those bytes are not a PNG, JPEG, WebP or AVIF (header ${sig.slice(0, 16)}, type "${mime}").`);
+      if (!kind)
+        return text(
+          `Those bytes are not a PNG, JPEG, WebP or AVIF (header ${sig.slice(0, 16)}, type "${mime}").`,
+        );
 
       const name = String(args.name ?? 'hero').replace(/[^a-z0-9-]/gi, '') || 'hero';
       const file = `src/content/posts/${post.slug}/${name}.${kind}`;
@@ -320,8 +360,15 @@ const tools = [
       ];
       let frontmatter = post.frontmatter;
       if (args.setHero !== false && name === 'hero') {
-        frontmatter = { ...post.frontmatter, heroImage: `./${name}.${kind}`, heroAlt: String(args.alt) };
-        files.push({ path: postPath(post.slug), content: joinPost(frontmatter, post.body) });
+        frontmatter = {
+          ...post.frontmatter,
+          heroImage: `./${name}.${kind}`,
+          heroAlt: String(args.alt),
+        };
+        files.push({
+          path: postPath(post.slug),
+          content: joinPost(frontmatter, post.body),
+        });
       }
 
       const result = await commitFiles(env, files, `Add ${name}.${kind} to ${post.slug}`);

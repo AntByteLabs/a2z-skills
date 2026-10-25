@@ -30,9 +30,38 @@ export const TESTED_TYPES = ['how-to', 'fix', 'review'];
 export type Frontmatter = Record<string, unknown>;
 
 const STOP_WORDS = new Set([
-  'a', 'an', 'the', 'how', 'to', 'in', 'on', 'for', 'of', 'and', 'or', 'is', 'are',
-  'do', 'does', 'my', 'your', 'you', 'with', 'at', 'it', 'this', 'that', 'can', 'i',
-  'fix', 'guide', 'tutorial', 'step', 'steps', 'best', 'top',
+  'a',
+  'an',
+  'the',
+  'how',
+  'to',
+  'in',
+  'on',
+  'for',
+  'of',
+  'and',
+  'or',
+  'is',
+  'are',
+  'do',
+  'does',
+  'my',
+  'your',
+  'you',
+  'with',
+  'at',
+  'it',
+  'this',
+  'that',
+  'can',
+  'i',
+  'fix',
+  'guide',
+  'tutorial',
+  'step',
+  'steps',
+  'best',
+  'top',
 ]);
 
 export const slugify = (input: string) =>
@@ -96,25 +125,33 @@ export const checkPost = (frontmatter: Frontmatter, body: string, slug: string) 
     .split(/\s+/).length;
 
   if (!f.title) problems.push('title is missing');
-  else if (String(f.title).length > 65) problems.push(`title is ${String(f.title).length} characters; the limit is 65`);
+  else if (String(f.title).length > 65)
+    problems.push(`title is ${String(f.title).length} characters; the limit is 65`);
 
   const desc = String(f.description ?? '');
   if (!desc) problems.push('description is missing');
   else if (desc.length < 120 || desc.length > 160)
     problems.push(`description is ${desc.length} characters; it must be 120 to 160`);
 
-  if (!PILLARS.includes(f.pillar)) problems.push(`pillar must be one of: ${PILLARS.join(', ')}`);
+  if (!PILLARS.includes(f.pillar))
+    problems.push(`pillar must be one of: ${PILLARS.join(', ')}`);
   if (!TYPES.includes(f.type)) problems.push(`type must be one of: ${TYPES.join(', ')}`);
   if (!f.author) problems.push('author is missing');
 
   const quick = String(f.quickAnswer ?? '');
   if (!quick) problems.push('quickAnswer is missing');
-  else if (quick.length > 300) problems.push(`quickAnswer is ${quick.length} characters; the limit is 300`);
+  else if (quick.length > 300)
+    problems.push(`quickAnswer is ${quick.length} characters; the limit is 300`);
 
   if (TESTED_TYPES.includes(f.type) && !f.testedOn?.date)
-    problems.push(`a ${f.type} post must record testedOn.date, the versions and the device`);
+    problems.push(
+      `a ${f.type} post must record testedOn.date, the versions and the device`,
+    );
 
-  if (/\bTODO\b|\bFIXME\b|\bLorem ipsum\b/i.test(body) || /\bTODO\b/i.test(JSON.stringify(f)))
+  if (
+    /\bTODO\b|\bFIXME\b|\bLorem ipsum\b/i.test(body) ||
+    /\bTODO\b/i.test(JSON.stringify(f))
+  )
     problems.push('a TODO, FIXME or Lorem ipsum is still in the post');
 
   if (words < 350 && f.draft === false)
@@ -126,7 +163,8 @@ export const checkPost = (frontmatter: Frontmatter, body: string, slug: string) 
   const h2s = [...body.matchAll(/^##\s+(.+)$/gm)].length;
   if (h2s < 2) warnings.push('fewer than two H2 sections');
 
-  if (!/^[a-z0-9-]+$/.test(slug)) problems.push('slug must be lowercase letters, numbers and hyphens');
+  if (!/^[a-z0-9-]+$/.test(slug))
+    problems.push('slug must be lowercase letters, numbers and hyphens');
 
   return { ok: problems.length === 0, problems, warnings, words };
 };
@@ -147,8 +185,12 @@ then a link to [the hub](/topics/${pillar}/) and two related posts.
 
 The working answer, with the real menu path and the real command.
 
-${TESTED_TYPES.includes(type) ? `<WhatBroke>
+${
+  TESTED_TYPES.includes(type)
+    ? `<WhatBroke>
   The errors actually hit while testing: what the screen said, what caused it,
   and what fixed it.
 </WhatBroke>
-` : ''}`;
+`
+    : ''
+}`;
