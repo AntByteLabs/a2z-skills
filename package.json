@@ -25,7 +25,7 @@
     "db:migrate:local": "wrangler d1 migrations apply a2z-skills --local",
     "db:migrate": "wrangler d1 migrations apply a2z-skills --remote",
     "budget": "tsx scripts/check-budget.ts",
-    "check:worker": "tsc -p worker/tsconfig.json",
+    "check:worker": "wrangler types && tsc -p worker/tsconfig.json",
     "icons": "tsx scripts/make-icons.ts",
     "image": "tsx scripts/add-image.ts"
   },
