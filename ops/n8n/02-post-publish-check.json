@@ -1,0 +1,123 @@
+{
+  "name": "A2Z — post-publish health check",
+  "meta": { "instanceId": "a2z-skills" },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "hours", "hoursInterval": 6 }] }
+      },
+      "id": "every-six-hours",
+      "name": "Every six hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-460, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://a2zskillsewa.com/sitemap-0.xml",
+        "options": {
+          "response": { "response": { "neverError": true, "responseFormat": "text" } }
+        }
+      },
+      "id": "fetch-sitemap",
+      "name": "Fetch the sitemap",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-240, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// One item per URL in the sitemap, so each page is checked on its own.\nconst xml = $input.first().json.data || '';\nconst urls = [...String(xml).matchAll(/<loc>([^<]+)<\\/loc>/g)].map((m) => m[1]);\nif (!urls.length) {\n  return [{ json: { url: null, problem: 'The sitemap returned no URLs at all.' } }];\n}\nreturn urls.map((url) => ({ json: { url } }));"
+      },
+      "id": "split-urls",
+      "name": "One item per URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-20, 0]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true,
+              "responseFormat": "text"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "id": "fetch-page",
+      "name": "Fetch each page",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [200, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "/*\n * The checks that matter after a deploy and that no local test can make:\n * the live page answers, is indexable, and still carries its own canonical.\n */\nconst problems = [];\n\nfor (const item of $input.all()) {\n  const url = item.json.url ?? $('One item per URL').first().json.url;\n  const status = item.json.statusCode ?? 0;\n  const html = String(item.json.body ?? '');\n\n  if (status !== 200) {\n    problems.push(`${url} returned ${status}`);\n    continue;\n  }\n  if (/name=[\"']robots[\"'][^>]*noindex/i.test(html)) {\n    problems.push(`${url} is in the sitemap but marked noindex`);\n  }\n  const canonical = html.match(/<link[^>]+rel=[\"']canonical[\"'][^>]+href=[\"']([^\"']+)/i);\n  if (!canonical) {\n    problems.push(`${url} has no canonical link`);\n  } else if (canonical[1].replace(/\\/$/, '') !== String(url).replace(/\\/$/, '')) {\n    problems.push(`${url} canonicalises to ${canonical[1]}`);\n  }\n  if (!/application\\/ld\\+json/.test(html)) {\n    problems.push(`${url} has no structured data`);\n  }\n}\n\nreturn [{ json: { count: problems.length, problems, checked: $input.all().length } }];"
+      },
+      "id": "evaluate",
+      "name": "Evaluate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [420, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "version": 2 },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": { "type": "number", "operation": "gt" },
+              "leftValue": "={{ $json.count }}",
+              "rightValue": 0
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "if-problems",
+      "name": "Anything wrong?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [640, 0]
+    },
+    {
+      "parameters": {
+        "sendTo": "antbytelabs@gmail.com",
+        "subject": "=A2Z Skills: {{ $json.count }} live page problem(s)",
+        "emailFormat": "text",
+        "message": "={{ $json.problems.join('\\n') }}\n\nChecked {{ $json.checked }} URLs from the sitemap.",
+        "options": {}
+      },
+      "id": "email",
+      "name": "Email the problems",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [880, -100],
+      "credentials": { "smtp": { "id": "SET_IN_UI", "name": "SMTP — antbytelabs" } }
+    }
+  ],
+  "connections": {
+    "Every six hours": {
+      "main": [[{ "node": "Fetch the sitemap", "type": "main", "index": 0 }]]
+    },
+    "Fetch the sitemap": {
+      "main": [[{ "node": "One item per URL", "type": "main", "index": 0 }]]
+    },
+    "One item per URL": {
+      "main": [[{ "node": "Fetch each page", "type": "main", "index": 0 }]]
+    },
+    "Fetch each page": { "main": [[{ "node": "Evaluate", "type": "main", "index": 0 }]] },
+    "Evaluate": { "main": [[{ "node": "Anything wrong?", "type": "main", "index": 0 }]] },
+    "Anything wrong?": {
+      "main": [[{ "node": "Email the problems", "type": "main", "index": 0 }], []]
+    }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "Asia/Kathmandu" },
+  "tags": [{ "name": "a2z-skills" }]
+}

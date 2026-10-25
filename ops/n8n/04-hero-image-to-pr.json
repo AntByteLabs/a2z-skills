@@ -1,0 +1,110 @@
+{
+  "name": "A2Z — hero image to pull request",
+  "meta": { "instanceId": "a2z-skills" },
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Add a hero image to a post",
+        "formDescription": "Paste the public URL of a generated image. It is downloaded, re-encoded, stripped of metadata and opened as a pull request. Nothing goes live until that PR is merged.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Post slug",
+              "placeholder": "excel-xlookup-not-working",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Image URL",
+              "placeholder": "https://…",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Alt text",
+              "placeholder": "What the image shows, not that it is an image",
+              "fieldType": "textarea",
+              "requiredField": true
+            },
+            { "fieldLabel": "File name", "placeholder": "hero" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "form",
+      "name": "Image form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [-320, 0],
+      "webhookId": "a2z-hero-image"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Reject anything that is not an https URL before it reaches GitHub.\nconst f = $input.first().json;\nconst url = String(f['Image URL'] || '').trim();\nif (!/^https:\\/\\//i.test(url)) {\n  throw new Error('Only https image URLs are accepted.');\n}\nconst slug = String(f['Post slug'] || '').trim();\nif (!/^[a-z0-9-]+$/.test(slug)) {\n  throw new Error('That is not a post slug: lowercase letters, numbers and hyphens only.');\n}\nreturn [\n  {\n    json: {\n      slug,\n      url,\n      alt: String(f['Alt text'] || '').trim(),\n      name: String(f['File name'] || 'hero').trim() || 'hero',\n    },\n  },\n];"
+      },
+      "id": "validate",
+      "name": "Check the input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-80, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.github.com/repos/AntByteLabs/a2z-skills/actions/workflows/add-image.yml/dispatches",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $env.GITHUB_TOKEN }}" },
+            { "name": "Accept", "value": "application/vnd.github+json" },
+            { "name": "X-GitHub-Api-Version", "value": "2022-11-28" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"ref\": \"main\",\n  \"inputs\": {\n    \"slug\": \"{{ $json.slug }}\",\n    \"url\": \"{{ $json.url }}\",\n    \"alt\": {{ JSON.stringify($json.alt) }},\n    \"name\": \"{{ $json.name }}\"\n  }\n}",
+        "options": {
+          "response": { "response": { "neverError": true, "fullResponse": true } }
+        }
+      },
+      "id": "dispatch",
+      "name": "Run the image workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [160, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// 204 is what a successful workflow_dispatch returns.\nconst res = $input.first().json;\nconst ok = res.statusCode === 204;\nreturn [\n  {\n    json: {\n      ok,\n      message: ok\n        ? 'The image workflow is running. A pull request will appear on AntByteLabs/a2z-skills in a minute.'\n        : `GitHub returned ${res.statusCode}: ${JSON.stringify(res.body).slice(0, 300)}`,\n    },\n  },\n];"
+      },
+      "id": "result",
+      "name": "Report back",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [400, 0]
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "responseText": "={{ $json.message }}",
+        "options": {}
+      },
+      "id": "respond",
+      "name": "Show the result",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [640, 0]
+    }
+  ],
+  "connections": {
+    "Image form": { "main": [[{ "node": "Check the input", "type": "main", "index": 0 }]] },
+    "Check the input": {
+      "main": [[{ "node": "Run the image workflow", "type": "main", "index": 0 }]]
+    },
+    "Run the image workflow": {
+      "main": [[{ "node": "Report back", "type": "main", "index": 0 }]]
+    },
+    "Report back": { "main": [[{ "node": "Show the result", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "Asia/Kathmandu" },
+  "tags": [{ "name": "a2z-skills" }]
+}

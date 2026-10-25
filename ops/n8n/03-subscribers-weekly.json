@@ -1,0 +1,103 @@
+{
+  "name": "A2Z — weekly subscriber report",
+  "meta": { "instanceId": "a2z-skills" },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "weeks", "triggerAtDay": [1], "triggerAtHour": 8 }]
+        }
+      },
+      "id": "monday",
+      "name": "Monday 08:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-420, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.cloudflare.com/client/v4/accounts/{{ $env.CF_ACCOUNT_ID }}/d1/database/{{ $env.CF_D1_DATABASE_ID }}/query",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $env.CF_D1_READ_TOKEN }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"sql\": \"SELECT COUNT(*) AS total, SUM(CASE WHEN created_at >= datetime('now','-7 day') THEN 1 ELSE 0 END) AS last_7_days, SUM(CASE WHEN status='confirmed' THEN 1 ELSE 0 END) AS confirmed FROM subscribers\"\n}",
+        "options": { "response": { "response": { "neverError": true } } }
+      },
+      "id": "totals",
+      "name": "Count subscribers",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-180, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.cloudflare.com/client/v4/accounts/{{ $env.CF_ACCOUNT_ID }}/d1/database/{{ $env.CF_D1_DATABASE_ID }}/query",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $env.CF_D1_READ_TOKEN }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"sql\": \"SELECT source_path, COUNT(*) AS n FROM subscribers WHERE created_at >= datetime('now','-7 day') GROUP BY source_path ORDER BY n DESC LIMIT 10\"\n}",
+        "options": { "response": { "response": { "neverError": true } } }
+      },
+      "id": "by-page",
+      "name": "Which pages converted",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [60, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "/*\n * Counts only. No email addresses leave D1: this report is about which posts\n * convert, and the list itself stays where it is.\n */\nconst totalsRes = $('Count subscribers').first().json;\nconst pagesRes = $('Which pages converted').first().json;\n\nconst firstRows = (res) => res?.result?.[0]?.results ?? [];\nconst totals = firstRows(totalsRes)[0] ?? {};\nconst pages = firstRows(pagesRes);\n\nif (totalsRes?.success === false) {\n  return [{ json: { failed: true, message: JSON.stringify(totalsRes.errors ?? totalsRes).slice(0, 500) } }];\n}\n\nconst lines = [\n  `Total subscribers: ${totals.total ?? 0}`,\n  `Confirmed: ${totals.confirmed ?? 0}`,\n  `New in the last 7 days: ${totals.last_7_days ?? 0}`,\n  '',\n  'Where they signed up:',\n  ...(pages.length\n    ? pages.map((p) => `  ${p.n.toString().padStart(3)}  ${p.source_path || '(unknown)'}`)\n    : ['  nobody signed up this week']),\n  '',\n  'Sending is still off: addresses are collected in D1 and will be mailed from a',\n  'newsletter tool once the list is worth emailing.',\n];\n\nreturn [{ json: { failed: false, report: lines.join('\\n'), total: totals.total ?? 0 } }];"
+      },
+      "id": "format",
+      "name": "Format the report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [300, 0]
+    },
+    {
+      "parameters": {
+        "sendTo": "antbytelabs@gmail.com",
+        "subject": "=A2Z Skills newsletter: {{ $json.failed ? 'report failed' : $json.total + ' subscribers' }}",
+        "emailFormat": "text",
+        "message": "={{ $json.failed ? 'The D1 query failed:\\n\\n' + $json.message : $json.report }}",
+        "options": {}
+      },
+      "id": "email",
+      "name": "Email the report",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [540, 0],
+      "credentials": { "smtp": { "id": "SET_IN_UI", "name": "SMTP — antbytelabs" } }
+    }
+  ],
+  "connections": {
+    "Monday 08:00": {
+      "main": [[{ "node": "Count subscribers", "type": "main", "index": 0 }]]
+    },
+    "Count subscribers": {
+      "main": [[{ "node": "Which pages converted", "type": "main", "index": 0 }]]
+    },
+    "Which pages converted": {
+      "main": [[{ "node": "Format the report", "type": "main", "index": 0 }]]
+    },
+    "Format the report": {
+      "main": [[{ "node": "Email the report", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "Asia/Kathmandu" },
+  "tags": [{ "name": "a2z-skills" }]
+}

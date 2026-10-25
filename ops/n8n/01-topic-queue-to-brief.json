@@ -1,0 +1,108 @@
+{
+  "name": "A2Z — topic to post brief",
+  "meta": { "instanceId": "a2z-skills" },
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "New post brief",
+        "formDescription": "One keyword per submission. This opens a brief issue on AntByteLabs/a2z-skills. Nothing is published by this form.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Keyword",
+              "placeholder": "excel xlookup not working",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Pillar",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  { "option": "windows-mac" },
+                  { "option": "phones" },
+                  { "option": "excel-office" },
+                  { "option": "ai-tools" },
+                  { "option": "websites-hosting" },
+                  { "option": "automation" }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Type",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  { "option": "how-to" },
+                  { "option": "fix" },
+                  { "option": "comparison" },
+                  { "option": "review" },
+                  { "option": "explainer" },
+                  { "option": "list" },
+                  { "option": "asset" }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "What the reader is trying to do",
+              "fieldType": "textarea",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "What the top results miss",
+              "fieldType": "textarea",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Test setup needed",
+              "placeholder": "Windows 11 25H2, Excel 2510"
+            },
+            { "fieldLabel": "Money page to link" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "form-trigger",
+      "name": "Brief form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [-320, 0],
+      "webhookId": "a2z-topic-brief"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build the issue body in the same shape as the repo's post-brief template.\nconst f = $input.first().json;\nconst slug = String(f.Keyword || '')\n  .toLowerCase()\n  .normalize('NFKD')\n  .replace(/[^a-z0-9\\s-]/g, '')\n  .trim()\n  .replace(/\\s+/g, '-');\n\nconst needsTest = ['how-to', 'fix', 'review'].includes(f.Type);\n\nconst body = [\n  `**Keyword:** ${f.Keyword}`,\n  `**Pillar:** ${f.Pillar}`,\n  `**Type:** ${f.Type}`,\n  '',\n  '### What the reader is trying to do',\n  f['What the reader is trying to do'],\n  '',\n  '### What the top results miss',\n  f['What the top results miss'],\n  '',\n  `**Test setup:** ${f['Test setup needed'] || 'not given'}`,\n  `**Money page:** ${f['Money page to link'] || 'none'}`,\n  '',\n  '### Scaffold',\n  '```bash',\n  `npm run new -- \"${f.Keyword}\" --type ${f.Type} --pillar ${f.Pillar}`,\n  '```',\n  '',\n  '### Before closing',\n  needsTest\n    ? '- [ ] Tested on a real machine, with versions, device and every error recorded'\n    : '- [ ] Sources checked and linked (this type is not hands-on)',\n  '- [ ] Drafted, then run through /humanizer',\n  '- [ ] Edited by a person',\n  '- [ ] npm run validate passes',\n  '- [ ] Preview URL read on a phone',\n  '- [ ] Two or three inbound links added from older posts',\n  '',\n  `_Filed from the n8n brief form at ${new Date().toISOString()}._`,\n].join('\\n');\n\nreturn [{ json: { title: `Post: ${f.Keyword}`, body, slug, pillar: f.Pillar, type: f.Type } }];"
+      },
+      "id": "build-body",
+      "name": "Build the brief",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-60, 0]
+    },
+    {
+      "parameters": {
+        "resource": "issue",
+        "owner": { "__rl": true, "value": "AntByteLabs", "mode": "name" },
+        "repository": { "__rl": true, "value": "a2z-skills", "mode": "name" },
+        "title": "={{ $json.title }}",
+        "body": "={{ $json.body }}",
+        "labels": [{ "label": "content" }, { "label": "brief" }]
+      },
+      "id": "create-issue",
+      "name": "Open the brief issue",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [200, 0],
+      "credentials": { "githubApi": { "id": "SET_IN_UI", "name": "GitHub — a2z-skills" } }
+    }
+  ],
+  "connections": {
+    "Brief form": { "main": [[{ "node": "Build the brief", "type": "main", "index": 0 }]] },
+    "Build the brief": {
+      "main": [[{ "node": "Open the brief issue", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "Asia/Kathmandu" },
+  "tags": [{ "name": "a2z-skills" }]
+}
