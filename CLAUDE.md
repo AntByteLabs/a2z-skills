@@ -24,6 +24,8 @@ it — never fill the gap.
 | `npm run stale`                   | Posts past their re-test date                           |
 | `npm run icons`                   | Re-renders the PNG icons from `public/favicon.svg`      |
 | `npm run lhci`                    | Lighthouse budgets (needs `CHROME_PATH` locally)        |
+| `npm run check`                   | **All gates in one go. Nothing ships without it**       |
+| `npm run deploy`                  | `check`, then `wrangler deploy`                         |
 
 Build with `INCLUDE_DRAFTS=1 npm run build` to render drafts locally. Production
 builds drop them.
@@ -104,9 +106,27 @@ Design changes go through the installed skills, not by hand:
 - Never add a web font. One display face is self-hosted and preloaded; body text
   is the system stack.
 
+## There is no CI
+
+GitHub Actions was removed from this project: it needed a Cloudflare token it
+did not have, and the failure emails were worse than useless. Every gate now
+runs locally, and a `pre-push` hook runs them for you:
+
+```bash
+git config core.hooksPath .githooks   # once per clone
+npm run check                         # lint, worker types, validate, build, links, tests
+npm run deploy                        # check, then wrangler deploy
+```
+
+Nothing stops you pushing with `--no-verify`. If you do that and the site
+breaks, that is the trade you made.
+
+`add-image.yml` is the one workflow left. It only runs when something asks it
+to, so it cannot fail on its own, and the n8n hero-image form depends on it.
+
 ## Performance budget
 
-Enforced in CI. Lighthouse mobile must stay at 95+ (it is currently 100), LCP
+Lighthouse mobile must stay at 95+ (it is currently 100), LCP
 under 2.0 s, CLS under 0.05, JS under 30 KB and CSS under 25 KB per page,
 measured gzipped by `scripts/check-budget.ts`.
 
@@ -126,7 +146,7 @@ explicit dimensions.
 - `wrangler.json` routes and the D1 binding, without being asked.
 - `public/_headers` cache rules — they are what keeps repeat visits fast.
 - `site.ts` flags.
-- Anything under `.github/workflows/` without saying what changed and why.
+- `.github/workflows/add-image.yml` — the n8n image form calls it.
 
 ## Publishing
 
@@ -135,7 +155,7 @@ explicit dimensions.
 3. A person tests it and records versions, device, date and every error.
 4. Draft into `index.mdx`, then `/humanizer`.
 5. A person edits: cut filler, verify every step, write `WhatBroke`.
-6. `npm run validate && npm run build && npm test`.
-7. Read the PR preview URL once, on a phone.
-8. Merge. The deploy pings IndexNow.
+6. `npm run check`.
+7. Read the page once on a phone, with `npm run preview`.
+8. Merge, then `npm run deploy`.
 9. Add the two or three inbound links the same day.

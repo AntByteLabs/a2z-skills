@@ -27,7 +27,9 @@
     "budget": "tsx scripts/check-budget.ts",
     "check:worker": "wrangler types && tsc -p worker/tsconfig.json",
     "icons": "tsx scripts/make-icons.ts",
-    "image": "tsx scripts/add-image.ts"
+    "image": "tsx scripts/add-image.ts",
+    "check": "npm run lint && npm run check:worker && npm run validate && npm run build && npm run links && npm test",
+    "deploy": "npm run check && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.1.1",

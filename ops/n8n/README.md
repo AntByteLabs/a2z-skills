@@ -3,17 +3,24 @@
 n8n runs on the Oracle Always Free server, deployed through Coolify as the
 service `n8n` in the **Tools** project.
 
-- **Editor:** https://n8n-citjvi7i6byqkriqljgsnlap.apps.antbytelabs.com
+- **Editor:** https://n8n.apps.antbytelabs.com
 - **Version:** n8n 2.10.2 with the JavaScript and Python task runners
 - **Service uuid:** `citjvi7i6byqkriqljgsnlap`
 - **Storage:** SQLite on a Coolify volume. Execution data is pruned after 14
   days or 5,000 runs (`EXECUTIONS_DATA_PRUNE`).
 
-To move it to `https://n8n.apps.antbytelabs.com`: Coolify → Tools → n8n →
-Domains, set it there and redeploy. The API does not expose that field, so it is
-the one step that has to be done in the dashboard. Set `N8N_HOST`, `WEBHOOK_URL`
-and `N8N_EDITOR_BASE_URL` to match, or form and webhook URLs keep pointing at
-the generated hostname.
+The domain is set through the API after all. `PATCH /api/v1/services/{uuid}`
+takes a `urls` array of `{name, url}`, where `name` is the compose service name:
+
+```bash
+curl -X PATCH "https://coolify.antbytelabs.com/api/v1/services/citjvi7i6byqkriqljgsnlap" \
+  -H "Authorization: Bearer $COOLIFY_TOKEN" -H "Content-Type: application/json" \
+  -d '{"urls":[{"name":"n8n","url":"https://n8n.apps.antbytelabs.com"}]}'
+```
+
+`SERVICE_FQDN_N8N` does not do it: Coolify regenerates that from the stored
+domain on deploy. Change `N8N_HOST`, `WEBHOOK_URL` and `N8N_EDITOR_BASE_URL` to
+match at the same time, or form and webhook URLs keep the old hostname.
 
 ## First run
 
@@ -63,6 +70,14 @@ Monday 08:00: queries D1 through the Cloudflare API for subscriber totals and
 which pages people signed up from, and emails the counts. **Counts only — no
 email address ever leaves D1.** The token it uses is read-only.
 
+### 05 — posts due for re-testing
+
+Monday 07:00: reads the live sitemap, fetches each post, pulls the rendered
+"Tested on" date out of the page and emails anything past 120 days. This
+replaces the GitHub Actions job that used to open an issue. It needs no
+repository access and no credentials beyond SMTP, because the tested-on date is
+published on the page.
+
 ### 04 — hero image to pull request
 
 A form that takes a post slug, a public image URL and alt text, then triggers the
@@ -82,6 +97,8 @@ put it somewhere publicly reachable over https, and paste the URL into the form.
   from a newsletter tool's free tier later.
 - **Uptime monitoring.** Uptime Kuma already does that on the same server. Add
   `a2zskillsewa.com` as a monitor there rather than building it here.
+- **Running the test suite.** That is `npm run check` on a machine with the
+  repository, not a job here.
 - **Writing prose.** Drafting happens in Claude Code against `CLAUDE.md`, where
   the house rules and `/humanizer` apply.
 

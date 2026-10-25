@@ -1,0 +1,14 @@
+#!/bin/sh
+# The quality gates, run before anything leaves this machine. GitHub Actions
+# no longer runs them, so this is the only thing standing between a broken
+# post and the live site.
+#
+# Enable once:  git config core.hooksPath .githooks
+# Skip once:    git push --no-verify
+echo "pre-push: running npm run check"
+npm run check || {
+  echo
+  echo "pre-push: checks failed, nothing pushed."
+  echo "          fix it, or push with --no-verify if you know why."
+  exit 1
+}
