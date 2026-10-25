@@ -125,11 +125,14 @@ test.describe('the reading experience', () => {
 test.describe('ad slots', () => {
   test.skip(!postPath, 'no posts in this build');
 
-  test('reserve their height before any ad loads', async ({ page }) => {
+  test('no empty ad boxes are shown to a reader', async ({ page }) => {
     await page.goto(postPath!);
     const slots = page.locator('[data-ad-slot]');
     const count = await slots.count();
-    expect(count).toBeGreaterThan(0);
+
+    // With no network approved there is nothing to show, so nothing renders.
+    // When a slot does render it must reserve its height, or turning ads on
+    // would shift the page and break the CLS budget.
     for (let i = 0; i < count; i += 1) {
       const slot = slots.nth(i);
       await expect(slot).toHaveAttribute('aria-label', 'Advertisement');
