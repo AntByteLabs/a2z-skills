@@ -31,9 +31,16 @@ jobs:
       - run: npm ci
 
       - name: Refuse to deploy an unconfigured Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           if grep -q 'REPLACE_WITH_D1_DATABASE_ID' wrangler.json; then
             echo "::error::wrangler.json still has the placeholder D1 database id."
+            exit 1
+          fi
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN is not set. Create a token with \
+          Workers Scripts: Edit and D1: Edit, then: gh secret set CLOUDFLARE_API_TOKEN"
             exit 1
           fi
 

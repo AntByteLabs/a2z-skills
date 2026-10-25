@@ -22,5 +22,11 @@
   "observability": {
     "enabled": true
   },
-  "workers_dev": true
+  "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "a2zskillsewa.com",
+      "custom_domain": true
+    }
+  ]
 }

@@ -139,9 +139,20 @@ jobs:
           path: dist
       - name: Upload a preview version
         id: upload
+        # The exit code must come from wrangler, not from the last echo in the
+        # pipeline, or a failed upload reports the job as green.
         run: |
+          set -o pipefail
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN is not set, so no preview can be uploaded."
+            exit 1
+          fi
           out=$(npx wrangler versions upload --message "PR #${{ github.event.pull_request.number }}" 2>&1 | tee /dev/stderr)
           url=$(printf '%s' "$out" | grep -oE 'https://[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev' | head -1)
+          if [ -z "$url" ]; then
+            echo "::error::wrangler uploaded no preview URL."
+            exit 1
+          fi
           echo "url=$url" >> "$GITHUB_OUTPUT"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
