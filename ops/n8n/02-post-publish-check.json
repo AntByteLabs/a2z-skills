@@ -1,10 +1,19 @@
 {
   "name": "A2Z — post-publish health check",
-  "meta": { "instanceId": "a2z-skills" },
+  "meta": {
+    "instanceId": "a2z-skills"
+  },
   "nodes": [
     {
       "parameters": {
-        "rule": { "interval": [{ "field": "hours", "hoursInterval": 6 }] }
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
       },
       "id": "every-six-hours",
       "name": "Every six hours",
@@ -16,7 +25,12 @@
       "parameters": {
         "url": "https://a2zskillsewa.com/sitemap-0.xml",
         "options": {
-          "response": { "response": { "neverError": true, "responseFormat": "text" } }
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
         }
       },
       "id": "fetch-sitemap",
@@ -68,11 +82,17 @@
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true, "version": 2 },
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
           "combinator": "and",
           "conditions": [
             {
-              "operator": { "type": "number", "operation": "gt" },
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              },
               "leftValue": "={{ $json.count }}",
               "rightValue": 0
             }
@@ -88,36 +108,102 @@
     },
     {
       "parameters": {
-        "sendTo": "antbytelabs@gmail.com",
         "subject": "=A2Z Skills: {{ $json.count }} live page problem(s)",
         "emailFormat": "text",
-        "message": "={{ $json.problems.join('\\n') }}\n\nChecked {{ $json.checked }} URLs from the sitemap.",
-        "options": {}
+        "options": {},
+        "fromEmail": "antbytelabs@gmail.com",
+        "toEmail": "antbytelabs@gmail.com",
+        "text": "={{ $json.problems.join('\\n') }}\n\nChecked {{ $json.checked }} URLs from the sitemap."
       },
       "id": "email",
       "name": "Email the problems",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [880, -100],
-      "credentials": { "smtp": { "id": "SET_IN_UI", "name": "SMTP — antbytelabs" } }
+      "credentials": {
+        "smtp": {
+          "id": "SET_IN_UI",
+          "name": "SMTP — antbytelabs"
+        }
+      }
     }
   ],
   "connections": {
     "Every six hours": {
-      "main": [[{ "node": "Fetch the sitemap", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Fetch the sitemap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Fetch the sitemap": {
-      "main": [[{ "node": "One item per URL", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "One item per URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "One item per URL": {
-      "main": [[{ "node": "Fetch each page", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Fetch each page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Fetch each page": { "main": [[{ "node": "Evaluate", "type": "main", "index": 0 }]] },
-    "Evaluate": { "main": [[{ "node": "Anything wrong?", "type": "main", "index": 0 }]] },
+    "Fetch each page": {
+      "main": [
+        [
+          {
+            "node": "Evaluate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluate": {
+      "main": [
+        [
+          {
+            "node": "Anything wrong?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Anything wrong?": {
-      "main": [[{ "node": "Email the problems", "type": "main", "index": 0 }], []]
+      "main": [
+        [
+          {
+            "node": "Email the problems",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
     }
   },
-  "settings": { "executionOrder": "v1", "timezone": "Asia/Kathmandu" },
-  "tags": [{ "name": "a2z-skills" }]
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kathmandu"
+  },
+  "tags": [
+    {
+      "name": "a2z-skills"
+    }
+  ]
 }

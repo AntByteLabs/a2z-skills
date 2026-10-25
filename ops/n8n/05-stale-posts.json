@@ -1,11 +1,19 @@
 {
   "name": "A2Z — posts due for re-testing",
-  "meta": { "instanceId": "a2z-skills" },
+  "meta": {
+    "instanceId": "a2z-skills"
+  },
   "nodes": [
     {
       "parameters": {
         "rule": {
-          "interval": [{ "field": "weeks", "triggerAtDay": [1], "triggerAtHour": 7 }]
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [1],
+              "triggerAtHour": 7
+            }
+          ]
         }
       },
       "id": "monday",
@@ -18,7 +26,12 @@
       "parameters": {
         "url": "https://a2zskillsewa.com/sitemap-0.xml",
         "options": {
-          "response": { "response": { "neverError": true, "responseFormat": "text" } }
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
         }
       },
       "id": "sitemap",
@@ -70,11 +83,17 @@
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true, "version": 2 },
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
           "combinator": "and",
           "conditions": [
             {
-              "operator": { "type": "number", "operation": "gt" },
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              },
               "leftValue": "={{ $json.count }}",
               "rightValue": 0
             }
@@ -90,40 +109,102 @@
     },
     {
       "parameters": {
-        "sendTo": "antbytelabs@gmail.com",
         "subject": "=A2Z Skills: {{ $json.count }} post(s) due for re-testing",
         "emailFormat": "text",
-        "message": "={{ $json.report }}\n\nChecked {{ $json.checked }} post(s) from the live sitemap.",
-        "options": {}
+        "options": {},
+        "fromEmail": "antbytelabs@gmail.com",
+        "toEmail": "antbytelabs@gmail.com",
+        "text": "={{ $json.report }}\n\nChecked {{ $json.checked }} post(s) from the live sitemap."
       },
       "id": "email",
       "name": "Email the list",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [880, -100],
-      "credentials": { "smtp": { "id": "SET_IN_UI", "name": "SMTP — antbytelabs" } }
+      "credentials": {
+        "smtp": {
+          "id": "SET_IN_UI",
+          "name": "SMTP — antbytelabs"
+        }
+      }
     }
   ],
   "connections": {
     "Monday 07:00": {
-      "main": [[{ "node": "Fetch the sitemap", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Fetch the sitemap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Fetch the sitemap": {
-      "main": [[{ "node": "Post URLs only", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Post URLs only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Post URLs only": {
-      "main": [[{ "node": "Fetch each post", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Fetch each post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Fetch each post": {
-      "main": [[{ "node": "Which are overdue", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Which are overdue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Which are overdue": {
-      "main": [[{ "node": "Anything overdue?", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Anything overdue?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Anything overdue?": {
-      "main": [[{ "node": "Email the list", "type": "main", "index": 0 }], []]
+      "main": [
+        [
+          {
+            "node": "Email the list",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
     }
   },
-  "settings": { "executionOrder": "v1", "timezone": "Asia/Kathmandu" },
-  "tags": [{ "name": "a2z-skills" }]
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kathmandu"
+  },
+  "tags": [
+    {
+      "name": "a2z-skills"
+    }
+  ]
 }
