@@ -90,8 +90,11 @@ put it somewhere publicly reachable over https, and paste the URL into the form.
 
 ## What is deliberately not automated
 
-- **Publishing.** Every post needs a person to test it and a merge to go live.
-  No workflow writes to `main`.
+- **Publishing.** Every post needs a person to test it and a deploy to go live.
+  No workflow here writes to `main`.
+- **Adding images.** GitHub Actions is disabled on the repository, so this runs
+  locally: `npm run image -- <slug> "<https url>" "<alt text>"`. Generate the
+  image wherever you like, put it somewhere publicly reachable, pass the URL.
 - **Sending email to subscribers.** Workers can only send to arbitrary
   recipients on the paid plan. Addresses are collected now and will be mailed
   from a newsletter tool's free tier later.

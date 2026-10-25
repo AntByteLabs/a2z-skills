@@ -121,8 +121,15 @@ npm run deploy                        # check, then wrangler deploy
 Nothing stops you pushing with `--no-verify`. If you do that and the site
 breaks, that is the trade you made.
 
-`add-image.yml` is the one workflow left. It only runs when something asks it
-to, so it cannot fail on its own, and the n8n hero-image form depends on it.
+GitHub Actions is disabled on the repository, so nothing there runs. A hero
+image is added locally:
+
+```bash
+npm run image -- <slug> "https://…/image.png" "What the image shows"
+```
+
+That fetches it over https only, checks it really is an image, re-encodes it to
+WebP at 1600px, strips metadata and sets `heroImage` and `heroAlt`.
 
 ## Performance budget
 
@@ -146,7 +153,7 @@ explicit dimensions.
 - `wrangler.json` routes and the D1 binding, without being asked.
 - `public/_headers` cache rules — they are what keeps repeat visits fast.
 - `site.ts` flags.
-- `.github/workflows/add-image.yml` — the n8n image form calls it.
+- `.githooks/pre-push` — it is the only gate left before the live site.
 
 ## Publishing
 
