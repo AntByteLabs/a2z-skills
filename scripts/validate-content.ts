@@ -102,6 +102,10 @@ const run = async () => {
   const authorIds = await readIds(AUTHORS_DIR, '.json');
   const pageIds = await readIds(PAGES_DIR, '.md');
   const postSlugs = new Set(posts.map((p) => p.slug));
+  const draftSlugs = new Set(posts.filter((p) => p.frontmatter.draft).map((p) => p.slug));
+  const publishedSlugs = new Set(
+    posts.filter((p) => !p.frontmatter.draft).map((p) => p.slug),
+  );
   const redirects = existsSync(join(ROOT, 'public/_redirects'))
     ? await readFile(join(ROOT, 'public/_redirects'), 'utf8')
     : '';
@@ -189,6 +193,20 @@ const run = async () => {
     if (f.quickAnswer && f.title && f.quickAnswer.trim() === f.title.trim())
       fail(rel, 'quick-answer', 'The short answer repeats the title.');
 
+    // Mirror the schema's limits here so the message arrives before astro check.
+    if (f.quickAnswer && f.quickAnswer.length > 300)
+      fail(rel, 'quick-answer', `${f.quickAnswer.length} characters; the limit is 300.`);
+    if (f.description && (f.description.length < 120 || f.description.length > 160))
+      fail(
+        rel,
+        'description',
+        `${f.description.length} characters; it must be 120 to 160.`,
+      );
+    if (f.title && f.title.length > 65)
+      fail(rel, 'title', `${f.title.length} characters; the limit is 65.`);
+    if (f.seoTitle && f.seoTitle.length > 60)
+      fail(rel, 'seo-title', `${f.seoTitle.length} characters; the limit is 60.`);
+
     if (f.faq && f.faq.length > 0 && f.faq.length < 3)
       warn(rel, 'faq', 'Either three real follow-up questions, or none.');
 
@@ -220,6 +238,13 @@ const run = async () => {
       const slug = clean.replace(/^\/|\/$/g, '');
       if (inbound.has(slug) && slug !== post.slug)
         inbound.set(slug, inbound.get(slug)! + 1);
+      // A draft is not built in production, so a live post linking to one 404s.
+      if (!f.draft && draftSlugs.has(slug))
+        fail(
+          rel,
+          'draft-link',
+          `Links to /${slug}/, which is a draft and will 404 in production.`,
+        );
     }
 
     if (f.pillar && !f.draft && !links.some((l) => l.startsWith(`/topics/${f.pillar}`)))
@@ -227,14 +252,17 @@ const run = async () => {
 
     const related = links.filter((l) => {
       const slug = l.replace(/^\/|\/$/g, '').split('#')[0]!;
-      return postSlugs.has(slug) && slug !== post.slug;
+      return publishedSlugs.has(slug) && slug !== post.slug;
     });
-    if (new Set(related).size < 2 && !f.draft)
-      fail(
+    if (new Set(related).size < 2 && !f.draft) {
+      // A new site has nothing to link to yet: advise until there is a corpus.
+      const report = publishedSlugs.size >= 4 ? fail : warn;
+      report(
         rel,
         'internal-links',
-        `${new Set(related).size} links to other posts; two is the minimum.`,
+        `${new Set(related).size} link(s) to other published posts; two is the minimum once four are live.`,
       );
+    }
 
     // --- Files ------------------------------------------------------------
     for (const d of f.downloads ?? []) {
