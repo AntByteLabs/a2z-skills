@@ -63,7 +63,9 @@
   --color-ink-invert: oklch(0.16 0.02 268);
   --color-highlight: oklch(0.93 0.09 95);
 
-  --radius-card: 0.75rem;
+  --radius-card: 1.25rem;
+  --radius-bubble: 1.75rem;
+  --radius-soft: 0.875rem;
   --radius-pill: 999px;
   --spacing-gutter: 1rem;
   --text-measure: 66ch;
@@ -524,4 +526,142 @@
   font-weight: 420;
   line-height: 1.76;
   letter-spacing: 0.008em;
+}
+
+/*
+ * Reading controls.
+ *
+ * A floating pill rather than a fixed bar: it sits over the article instead of
+ * stealing a strip of it, and on a phone the whole thing scrolls sideways if
+ * the labels do not fit, which is why nothing here has a fixed width.
+ */
+@utility reader-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  border-radius: var(--radius-bubble);
+  padding: 0.5rem 0.85rem;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  transition:
+    background-color 140ms ease-out,
+    color 140ms ease-out;
+
+  &:hover {
+    background: var(--color-paper-sunk);
+  }
+
+  &.is-on {
+    background: var(--color-brand-deep);
+    color: var(--color-paper);
+  }
+}
+
+@utility reader-ico {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+@utility reader-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  border-radius: var(--radius-bubble);
+  background: var(--color-paper-sunk);
+  padding: 0.15rem;
+}
+
+@utility reader-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  border-radius: var(--radius-bubble);
+  padding: 0.35rem 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-ink-soft);
+
+  &:hover {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+}
+
+@utility reader-speed {
+  min-width: 2.6rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-soft);
+}
+
+/* The line being read. Range highlight where it exists, class where it does not. */
+::highlight(reading) {
+  background-color: var(--color-highlight);
+  color: var(--color-ink);
+}
+
+.prose .is-reading {
+  border-radius: var(--radius-soft);
+  background: var(--color-highlight);
+  box-shadow: 0 0 0 0.35rem var(--color-highlight);
+}
+
+/* Reader-controlled text size, applied on top of the article's own scale. */
+.prose.prose-article {
+  font-size: calc(1.0625rem * var(--read-scale, 1));
+
+  @media (min-width: 640px) {
+    font-size: calc(1.125rem * var(--read-scale, 1));
+  }
+}
+
+/* The floating bar must never sit on top of the last paragraph. */
+article {
+  scroll-margin-bottom: 6rem;
+}
+
+body:has([data-reader]) {
+  padding-bottom: 4.5rem;
+}
+
+/* The reading bar steps aside while the reader is moving down the page. */
+#reader-bar {
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease-out;
+}
+
+#reader-bar.is-away {
+  transform: translateY(140%);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #reader-bar {
+    transition: none;
+  }
+}
+
+/*
+ * The chrome speaks in the display face.
+ *
+ * Bricolage is already loaded for headings and is the warmer of the two, so
+ * navigation, buttons and labels cost nothing extra to make friendlier. The
+ * article keeps its serif: that contrast is the point.
+ */
+nav a,
+.pill,
+button,
+summary,
+[role='toolbar'] {
+  font-family: var(--font-display);
 }

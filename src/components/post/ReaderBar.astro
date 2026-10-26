@@ -1,0 +1,301 @@
+---
+/**
+ * Reading controls: listen, auto-scroll, text size.
+ *
+ * Listening uses the browser's own speech synthesis. No audio is generated,
+ * stored or fetched, so it costs nothing to host, works offline once the page
+ * is cached, and respects whatever voices the reader has installed. The
+ * trade is that it cannot be exported as a file; the plain-text link at the
+ * end of the bar is there for people who want to feed an audiobook app.
+ *
+ * Everything degrades: with JavaScript off the bar never renders, and the
+ * article is unchanged. With speech unsupported, the listen button hides
+ * itself rather than failing when pressed.
+ */
+---
+
+<div
+  id="reader-bar"
+  class="pointer-events-none fixed inset-x-0 bottom-0 z-40 hidden justify-center px-3 pb-3 print:hidden"
+  data-reader
+>
+  <div
+    class="pointer-events-auto flex max-w-full items-center gap-1 overflow-x-auto rounded-bubble border border-rule bg-paper/95 p-1.5 shadow-lift backdrop-blur"
+    role="toolbar"
+    aria-label="Reading controls"
+  >
+    <button type="button" class="reader-btn" data-listen aria-pressed="false">
+      <span class="reader-ico" aria-hidden="true" data-listen-ico>
+        ▶
+      </span>
+      <span data-listen-label>Listen</span>
+    </button>
+
+    <button type="button" class="reader-btn" data-scroll aria-pressed="false">
+      <span class="reader-ico" aria-hidden="true">
+        ↓
+      </span>
+      <span>Auto-scroll</span>
+    </button>
+
+    <div class="reader-group" role="group" aria-label="Speed">
+      <button type="button" class="reader-chip" data-speed-down aria-label="Slower">
+        −
+      </button>
+      <span class="reader-speed" data-speed-label aria-live="polite">
+        1.0×
+      </span>
+      <button type="button" class="reader-chip" data-speed-up aria-label="Faster">
+        +
+      </button>
+    </div>
+
+    <div class="reader-group" role="group" aria-label="Text size">
+      <button type="button" class="reader-chip" data-size-down aria-label="Smaller text">
+        A
+      </button>
+      <button
+        type="button"
+        class="reader-chip text-base"
+        data-size-up
+        aria-label="Larger text"
+      >
+        A
+      </button>
+    </div>
+
+    <button type="button" class="reader-btn" data-top>
+      <span class="reader-ico" aria-hidden="true">
+        ↑
+      </span>
+      <span class="sr-only sm:not-sr-only">Top</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-reader]');
+  const article = document.querySelector<HTMLElement>('.prose');
+  if (bar && article) {
+    bar.classList.remove('hidden');
+    bar.classList.add('flex');
+
+    const slug = location.pathname;
+    const $ = <T extends HTMLElement>(sel: string) => bar.querySelector<T>(sel)!;
+    const listenBtn = $('[data-listen]');
+    const listenIco = $('[data-listen-ico]');
+    const listenLabel = $('[data-listen-label]');
+    const scrollBtn = $('[data-scroll]');
+    const speedLabel = $('[data-speed-label]');
+
+    const store = (k: string, v: string) => {
+      try {
+        localStorage.setItem(k, v);
+      } catch {
+        /* private mode: the control still works, it just will not be remembered */
+      }
+    };
+    const read = (k: string) => {
+      try {
+        return localStorage.getItem(k);
+      } catch {
+        return null;
+      }
+    };
+
+    /* ---- text size -------------------------------------------------- */
+    const SIZES = ['0.95', '1', '1.1', '1.22'];
+    let sizeIdx = Math.max(0, SIZES.indexOf(read('a2z:size') ?? '1'));
+    const applySize = () => {
+      article.style.setProperty('--read-scale', SIZES[sizeIdx]!);
+      store('a2z:size', SIZES[sizeIdx]!);
+    };
+    applySize();
+    $('[data-size-up]').addEventListener('click', () => {
+      sizeIdx = Math.min(SIZES.length - 1, sizeIdx + 1);
+      applySize();
+    });
+    $('[data-size-down]').addEventListener('click', () => {
+      sizeIdx = Math.max(0, sizeIdx - 1);
+      applySize();
+    });
+
+    /* ---- speed, shared by listening and auto-scroll ------------------ */
+    let rate = Number(read('a2z:rate') ?? '1');
+    const showRate = () => {
+      speedLabel.textContent = `${rate.toFixed(1)}×`;
+      store('a2z:rate', String(rate));
+    };
+    showRate();
+    const nudge = (d: number) => {
+      rate = Math.min(2.5, Math.max(0.5, Math.round((rate + d) * 10) / 10));
+      showRate();
+      if (speaking) speakFrom(idx); // the API cannot retune mid-utterance
+    };
+    $('[data-speed-up]').addEventListener('click', () => nudge(0.1));
+    $('[data-speed-down]').addEventListener('click', () => nudge(-0.1));
+
+    /* ---- auto-scroll -------------------------------------------------- */
+    let scrolling = false;
+    let raf = 0;
+    let last = 0;
+    let carry = 0;
+    const step = (t: number) => {
+      if (!scrolling) return;
+      const dt = last ? Math.min(100, t - last) : 16;
+      last = t;
+      // 38px/sec at 1x is a slow, readable crawl.
+      carry += (38 * rate * dt) / 1000;
+      const whole = Math.floor(carry);
+      if (whole > 0) {
+        carry -= whole;
+        scrollBy(0, whole);
+        if (scrollY + innerHeight >= document.body.scrollHeight - 2)
+          return setScroll(false);
+      }
+      raf = requestAnimationFrame(step);
+    };
+    function setScroll(on: boolean) {
+      scrolling = on;
+      scrollBtn.setAttribute('aria-pressed', String(on));
+      scrollBtn.classList.toggle('is-on', on);
+      cancelAnimationFrame(raf);
+      last = 0;
+      carry = 0;
+      if (on) raf = requestAnimationFrame(step);
+    }
+    scrollBtn.addEventListener('click', () => setScroll(!scrolling));
+    // Any deliberate move by the reader wins.
+    for (const ev of ['wheel', 'touchstart', 'pointerdown'] as const) {
+      addEventListener(ev, () => scrolling && setScroll(false), { passive: true });
+    }
+    addEventListener('keydown', (e) => {
+      if (scrolling && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', ' '].includes(e.key))
+        setScroll(false);
+    });
+
+    /* ---- listening ----------------------------------------------------- */
+    const synth = window.speechSynthesis;
+    let blocks: HTMLElement[] = [];
+    let idx = 0;
+    let speaking = false;
+    let guard = 0;
+
+    const hl = 'Highlight' in window && CSS.highlights ? new Highlight() : null;
+    if (hl) CSS.highlights.set('reading', hl);
+
+    const mark = (el: HTMLElement | null) => {
+      for (const b of blocks) b.classList.remove('is-reading');
+      if (hl) hl.clear();
+      if (!el) return;
+      if (hl) {
+        const r = document.createRange();
+        r.selectNodeContents(el);
+        hl.add(r);
+      } else {
+        el.classList.add('is-reading');
+      }
+    };
+
+    const collect = () => {
+      blocks = Array.from(
+        article.querySelectorAll<HTMLElement>('p, h2, h3, li, blockquote'),
+      ).filter((el) => !el.closest('pre') && (el.textContent ?? '').trim().length > 1);
+    };
+
+    function speakFrom(i: number) {
+      synth.cancel();
+      idx = i;
+      if (idx >= blocks.length) return stop();
+      const el = blocks[idx]!;
+      const u = new SpeechSynthesisUtterance((el.textContent ?? '').trim());
+      u.rate = rate;
+      u.onend = () => {
+        if (!speaking) return;
+        idx += 1;
+        store(`a2z:pos:${slug}`, String(idx));
+        if (idx < blocks.length) speakFrom(idx);
+        else stop();
+      };
+      u.onerror = () => stop();
+      mark(el);
+      el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      synth.speak(u);
+    }
+
+    function stop() {
+      speaking = false;
+      synth.cancel();
+      clearInterval(guard);
+      mark(null);
+      listenBtn.setAttribute('aria-pressed', 'false');
+      listenBtn.classList.remove('is-on');
+      listenIco.textContent = '▶';
+      listenLabel.textContent = 'Listen';
+    }
+
+    function start() {
+      collect();
+      if (!blocks.length) return;
+      speaking = true;
+      listenBtn.setAttribute('aria-pressed', 'true');
+      listenBtn.classList.add('is-on');
+      listenIco.textContent = '❚❚';
+      listenLabel.textContent = 'Pause';
+      const saved = Number(read(`a2z:pos:${slug}`) ?? '0');
+      speakFrom(saved > 0 && saved < blocks.length ? saved : 0);
+      // Chrome stops speaking after about fifteen seconds unless it is poked.
+      clearInterval(guard);
+      guard = window.setInterval(() => {
+        if (speaking && synth.speaking && !synth.paused) {
+          synth.pause();
+          synth.resume();
+        }
+      }, 10000);
+    }
+
+    if (!('speechSynthesis' in window)) {
+      listenBtn.remove();
+    } else {
+      listenBtn.addEventListener('click', () => (speaking ? stop() : start()));
+      addEventListener('beforeunload', () => synth.cancel());
+    }
+
+    /* ---- get out of the way ------------------------------------------- */
+    // A floating bar sits over the words. Scrolling down means the reader is
+    // reading, so it drops away; scrolling up or working the controls brings
+    // it back, and it never hides while it is doing something.
+    let lastY = scrollY;
+    let hidden = false;
+    const show = (v: boolean) => {
+      if (v === !hidden) return;
+      hidden = !v;
+      bar.classList.toggle('is-away', hidden);
+    };
+    addEventListener(
+      'scroll',
+      () => {
+        const y = scrollY;
+        if (speaking || scrolling) show(true);
+        else if (y > lastY + 24 && y > 280) show(false);
+        else if (y < lastY - 24) show(true);
+        lastY = y;
+      },
+      { passive: true },
+    );
+    bar.addEventListener('pointerenter', () => show(true));
+    bar.addEventListener('focusin', () => show(true));
+
+    /* ---- top, and the two shortcuts worth having ----------------------- */
+    $('[data-top]').addEventListener('click', () =>
+      scrollTo({ top: 0, behavior: 'smooth' }),
+    );
+    addEventListener('keydown', (e) => {
+      const t = e.target as HTMLElement;
+      if (e.metaKey || e.ctrlKey || e.altKey || /input|textarea|select/i.test(t.tagName))
+        return;
+      if (e.key === 'l') listenBtn.click();
+      if (e.key === 'a') scrollBtn.click();
+    });
+  }
+</script>

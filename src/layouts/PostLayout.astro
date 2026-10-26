@@ -17,6 +17,7 @@ import AffiliateDisclosure from '../components/money/AffiliateDisclosure.astro';
 import AdSlot from '../components/money/AdSlot.astro';
 import NewsletterForm from '../components/site/NewsletterForm.astro';
 import ReadingProgress from '../components/post/ReadingProgress.astro';
+import ReaderBar from '../components/post/ReaderBar.astro';
 import CopyCode from '../components/post/CopyCode.astro';
 import ShareRow from '../components/post/ShareRow.astro';
 import PrevNext from '../components/post/PrevNext.astro';
@@ -171,6 +172,7 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
       <RelatedPosts posts={related} />
       <PrevNext prev={prev} next={next} />
       <CopyCode />
+      <ReaderBar />
     </article>
 
     <aside class="hidden min-w-0 lg:block">
