@@ -7,10 +7,16 @@
 
 ## Why this one
 
-The searcher has already pressed Refresh, so every page that opens by telling
-them to press Refresh has lost them. There are four real causes and they are
-distinguishable in about ten seconds each, which is a structure no competing
-page uses.
+**The hardest of the four, and the claim that was wrong.** This brief first said
+no competing page uses a causes-in-order structure. That is false: ExcelDemy
+publishes "Pivot Table Not Refreshing (5 Issues & Solutions)" and ranks for it,
+alongside Microsoft Learn and several established Excel sites.
+
+So the premise still holds, that a searcher who has already pressed Refresh is
+lost by a page telling them to press Refresh, but the SERP is crowded with sites
+that have far more authority than this one. Treat it as a later post, not an
+early one, and only write it if the test turns up something those pages do not
+have: a real error, a real build number, a cause they skip.
 
 ## Frontmatter to fill
 

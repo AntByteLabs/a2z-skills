@@ -22,6 +22,25 @@ What it does not hold is anything a person has to see with their own eyes.
 5. `npm run suggest-links -- <slug>`, then add the inbound links it finds.
 6. `npm run check`, set `draft: false`, push.
 
+## What was not done
+
+**No keyword research.** These ten topics were chosen on judgement about search
+intent, not from volume or difficulty data. Ahrefs is connected to this account
+but every endpoint returns "Insufficient plan", including the free domain
+rating, so none of it could be measured here.
+
+That matters most for the Excel pivot brief, where a claim about competitors
+turned out to be plainly wrong when the SERP was finally read. The "Why this
+one" section of each brief now says whether its reasoning was checked.
+
+Before committing a day to any of these, do the cheap version of the research:
+
+1. Search the exact phrase and read the first page. Established sites with real
+   authority on every result means pick something else.
+2. Check Search Console once impressions start. Real queries from the live site
+   beat any guess in this folder, and they arrive free.
+3. If a keyword tool becomes available, check volume before writing, not after.
+
 ## The four
 
 | Slug                               | Pillar       | Tester     | Needs                                     |

@@ -7,10 +7,13 @@
 
 ## Why this one
 
-Highest-volume desktop failure that produces no error message, so the searcher
-has nothing to type except the symptom. Every competing page opens with the same
-four generic steps and none of them says what the percentage figure means or why
-it lies. That is the gap.
+**Unverified.** Picked on judgement, not on data: a stalled update produces no
+error message, so the searcher has nothing to type but the symptom, and the
+intent is unambiguous. Nobody has measured the volume or read the SERP for it.
+
+Check before you spend a day testing: search the phrase, and see whether the
+first page is support forums and thin listicles or a strong guide from a site
+with real authority. If it is the latter, write something else first.
 
 ## Frontmatter to fill
 

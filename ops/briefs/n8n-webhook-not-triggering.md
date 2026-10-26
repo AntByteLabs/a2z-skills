@@ -7,10 +7,13 @@
 
 ## Why this one
 
-We already run the instance, so this is the cheapest of the four to test and the
-one we have the most first-hand material for. The test URL versus production URL
-distinction catches nearly everyone and is badly explained everywhere, including
-in the product.
+**The one to do first**, and the only one of the four whose premise rests on
+something we have actually seen. We run the instance, so the test costs an hour
+rather than a day, and the test URL versus production URL split is a real trap
+we hit ourselves.
+
+Search demand has not been measured. n8n is a smaller audience than Excel or
+Windows, so expect less traffic and less competition at the same time.
 
 ## Frontmatter to fill
 

@@ -7,9 +7,13 @@
 
 ## Why this one
 
-People hit this at the worst moment, part way through setting up a replacement
-handset. The competing pages are thin and mostly recommend restarting, which is
-the one thing that can cost the reader the backup they were waiting for.
+**Partly unverified.** The timing argument is sound: people hit this part way
+through setting up a replacement handset, so the intent is urgent and specific.
+The claim that competing pages are thin has not been checked.
+
+What this post can genuinely own is a measured number for how long the
+estimating state lasts, because almost nobody publishes one. That number is the
+reason to write it, and it only exists if you time the test.
 
 ## Frontmatter to fill
 
