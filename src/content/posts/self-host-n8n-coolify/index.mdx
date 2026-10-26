@@ -1,29 +1,33 @@
 ---
-title: Self-host n8n on Coolify
-description: 'Coolify deploys n8n in a click, then three things fight you: the domain, the credentials API and the email node. Here is each one, with the fix.'
-pillar: automation
-type: how-to
-tags: [n8n, coolify, self-hosting, automation]
-author: ronit-karki
-publishedAt: 2026-10-26
+title: "Self-host n8n on Coolify"
+description: "Coolify deploys n8n in a click, then three things fight you: the domain, the credentials API and the email node. Here is each one, with the fix."
+pillar: "automation"
+type: "how-to"
+tags:
+  - "n8n"
+  - "coolify"
+  - "self-hosting"
+  - "deployment"
+author: "ronit-karki"
+publishedAt: "2026-10-26"
 quickAnswer: "Coolify's one-click n8n works, but the domain it generates cannot be changed through the environment variables that look like they control it. Use PATCH /api/v1/services/{uuid} with a urls array, then change N8N_HOST, WEBHOOK_URL and N8N_EDITOR_BASE_URL to match."
 testedOn:
-  date: 2026-10-26
+  date: "2026-10-26"
   versions:
-    Coolify: '4.5.0'
-    n8n: '2.10.2'
-    Ubuntu: '24.04 arm64'
-  device: Oracle Always Free VM, 2 OCPU and 12 GB
-  testedBy: Ronit Karki
+    Coolify: "4.5.0"
+    n8n: "2.10.2"
+    Ubuntu: "24.04 arm64"
+  device: "Oracle Always Free VM, 2 OCPU and 12 GB"
+  testedBy: "Ronit Karki"
 faq:
-  - q: 'How much memory does n8n use on a small server?'
-    a: 'Around 550 MB resident with the task runners enabled, measured on an idle instance with no workflows. On a 12 GB box that is comfortable; on a 1 GB box it is not.'
-  - q: 'Can I import workflows without using the editor?'
-    a: 'Yes. POST /api/v1/workflows with an API key accepts name, nodes, connections and settings. It rejects anything else in the payload, including the active flag, so activate separately.'
-  - q: 'Why does my imported workflow refuse to activate?'
-    a: 'Usually a node that imported cleanly but has the wrong parameter names for its version. n8n accepts the JSON and only complains when you publish, with a message naming the node but not the field.'
-  - q: 'Does the free Coolify one-click include a database?'
-    a: 'The n8n template runs on SQLite by default, which is fine for a few workflows. Move to the Postgres variant before you depend on it for anything with volume.'
+  - q: "How much memory does n8n use on a small server?"
+    a: "Around 550 MB resident with the task runners enabled, measured on an idle instance with no workflows. On a 12 GB box that is comfortable; on a 1 GB box it is not."
+  - q: "Can I import workflows without using the editor?"
+    a: "Yes. POST /api/v1/workflows with an API key accepts name, nodes, connections and settings. It rejects anything else in the payload, including the active flag, so activate separately."
+  - q: "Why does my imported workflow refuse to activate?"
+    a: "Usually a node that imported cleanly but has the wrong parameter names for its version. n8n accepts the JSON and only complains when you publish, with a message naming the node but not the field."
+  - q: "Does the free Coolify one-click include a database?"
+    a: "The n8n template runs on SQLite by default, which is fine for a few workflows. Move to the Postgres variant before you depend on it for anything with volume."
 draft: false
 ---
 
