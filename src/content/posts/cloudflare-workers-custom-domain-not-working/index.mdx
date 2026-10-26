@@ -1,35 +1,35 @@
 ---
-title: 'Cloudflare Workers custom domain not working'
-description: 'Four things block a Workers custom domain, and none of them says so plainly. Here is each error as it appears, and what it actually means.'
-pillar: 'websites-hosting'
-type: 'fix'
+title: "Cloudflare Workers custom domain not working"
+description: "Four things block a Workers custom domain, and none of them says so plainly. Here is each error as it appears, and what it actually means."
+pillar: "websites-hosting"
+type: "fix"
 tags:
-  - 'cloudflare'
-  - 'workers'
-  - 'dns'
-  - 'deployment'
-author: 'devchandra-shrestha'
-publishedAt: '2026-10-25'
+  - "cloudflare"
+  - "workers"
+  - "dns"
+  - "deployment"
+author: "devchandra-shrestha"
+publishedAt: "2026-10-25"
 quickAnswer: "A Workers custom domain only attaches if the domain's zone is on the same Cloudflare account, which means its nameservers must point at Cloudflare. Adding the domain is not enough: until the registrar's nameservers change, the zone stays pending and the route will not work."
 testedOn:
-  date: '2026-10-25'
+  date: "2026-10-25"
   versions:
-    wrangler: '4.152.0'
-    Node.js: '26.11.1'
-    macOS: '27.2'
-  device: 'Mac, Apple silicon'
-  testedBy: 'Devchandra Shrestha'
+    wrangler: "4.152.0"
+    Node.js: "26.11.1"
+    macOS: "27.2"
+  device: "Mac, Apple silicon"
+  testedBy: "Devchandra Shrestha"
 faq:
-  - q: 'Do I have to move my whole domain to Cloudflare just to use a Worker?'
-    a: 'For a custom domain on the apex, yes. The zone has to be on the same Cloudflare account, which means Cloudflare nameservers. If you cannot move the nameservers, a Worker route on a subdomain of a zone you already have there is the way round it.'
-  - q: 'How long does the zone stay pending after I change nameservers?'
-    a: 'Cloudflare rechecks periodically and you can trigger a check from the dashboard. In our experience it is minutes rather than hours, but registrars publish nameserver changes on their own schedule, so plan for it to be slow rather than instant.'
-  - q: 'Is a workers.dev URL safe to leave up once the real domain is live?'
-    a: 'It is, as long as it is not indexable. A `_headers` rule matching the workers.dev host with `X-Robots-Tag: noindex` keeps it out of search results so it cannot compete with the real domain for the same content.'
-  - q: 'Why did my first deploy say the Worker had no subdomain?'
-    a: 'Because the account had never had Workers opened on it. A workers.dev subdomain is created the first time you visit Workers & Pages in the dashboard, or you can set the name directly over the API.'
+  - q: "Do I have to move my whole domain to Cloudflare just to use a Worker?"
+    a: "For a custom domain on the apex, yes. The zone has to be on the same Cloudflare account, which means Cloudflare nameservers. If you cannot move the nameservers, a Worker route on a subdomain of a zone you already have there is the way round it."
+  - q: "How long does the zone stay pending after I change nameservers?"
+    a: "Cloudflare rechecks periodically and you can trigger a check from the dashboard. In our experience it is minutes rather than hours, but registrars publish nameserver changes on their own schedule, so plan for it to be slow rather than instant."
+  - q: "Is a workers.dev URL safe to leave up once the real domain is live?"
+    a: "It is, as long as it is not indexable. A `_headers` rule matching the workers.dev host with `X-Robots-Tag: noindex` keeps it out of search results so it cannot compete with the real domain for the same content."
+  - q: "Why did my first deploy say the Worker had no subdomain?"
+    a: "Because the account had never had Workers opened on it. A workers.dev subdomain is created the first time you visit Workers & Pages in the dashboard, or you can set the name directly over the API."
 draft: false
-updatedAt: '2026-10-26'
+updatedAt: "2026-10-26"
 ---
 
 Adding a domain to Cloudflare and having a Worker answer on it are two
