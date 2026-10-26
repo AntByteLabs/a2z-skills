@@ -29,7 +29,7 @@
     "icons": "tsx scripts/make-icons.ts",
     "image": "tsx scripts/add-image.ts",
     "check": "npm run lint && npm run check:worker && npm run validate && npm run build && npm run links && npm test",
-    "deploy": "npm run check && wrangler deploy",
+    "deploy": "npm run check && tsx scripts/indexnow.ts --write-key && wrangler deploy && tsx scripts/indexnow.ts",
     "mcp:deploy": "wrangler deploy --config mcp/wrangler.json",
     "mcp:dev": "wrangler dev --config mcp/wrangler.json --port 8799"
   },
