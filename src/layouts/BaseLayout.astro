@@ -13,6 +13,7 @@ interface Props {
   path: string;
   seoTitle?: string;
   image?: string;
+  imageAlt?: string;
   noindex?: boolean;
   publishedAt?: Date;
   updatedAt?: Date;
@@ -49,15 +50,6 @@ const analyticsToken = /^[a-f0-9]{32}$/i.test(configuredAnalyticsToken)
       type="font/woff2"
       crossorigin="anonymous"
     />
-    {searchable && (
-      <link
-        rel="preload"
-        href="/fonts/literata-var.woff2"
-        as="font"
-        type="font/woff2"
-        crossorigin="anonymous"
-      />
-    )}
     <SEO {...seo} />
     <JsonLd data={website()} />
     <!-- Theme is applied before first paint so the page never flashes. -->

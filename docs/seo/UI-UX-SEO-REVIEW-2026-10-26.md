@@ -2,6 +2,8 @@ Method: dual-agent (A: /root/design_assessment · B: /root/design_detector)
 
 # Project review and improvements
 
+This is the earlier review. The subsequent [illustrated sans-serif update](../design/ILLUSTRATED-SANS-2026-10-26.md) replaces the serif reading style at the owner's request and adds artwork.
+
 Reviewed 26 October 2026, starting at commit 35b75f4. Audience: global English
 readers looking for automation, hosting and troubleshooting help. Mode: Read.
 The existing Bricolage headings, Literata article text, paper/ink palette and

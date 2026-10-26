@@ -40,7 +40,14 @@ const crumbs = [
     <h1 class="mt-2 font-display text-[1.6rem] font-bold sm:text-3xl">All topics</h1>
     <div class="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
       {pillars.map((p) => (
-        <PillarCard pillar={p} count={posts.filter((x) => x.data.pillar === p.id).length} />
+        <PillarCard
+          pillar={p}
+          count={posts.filter((x) => x.data.pillar === p.id).length}
+          image={
+            posts.find((post) => post.id === p.data.startHere[0])?.data.heroImage ??
+            posts.find((post) => post.data.pillar === p.id)?.data.heroImage
+          }
+        />
       ))}
     </div>
   </div>

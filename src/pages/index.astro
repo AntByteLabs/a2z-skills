@@ -1,11 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
+import { Picture, getImage } from 'astro:assets';
+import workbench from '../assets/illustrations/tech-workbench.webp';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
 import GuideLibrary from '../components/site/GuideLibrary.astro';
 import { livePosts, postPath } from '../lib/posts';
 import { collectionPage } from '../lib/schema';
-import { site } from '../site';
+import { site, absolute } from '../site';
 
 const posts = await livePosts();
 const pillars = (await getCollection('pillars')).sort(
@@ -18,12 +20,25 @@ const tested = ['automation', 'websites-hosting'].flatMap((id) => {
     .find((entry) => entry?.data.testedOn?.testedBy);
   return post ? [post] : [];
 });
+const topicCover = (id: string, first?: string) =>
+  posts.find((post) => post.id === first)?.data.heroImage ??
+  posts.find((post) => post.data.pillar === id)?.data.heroImage;
+const social = await getImage({
+  src: workbench,
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  format: 'jpeg',
+  quality: 82,
+});
 ---
 
 <BaseLayout
   title="Automation, hosting and everyday tech fixes"
   description={site.description}
   path="/"
+  image={absolute(social.src)}
+  imageAlt="An illustrated laptop, phone and connected cloud on a technology workbench."
 >
   <JsonLd
     slot="head"
@@ -34,13 +49,13 @@ const tested = ['automation', 'websites-hosting'].flatMap((id) => {
       items: posts.map((post) => ({ name: post.data.title, path: postPath(post) })),
     })}
   />
-  <section class="border-b border-rule bg-paper-sunk">
-    <div class="shell grid gap-8 py-8 sm:py-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-16">
+  <section class="editorial-hero">
+    <div class="shell grid items-center gap-7 py-8 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
       <div class="min-w-0">
-        <h1 class="max-w-xl font-display text-4xl font-bold leading-[1.06] sm:text-5xl">
-          Practical fixes for everyday tech.
+        <h1 class="max-w-xl font-display text-4xl font-bold leading-[1.04] sm:text-5xl lg:text-[3.5rem]">
+          Practical fixes for <span class="text-brand-deep">everyday tech.</span>
         </h1>
-        <p class="mt-4 max-w-lg text-ink-soft">
+        <p class="mt-5 max-w-lg text-lg leading-relaxed text-ink-soft">
           Set up n8n, troubleshoot hosting or understand what went wrong. Tested guides and
           sourced explanations, with the details that matter.
         </p>
@@ -69,45 +84,108 @@ const tested = ['automation', 'websites-hosting'].flatMap((id) => {
           Browse all {posts.length} articles
         </a>
       </div>
-      {tested.length > 0 && (
-        <div class="min-w-0 lg:border-l lg:border-rule lg:pl-8">
-          <h2 class="font-display text-xl font-semibold">Start with a tested guide</h2>
-          <ul class="mt-2 divide-y divide-rule">
-            {tested.map((post) => (
-              <li class="py-4">
-                <a
-                  href={postPath(post)}
-                  class="font-display text-lg font-semibold leading-snug no-underline hover:underline"
-                >
-                  {post.data.title}
-                </a>
-                <p class="mt-1.5 text-sm text-ink-soft">{post.data.description}</p>
-              </li>
-            ))}
-          </ul>
-          <a href="/editorial-policy/" class="inline-flex min-h-11 items-center text-sm">
-            How we test and source articles
-          </a>
-        </div>
-      )}
+      <div class="illustration-frame" data-editorial-art>
+        <Picture
+          src={workbench}
+          alt="A blue laptop connected to a cloud, a phone and workflow tiles."
+          widths={[480, 768, 1100]}
+          width={1100}
+          height={825}
+          fit="cover"
+          formats={['avif', 'webp']}
+          fallbackFormat="webp"
+          quality={75}
+          sizes="(min-width: 1024px) 540px, 94vw"
+          loading="eager"
+          fetchpriority="high"
+          class="aspect-[4/3] w-full object-cover"
+          data-home-art
+        />
+      </div>
     </div>
   </section>
 
-  <nav class="shell border-b border-rule py-5" aria-label="Browse by topic">
-    <ul class="grid grid-cols-2 gap-x-5 gap-y-1 sm:grid-cols-3 lg:grid-cols-6">
-      {pillars.map((pillar) => (
-        <li class="min-w-0">
-          <a
-            href={`/topics/${pillar.id}/`}
-            class="flex min-h-11 items-center gap-2 py-1 text-sm font-semibold no-underline hover:underline"
-          >
-            {pillar.data.name}
-            <span class="font-normal text-ink-faint" data-numeric>
-              {posts.filter((post) => post.data.pillar === pillar.id).length}
-            </span>
-          </a>
-        </li>
-      ))}
+  {tested.length > 0 && (
+    <section class="shell py-7 sm:py-9" aria-labelledby="tested-guides">
+      <div class="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 id="tested-guides" class="font-display text-xl font-semibold sm:text-2xl">
+          Start with a tested guide
+        </h2>
+        <a href="/editorial-policy/" class="inline-flex min-h-11 items-center text-sm">
+          How we test and source articles
+        </a>
+      </div>
+      <ul class="mt-3 grid gap-4 md:grid-cols-2">
+        {tested.map((post) => (
+          <li class="relative flex min-w-0 items-center gap-4 rounded-card border border-rule p-3 sm:p-4">
+            {post.data.heroImage && (
+              <div class="w-24 shrink-0 overflow-hidden rounded-soft sm:w-28">
+                <Picture
+                  src={post.data.heroImage}
+                  alt=""
+                  widths={[160, 320]}
+                  width={320}
+                  height={240}
+                  fit="cover"
+                  formats={['avif', 'webp']}
+                  fallbackFormat="webp"
+                  sizes="112px"
+                  loading="lazy"
+                  class="h-20 w-full object-cover sm:h-24"
+                  data-editorial-art
+                />
+              </div>
+            )}
+            <div class="min-w-0">
+              <a
+                href={postPath(post)}
+                class="font-display text-base font-semibold leading-snug no-underline after:absolute after:inset-0 hover:underline sm:text-lg"
+              >
+                {post.data.title}
+              </a>
+              <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-ink-soft">
+                {post.data.description}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <nav class="shell border-y border-rule py-6" aria-label="Browse by topic">
+    <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      {pillars.map((pillar) => {
+        const image = topicCover(pillar.id, pillar.data.startHere[0]);
+        return (
+          <li class="min-w-0">
+            <a href={`/topics/${pillar.id}/`} class="topic-tile group h-full">
+              {image && (
+                <Picture
+                  src={image}
+                  alt=""
+                  widths={[160, 320]}
+                  width={320}
+                  height={180}
+                  fit="cover"
+                  formats={['avif', 'webp']}
+                  fallbackFormat="webp"
+                  sizes="(min-width: 1024px) 175px, (min-width: 640px) 30vw, 45vw"
+                  loading="lazy"
+                  class="aspect-video w-full object-cover"
+                  data-editorial-art
+                />
+              )}
+              <span class="flex items-center justify-between gap-2 px-3 py-3 text-sm font-semibold text-ink group-hover:text-brand-deep">
+                {pillar.data.name}
+                <span class="font-normal text-ink-soft" data-numeric>
+                  {posts.filter((post) => post.data.pillar === pillar.id).length}
+                </span>
+              </span>
+            </a>
+          </li>
+        );
+      })}
     </ul>
   </nav>
   <GuideLibrary posts={posts} pillars={pillars} />

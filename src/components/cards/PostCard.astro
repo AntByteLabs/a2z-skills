@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
 import type { Post } from '../../lib/posts';
 import { postPath } from '../../lib/posts';
 import { formatDate, readingMinutes, postTypeLabel } from '../../lib/format';
@@ -15,40 +16,55 @@ const pillar = showPillar ? await getEntry('pillars', data.pillar) : undefined;
 const shown = data.updatedAt ?? data.publishedAt;
 ---
 
-<article
-  class:list={['card-link relative group flex h-full flex-col p-4', compact && 'p-3.5']}
->
-  <div class="flex flex-wrap items-center gap-1.5">
-    <span class="pill">{postTypeLabel(data.type)}</span>
-    {data.testedOn?.testedBy && (
-      <span class="badge-tested">
-        <svg aria-hidden="true" viewBox="0 0 12 12" class="h-3 w-3" fill="currentColor">
-          <path d="M4.6 9 1.4 5.8l1.1-1.1 2.1 2.1 4.9-4.9 1.1 1.1z" />
-        </svg>
-        Tested
-      </span>
-    )}
-    {pillar && <span class="text-xs text-ink-soft">{pillar.data.name}</span>}
+<article class="card-link relative group flex h-full min-w-0 flex-col overflow-hidden">
+  {data.heroImage && (
+    <Picture
+      src={data.heroImage}
+      alt=""
+      widths={[320, 640]}
+      width={640}
+      height={400}
+      fit="cover"
+      formats={['avif', 'webp']}
+      fallbackFormat="webp"
+      sizes="(min-width: 1024px) 360px, (min-width: 640px) 46vw, 94vw"
+      loading="lazy"
+      class="aspect-[8/5] w-full object-cover"
+      data-editorial-art
+    />
+  )}
+  <div class:list={['flex flex-1 flex-col p-5', compact && 'p-4']}>
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="pill">{postTypeLabel(data.type)}</span>
+      {data.testedOn?.testedBy && (
+        <span class="badge-tested">
+          <svg aria-hidden="true" viewBox="0 0 12 12" class="h-3 w-3" fill="currentColor">
+            <path d="M4.6 9 1.4 5.8l1.1-1.1 2.1 2.1 4.9-4.9 1.1 1.1z" />
+          </svg>
+          Tested
+        </span>
+      )}
+      {pillar && <span class="text-xs text-ink-soft">{pillar.data.name}</span>}
+    </div>
+    <h3
+      class:list={[
+        'mt-3 font-display font-semibold leading-snug text-ink group-hover:text-brand-deep',
+        compact ? 'text-lg' : 'text-xl',
+      ]}
+    >
+      <a href={postPath(post)} class="no-underline after:absolute after:inset-0">
+        {data.title}
+      </a>
+    </h3>
+    <p class="mt-2 line-clamp-3 flex-1 text-base leading-relaxed text-ink-soft">
+      {data.description}
+    </p>
+    <p class="mt-4 flex flex-wrap items-center gap-x-2 border-t border-rule pt-3 text-xs text-ink-faint">
+      <time datetime={shown.toISOString()}>
+        {data.updatedAt ? `Updated ${formatDate(shown)}` : formatDate(shown)}
+      </time>
+      <span class="h-3 border-l border-rule" aria-hidden="true"></span>
+      <span>{readingMinutes(post.body ?? '')} min read</span>
+    </p>
   </div>
-
-  <h3
-    class:list={[
-      'mt-2.5 font-display font-semibold leading-snug text-ink group-hover:text-brand-deep',
-      compact ? 'text-base' : 'text-lg',
-    ]}
-  >
-    <a href={postPath(post)} class="no-underline after:absolute after:inset-0">
-      {data.title}
-    </a>
-  </h3>
-
-  <p class="mt-1.5 line-clamp-3 flex-1 text-sm text-ink-soft">{data.description}</p>
-
-  <p class="mt-3 flex flex-wrap items-center gap-x-2 border-t border-rule pt-2.5 text-xs text-ink-faint">
-    <time datetime={shown.toISOString()}>
-      {data.updatedAt ? `Updated ${formatDate(shown)}` : formatDate(shown)}
-    </time>
-    <span class="h-3 border-l border-rule" aria-hidden="true"></span>
-    <span>{readingMinutes(post.body ?? '')} min read</span>
-  </p>
 </article>

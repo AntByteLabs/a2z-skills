@@ -1,0 +1,101 @@
+[
+  {
+    "url": "http://localhost:54627/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1730.7516999999998,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54627/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1729.0025,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54627/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1728.174,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54627/ai-detectors-flagging-human-writing/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1127.9642,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54627/ai-detectors-flagging-human-writing/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1127.5958,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54627/ai-detectors-flagging-human-writing/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1127.9445,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54627/topics/ai-tools/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1502.4242,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54627/topics/ai-tools/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1502.7032,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54627/topics/ai-tools/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1502.2722,
+    "cls": 0
+  }
+]

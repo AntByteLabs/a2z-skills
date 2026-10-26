@@ -1,4 +1,5 @@
 ---
+import { Picture } from 'astro:assets';
 import type { Post } from '../../lib/posts';
 import { postPath } from '../../lib/posts';
 interface Props {
@@ -14,11 +15,29 @@ const { posts } = Astro.props;
     </h2>
     <ul class="mt-3 grid gap-3 sm:grid-cols-2">
       {posts.map((p) => (
-        <li class="rounded-card border border-rule p-3">
-          <a href={postPath(p)} class="font-semibold no-underline hover:underline">
-            {p.data.title}
-          </a>
-          <p class="mt-1 text-sm text-ink-soft">{p.data.quickAnswer.slice(0, 110)}…</p>
+        <li class="min-w-0 overflow-hidden rounded-card border border-rule">
+          {p.data.heroImage && (
+            <Picture
+              src={p.data.heroImage}
+              alt=""
+              widths={[320, 640]}
+              width={640}
+              height={320}
+              fit="cover"
+              formats={['avif', 'webp']}
+              fallbackFormat="webp"
+              sizes="(min-width:640px) 320px, 94vw"
+              loading="lazy"
+              class="aspect-[2/1] w-full object-cover"
+              data-editorial-art
+            />
+          )}
+          <div class="p-4">
+            <a href={postPath(p)} class="font-semibold no-underline hover:underline">
+              {p.data.title}
+            </a>
+            <p class="mt-1 text-sm text-ink-soft">{p.data.quickAnswer.slice(0, 110)}…</p>
+          </div>
         </li>
       ))}
     </ul>

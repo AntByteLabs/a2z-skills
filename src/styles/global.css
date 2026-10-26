@@ -34,9 +34,7 @@
 @theme {
   --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  /* Article prose only. The chrome stays sans: the serif is what marks the
-     difference between a page you navigate and a page you read. */
-  --font-serif: 'Literata', 'Literata Fallback', Georgia, 'Times New Roman', serif;
+  --font-reading: var(--font-sans);
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   --color-ink: oklch(0.2 0.025 268);
@@ -253,29 +251,6 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Literata';
-  src: url('/fonts/literata-var.woff2') format('woff2-variations');
-  font-weight: 400 700;
-  font-display: swap;
-  font-style: normal;
-}
-
-/*
- * Georgia, re-metricked to Literata so the swap does not move a line.
- * size-adjust is the x-height ratio (0.507 / 0.484); the ascent and descent
- * overrides are Literata's own (117.7% / 30.8%) divided by that figure.
- * The CLS budget is 0.05 and body text is most of the page.
- */
-@font-face {
-  font-family: 'Literata Fallback';
-  src: local('Georgia'), local('Times New Roman'), local('Times');
-  size-adjust: 104.7%;
-  ascent-override: 112.4%;
-  descent-override: 29.4%;
-  line-gap-override: 0%;
-}
-
 @utility measure {
   max-width: var(--text-measure);
 }
@@ -353,28 +328,13 @@
   color: var(--color-ink-soft);
 }
 
-/*
- * The reading column.
- *
- * Set in Literata rather than the system stack, because this is the surface a
- * reader stays on for several minutes and the system sans made every guide
- * look like every other guide. The chrome around it stays sans on purpose:
- * that contrast is what tells you which part of the page is the article.
- *
- * Leading is 1.72 rather than the usual 1.6: a serif at 18px across a 66ch
- * measure needs the extra room, and the prose plugin's default is tuned for a
- * sans. Headings keep more space above than below so a section reads as
- * belonging to the heading that opens it.
- */
+/* Sans-serif reading text: a steady measure, generous leading and clear headings. */
 .prose.prose-article {
-  font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  line-height: 1.72;
-  letter-spacing: 0.003em;
-  /* Set in rem, not ch: ch follows the font's zero, so the same 66ch measure
-     came out far narrower in Literata than in the sans it replaced. At 18px
-     this is roughly 68 characters, and it matches the blocks above it. */
-  max-width: 42rem;
+  font-family: var(--font-reading);
+  font-size: 1.125rem;
+  line-height: 1.78;
+  letter-spacing: 0;
+  max-width: 40rem;
   margin-top: 1.75rem;
 
   & p,
@@ -427,7 +387,7 @@
   }
 
   @media (min-width: 640px) {
-    font-size: 1.125rem;
+    font-size: 1.1875rem;
 
     & h2 {
       font-size: 1.75rem;
@@ -517,15 +477,15 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .prose.prose-article {
     font-weight: 420;
-    line-height: 1.76;
-    letter-spacing: 0.008em;
+    line-height: 1.8;
+    letter-spacing: 0.004em;
   }
 }
 
 :root[data-theme='dark'] .prose.prose-article {
   font-weight: 420;
-  line-height: 1.76;
-  letter-spacing: 0.008em;
+  line-height: 1.8;
+  letter-spacing: 0.004em;
 }
 
 /*
@@ -618,10 +578,10 @@
 
 /* Reader-controlled text size, applied on top of the article's own scale. */
 .prose.prose-article {
-  font-size: calc(1.0625rem * var(--read-scale, 1));
+  font-size: calc(1.125rem * var(--read-scale, 1));
 
   @media (min-width: 640px) {
-    font-size: calc(1.125rem * var(--read-scale, 1));
+    font-size: calc(1.1875rem * var(--read-scale, 1));
   }
 }
 
@@ -657,7 +617,7 @@ body:has([data-reader]) {
  *
  * Bricolage is already loaded for headings and is the warmer of the two, so
  * navigation, buttons and labels cost nothing extra to make friendlier. The
- * article keeps its serif: that contrast is the point.
+ * reading column uses the system sans for clear, steady paragraphs.
  */
 nav a,
 .pill,
@@ -716,4 +676,45 @@ article .prose-sm {
 #reader-bar:focus-within {
   transform: none;
   opacity: 1;
+}
+
+/* Images carry the publication's colour; reading surfaces stay quiet. */
+@utility illustration-frame {
+  overflow: hidden;
+  border-radius: var(--radius-bubble);
+  background: var(--color-paper-sunk);
+  border: 1px solid var(--color-rule);
+}
+
+@utility editorial-hero {
+  background: var(--color-brand-wash);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+@utility topic-tile {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-soft);
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  text-decoration: none;
+  transition: border-color 160ms ease-out;
+
+  &:hover {
+    border-color: var(--color-brand-deep);
+  }
+}
+
+[data-guide-list] .card-link {
+  box-shadow: none;
+}
+
+[data-guide-list] .card-link:hover {
+  box-shadow: var(--shadow-lift);
+}
+
+@media print {
+  [data-editorial-art] {
+    display: none !important;
+  }
 }

@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { livePosts, postPath } from './posts';
+import { absolute } from '../site';
 import { latestDate } from './seo-dates';
 
 /** Only canonical, indexable pages belong in the search-engine sitemap. */
@@ -22,7 +23,11 @@ export const sitemapEntries = async () => {
   return [
     { path: '/', lastmod: newest },
     { path: '/topics/', lastmod: latestDate(posts.map(changed)) },
-    ...posts.map((post) => ({ path: postPath(post), lastmod: changed(post) })),
+    ...posts.map((post) => ({
+      path: postPath(post),
+      lastmod: changed(post),
+      image: post.data.heroImage ? absolute(post.data.heroImage.src) : undefined,
+    })),
     ...pillars.map((pillar) => ({
       path: `/topics/${pillar.id}/`,
       lastmod: latestDate(

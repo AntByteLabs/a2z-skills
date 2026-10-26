@@ -1,0 +1,62 @@
+[
+  {
+    "name": "home",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "name": "article",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "name": "topics",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "name": "hub",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "name": "home",
+    "width": 768,
+    "overflow": false
+  },
+  {
+    "name": "article",
+    "width": 768,
+    "overflow": false
+  },
+  {
+    "name": "topics",
+    "width": 768,
+    "overflow": false
+  },
+  {
+    "name": "hub",
+    "width": 768,
+    "overflow": false
+  },
+  {
+    "name": "home",
+    "width": 1280,
+    "overflow": false
+  },
+  {
+    "name": "article",
+    "width": 1280,
+    "overflow": false
+  },
+  {
+    "name": "topics",
+    "width": 1280,
+    "overflow": false
+  },
+  {
+    "name": "hub",
+    "width": 1280,
+    "overflow": false
+  }
+]

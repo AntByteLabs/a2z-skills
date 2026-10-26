@@ -7,13 +7,16 @@ export const GET: APIRoute = async () => {
   const entries = await sitemapEntries();
   const xml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
     ...entries.map((entry) =>
       [
         '  <url>',
         `    <loc>${xmlEscape(site.url + entry.path)}</loc>`,
         entry.lastmod
           ? `    <lastmod>${entry.lastmod.toISOString().slice(0, 10)}</lastmod>`
+          : '',
+        'image' in entry && entry.image
+          ? `    <image:image><image:loc>${xmlEscape(entry.image)}</image:loc></image:image>`
           : '',
         '  </url>',
       ]

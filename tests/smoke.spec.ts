@@ -82,7 +82,7 @@ test.describe('a published post', () => {
     await page.goto(postPath!);
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
       'content',
-      /\.png$/,
+      /\.(?:png|jpe?g|webp)$/,
     );
     await expect(page.locator('a[href^="/topics/"]').first()).toBeAttached();
   });

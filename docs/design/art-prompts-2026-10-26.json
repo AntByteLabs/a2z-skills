@@ -1,0 +1,91 @@
+{
+  "date": "2026-10-26",
+  "method": "Built-in image_gen tool",
+  "style": "Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles.",
+  "assets": [
+    {
+      "slug": "home",
+      "destination": "src/assets/illustrations/tech-workbench.webp",
+      "alt": "A blue laptop connected to a cloud, a phone and workflow tiles.",
+      "prompt": "Use case: illustration-story. Asset: homepage hero illustration for A2Z Skills, a friendly practical technology publication. Create one polished wide landscape editorial illustration, no text, no lettering, no logos. Subject: an inviting little tech workbench, a cobalt-blue laptop with simple blank application tiles, a peach smartphone, a white cloud connected by one curved cable, and three small interlocking workflow tiles. Visual story: making technology understandable and fixing connections. Style: contemporary flat gouache and cut-paper editorial art, crisp dark navy outlines, subtle real paper grain, gently rounded friendly forms, sophisticated rather than childish, bold simple composition. Palette: warm ivory background, cobalt blue, muted coral-orange, sage green, pale sky blue. One cohesive scene with generous breathing room and recognisable objects. Horizontal 3:2 composition for a large website hero, clear at thumbnail size. No fake software screenshots, no invented error messages, no charts with numbers, no people, no watermark, no decorative sparkles."
+    },
+    {
+      "slug": "ai-detectors-flagging-human-writing",
+      "destination": "src/content/posts/ai-detectors-flagging-human-writing/cover-illustration.webp",
+      "alt": "A pencil and handwritten sheet under an uncertain inspection lens.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: A handwritten sheet and a pencil pass through a magnifying glass held above them; the glass contains an uncertain abstract split check/cross symbol, showing that automated judgement of human writing can be wrong. No words on the paper. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "automations-failing-silently",
+      "destination": "src/content/posts/automations-failing-silently/cover-illustration.webp",
+      "alt": "Connected workflow tiles ending at a gap before an empty receiving tray.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: A sequence of connected workflow tiles carries a small package; the final connection has a subtle gap and an empty receiving tray, while the earlier tiles have calm green check shapes. The visual contrast is a completed-looking workflow with an absent outcome. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "chatgpt-different-answers-same-question",
+      "destination": "src/content/posts/chatgpt-different-answers-same-question/cover-illustration.webp",
+      "alt": "One question bubble branching into three different illustrated replies.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: One simple question-shaped speech bubble branches into three distinct colourful reply bubbles, each holding different abstract geometric arrangements. A small friendly laptop below anchors the idea of varying AI responses. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "cloudflare-workers-custom-domain-not-working",
+      "destination": "src/content/posts/cloudflare-workers-custom-domain-not-working/cover-illustration.webp",
+      "alt": "A cloud and domain globe separated by an unconnected cable.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: A small orange cloud, a cobalt server tile and a domain globe connected by a cable with an unjoined plug in the middle; a hand-sized spanner lies nearby, showing diagnosis of a domain connection. No brand logo, no error text. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "deleting-files-not-freeing-disk-space",
+      "destination": "src/content/posts/deleting-files-not-freeing-disk-space/cover-illustration.webp",
+      "alt": "A packed storage drive beside a basket containing discarded file tiles.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: A hard-drive-shaped storage box is still packed with blank file tiles while a few discarded files sit in a nearby waste basket; show the difference between removing visible files and remaining stored items. Simple explanatory metaphor. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "dns-propagation-explained",
+      "destination": "src/content/posts/dns-propagation-explained/cover-illustration.webp",
+      "alt": "A central server connected to globe nodes holding different cached record tiles.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: A central little address-book/server tile sends curved routes to three distributed globe nodes; one route has an older pale tile and another a new cobalt tile, suggesting different cached copies during a DNS update. No arrows with labels or numbers. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "excel-changing-numbers-into-dates",
+      "destination": "src/content/posts/excel-changing-numbers-into-dates/cover-illustration.webp",
+      "alt": "A spreadsheet tile transforming into a calendar-shaped tile.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: A green spreadsheet sheet with a few simple blank cells feeds a small number-shaped tile through a curved path and it emerges as a calendar-shaped tile. No text or numerals: distinguish input data and unwanted calendar transformation using shapes. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "excel-file-size-too-large",
+      "destination": "src/content/posts/excel-file-size-too-large/cover-illustration.webp",
+      "alt": "An overstuffed spreadsheet folder with layered sheets beneath a magnifying glass.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: An overstuffed green spreadsheet folder bulges with layered blank sheets, hidden formatting strips and little picture tiles; a small magnifying glass reveals the layered contents. No charts, labels or numbers. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "n8n-webhook-not-working",
+      "destination": "src/content/posts/n8n-webhook-not-working/cover-illustration.webp",
+      "alt": "Two illustrated webhook paths leading from a laptop to different workflow endpoints.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: Two parallel webhook paths connect a friendly laptop to workflow nodes: a short coral test path ends in a one-shot open socket, and a longer cobalt production path leads to a server with a clear on/off toggle shape. A single envelope waits between the routes. Conceptual, not a factual technical diagram. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "phone-slows-down-gets-older",
+      "destination": "src/content/posts/phone-slows-down-gets-older/cover-illustration.webp",
+      "alt": "A phone surrounded by application tiles and a slow-moving tortoise.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: An upright peach smartphone has several soft layered application tiles stacked around it and a partly filled simple battery shape beside it; a small tortoise-shaped timing metaphor sits near the phone. Friendly, calm illustration of accumulated load rather than a damaged processor. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "phone-storage-full-after-deleting-photos",
+      "destination": "src/content/posts/phone-storage-full-after-deleting-photos/cover-illustration.webp",
+      "alt": "Photo tiles grouped around a phone, cloud and recently-deleted basket.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: A smartphone showing a few blank photo thumbnails sits beside a cloud and a recently-deleted basket, each containing matching tiny landscape-photo tiles. Show separate places for local, cloud and retained items without numbers or a literal claim of three physical copies. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "self-host-n8n-coolify",
+      "destination": "src/content/posts/self-host-n8n-coolify/cover-illustration.webp",
+      "alt": "A small server connected to a cloud and colourful workflow blocks.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: A compact cobalt server tower connected to a cloud and three bright workflow blocks, with a small leaf-like green power switch and a tidy cable. Friendly self-hosted automation workbench, no actual vendor logos or interface screenshot. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    },
+    {
+      "slug": "windows-restart-finish-installing-updates",
+      "destination": "src/content/posts/windows-restart-finish-installing-updates/cover-illustration.webp",
+      "alt": "A laptop and interlocking update pieces surrounded by a restart arrow.",
+      "prompt": "Use case: illustration-story. Asset: individual blog cover for A2Z Skills. Contemporary flat gouache and cut-paper editorial illustration; crisp dark navy outlines; subtle paper grain; gently rounded friendly recognisable objects; sophisticated not childish; warm ivory background, cobalt blue with muted coral-orange, sage green and pale sky-blue; strong single focal metaphor; wide landscape 3:2; no text, lettering, logos, people, screenshots, fake errors, numerical data, watermarks or decorative sparkles. Subject: A laptop with a simple cobalt window tile on its screen, a circular restart arrow wrapping around two interlocking update pieces beside it. Calm reassuring maintenance scene, no real OS screenshot or text. A single polished original image for this article, not a collage of multiple covers. Keep all important objects inside the middle 80% for responsive cropping. The image should feel like part of one publication's illustration family."
+    }
+  ]
+}

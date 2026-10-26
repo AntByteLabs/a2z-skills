@@ -1,7 +1,7 @@
 ---
 import type { MarkdownHeading } from 'astro';
 import { getEntry } from 'astro:content';
-import { Image } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
@@ -42,7 +42,17 @@ if (!author) throw new Error(`Post ${post.id} references a missing author`);
 const pillar = await getEntry('pillars', data.pillar);
 
 const path = postPath(post);
-const ogImage = absolute(`/og/${post.id}.png`);
+const social = data.heroImage
+  ? await getImage({
+      src: data.heroImage,
+      width: 1200,
+      height: 630,
+      fit: 'cover',
+      format: 'jpeg',
+      quality: 82,
+    })
+  : undefined;
+const ogImage = social ? absolute(social.src) : absolute(`/og/${post.id}.png`);
 const related = await relatedPosts(post);
 
 // Newest first, so "previous" is the post published before this one.
@@ -84,6 +94,7 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
   description={data.description}
   path={path}
   image={ogImage}
+  imageAlt={data.heroAlt}
   noindex={data.noindex || data.draft}
   publishedAt={data.publishedAt}
   updatedAt={data.updatedAt}
@@ -154,15 +165,25 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
       <AdSlot position="after-answer" />
 
       {data.heroImage && (
-        <Image
-          src={data.heroImage}
-          alt={data.heroAlt ?? ''}
-          widths={[480, 800, 1200]}
-          sizes="(min-width: 1024px) 760px, 100vw"
-          loading="eager"
-          fetchpriority="high"
-          class="mt-5 rounded-card border border-rule"
-        />
+        <figure class="my-6" data-pagefind-ignore data-article-art data-editorial-art>
+          <Picture
+            src={data.heroImage}
+            alt={data.heroAlt ?? ''}
+            widths={[480, 800, 1200]}
+            width={1200}
+            height={750}
+            fit="cover"
+            formats={['avif', 'webp']}
+            fallbackFormat="webp"
+            quality={78}
+            sizes="(min-width: 1024px) 672px, 94vw"
+            loading="lazy"
+            class="illustration-frame aspect-[8/5] w-full object-cover"
+          />
+          <figcaption class="mt-2 text-right text-xs text-ink-faint">
+            Editorial illustration
+          </figcaption>
+        </figure>
       )}
 
       <div class="lg:hidden">

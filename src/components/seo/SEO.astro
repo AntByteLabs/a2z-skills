@@ -8,6 +8,7 @@ interface Props {
   path: string;
   seoTitle?: string;
   image?: string;
+  imageAlt?: string;
   noindex?: boolean;
   publishedAt?: Date;
   updatedAt?: Date;
@@ -20,6 +21,7 @@ const {
   description,
   path,
   image,
+  imageAlt,
   noindex = false,
   publishedAt,
   updatedAt,
@@ -49,6 +51,7 @@ const robots = noindex
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={imageAlt ?? `${base} — ${site.name}`} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="en_GB" />
@@ -61,6 +64,7 @@ const robots = noindex
 <meta name="twitter:title" content={base} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={imageAlt ?? `${base} — ${site.name}`} />
 
 <link
   rel="alternate"
