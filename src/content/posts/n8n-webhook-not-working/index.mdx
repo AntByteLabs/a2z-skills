@@ -1,0 +1,117 @@
+---
+title: 'n8n webhook not working'
+description: 'Both n8n webhook URLs answer 404 when they are not listening, so the status code tells you nothing. The hint field in the body is what names the cause.'
+pillar: 'automation'
+type: 'fix'
+tags:
+  - 'n8n'
+  - 'webhooks'
+  - 'automation'
+author: 'ronit-karki'
+publishedAt: '2026-10-26'
+quickAnswer: 'A test URL only listens after you press Execute workflow, and for one call. A production URL only exists once the workflow is active. Both return 404 when they are not listening, so read the hint field in the response body: it is the only part that says which of the two you have hit.'
+testedOn:
+  date: '2026-10-26'
+  versions:
+    n8n: '2.10.2'
+    Ubuntu: '24.04 arm64'
+  device: 'Oracle Always Free VM, 2 OCPU and 12 GB'
+faq:
+  - q: 'Why does my webhook work in the editor and then stop?'
+    a: 'Because you were calling the test URL. It listens for a single call after you press Execute workflow and then stops. The production URL is the one that keeps working, and it needs the workflow to be active.'
+  - q: 'Does a production webhook show up on the canvas?'
+    a: 'No, and n8n says so in the 404 hint. Production calls appear only in the executions list. An empty canvas is not evidence that the request never arrived.'
+  - q: 'Can I tell the two 404s apart from the status code?'
+    a: 'No. Both are 404. The message and hint differ, and the production message includes the HTTP method while the test message does not, so parse the body rather than the status.'
+draft: false
+---
+
+A webhook that worked a minute ago and now returns 404 is almost always one of
+two URLs being mistaken for the other. More automation guides are in
+[Automation](/topics/automation/), the instance this was tested on is the one
+from [self-host n8n on Coolify](/self-host-n8n-coolify/), and the wider failure
+this belongs to is in
+[why automations fail silently](/automations-failing-silently/).
+
+## Both URLs answer 404, so the status code is useless
+
+Every n8n webhook node gives you two URLs. A test URL under `/webhook-test/`
+and a production URL under `/webhook/`. When neither is listening, both return
+`404`, and the body is the only thing that separates them.
+
+Calling a production path with no active workflow:
+
+```json
+{
+  "code": 404,
+  "message": "The requested webhook \"POST does-not-exist-probe\" is not registered.",
+  "hint": "The workflow must be active for a production URL to run successfully. You can activate the workflow using the toggle in the top-right of the editor. Note that unlike test URL calls, production URL calls aren't shown on the canvas (only in the executions list)"
+}
+```
+
+Calling a test path with nothing listening:
+
+```json
+{
+  "code": 404,
+  "message": "The requested webhook \"does-not-exist-probe\" is not registered.",
+  "hint": "Click the 'Execute workflow' button on the canvas, then try again. (In test mode, the webhook only works for one call after you click this button)"
+}
+```
+
+Two things are worth noticing. The hint names the cause in both cases, which is
+more than most 404s give you. And the production message quotes the HTTP method
+before the path, `"POST does-not-exist-probe"`, where the test message quotes
+the path alone. If you are logging these, that difference tells you which half
+of the system answered without parsing the hint at all.
+
+## The test URL listens once, on purpose
+
+Pressing **Execute workflow** arms the test URL for a single call. It is a
+debugging aid: it shows you the data on the canvas as it arrives. After that one
+call it stops listening, and anything else that calls it gets the 404 above.
+
+This is the cause behind almost every "it worked and then it broke" report. The
+webhook never broke. It did exactly one job and finished.
+
+<Callout type="tip" title="If you are testing with curl">
+  Press Execute workflow immediately before each call. One press, one request. A retry loop
+  will consume the arm on its first attempt and then collect 404s.
+</Callout>
+
+## The production URL needs the workflow active
+
+Saving a workflow is not activating it. The production path is registered when
+the workflow is switched on with the toggle, and deregistered when it is
+switched off, so a saved-but-inactive workflow has no live URL at all.
+
+The second half of that hint is the part people miss: **production calls are not
+drawn on the canvas.** They appear in the executions list only. Watching an empty
+canvas and concluding the request never arrived is the wrong conclusion, and it
+sends people off to debug a proxy that is working correctly.
+
+## When the host in the URL is wrong
+
+On a self-hosted instance there is a third cause. n8n builds the URLs it shows
+you from its own configured hostname, not from the address you typed in the
+browser. If `WEBHOOK_URL`, `N8N_HOST` and `N8N_EDITOR_BASE_URL` do not agree
+with the public domain, the editor will display a URL that resolves somewhere
+else, and the call never reaches n8n at all.
+
+That is a different failure from the two above, and it looks different: you get
+your proxy's error, or a connection failure, rather than n8n's JSON 404. A JSON
+body with `code` and `hint` in it means you reached n8n. Anything else means you
+did not, and the problem is in front of it.
+
+<WhatBroke>
+  Both probes were run against a live instance, and the thing that surprised us
+  was that the two cases are indistinguishable by status code. We expected the
+  production URL to answer differently from the test URL, perhaps 404 against
+  409 or 503. Both are 404. A monitor that alerts on status alone cannot tell an
+  inactive workflow from a test URL that has already fired, and will report both
+  as the same outage.
+
+`GET` on a production path returns 404 as well, so you cannot probe for
+existence with a GET before sending the real POST.
+
+</WhatBroke>
