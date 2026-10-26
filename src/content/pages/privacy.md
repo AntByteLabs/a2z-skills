@@ -1,7 +1,7 @@
 ---
 title: Privacy
 description: What A2Z Skills collects, what it does not, where the newsletter list is stored, and how to exercise your rights over it wherever you live.
-updatedAt: 2026-10-25
+updatedAt: 2026-10-26
 order: 4
 ---
 
@@ -32,28 +32,30 @@ and we do not build profiles of readers.
 
 ## Analytics without tracking
 
-We use **Cloudflare Web Analytics**, which is cookieless and does not
-fingerprint visitors or follow anyone between sites. We see totals; we cannot see
-individual people.
+The optional analytics integration uses **Cloudflare Web Analytics** when
+configured. It reports aggregate visits and performance. The integration is
+omitted when no public beacon token is configured in the build.
 
-We also read **Google Search Console** and **Bing Webmaster Tools**, which report
-the search queries that reach the site in aggregate. Neither tells us who
-searched.
+Search reporting tools such as **Google Search Console** and **Bing Webmaster
+Tools** provide aggregate search-query reports for verified properties. These
+reports do not tell us who searched.
 
 ## The newsletter
 
 If you subscribe, your email address, the page you subscribed from, the date and
 your two-letter country code are stored in a Cloudflare D1 database on
-Cloudflare's network. We use them to send the newsletter and for nothing else. We
+Cloudflare's network. Email delivery is not active yet; addresses are collected
+for guide notifications. We
 do not sell, rent or share the list, and we do not send anyone else's
 advertising.
 
-Every email has an unsubscribe link. To be removed immediately, email
+If newsletter delivery is enabled, its messages will include an unsubscribe
+link. To request removal from the current notification list, email
 [hello@a2zskillsewa.com](mailto:hello@a2zskillsewa.com) and the row is deleted
 outright, not flagged.
 
-Sign-up is protected by **Cloudflare Turnstile**, which checks that you are not a
-bot without tracking you across sites.
+Sign-up uses a hidden honeypot field and request limits. **Cloudflare Turnstile**
+verification is enforced only when its Worker secret is configured.
 
 ## Where your data goes
 

@@ -22,7 +22,7 @@ const id = `nl-${Math.random().toString(36).slice(2, 8)}`;
 >
   {!compact && (
     <p class="font-display text-base font-semibold sm:text-lg">
-      Get the next tested guide by email
+      Join the guide notification list
     </p>
   )}
   <label class="sr-only" for={id}>
@@ -68,10 +68,10 @@ const id = `nl-${Math.random().toString(36).slice(2, 8)}`;
     ></div>
   )}
   <p class="mt-2 text-xs text-ink-faint">
-    One email a week. No sharing, no selling, unsubscribe in one click.
+    Email delivery is not active yet. No sharing or selling your address.
   </p>
   <p class="mt-2 hidden text-sm text-good" data-newsletter-ok>
-    Thanks — check your inbox.
+    Your address is saved. No confirmation email is sent yet.
   </p>
   <p class="mt-2 hidden text-sm text-bad" data-newsletter-err>
     That did not go through. Try again?
@@ -133,6 +133,7 @@ const id = `nl-${Math.random().toString(36).slice(2, 8)}`;
       try {
         const res = await fetch(form.action, {
           method: 'POST',
+          headers: { Accept: 'application/json' },
           body: new FormData(form),
         });
         if (!res.ok) throw new Error(String(res.status));
