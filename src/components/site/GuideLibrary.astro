@@ -2,12 +2,15 @@
 import type { CollectionEntry } from 'astro:content';
 import type { Post } from '../../lib/posts';
 import PostCard from '../cards/PostCard.astro';
+import AdSlot from '../money/AdSlot.astro';
+import { site } from '../../site';
 
 interface Props {
   posts: Post[];
   pillars: CollectionEntry<'pillars'>[];
 }
 const { posts, pillars } = Astro.props;
+const showLibraryAd = (site.ADS_ENABLED || site.ADS_PLACEHOLDER) && posts.length >= 9;
 ---
 
 <section
@@ -16,7 +19,7 @@ const { posts, pillars } = Astro.props;
   aria-labelledby="library-title"
   data-guide-library
 >
-  <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-10">
+  <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-8">
     <div class="min-w-0">
       <div class="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="library-title" class="font-display text-2xl font-semibold">
@@ -75,15 +78,22 @@ const { posts, pillars } = Astro.props;
         No articles match these filters. Choose another topic or clear the filters to see
         every article.
       </p>
-      <ul class="mt-5 grid gap-5 sm:grid-cols-2" data-guide-list>
-        {posts.map((post) => (
-          <li
-            class="min-w-0"
-            data-guide-topic={post.data.pillar}
-            data-guide-type={post.data.testedOn?.testedBy ? 'tested' : post.data.type}
-          >
-            <PostCard post={post} showPillar={true} />
-          </li>
+      <ul class="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-3" data-guide-list>
+        {posts.map((post, index) => (
+          <>
+            <li
+              class="min-w-0"
+              data-guide-topic={post.data.pillar}
+              data-guide-type={post.data.testedOn?.testedBy ? 'tested' : post.data.type}
+            >
+              <PostCard post={post} showPillar={true} />
+            </li>
+            {showLibraryAd && index === 5 && (
+              <li class="col-span-full min-w-0" data-library-ad>
+                <AdSlot position="library" />
+              </li>
+            )}
+          </>
         ))}
       </ul>
     </div>
@@ -135,6 +145,7 @@ const { posts, pillars } = Astro.props;
     const items = [...library.querySelectorAll<HTMLElement>('[data-guide-topic]')];
     const count = library.querySelector<HTMLElement>('[data-guide-count]')!;
     const empty = library.querySelector<HTMLElement>('[data-guide-empty]')!;
+    const ad = library.querySelector<HTMLElement>('[data-library-ad]');
     const apply = () => {
       let visible = 0;
       for (const item of items) {
@@ -143,6 +154,13 @@ const { posts, pillars } = Astro.props;
           (type.value && item.dataset.guideType !== type.value),
         );
         if (!item.hidden) visible++;
+      }
+      // Six cards fill complete rows at all three column counts. Avoid an ad
+      // when filtering leaves fewer than three articles after the placement.
+      if (ad) {
+        const matching = items.filter((item) => !item.hidden);
+        ad.hidden = matching.length < 9;
+        if (!ad.hidden) matching[5]!.after(ad);
       }
       count.textContent = `${visible} of ${items.length} articles`;
       empty.hidden = visible > 0;

@@ -5,13 +5,13 @@
  *   ADS_PLACEHOLDER  — a labelled dashed box at the real height
  *   neither          — nothing at all
  *
- * The height is fixed in every state, so turning ads on later shifts nothing
- * and the 0.05 CLS budget holds.
+ * Visible slots reserve space before network content loads. Disabled slots
+ * render nothing. The network must supply creatives that fit the slot width.
  */
 import { site } from '../../site';
 
 interface Props {
-  position: 'after-answer' | 'mid-article' | 'end-article' | 'sidebar';
+  position: 'after-answer' | 'mid-article' | 'end-article' | 'sidebar' | 'library';
 }
 const { position } = Astro.props;
 
@@ -27,6 +27,11 @@ const slot = {
     label: 'End of article',
     size: '336×280 / responsive',
   },
+  library: {
+    h: 'min-h-[250px]',
+    label: 'Between article rows',
+    size: 'Responsive, up to 728×250',
+  },
   sidebar: { h: 'min-h-[600px]', label: 'Sidebar', size: '300×600' },
 }[position];
 
@@ -36,7 +41,7 @@ const show = site.ADS_ENABLED || site.ADS_PLACEHOLDER;
 {show && (
   <aside
     class:list={[
-      'not-prose my-6 flex flex-col items-center justify-center gap-1 rounded-card text-center',
+      'not-prose my-6 flex w-full min-w-0 overflow-hidden flex-col items-center justify-center gap-1 rounded-card text-center',
       slot.h,
       site.ADS_ENABLED
         ? 'bg-paper-sunk'
@@ -46,7 +51,12 @@ const show = site.ADS_ENABLED || site.ADS_PLACEHOLDER;
     aria-label="Advertisement"
   >
     {site.ADS_ENABLED ? (
-      <slot />
+      <>
+        <span class="text-xs text-ink-faint">Advertisement</span>
+        <div class="w-full min-w-0 max-w-full">
+          <slot />
+        </div>
+      </>
     ) : (
       <>
         <span class="text-xs font-semibold uppercase tracking-wide">Ad slot</span>

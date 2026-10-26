@@ -249,3 +249,91 @@ test.describe('dark mode', () => {
     expect(bg).not.toBe('rgba(0, 0, 0, 0)');
   });
 });
+
+test('the article library adapts from one to three readable columns', async ({ page }) => {
+  await page.goto('/');
+  for (const [width, columns] of [
+    [320, 1],
+    [390, 1],
+    [640, 2],
+    [768, 2],
+    [1024, 2],
+    [1280, 3],
+    [1440, 3],
+    [1920, 3],
+    [2560, 3],
+  ]) {
+    await page.setViewportSize({ width: width!, height: 900 });
+    const cards = page.locator('[data-guide-list] > [data-guide-topic]');
+    const boxes = await cards.evaluateAll((nodes) =>
+      nodes.map((node) => {
+        const { x, y, width, right } = node.getBoundingClientRect();
+        return { x, y, width, right };
+      }),
+    );
+    const firstRow = boxes.filter((box) => Math.abs(box.y - boxes[0]!.y) < 1);
+    expect(firstRow, `columns at ${width}px`).toHaveLength(columns!);
+    expect(boxes[columns!]!.y).toBeGreaterThan(boxes[0]!.y);
+    for (const box of boxes) {
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.right).toBeLessThanOrEqual(width!);
+      expect(box.width).toBeGreaterThan(250);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+  }
+  await expect(page.locator('[data-library-ad]')).toHaveCount(0);
+});
+
+test('future library advertising stays between full rows and follows filters', async ({
+  page,
+}) => {
+  // Exercise the dormant placement without enabling advertising in site settings.
+  await page.route('**/', async (route) => {
+    if (new URL(route.request().url()).pathname !== '/') return route.continue();
+    const response = await route.fetch();
+    const body = (await response.text()).replace(
+      /(<ul\b[^>]*data-guide-list[^>]*>)/,
+      '$1<li class="col-span-full min-w-0" data-library-ad><aside data-ad-slot="library" aria-label="Advertisement" style="min-height:250px;width:100%">Advertisement</aside></li>',
+    );
+    await route.fulfill({ response, body });
+  });
+  await page.goto('/');
+  const ad = page.locator('[data-library-ad]');
+  for (const width of [320, 768, 1280, 1440, 1920]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect(ad).toBeVisible();
+    const placement = await ad.evaluate((node) => {
+      const siblings = [...node.parentElement!.children];
+      const before = siblings
+        .slice(0, siblings.indexOf(node))
+        .filter((el) => el.hasAttribute('data-guide-topic') && !(el as HTMLElement).hidden);
+      const list = node.parentElement!.getBoundingClientRect();
+      const box = node.getBoundingClientRect();
+      return {
+        count: before.length,
+        width: box.width,
+        listWidth: list.width,
+        height: box.height,
+      };
+    });
+    expect(placement.count).toBe(6);
+    expect(placement.width).toBeCloseTo(placement.listWidth, 0);
+    expect(placement.height).toBeGreaterThanOrEqual(250);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+  }
+  await page.getByLabel('Article type', { exact: true }).selectOption('explainer');
+  await expect(ad).toBeVisible();
+  expect(
+    await ad.evaluate((node) => {
+      const siblings = [...node.parentElement!.children];
+      return siblings
+        .slice(0, siblings.indexOf(node))
+        .filter((el) => el.hasAttribute('data-guide-topic') && !(el as HTMLElement).hidden)
+        .length;
+    }),
+  ).toBe(6);
+  await page.getByLabel('Topic', { exact: true }).selectOption('phones');
+  await expect(ad).toBeHidden();
+  await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
+  await expect(ad).toBeVisible();
+});

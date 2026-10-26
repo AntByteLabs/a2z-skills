@@ -28,3 +28,7 @@ FIRST VIEWPORT: Strong masthead and navigation above a short introduction. A lar
 FORM: Compact publication, own candidate 7, seed:288d67292119315b. User approved option 1 in chat with cards replacing the preview's article rows. Code-led; screenshot .impeccable/previews/compact-publication.png is the composition reference.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+## Responsive library amendment
+
+User requested three article cards per row from the collection shown in their screenshot, with future ads organised properly. Keep one column below 640px, two from 640px and three from 1280px. Narrow the desktop topic sidebar to 15rem. Prepare one optional full-width advertising row after six matching cards, only when at least nine match; filtering repositions or hides it. Keep both advertising flags disabled and render no empty space while disabled.
