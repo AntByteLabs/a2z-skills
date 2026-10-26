@@ -172,15 +172,28 @@ export const commitFiles = async (
   };
 };
 
-/** Start a Cloudflare Workers build, which is what actually deploys the site. */
+/**
+ * Deploys are automatic: Workers Builds watches main, and every tool here
+ * commits to main, so a change is built and published without anything else
+ * being called. An explicit build can also be started when a token is set,
+ * which is only needed to republish without a change.
+ */
 export const startBuild = async (env: Env) => {
+  const autoDeploy = {
+    automatic: true,
+    how: 'Workers Builds watches main. Every change made through this server is a commit to main, so it is built and deployed on its own, usually inside two minutes.',
+    watch:
+      'https://dash.cloudflare.com/?to=/:account/workers/services/view/a2z-skills/production/builds',
+  };
+
   if (!env.CF_API_TOKEN || !env.CF_ACCOUNT_ID || !env.CF_BUILD_TRIGGER) {
     return {
       started: false,
-      reason:
-        'Workers Builds is not connected yet. Connect the repository once in the Cloudflare dashboard (Workers & Pages, a2z-skills, Settings, Builds), then set CF_API_TOKEN, CF_ACCOUNT_ID and CF_BUILD_TRIGGER as secrets on this Worker. Until then the commit is on main and `npm run deploy` publishes it.',
+      ...autoDeploy,
+      note: 'No build was started from here because this server has no Cloudflare API token, which it only needs to force a rebuild with no commit behind it. Nothing is waiting: the last commit is already building.',
     };
   }
+
   const res = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/builds/triggers/${env.CF_BUILD_TRIGGER}/builds`,
     {
@@ -189,16 +202,26 @@ export const startBuild = async (env: Env) => {
         Authorization: `Bearer ${env.CF_API_TOKEN}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({}),
+      // The API needs a branch or a commit hash; an empty body is refused.
+      body: JSON.stringify({ branch: BRANCH }),
     },
   );
   const body = (await res.json()) as {
     success?: boolean;
-    result?: { build_uuid?: string };
+    result?: { build_uuid?: string; status?: string };
     errors?: unknown;
   };
   if (!res.ok || body.success === false) {
-    return { started: false, reason: JSON.stringify(body.errors ?? body).slice(0, 300) };
+    return {
+      started: false,
+      ...autoDeploy,
+      error: JSON.stringify(body.errors ?? body).slice(0, 300),
+    };
   }
-  return { started: true, build: body.result?.build_uuid };
+  return {
+    started: true,
+    build: body.result?.build_uuid,
+    status: body.result?.status,
+    ...autoDeploy,
+  };
 };

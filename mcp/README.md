@@ -66,18 +66,41 @@ here as well as in the build.
 
 ## Deploying
 
-The `deploy` tool starts a **Cloudflare Workers build**, which needs connecting
-once: Cloudflare dashboard, Workers & Pages, `a2z-skills`, Settings, Builds,
-connect `AntByteLabs/a2z-skills`. Then set three secrets on this Worker:
+**Nothing needs calling.** Cloudflare Workers Builds watches `main`, and every
+tool here commits to `main`, so a change is built and published on its own,
+usually inside two minutes.
 
-```bash
-npx wrangler secret put CF_API_TOKEN     --config mcp/wrangler.json
-npx wrangler secret put CF_ACCOUNT_ID    --config mcp/wrangler.json
-npx wrangler secret put CF_BUILD_TRIGGER --config mcp/wrangler.json
+```
+chat → MCP tool → commit to main → Workers build → a2zskillsewa.com
 ```
 
-Until then `deploy` says exactly that, and `npm run deploy` from the repository
-publishes as usual.
+Verified end to end on 26 October 2026: an `update_post` call produced commit
+`90b3fce`, which Cloudflare picked up as a `push_event` and built without
+anything else being triggered.
+
+The `deploy` tool reports that, and links the build log. It can also force a
+rebuild with no commit behind it, which needs a Cloudflare API token set as
+`CF_API_TOKEN` on this Worker. That token has to be made by hand at
+[dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens):
+account-owned tokens created through `/accounts/{id}/tokens` are **not** valid
+deploy credentials, which is a trap worth knowing. A build using one fails with
+_"The build token selected for this build has been deleted or rolled"_, which
+does not describe the real problem at all.
+
+### The build setup
+
+| Setting        | Value                    |
+| -------------- | ------------------------ |
+| Repository     | `AntByteLabs/a2z-skills` |
+| Branch         | `main`                   |
+| Root directory | `/`                      |
+| Build command  | `npm run build`          |
+| Deploy command | `npx wrangler deploy`    |
+| Build caching  | on                       |
+
+The build runs the same gate as the pre-push hook: `astro check`, the content
+validator, Pagefind, the asset count and the size budget. A post that fails
+validation fails the build, so it never reaches the live site.
 
 ## Known edges
 

@@ -444,7 +444,7 @@ const tools = [
   {
     name: 'deploy',
     description:
-      'Build and publish the current state of main to the live site. Returns how to finish the setup if Workers Builds is not connected yet.',
+      'Report how the site publishes, and force a rebuild where that is possible. Normally nothing needs calling: every change this server makes is a commit to main, and Workers Builds deploys main on its own.',
     inputSchema: { type: 'object', properties: {} },
     handler: async (env: Env) => text(await startBuild(env)),
   },
