@@ -171,3 +171,41 @@ test('a valid MCP edit still commits after resolving real repository references'
     globalThis.fetch = originalFetch;
   }
 });
+
+test('generic writes reject article paths even with redundant dot segments', async () => {
+  const originalFetch = globalThis.fetch;
+  let attempts = 0;
+  globalThis.fetch = async () => {
+    attempts += 1;
+    throw new Error('No network expected');
+  };
+  try {
+    for (const path of [
+      'src/content/posts/example/index.mdx',
+      './src/content/posts/example/index.mdx',
+      'src//content/posts/example/index.mdx',
+    ]) {
+      const response = await mcp.fetch(
+        new Request('https://unit.test/', {
+          method: 'POST',
+          headers: { Authorization: 'Bearer unit-test' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            id: 3,
+            method: 'tools/call',
+            params: { name: 'write_repo_file', arguments: { path, content: 'invalid' } },
+          }),
+        }),
+        { MCP_TOKEN: 'unit-test', GITHUB_TOKEN: 'unit-test' },
+      );
+      const result = (await response.json()) as {
+        result: { isError?: boolean; content: { text: string }[] };
+      };
+      assert.equal(result.result.isError, true);
+      assert.match(result.result.content[0]!.text, /Use the post tools/);
+    }
+    assert.equal(attempts, 0);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});

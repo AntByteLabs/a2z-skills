@@ -369,6 +369,12 @@ const tools = [
           heroImage: `./${name}.${kind}`,
           heroAlt: String(args.alt),
         };
+        const check = await checkBeforeWrite(env, frontmatter, post.body, post.slug);
+        if (!check.ok)
+          return {
+            ...text({ refused: post.slug, problems: check.problems }),
+            isError: true,
+          };
         files.push({
           path: postPath(post.slug),
           content: joinPost(frontmatter, post.body),
@@ -400,7 +406,22 @@ const tools = [
       if (args.confirm !== true) return text('Pass confirm: true to delete a post.');
       const post = await getPost(env, String(args.slug));
       if (!post) return text(`No post at ${args.slug}.`);
-      const wasLive = post.frontmatter.draft === false;
+      const wasLive = post.frontmatter.draft !== true;
+      if (wasLive) {
+        const redirects = await readFile(env, 'public/_redirects');
+        if (
+          !redirects?.text
+            .split('\n')
+            .some(
+              (line) => line.trim().split(/\s+/)[0]?.replace(/\/$/, '') === `/${post.slug}`,
+            )
+        ) {
+          return {
+            ...text('Add the published URL redirect before deleting this post.'),
+            isError: true,
+          };
+        }
+      }
       const result = await deleteFile(env, postPath(post.slug), `Remove ${post.slug}`);
       return text({
         ...result,
@@ -485,7 +506,11 @@ const tools = [
       if (
         path.split('/').includes('..') ||
         path.startsWith('/') ||
-        path.split('/').filter(Boolean).join('/').startsWith('src/content/posts/')
+        path
+          .split('/')
+          .filter((part) => part && part !== '.')
+          .join('/')
+          .startsWith('src/content/posts/')
       ) {
         return {
           ...text('Use the post tools for article changes so publishing checks run.'),
