@@ -11,7 +11,13 @@ const posts = await livePosts();
 const pillars = (await getCollection('pillars')).sort(
   (a, b) => a.data.order - b.data.order,
 );
-const tested = posts.filter((post) => post.data.testedOn).slice(0, 2);
+const tested = ['automation', 'websites-hosting'].flatMap((id) => {
+  const pillar = pillars.find((entry) => entry.id === id);
+  const post = pillar?.data.startHere
+    .map((slug) => posts.find((entry) => entry.id === slug))
+    .find((entry) => entry?.data.testedOn?.testedBy);
+  return post ? [post] : [];
+});
 ---
 
 <BaseLayout

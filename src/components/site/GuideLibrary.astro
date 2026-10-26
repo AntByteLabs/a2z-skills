@@ -77,7 +77,7 @@ const { posts, pillars } = Astro.props;
       <li
         class="min-w-0"
         data-guide-topic={post.data.pillar}
-        data-guide-type={post.data.testedOn ? 'tested' : post.data.type}
+        data-guide-type={post.data.testedOn?.testedBy ? 'tested' : post.data.type}
       >
         <PostCard post={post} showPillar={true} />
       </li>

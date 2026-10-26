@@ -30,6 +30,19 @@ test('published procedures require versions and a real body section for the test
   );
 });
 
+test('published procedures require an explicit tester, while a draft can await review', () => {
+  const record = parsed.frontmatter.testedOn as Record<string, unknown>;
+  for (const testedBy of [undefined, '', '   ']) {
+    const post = { ...parsed.frontmatter, testedOn: { ...record, testedBy } };
+    assert.equal(checkArticle(post, parsed.body, slug).ok, false);
+    assert.match(
+      checkArticle(post, parsed.body, slug).problems.join(' '),
+      /person who tested/,
+    );
+    assert.equal(checkArticle({ ...post, draft: true }, parsed.body, slug).ok, true);
+  }
+});
+
 test('metadata cannot bypass publication limits through unexpected types', () => {
   assert.equal(
     checkArticle({ ...parsed.frontmatter, draft: 'false' }, parsed.body, slug).ok,

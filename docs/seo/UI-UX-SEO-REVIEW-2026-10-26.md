@@ -55,7 +55,7 @@ the ending.
    records and FAQ answers remain searchable. Results show one entry per
    matching article. A failed bundle has a tested Retry search action; topics
    remain available for empty results and without JavaScript.
-4. P1: The two tested procedures were buried. They now appear beside the main
+4. P1: The two original tested entry guides were buried. They now appear beside the main
    search on desktop and directly below it on phones. Topic links precede the
    full library. Readers can filter by topic and tested guide/explainer type,
    see a result count and clear an empty selection.
@@ -127,6 +127,15 @@ menu, reading options and manual/system dark search. The twelve light-mode
 captures have no document overflow. Images remain local review artifacts.
 
 ## Validation and publication
+
+The first completed check passed 126 browser tests (two intentional skips) and
+eight unit tests. After a concurrent webhook article was integrated, the owner
+confirmed Ronit completed the review. Its tester is now recorded explicitly.
+Local validation, the Astro schema and MCP article checks reject a published
+procedure without a named tester; the template no longer guesses from authorship.
+A ninth unit test covers missing/blank testers and draft handling. The keyword
+queue and both webhook briefs point to the published canonical URL to avoid
+competing pages for the same intent.
 
 Final check, Lighthouse and production results are recorded in
 [verification](verification-experience-2026-10-26/). Form tests use mocked

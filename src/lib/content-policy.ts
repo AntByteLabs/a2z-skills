@@ -70,6 +70,11 @@ const fields = z
       issue('quickAnswer', 'A published post needs a short answer');
     if (!post.draft && testedTypes.includes(post.type) && !post.testedOn)
       issue('testedOn', 'A published procedure needs its test record');
+    if (!post.draft && testedTypes.includes(post.type) && !post.testedOn?.testedBy?.trim())
+      issue(
+        'testedOn.testedBy',
+        'A published procedure needs the name of the person who tested it',
+      );
     if (post.heroImage && !post.heroAlt?.trim())
       issue('heroAlt', 'The hero image needs alt text');
     if (post.updatedAt && post.updatedAt < post.publishedAt)

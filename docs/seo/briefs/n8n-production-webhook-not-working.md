@@ -1,15 +1,15 @@
 # Production webhooks: distinguish test URL, published state and HTTP method
 
-Status: prepared for a human test; unpublished.
+Status: basic test/production URL diagnosis is published at [/n8n-webhook-not-working/](/n8n-webhook-not-working/). The owner confirmed Ronit completed the review on 26 October 2026. Further outcome checks below remain an extension of that article, not a second page for the same intent.
 Primary query: n8n production webhook not working
-Candidate route: /n8n-production-webhook-not-working/
+Canonical route: /n8n-webhook-not-working/
 Existing parent: /self-host-n8n-coolify/
 
 ## Evidence required
 
 The named tester must supply the date, product versions, device/deployment,
 starting state, exact observed output and final result. Record failed attempts
-as well as the working result. No test has been claimed for this brief.
+as well as the working result. The published article records the two observed 404 responses; the remaining checks below need their own evidence.
 
 - [ ] Record a disposable workflow's behaviour before and after publication.
 - [ ] Compare the actual test and production endpoints with the same HTTP method and payload.

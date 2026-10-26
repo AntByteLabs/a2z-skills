@@ -7,10 +7,8 @@ interface Props {
     device?: string;
     testedBy?: string;
   };
-  author: string;
 }
-const { testedOn, author } = Astro.props;
-const by = testedOn.testedBy ?? author;
+const { testedOn } = Astro.props;
 ---
 
 <div class="not-prose mt-3 rounded-card border border-rule bg-paper-sunk p-3.5 text-sm">
@@ -23,7 +21,9 @@ const by = testedOn.testedBy ?? author;
     >
       <path d="M5.4 10.5 1.9 7l1.3-1.3 2.2 2.2 5.4-5.4L12.1 3.8z" />
     </svg>
-    Tested {formatDate(testedOn.date)} by {by}
+    {testedOn.testedBy
+      ? `Tested ${formatDate(testedOn.date)} by ${testedOn.testedBy}`
+      : `Test record: ${formatDate(testedOn.date)}`}
   </p>
   <dl class="mt-2 flex flex-wrap gap-x-4 gap-y-1">
     {Object.entries(testedOn.versions).map(([name, version]) => (

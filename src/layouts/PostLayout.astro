@@ -142,7 +142,7 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
       </div>
 
       {data.testedOn ? (
-        <TestedOn testedOn={data.testedOn} author={author.data.name} />
+        <TestedOn testedOn={data.testedOn} />
       ) : data.type === 'explainer' ? (
         <p class="mt-3 text-sm text-ink-soft" data-research-note>
           Researched explainer. Supporting documentation and research are linked in the

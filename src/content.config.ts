@@ -46,6 +46,16 @@ const posts = defineCollection({
           path: ['testedOn'],
         },
       )
+      .refine(
+        (p) =>
+          p.draft ||
+          !['how-to', 'fix', 'review'].includes(p.type) ||
+          !!p.testedOn?.testedBy?.trim(),
+        {
+          message: 'Published procedures need the name of the person who tested them',
+          path: ['testedOn', 'testedBy'],
+        },
+      )
       .refine((p) => p.draft || p.description.length >= 120, {
         message: 'Published descriptions need 120 to 160 characters',
         path: ['description'],

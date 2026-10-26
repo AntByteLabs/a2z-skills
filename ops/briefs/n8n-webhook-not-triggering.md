@@ -1,5 +1,7 @@
 # n8n webhook not triggering
 
+Status: basic diagnosis is published at [/n8n-webhook-not-working/](https://a2zskillsewa.com/n8n-webhook-not-working/). The owner confirmed Ronit completed the review on 26 October 2026. Keep follow-ups on that URL when they answer the same test/production endpoint question. The scaffold below is retained as the original brief, not a second publication task.
+
 - **Keyword:** n8n webhook not triggering
 - **Slug:** `n8n-webhook-not-triggering`
 - **Pillar:** automation · **Type:** fix · **Author:** ronit-karki

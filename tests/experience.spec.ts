@@ -24,11 +24,15 @@ test('library filters combine, explain an empty result and reset without creatin
   await page.goto('/');
   const items = page.locator('[data-guide-topic]:visible');
   const total = await items.count();
+  const testedCount = await page.locator('[data-guide-type="tested"]').count();
+  const automationCount = await page
+    .locator('[data-guide-topic="automation"][data-guide-type="tested"]')
+    .count();
   await page.getByLabel('Article type', { exact: true }).selectOption('tested');
-  await expect(items).toHaveCount(2);
+  await expect(items).toHaveCount(testedCount);
   await page.getByLabel('Topic', { exact: true }).selectOption('automation');
-  await expect(items).toHaveCount(1);
-  await expect(items.first()).toContainText('Self-host n8n on Coolify');
+  await expect(items).toHaveCount(automationCount);
+  await expect(items.filter({ hasText: 'Self-host n8n on Coolify' })).toHaveCount(1);
   await page.getByLabel('Topic', { exact: true }).selectOption('phones');
   await expect(items).toHaveCount(0);
   await expect(page.locator('[data-guide-empty]')).toBeVisible();

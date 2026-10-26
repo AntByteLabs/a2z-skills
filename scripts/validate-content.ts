@@ -138,6 +138,13 @@ const run = async () => {
     if (!f.draft && f.type && TESTED_TYPES.has(f.type) && !f.testedOn?.date)
       fail(rel, 'tested-on', `A ${f.type} post must record when it was tested.`);
 
+    if (!f.draft && f.type && TESTED_TYPES.has(f.type) && !f.testedOn?.testedBy?.trim())
+      fail(
+        rel,
+        'tested-by',
+        'Name the person who tested this procedure before publishing it.',
+      );
+
     if (f.testedOn?.versions && Object.keys(f.testedOn.versions).length === 0)
       fail(rel, 'tested-on', 'testedOn.versions is empty; name the versions you tested.');
 
