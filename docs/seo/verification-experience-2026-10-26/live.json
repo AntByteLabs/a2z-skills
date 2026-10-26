@@ -1,0 +1,276 @@
+{
+  "checkedAt": "2026-10-26T13:17:23.131Z",
+  "site": "https://a2zskillsewa.com",
+  "checks": [
+    {
+      "width": 375,
+      "catalogue": 13,
+      "tested_guides": 3,
+      "automation_tested_guides": 2,
+      "search_pointer_click": true,
+      "search_results": true,
+      "tester_attribution": true,
+      "reading_options": true,
+      "overflow": false,
+      "browser_errors": []
+    },
+    {
+      "width": 1280,
+      "catalogue": 13,
+      "tested_guides": 3,
+      "automation_tested_guides": 2,
+      "search_pointer_click": true,
+      "search_results": true,
+      "tester_attribution": true,
+      "reading_options": true,
+      "overflow": false,
+      "browser_errors": []
+    }
+  ],
+  "manual_dark_search": true,
+  "sitemap_urls": 29,
+  "all_sitemap_pages_pass": true,
+  "mcp_health": 200,
+  "mcp_unauthenticated_post": 401,
+  "pages": [
+    {
+      "url": "https://a2zskillsewa.com/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/automations-failing-silently/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/chatgpt-different-answers-same-question/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/dns-propagation-explained/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/excel-changing-numbers-into-dates/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/excel-file-size-too-large/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/n8n-webhook-not-working/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/phone-slows-down-gets-older/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/windows-restart-finish-installing-updates/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/ai-tools/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/automation/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/excel-office/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/phones/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/websites-hosting/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/windows-mac/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/krishna-pokharel/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/ronit-karki/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/about/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/affiliate-disclosure/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/contact/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/editorial-policy/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/privacy/",
+      "status": 200,
+      "canonical": true,
+      "h1": 1,
+      "noindex": false,
+      "pass": true
+    }
+  ],
+  "site_worker_version": "21423f37-7304-4a5b-92dc-55cb4e57258e",
+  "mcp_worker_version": "0718f8ad-d2ae-4d60-94a4-14a95c7d90d3",
+  "indexnow": {
+    "submitted_urls": 29,
+    "status": 200,
+    "meaning": "Submission succeeded; search-engine indexing and ranking are not confirmed"
+  }
+}

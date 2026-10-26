@@ -144,6 +144,21 @@ Nine fresh Lighthouse lab runs across three representative pages scored 100 in
 all four categories, with CLS 0. Exact LCP measurements are in the JSON report;
 these are lab results, not field Core Web Vitals.
 
+Published and verified at [a2zskillsewa.com](https://a2zskillsewa.com/).
+Live checks at 375 and 1280 pixels confirmed real pointer search, the 13-article
+catalogue, three named tested guides, combined filters/reset, the mobile topic
+menu, Ronit's webhook attribution and reading options, with no browser errors
+or document overflow. Manual dark search was captured and reviewed. All 29
+sitemap URLs returned 200 with matching canonicals, one H1 and no noindex.
+The MCP health endpoint returned 200; an unauthenticated request returned 401.
+IndexNow accepted the 29-URL submission with HTTP 200. That response does not
+confirm Google indexing.
+
+The site deployment is `21423f37-7304-4a5b-92dc-55cb4e57258e`; MCP is
+`0718f8ad-d2ae-4d60-94a4-14a95c7d90d3`. Source changes were merged to main,
+including both concurrent workflow commits. The other session's untracked
+content-scorecard file was preserved. The final local preview was stopped.
+
 Final check, Lighthouse and production results are recorded in
 [verification](verification-experience-2026-10-26/). Form tests use mocked
 submissions; this review did not add production signup or feedback records.
