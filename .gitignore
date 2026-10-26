@@ -14,3 +14,11 @@ worker-configuration.d.ts
 
 .impeccable/critique/design-evidence/
 .impeccable/critique/after/
+
+# Local design choices and browser evidence
+.impeccable/mocks/
+.impeccable/previews/
+.impeccable/review/
+.impeccable/clean-layout-options.json
+.impeccable/questions/
+.impeccable/telemetry/

@@ -14,8 +14,8 @@ test('card whitespace opens its own article and leaves other actions clickable',
     await expect(page).toHaveURL(new RegExp(`${href}$`));
     await page.goto('/');
   }
-  await page.locator('#home-q').click();
-  await expect(page.locator('#home-q')).toBeFocused();
+  await page.locator('input[name="q"]:visible').first().click();
+  await expect(page.locator('input[name="q"]:visible').first()).toBeFocused();
 });
 
 test('library filters combine, explain an empty result and reset without creating facet URLs', async ({

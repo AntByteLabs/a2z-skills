@@ -11,9 +11,9 @@ test('a homepage search preserves its query and returns a relevant article', asy
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/');
-  await page.locator('#home-q').click();
-  await page.locator('#home-q').fill('n8n');
-  await page.locator('#home-q').press('Enter');
+  await page.locator('input[name="q"]:visible').first().click();
+  await page.locator('input[name="q"]:visible').first().fill('n8n');
+  await page.locator('input[name="q"]:visible').first().press('Enter');
   await expect(page).toHaveURL(/\/search\/\?q=n8n/);
   await expect(page.locator('.pagefind-ui__search-input')).toHaveValue('n8n');
   await expect(

@@ -28,8 +28,8 @@
  * light blue with dark text in the dark scheme. Do not nudge a lightness value
  * without re-running the check in scripts/check-contrast.ts.
  *
- * Paper is warm rather than white, radii are generous and the spacing scale is
- * tight: the site should feel like a well-set page, not a dashboard.
+ * White surfaces, thin rules and modest card corners keep the publication
+ * clear, compact and comfortable to read.
  */
 @theme {
   --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
@@ -40,9 +40,9 @@
   --color-ink: oklch(0.2 0.025 268);
   --color-ink-soft: oklch(0.455 0.02 265);
   --color-ink-faint: oklch(0.525 0.016 265);
-  --color-paper: oklch(0.993 0.006 85);
-  --color-paper-sunk: oklch(0.965 0.012 85);
-  --color-rule: oklch(0.885 0.012 85);
+  --color-paper: oklch(1 0 0);
+  --color-paper-sunk: oklch(0.98 0.003 260);
+  --color-rule: oklch(0.89 0.007 260);
 
   --color-brand: oklch(0.5 0.16 258);
   --color-brand-deep: oklch(0.36 0.14 260);
@@ -61,9 +61,9 @@
   --color-ink-invert: oklch(0.16 0.02 268);
   --color-highlight: oklch(0.93 0.09 95);
 
-  --radius-card: 1.25rem;
+  --radius-card: 0.625rem;
   --radius-bubble: 1.75rem;
-  --radius-soft: 0.875rem;
+  --radius-soft: 0.5rem;
   --radius-pill: 999px;
   --spacing-gutter: 1rem;
   --text-measure: 66ch;
@@ -86,7 +86,7 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: 6rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -258,7 +258,7 @@
 /* The page frame, so every template agrees on gutters and width. */
 @utility shell {
   margin-inline: auto;
-  max-width: 72rem;
+  max-width: 83rem;
   padding-inline: var(--spacing-gutter);
 }
 
@@ -289,15 +289,15 @@
   align-items: center;
   gap: 0.3rem;
   border-radius: var(--radius-pill);
-  background: var(--color-good-wash);
-  padding: 0.1875rem 0.5rem;
+  background: transparent;
+  padding: 0;
   font-size: 0.75rem;
   font-weight: 600;
   line-height: 1.4;
-  color: var(--color-good-deep);
+  color: var(--color-brand-deep);
 }
 
-/* A card that lifts a little when you point at it. */
+/* A restrained article card: emphasis comes from its border and headline. */
 @utility card-link {
   border-radius: var(--radius-card);
   border: 1px solid var(--color-rule);
@@ -310,8 +310,6 @@
 
   &:hover {
     border-color: var(--color-brand);
-    box-shadow: var(--shadow-lift);
-    transform: translateY(-2px);
   }
 }
 
@@ -320,8 +318,8 @@
   align-items: center;
   gap: 0.25rem;
   border-radius: var(--radius-pill);
-  background: var(--color-paper-sunk);
-  padding: 0.125rem 0.5rem;
+  background: transparent;
+  padding: 0;
   font-size: 0.75rem;
   font-weight: 600;
   line-height: 1.5;
@@ -707,10 +705,6 @@ article .prose-sm {
 
 [data-guide-list] .card-link {
   box-shadow: none;
-}
-
-[data-guide-list] .card-link:hover {
-  box-shadow: var(--shadow-lift);
 }
 
 @media print {

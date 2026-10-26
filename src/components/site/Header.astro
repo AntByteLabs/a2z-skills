@@ -1,6 +1,5 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
-import { site } from '../../site';
 import { getCollection } from 'astro:content';
 
 const pillars = (await getCollection('pillars')).sort(
@@ -15,35 +14,67 @@ const onPillar = (id: string) => activePillar === id || here === `/topics/${id}/
 ---
 
 <header class="sticky top-0 z-40 border-b border-rule bg-paper/85 backdrop-blur-md">
-  <div class="shell flex h-14 items-center gap-3">
+  <div class="shell flex h-16 lg:h-20 items-center gap-3">
     <a
       href="/"
-      class="shrink-0 font-display text-base font-bold tracking-tight no-underline sm:text-lg"
+      class="shrink-0 font-display text-2xl font-bold tracking-tight no-underline text-ink sm:text-3xl"
     >
-      {site.name}
+      A2Z <span class="text-brand-deep">Skills</span>
     </a>
 
-    <nav aria-label="Topics" class="hidden min-w-0 flex-1 lg:block">
-      <ul class="flex items-center gap-1 text-sm">
-        {pillars.map((p) => (
+    <nav aria-label="Main" class="hidden min-w-0 flex-1 lg:block">
+      <ul class="flex items-center gap-5 pl-6 text-sm">
+        {[
+          ['Latest', '/#guides'],
+          ['Topics', '/topics/'],
+          ['Tested guides', '/#tested-guides'],
+          ['About', '/about/'],
+        ].map(([label, href]) => (
           <li>
             <a
-              href={`/topics/${p.id}/`}
-              aria-current={onPillar(p.id) ? 'page' : undefined}
-              class:list={[
-                'rounded-pill px-2.5 py-1.5 no-underline transition-colors',
-                onPillar(p.id)
-                  ? 'bg-brand-wash font-semibold text-brand-deep'
-                  : 'text-ink-soft hover:bg-paper-sunk hover:text-ink',
-              ]}
+              href={href}
+              class="inline-flex min-h-11 items-center no-underline text-ink-soft hover:text-brand-deep hover:underline"
             >
-              {p.data.name}
+              {label}
             </a>
           </li>
         ))}
       </ul>
     </nav>
-
+    <form
+      action="/search/"
+      method="get"
+      role="search"
+      class="hidden min-w-0 items-center rounded-soft border border-rule lg:flex"
+    >
+      <label class="sr-only" for={here === '/' ? 'home-q-desktop' : 'nav-q'}>
+        Search guides
+      </label>
+      <input
+        id={here === '/' ? 'home-q-desktop' : 'nav-q'}
+        name="q"
+        type="search"
+        placeholder="Search guides…"
+        class="min-h-11 w-40 min-w-0 rounded-soft bg-paper px-3 text-base xl:w-48"
+      />
+      <button
+        type="submit"
+        aria-label="Search"
+        class="flex h-11 w-11 items-center justify-center text-ink-soft hover:text-brand-deep"
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 16 16"
+          class="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+          <circle cx="7" cy="7" r="4.5" />
+          <path d="M10.5 10.5 14 14" />
+        </svg>
+      </button>
+    </form>
     <details class="ml-auto lg:hidden" data-topic-menu>
       <summary class="flex min-h-11 cursor-pointer list-none items-center gap-1 rounded-pill px-3 text-sm font-semibold marker:hidden">
         Topics
@@ -93,7 +124,7 @@ const onPillar = (id: string) => activePillar === id || here === `/topics/${id}/
     <div class="flex shrink-0 items-center gap-1.5 lg:ml-auto">
       <a
         href="/search/"
-        class="flex items-center gap-1.5 rounded-pill border border-rule px-3 py-1.5 text-sm no-underline text-ink-soft transition-colors hover:bg-paper-sunk hover:text-ink"
+        class="flex min-h-11 items-center gap-1.5 rounded-soft px-3 text-sm no-underline text-ink-soft transition-colors hover:bg-paper-sunk hover:text-ink lg:hidden"
       >
         <svg
           aria-hidden="true"

@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T15:31:26.604584+00:00",
+  "title": "Design System: A2Z Skills",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(0.15 0.025 268)",
+          "oklch(0.26 0.025 268)",
+          "oklch(0.38 0.025 268)",
+          "oklch(0.50 0.025 268)",
+          "oklch(0.62 0.025 268)",
+          "oklch(0.74 0.025 268)",
+          "oklch(0.85 0.025 268)",
+          "oklch(0.95 0.025 268)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "tonalRamp": [
+          "oklch(0.15 0.02 265)",
+          "oklch(0.26 0.02 265)",
+          "oklch(0.38 0.02 265)",
+          "oklch(0.50 0.02 265)",
+          "oklch(0.62 0.02 265)",
+          "oklch(0.74 0.02 265)",
+          "oklch(0.85 0.02 265)",
+          "oklch(0.95 0.02 265)"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Ink Faint",
+        "tonalRamp": [
+          "oklch(0.15 0.016 265)",
+          "oklch(0.26 0.016 265)",
+          "oklch(0.38 0.016 265)",
+          "oklch(0.50 0.016 265)",
+          "oklch(0.62 0.016 265)",
+          "oklch(0.74 0.016 265)",
+          "oklch(0.85 0.016 265)",
+          "oklch(0.95 0.016 265)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.50 0 0)",
+          "oklch(0.62 0 0)",
+          "oklch(0.74 0 0)",
+          "oklch(0.85 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "paper-sunk": {
+        "role": "neutral",
+        "displayName": "Paper Sunk",
+        "tonalRamp": [
+          "oklch(0.15 0.003 260)",
+          "oklch(0.26 0.003 260)",
+          "oklch(0.38 0.003 260)",
+          "oklch(0.50 0.003 260)",
+          "oklch(0.62 0.003 260)",
+          "oklch(0.74 0.003 260)",
+          "oklch(0.85 0.003 260)",
+          "oklch(0.95 0.003 260)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "tonalRamp": [
+          "oklch(0.15 0.007 260)",
+          "oklch(0.26 0.007 260)",
+          "oklch(0.38 0.007 260)",
+          "oklch(0.50 0.007 260)",
+          "oklch(0.62 0.007 260)",
+          "oklch(0.74 0.007 260)",
+          "oklch(0.85 0.007 260)",
+          "oklch(0.95 0.007 260)"
+        ]
+      },
+      "brand": {
+        "role": "primary",
+        "displayName": "Brand",
+        "tonalRamp": [
+          "oklch(0.15 0.16 258)",
+          "oklch(0.26 0.16 258)",
+          "oklch(0.38 0.16 258)",
+          "oklch(0.50 0.16 258)",
+          "oklch(0.62 0.16 258)",
+          "oklch(0.74 0.16 258)",
+          "oklch(0.85 0.16 258)",
+          "oklch(0.95 0.16 258)"
+        ]
+      },
+      "brand-deep": {
+        "role": "primary",
+        "displayName": "Brand Deep",
+        "tonalRamp": [
+          "oklch(0.15 0.14 260)",
+          "oklch(0.26 0.14 260)",
+          "oklch(0.38 0.14 260)",
+          "oklch(0.50 0.14 260)",
+          "oklch(0.62 0.14 260)",
+          "oklch(0.74 0.14 260)",
+          "oklch(0.85 0.14 260)",
+          "oklch(0.95 0.14 260)"
+        ]
+      },
+      "brand-wash": {
+        "role": "primary",
+        "displayName": "Brand Wash",
+        "tonalRamp": [
+          "oklch(0.15 0.025 255)",
+          "oklch(0.26 0.025 255)",
+          "oklch(0.38 0.025 255)",
+          "oklch(0.50 0.025 255)",
+          "oklch(0.62 0.025 255)",
+          "oklch(0.74 0.025 255)",
+          "oklch(0.85 0.025 255)",
+          "oklch(0.95 0.025 255)"
+        ]
+      },
+      "accent": {
+        "role": "secondary",
+        "displayName": "Accent",
+        "tonalRamp": [
+          "oklch(0.15 0.16 42)",
+          "oklch(0.26 0.16 42)",
+          "oklch(0.38 0.16 42)",
+          "oklch(0.50 0.16 42)",
+          "oklch(0.62 0.16 42)",
+          "oklch(0.74 0.16 42)",
+          "oklch(0.85 0.16 42)",
+          "oklch(0.95 0.16 42)"
+        ]
+      },
+      "accent-edge": {
+        "role": "secondary",
+        "displayName": "Accent Edge",
+        "tonalRamp": [
+          "oklch(0.15 0.16 45)",
+          "oklch(0.26 0.16 45)",
+          "oklch(0.38 0.16 45)",
+          "oklch(0.50 0.16 45)",
+          "oklch(0.62 0.16 45)",
+          "oklch(0.74 0.16 45)",
+          "oklch(0.85 0.16 45)",
+          "oklch(0.95 0.16 45)"
+        ]
+      },
+      "good": {
+        "role": "secondary",
+        "displayName": "Good",
+        "tonalRamp": [
+          "oklch(0.15 0.12 155)",
+          "oklch(0.26 0.12 155)",
+          "oklch(0.38 0.12 155)",
+          "oklch(0.50 0.12 155)",
+          "oklch(0.62 0.12 155)",
+          "oklch(0.74 0.12 155)",
+          "oklch(0.85 0.12 155)",
+          "oklch(0.95 0.12 155)"
+        ]
+      },
+      "good-deep": {
+        "role": "secondary",
+        "displayName": "Good Deep",
+        "tonalRamp": [
+          "oklch(0.15 0.11 155)",
+          "oklch(0.26 0.11 155)",
+          "oklch(0.38 0.11 155)",
+          "oklch(0.50 0.11 155)",
+          "oklch(0.62 0.11 155)",
+          "oklch(0.74 0.11 155)",
+          "oklch(0.85 0.11 155)",
+          "oklch(0.95 0.11 155)"
+        ]
+      },
+      "good-wash": {
+        "role": "secondary",
+        "displayName": "Good Wash",
+        "tonalRamp": [
+          "oklch(0.15 0.045 155)",
+          "oklch(0.26 0.045 155)",
+          "oklch(0.38 0.045 155)",
+          "oklch(0.50 0.045 155)",
+          "oklch(0.62 0.045 155)",
+          "oklch(0.74 0.045 155)",
+          "oklch(0.85 0.045 155)",
+          "oklch(0.95 0.045 155)"
+        ]
+      },
+      "warn": {
+        "role": "secondary",
+        "displayName": "Warn",
+        "tonalRamp": [
+          "oklch(0.15 0.13 75)",
+          "oklch(0.26 0.13 75)",
+          "oklch(0.38 0.13 75)",
+          "oklch(0.50 0.13 75)",
+          "oklch(0.62 0.13 75)",
+          "oklch(0.74 0.13 75)",
+          "oklch(0.85 0.13 75)",
+          "oklch(0.95 0.13 75)"
+        ]
+      },
+      "warn-deep": {
+        "role": "secondary",
+        "displayName": "Warn Deep",
+        "tonalRamp": [
+          "oklch(0.15 0.115 75)",
+          "oklch(0.26 0.115 75)",
+          "oklch(0.38 0.115 75)",
+          "oklch(0.50 0.115 75)",
+          "oklch(0.62 0.115 75)",
+          "oklch(0.74 0.115 75)",
+          "oklch(0.85 0.115 75)",
+          "oklch(0.95 0.115 75)"
+        ]
+      },
+      "bad": {
+        "role": "secondary",
+        "displayName": "Bad",
+        "tonalRamp": [
+          "oklch(0.15 0.18 25)",
+          "oklch(0.26 0.18 25)",
+          "oklch(0.38 0.18 25)",
+          "oklch(0.50 0.18 25)",
+          "oklch(0.62 0.18 25)",
+          "oklch(0.74 0.18 25)",
+          "oklch(0.85 0.18 25)",
+          "oklch(0.95 0.18 25)"
+        ]
+      },
+      "ink-invert": {
+        "role": "neutral",
+        "displayName": "Ink Invert",
+        "tonalRamp": [
+          "oklch(0.15 0.02 268)",
+          "oklch(0.26 0.02 268)",
+          "oklch(0.38 0.02 268)",
+          "oklch(0.50 0.02 268)",
+          "oklch(0.62 0.02 268)",
+          "oklch(0.74 0.02 268)",
+          "oklch(0.85 0.02 268)",
+          "oklch(0.95 0.02 268)"
+        ]
+      },
+      "highlight": {
+        "role": "neutral",
+        "displayName": "Highlight",
+        "tonalRamp": [
+          "oklch(0.15 0.09 95)",
+          "oklch(0.26 0.09 95)",
+          "oklch(0.38 0.09 95)",
+          "oklch(0.50 0.09 95)",
+          "oklch(0.62 0.09 95)",
+          "oklch(0.74 0.09 95)",
+          "oklch(0.85 0.09 95)",
+          "oklch(0.95 0.09 95)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Featured and article titles; responsive sizes documented in DESIGN.md."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card headlines."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "General interface text."
+      },
+      "reading": {
+        "displayName": "Reading",
+        "purpose": "Article prose with responsive and dark-mode compensation."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Quiet metadata."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Commands and code."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 1px 2px oklch(0.235 0.022 265 / 0.05)",
+        "purpose": "Existing generic utility and mobile menu; suppressed for home library cards."
+      },
+      {
+        "name": "card-dark",
+        "value": "0 1px 2px oklch(0 0 0 / 0.3)",
+        "purpose": "Dark counterpart of the existing generic utility."
+      },
+      {
+        "name": "lift",
+        "value": "0 4px 16px oklch(0.235 0.022 265 / 0.08)",
+        "purpose": "Residual source token; do not introduce into the flat library."
+      },
+      {
+        "name": "lift-dark",
+        "value": "0 4px 16px oklch(0 0 0 / 0.4)",
+        "purpose": "Dark counterpart of the residual source token."
+      }
+    ],
+    "motion": [
+      {
+        "name": "card-edge",
+        "value": "border-color 0.18s ease",
+        "purpose": "Article-card edge colour; no hover movement."
+      },
+      {
+        "name": "reader-colour",
+        "value": "background-color 140ms ease-out, color 140ms ease-out",
+        "purpose": "Reader control states."
+      },
+      {
+        "name": "reader-hide",
+        "value": "transform 220ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease-out",
+        "purpose": "Existing reading toolbar; disabled under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Deep blue notification-list action with a quiet colour change.",
+      "html": "<button class=\"ds-primary\">Subscribe</button>",
+      "css": ".ds-primary{border:0;background:var(--color-brand-deep);color:var(--color-paper);border-radius:var(--radius-pill);padding:.625rem 1rem;font-family:var(--font-display);font-weight:600;transition:background-color 150ms ease}.ds-primary:hover{background:var(--color-brand)}.ds-primary:focus-visible{outline:2px solid var(--color-brand);outline-offset:2px;}"
+    },
+    {
+      "name": "Clear filters",
+      "kind": "button",
+      "refersTo": "button-reset",
+      "description": "Secondary reset with a thin border and disabled state.",
+      "html": "<button class=\"ds-reset\">Clear filters</button>",
+      "css": ".ds-reset{min-height:2.75rem;border:1px solid var(--color-rule);background:var(--color-paper);color:var(--color-ink);border-radius:var(--radius-pill);padding:.5rem 1rem;font:600 .875rem var(--font-display)}.ds-reset:hover{border-color:var(--color-brand-deep)}.ds-reset:focus-visible{outline:2px solid var(--color-brand);outline-offset:2px;}.ds-reset:disabled{opacity:.5;cursor:default}"
+    },
+    {
+      "name": "Search field",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Soft rectangular search input with explicit label.",
+      "html": "<label class=\"ds-search\">Search guides<input type=\"search\" placeholder=\"Search guides…\"></label>",
+      "css": ".ds-search{display:grid;gap:.25rem;color:var(--color-ink);font-family:var(--font-sans)}.ds-search input{min-height:2.75rem;border:1px solid var(--color-rule);border-radius:var(--radius-soft);padding:0 .75rem;background:var(--color-paper);color:var(--color-ink);font:1rem var(--font-sans)}.ds-search input:hover{border-color:var(--color-brand-deep)}.ds-search input:focus-visible{outline:2px solid var(--color-brand);outline-offset:2px;}"
+    },
+    {
+      "name": "Native topic filter",
+      "kind": "input",
+      "refersTo": "filter-field",
+      "description": "Native labelled select; actual collection filtering is progressively enhanced.",
+      "html": "<label class=\"ds-filter\">Topic<select><option>All topics</option><option>Automation</option><option>Websites &amp; hosting</option></select></label>",
+      "css": ".ds-filter{display:grid;gap:.25rem;font:600 .875rem var(--font-sans);color:var(--color-ink)}.ds-filter select{min-height:2.75rem;border:1px solid var(--color-rule);border-radius:var(--radius-soft);padding:.5rem .75rem;background:var(--color-paper);color:var(--color-ink);font:1rem var(--font-sans)}.ds-filter select:hover{border-color:var(--color-brand-deep)}.ds-filter select:focus-visible{outline:2px solid var(--color-brand);outline-offset:2px;}"
+    },
+    {
+      "name": "Metadata label",
+      "kind": "chip",
+      "refersTo": "metadata-label",
+      "description": "Quiet factual label without a filled badge.",
+      "html": "<span class=\"ds-label\">Explainer</span>",
+      "css": ".ds-label{display:inline-flex;align-items:center;gap:.25rem;border-radius:var(--radius-pill);background:transparent;padding:0;color:var(--color-ink-soft);font:600 .75rem/1.5 var(--font-display)}"
+    },
+    {
+      "name": "Article card",
+      "kind": "card",
+      "refersTo": "article-card",
+      "description": "Bordered library card with headline emphasis and no shadow. Preview copy is illustrative.",
+      "html": "<article class=\"ds-card\"><span class=\"ds-card-type\">Explainer</span><h3><a href=\"#guide\">Understand your hosting options</a></h3><p>Clear explanations to help you choose the next step.</p><footer>26 October 2026 · 5 min read</footer></article>",
+      "css": ".ds-card{position:relative;border:1px solid var(--color-rule);border-radius:var(--radius-card);background:var(--color-paper);color:var(--color-ink);padding:1.25rem;max-width:26rem;font-family:var(--font-sans);transition:border-color .18s ease}.ds-card:hover{border-color:var(--color-brand)}.ds-card-type{font:600 .75rem/1.5 var(--font-display);color:var(--color-ink-soft)}.ds-card h3{margin:.75rem 0 .5rem;font:600 1.25rem/1.375 var(--font-display);letter-spacing:-.02em}.ds-card a{color:var(--color-ink);text-decoration:none}.ds-card a:after{content:\"\";position:absolute;inset:0}.ds-card:hover a{color:var(--color-brand-deep)}.ds-card a:focus-visible{outline:2px solid var(--color-brand);outline-offset:2px;}.ds-card p{color:var(--color-ink-soft);font-size:1rem;line-height:1.625}.ds-card footer{margin-top:1rem;border-top:1px solid var(--color-rule);padding-top:.75rem;color:var(--color-ink-faint);font-size:.75rem}"
+    },
+    {
+      "name": "Masthead navigation",
+      "kind": "nav",
+      "refersTo": "masthead-navigation",
+      "description": "Compact desktop publication navigation.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main\"><a href=\"#latest\">Latest</a><a href=\"#topics\">Topics</a><a href=\"#tested\">Tested guides</a></nav>",
+      "css": ".ds-nav{display:flex;flex-wrap:wrap;gap:1.25rem;font:400 .875rem var(--font-display)}.ds-nav a{display:inline-flex;min-height:2.75rem;align-items:center;color:var(--color-ink-soft);text-decoration:none}.ds-nav a:hover{color:var(--color-brand-deep);text-decoration:underline;text-underline-offset:.2em}.ds-nav a:focus-visible{outline:2px solid var(--color-brand);outline-offset:2px;}"
+    },
+    {
+      "name": "Reader button",
+      "kind": "button",
+      "refersTo": "reader-button",
+      "description": "Rounded reading-toolbar action; selected state follows semantic theme colours.",
+      "html": "<button class=\"ds-reader\">Listen</button>",
+      "css": ".ds-reader{display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;border:0;border-radius:var(--radius-bubble);padding:.5rem .85rem;background:transparent;color:var(--color-ink);font:600 .875rem var(--font-display);transition:background-color 140ms ease-out,color 140ms ease-out}.ds-reader:hover{background:var(--color-paper-sunk)}.ds-reader[aria-pressed=\"true\"]{background:var(--color-brand-deep);color:var(--color-paper)}.ds-reader:focus-visible{outline:2px solid var(--color-brand);outline-offset:2px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Compact Technology Publication",
+    "overview": "A2Z Skills is a clean, simple, professional and friendly publication. A compact masthead, clear headline hierarchy, thin rules and modest cards help readers find a useful guide quickly. Bricolage Grotesque adds warmth to headings and controls; a system sans keeps reading familiar and steady.\n\nWhite and charcoal surfaces carry restrained blue links. Existing editorial illustrations supply colour without competing with the reading surface. Tested procedures and sourced explanations remain visibly distinct, with factual metadata rather than decorative claims.",
+    "keyCharacteristics": [
+      "Compact publication hierarchy with article cards.",
+      "Friendly sans-serif headings and reading text.",
+      "Restrained blue actions on quiet light or dark surfaces.",
+      "Responsive illustrations, visible focus and progressively enhanced filtering."
+    ],
+    "rules": [
+      {
+        "name": "The Restrained Blue Rule",
+        "body": "Use blue for links, actions, selected states and testing evidence; keep the reading surface neutral.",
+        "section": "colors"
+      },
+      {
+        "name": "The Reading Measure Rule",
+        "body": "Keep article prose within its 40rem maximum; use the wider shell for navigation, collections and supporting information.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Card Rule",
+        "body": "Use a thin rule and headline colour to distinguish article cards; do not add decorative lift to the library.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use the existing light and dark semantic tokens together.",
+      "Do keep cards modestly rounded and article text in a friendly sans-serif.",
+      "Do preserve visible keyboard focus, coarse-pointer targets and reduced-motion handling.",
+      "Do keep tested records distinct from sourced explanations and editorial illustrations.",
+      "Do preserve responsive image dimensions and the adjacent original-prompt provenance files."
+    ],
+    "donts": [
+      "Don't replace the compact publication with an oversized promotional hero.",
+      "Don't add decorative card shadows or hover movement to the article library.",
+      "Don't use serif body text or turn metadata into decorative badges.",
+      "Don't present editorial illustrations as evidence of a tested procedure."
+    ]
+  }
+}

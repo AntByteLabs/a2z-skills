@@ -4,97 +4,111 @@
     "path": "src/assets/illustrations/tech-workbench.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 95544
+    "bytes": 95544,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "ai-detectors-flagging-human-writing",
     "path": "src/content/posts/ai-detectors-flagging-human-writing/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 84720
+    "bytes": 84720,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "automations-failing-silently",
     "path": "src/content/posts/automations-failing-silently/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 44936
+    "bytes": 44936,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "chatgpt-different-answers-same-question",
     "path": "src/content/posts/chatgpt-different-answers-same-question/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 49906
+    "bytes": 49906,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "cloudflare-workers-custom-domain-not-working",
     "path": "src/content/posts/cloudflare-workers-custom-domain-not-working/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 61876
+    "bytes": 61876,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "deleting-files-not-freeing-disk-space",
     "path": "src/content/posts/deleting-files-not-freeing-disk-space/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 67222
+    "bytes": 67222,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "dns-propagation-explained",
     "path": "src/content/posts/dns-propagation-explained/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 55534
+    "bytes": 55534,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "excel-changing-numbers-into-dates",
     "path": "src/content/posts/excel-changing-numbers-into-dates/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 47792
+    "bytes": 47792,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "excel-file-size-too-large",
     "path": "src/content/posts/excel-file-size-too-large/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 87386
+    "bytes": 87386,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "n8n-webhook-not-working",
     "path": "src/content/posts/n8n-webhook-not-working/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 51122
+    "bytes": 51122,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "phone-slows-down-gets-older",
     "path": "src/content/posts/phone-slows-down-gets-older/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 63618
+    "bytes": 63618,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "phone-storage-full-after-deleting-photos",
     "path": "src/content/posts/phone-storage-full-after-deleting-photos/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 68866
+    "bytes": 68866,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "self-host-n8n-coolify",
     "path": "src/content/posts/self-host-n8n-coolify/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 50016
+    "bytes": 50016,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   },
   {
     "slug": "windows-restart-finish-installing-updates",
     "path": "src/content/posts/windows-restart-finish-installing-updates/cover-illustration.webp",
     "width": 1440,
     "height": 960,
-    "bytes": 70436
+    "bytes": 70436,
+    "provenance": "Original generation prompt in adjacent .webp.json provenance sidecar; docs/design/art-prompts-2026-10-26.json"
   }
 ]

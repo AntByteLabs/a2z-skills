@@ -1,0 +1,110 @@
+[
+  {
+    "url": "http://localhost:61811/index.html",
+    "fetchTime": "2026-10-26T15:30:41.900Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1205.5655,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:61811/index.html",
+    "fetchTime": "2026-10-26T15:30:52.385Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1203.8856,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:61811/index.html",
+    "fetchTime": "2026-10-26T15:31:02.615Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1203.2253,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:61811/ai-detectors-flagging-human-writing/index.html",
+    "fetchTime": "2026-10-26T15:31:12.848Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1130.914,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:61811/ai-detectors-flagging-human-writing/index.html",
+    "fetchTime": "2026-10-26T15:31:22.991Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1128.3624,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:61811/ai-detectors-flagging-human-writing/index.html",
+    "fetchTime": "2026-10-26T15:31:33.156Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1127.663,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:61811/topics/ai-tools/index.html",
+    "fetchTime": "2026-10-26T15:31:43.279Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1127.1189,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:61811/topics/ai-tools/index.html",
+    "fetchTime": "2026-10-26T15:31:53.207Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1126.6307,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:61811/topics/ai-tools/index.html",
+    "fetchTime": "2026-10-26T15:32:03.114Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1127.875,
+    "cls": 0
+  }
+]
