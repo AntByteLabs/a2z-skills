@@ -1,0 +1,399 @@
+{
+  "name": "A2Z — publish new posts to Facebook and Instagram",
+  "meta": {
+    "instanceId": "a2z-skills"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "feedUrl": "https://a2zskillsewa.com/rss.xml"
+      },
+      "id": "rss",
+      "name": "New item in the feed",
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [-620, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Posts to publish: new only, with the caption and image each network needs.\nconst HASHTAGS = {\n  'windows-mac': '#windows11 #mactips #pcfix #techtips',\n  'phones': '#android #iphone #phonetips #mobilefix',\n  'excel-office': '#excel #exceltips #spreadsheets #msoffice',\n  'ai-tools': '#aitools #chatgpt #aiwriting #productivity',\n  'websites-hosting': '#webhosting #dns #domains #webdev',\n  'automation': '#n8n #automation #nocode #workflow',\n};\nconst MAX_AGE_HOURS = 48;\nconst out = [];\n\nfor (const item of $input.all()) {\n  const j = item.json;\n  const link = j.link;\n  if (!link) continue;\n\n  // The RSS trigger should only hand us new items. This is the second guard:\n  // on a re-activation it can replay the feed, and a replay would re-post.\n  const published = new Date(j.isoDate || j.pubDate || 0).getTime();\n  if (!published || Date.now() - published > MAX_AGE_HOURS * 3600 * 1000) continue;\n\n  const slug = link.replace(/\\/+$/, '').split('/').pop();\n  const cats = [].concat(j.categories || []).map((c) => (typeof c === 'string' ? c : c && c.name) || '');\n  const pillar = cats.find((c) => HASHTAGS[c]) || '';\n  const answer = String(j['content:encoded'] || j.content || j.contentSnippet || j.description || '').trim();\n\n  out.push({\n    json: {\n      title: j.title,\n      link,\n      slug,\n      pillar,\n      answer,\n      // JPEG, not PNG: Instagram's container rejects PNG without saying so.\n      ogImage: `https://a2zskillsewa.com/og/${slug}.jpg`,\n      fbMessage: `${j.title}\\n\\n${answer}\\n\\nRead it: ${link}`,\n      igCaption: `${j.title}\\n\\n${answer}\\n\\nFull guide on a2zskillsewa.com, link in bio.\\n\\n${HASHTAGS[pillar] || '#tech #howto'}`,\n    },\n  });\n}\n\nreturn out;\n"
+      },
+      "id": "filter",
+      "name": "Only genuinely new posts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-400, 0]
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.facebook.com/v23.0/{{ $env.META_PAGE_ID }}/feed",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "={{ $json.fbMessage }}"
+            },
+            {
+              "name": "link",
+              "value": "={{ $json.link }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $env.META_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "fb",
+      "name": "Post to the Facebook Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-180, 0]
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.facebook.com/v23.0/{{ $env.META_IG_USER_ID }}/media",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $('Only genuinely new posts').item.json.ogImage }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('Only genuinely new posts').item.json.igCaption }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $env.META_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "ig-create",
+      "name": "Create the Instagram container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [40, 0]
+    },
+    {
+      "parameters": {
+        "amount": 20,
+        "unit": "seconds"
+      },
+      "id": "wait",
+      "name": "Let it process",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [260, 0],
+      "webhookId": "a2z-social-wait"
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.facebook.com/v23.0/{{ $('Create the Instagram container').item.json.body.id }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "status_code"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $env.META_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "ig-status",
+      "name": "Check the container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.body.status_code }}",
+              "rightValue": "FINISHED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "if-ready",
+      "name": "Container ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [680, 0]
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.facebook.com/v23.0/{{ $env.META_IG_USER_ID }}/media_publish",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $('Create the Instagram container').item.json.body.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $env.META_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "ig-publish",
+      "name": "Publish to Instagram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, -120]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Assert on the outcome, not on the run. A green execution that posted nothing\n// is the failure this workflow exists to avoid.\nconst src = $('Only genuinely new posts').item.json;\nconst problems = [];\n\nconst read = (nodeName) => {\n  try {\n    const j = $(nodeName).item.json;\n    return (j && j.body) || j || null;\n  } catch (e) {\n    return null;\n  }\n};\n\nconst fb = read('Post to the Facebook Page');\nif (!fb || !fb.id) problems.push(`Facebook: ${JSON.stringify((fb && fb.error) || fb || 'no response')}`);\n\nconst ig = read('Publish to Instagram');\nif (!ig || !ig.id) {\n  const status = read('Check the container');\n  problems.push(\n    `Instagram: ${JSON.stringify((ig && ig.error) || ig || (status && status.status_code) || 'no response')}`,\n  );\n}\n\nreturn [{ json: { title: src.title, link: src.link, problems, count: problems.length } }];\n"
+      },
+      "id": "verify",
+      "name": "Did both actually land?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              },
+              "leftValue": "={{ $json.count }}",
+              "rightValue": 0
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "if-problem",
+      "name": "Anything fail?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1340, 0]
+    },
+    {
+      "parameters": {
+        "subject": "=A2Z Skills: social post failed for {{ $json.title }}",
+        "emailFormat": "text",
+        "options": {},
+        "fromEmail": "antbytelabs@gmail.com",
+        "toEmail": "antbytelabs@gmail.com",
+        "text": "={{ $json.problems.join('\\n\\n') }}\n\nPost: {{ $json.link }}\n\nNothing retries on its own. Re-run this execution once the cause is fixed."
+      },
+      "id": "email",
+      "name": "Email what failed",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1560, -120],
+      "credentials": {
+        "smtp": {
+          "id": "SET_IN_UI",
+          "name": "SMTP — antbytelabs"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "New item in the feed": {
+      "main": [
+        [
+          {
+            "node": "Only genuinely new posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Only genuinely new posts": {
+      "main": [
+        [
+          {
+            "node": "Post to the Facebook Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to the Facebook Page": {
+      "main": [
+        [
+          {
+            "node": "Create the Instagram container",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create the Instagram container": {
+      "main": [
+        [
+          {
+            "node": "Let it process",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Let it process": {
+      "main": [
+        [
+          {
+            "node": "Check the container",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check the container": {
+      "main": [
+        [
+          {
+            "node": "Container ready?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Container ready?": {
+      "main": [
+        [
+          {
+            "node": "Publish to Instagram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Did both actually land?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publish to Instagram": {
+      "main": [
+        [
+          {
+            "node": "Did both actually land?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Did both actually land?": {
+      "main": [
+        [
+          {
+            "node": "Anything fail?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anything fail?": {
+      "main": [
+        [
+          {
+            "node": "Email what failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kathmandu"
+  },
+  "tags": []
+}

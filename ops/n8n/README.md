@@ -111,3 +111,69 @@ n8n adds roughly 550 MB of resident memory, which _helps_: Oracle reclaims an
 Always Free VM only when CPU, network **and memory** all sit under 20% for seven
 days, and `oracle-guard` warned that memory was at 22.6% before this went on.
 Check with `ssh ubuntu@161.118.175.122 oracle-guard` after any change.
+
+### 06 — publish new posts to Facebook and Instagram
+
+Polls `rss.xml` hourly. For each genuinely new post it writes a link post on the
+Facebook Page and an image post on Instagram, then checks that both actually
+returned an id and emails if either did not.
+
+**It posts a link on Facebook and an image on Instagram, because that is what
+each network allows.** Facebook renders the article card from the page's own
+Open Graph tags, so the preview image, title and description come from the post
+and nothing has to be duplicated here. Instagram does not allow a clickable
+link in a caption at all, so the caption ends with "link in bio" and the image
+is the post's OG card.
+
+Two details that are easy to get wrong and fail quietly:
+
+- **The image must be JPEG.** Instagram's container rejects PNG, and the error
+  it returns does not say so. `src/pages/og/[...slug].jpg.ts` exists only for
+  this: the same card, re-encoded. `og:image` on the site still points at the
+  PNG.
+- **The container is created and published in two calls.** Between them it has
+  to finish processing, so the workflow waits, reads `status_code`, and only
+  publishes on `FINISHED`. A container that never finishes routes to the alert
+  rather than to a green run.
+
+#### What you have to set up first
+
+This needs a Meta app and a Page, and none of it can be done from here.
+
+1. Create the Facebook Page and the Instagram account. The Instagram account
+   must be a **Business or Creator** account, and it must be **linked to the
+   Page** from the Page's settings. A personal Instagram account cannot be
+   posted to by any API.
+2. At [developers.facebook.com](https://developers.facebook.com), create an app
+   of type **Business**, and add the **Instagram Graph API** and **Facebook
+   Login for Business** products.
+3. In the Graph API Explorer, select the app and request these permissions:
+   `pages_show_list`, `pages_read_engagement`, `pages_manage_posts`,
+   `instagram_basic`, `instagram_content_publish`.
+4. Generate a user token, then exchange it for a **long-lived Page access
+   token**. A short-lived token expires in about an hour and the workflow will
+   start failing silently-looking failures that are really expiry.
+5. Get the two ids: `GET /me/accounts` returns the Page id, and
+   `GET /{page-id}?fields=instagram_business_account` returns the Instagram
+   user id.
+
+#### Environment variables
+
+Add these in Coolify on the n8n service, then redeploy. Never put a token in
+the workflow JSON.
+
+| Variable            | What it is                        |
+| ------------------- | --------------------------------- |
+| `META_PAGE_ID`      | The Facebook Page id              |
+| `META_IG_USER_ID`   | The Instagram business account id |
+| `META_ACCESS_TOKEN` | The long-lived Page access token  |
+
+#### Before you activate it
+
+Run it once by hand with the RSS trigger pinned to a single item, and check the
+post appears on both. The workflow has no retry and no undo: a bad caption is
+published, not queued.
+
+The token is the thing that will break this. Long-lived Page tokens last about
+60 days and then stop working. The verification step catches it, because an
+expired token returns a response with no `id`, and you get the email.
