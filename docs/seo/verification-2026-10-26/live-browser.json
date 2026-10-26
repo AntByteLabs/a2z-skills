@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-26T06:42:57.963Z",
+  "site": "https://a2zskillsewa.com",
+  "siteVersion": "af2ed76c-3dff-43a2-a3de-0d2e829073b1",
+  "checks": [
+    {
+      "device": "mobile",
+      "search_results": true,
+      "query_preserved": true,
+      "csp_wasm": true,
+      "correction_visible": true,
+      "research_label": true,
+      "reader_controls": true,
+      "browser_errors": []
+    },
+    {
+      "device": "desktop",
+      "search_results": true,
+      "query_preserved": true,
+      "csp_wasm": true,
+      "correction_visible": true,
+      "research_label": true,
+      "reader_controls": true,
+      "browser_errors": []
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+[
+  {
+    "url": "http://localhost:54813/ai-detectors-flagging-human-writing/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1353.43,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54813/ai-detectors-flagging-human-writing/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1353.44,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54813/ai-detectors-flagging-human-writing/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1353.58,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54813/topics/ai-tools/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1353.61,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54813/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1353.78,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54813/topics/ai-tools/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1353.1,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54813/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1354.12,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54813/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1352.9,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:54813/topics/ai-tools/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1352.95,
+    "cls": 0
+  }
+]

@@ -1,0 +1,346 @@
+{
+  "checkedAt": "2026-10-26T06:43:36.615Z",
+  "sitemap_pages": 28,
+  "all_sitemap_pages_pass": true,
+  "utility_crawl_allowed": true,
+  "verification_key_matches": true,
+  "pages": [
+    {
+      "url": "https://a2zskillsewa.com/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/topics/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/automations-failing-silently/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/automations-failing-silently/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/chatgpt-different-answers-same-question/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/chatgpt-different-answers-same-question/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/dns-propagation-explained/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/dns-propagation-explained/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/excel-changing-numbers-into-dates/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/excel-changing-numbers-into-dates/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/excel-file-size-too-large/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/excel-file-size-too-large/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/phone-slows-down-gets-older/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/phone-slows-down-gets-older/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/self-host-n8n-coolify/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/windows-restart-finish-installing-updates/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/windows-restart-finish-installing-updates/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/ai-tools/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/topics/ai-tools/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/automation/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/topics/automation/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/excel-office/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/topics/excel-office/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/phones/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/topics/phones/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/websites-hosting/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/topics/websites-hosting/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/windows-mac/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/topics/windows-mac/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/authors/devchandra-shrestha/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/krishna-pokharel/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/authors/krishna-pokharel/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/ronit-karki/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/authors/ronit-karki/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/about/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/about/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/affiliate-disclosure/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/affiliate-disclosure/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/contact/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/contact/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/editorial-policy/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/editorial-policy/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    },
+    {
+      "url": "https://a2zskillsewa.com/privacy/",
+      "status": 200,
+      "canonical": [
+        "https://a2zskillsewa.com/privacy/"
+      ],
+      "h1_count": 1,
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "passed": true
+    }
+  ],
+  "site_worker_version": "af2ed76c-3dff-43a2-a3de-0d2e829073b1"
+}

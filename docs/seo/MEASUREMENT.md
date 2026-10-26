@@ -35,7 +35,7 @@ site. Separate visitor measurements from Lighthouse lab scores.
 
 | Week ending      | Web clicks   | Impressions  | Indexed priority URLs | Main relevant queries   | Changes and next action                    |
 | ---------------- | ------------ | ------------ | --------------------- | ----------------------- | ------------------------------------------ |
-| Initial baseline | Not measured | Not measured | Not measured          | Awaiting private export | Technical and content corrections prepared |
+| Initial baseline | Not measured | Not measured | Not measured          | Awaiting private export | Technical and content corrections deployed |
 
 Use source/medium reporting for referral or social visits. Those visits are not
 Google Search clicks, and page views are a separate measure again.

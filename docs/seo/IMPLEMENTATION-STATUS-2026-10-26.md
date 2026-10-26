@@ -66,5 +66,20 @@ See [CLAUDE.md](../../CLAUDE.md).
 
 ## Deployment
 
-Prepared for publication after integrating the latest reader-feature commit.
-Deployment and live-check results will be recorded after they run.
+Published to [a2zskillsewa.com](https://a2zskillsewa.com/) after integrating the
+reader controls from the latest main branch. Live mobile and desktop browser
+checks returned n8n search results with no console or page errors, displayed the
+article correction and research label, and retained the Listen controls.
+
+All 28 sitemap URLs returned HTTP 200 with one H1, the correct canonical and no
+noindex directive. The public IndexNow key matched its verification file.
+IndexNow accepted the 28-URL submission with HTTP 202; this does not confirm
+indexing. The MCP health endpoint returned 200, unauthenticated writes returned
+401, and the preview site retained noindex.
+
+Site Worker version: `af2ed76c-3dff-43a2-a3de-0d2e829073b1`.
+MCP Worker version: `6dbdbe03-25f4-4ffb-a323-6768deb28a41`.
+
+The source changes are committed on `seo/research-plan-20261026` and include the
+existing reader features. See [verification evidence](verification-2026-10-26/)
+for the live-page, live-browser, MCP and lab reports.

@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-26",
+  "source_commit": "0659b5e",
+  "full_check": "passed",
+  "browser_tests": {
+    "passed": 102,
+    "skipped": 2,
+    "server": "local Cloudflare Worker with production headers"
+  },
+  "unit_tests": {
+    "passed": 8
+  },
+  "internal_links": "all 41 built HTML entry points passed",
+  "published_articles": 12,
+  "topic_hubs": 6,
+  "indexnow": {
+    "submitted_urls": 28,
+    "response_status": 202,
+    "meaning": "Accepted for processing; indexing is not confirmed"
+  },
+  "lighthouse": {
+    "runs": 9,
+    "mode": "local lab; three pages, three runs each",
+    "all_category_scores": 100,
+    "maximum_lcp_ms": 1354.12,
+    "cls": 0
+  },
+  "field_traffic": "not available",
+  "site_worker_version": "af2ed76c-3dff-43a2-a3de-0d2e829073b1",
+  "mcp_worker_version": "6dbdbe03-25f4-4ffb-a323-6768deb28a41"
+}
