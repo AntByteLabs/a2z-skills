@@ -6,8 +6,12 @@ import { getCollection } from 'astro:content';
 const pillars = (await getCollection('pillars')).sort(
   (a, b) => a.data.order - b.data.order,
 );
+interface Props {
+  activePillar?: string;
+}
+const { activePillar } = Astro.props;
 const here = Astro.url.pathname;
-const onPillar = (id: string) => here.startsWith(`/topics/${id}`);
+const onPillar = (id: string) => activePillar === id || here === `/topics/${id}/`;
 ---
 
 <header class="sticky top-0 z-40 border-b border-rule bg-paper/85 backdrop-blur-md">
@@ -40,7 +44,53 @@ const onPillar = (id: string) => here.startsWith(`/topics/${id}`);
       </ul>
     </nav>
 
-    <div class="ml-auto flex shrink-0 items-center gap-1.5">
+    <details class="ml-auto lg:hidden" data-topic-menu>
+      <summary class="flex min-h-11 cursor-pointer list-none items-center gap-1 rounded-pill px-3 text-sm font-semibold marker:hidden">
+        Topics
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 16 16"
+          class="h-3 w-3"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+          <path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </summary>
+      <nav
+        aria-label="Mobile topics"
+        class="absolute inset-x-0 top-full border-b border-rule bg-paper py-4 shadow-card"
+      >
+        <ul class="shell grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {pillars.map((p) => (
+            <li class="min-w-0">
+              <a
+                href={`/topics/${p.id}/`}
+                aria-current={onPillar(p.id) ? 'page' : undefined}
+                class:list={[
+                  'flex min-h-11 items-center rounded-soft px-3 py-2 text-sm no-underline',
+                  onPillar(p.id)
+                    ? 'bg-brand-wash font-semibold text-brand-deep'
+                    : 'text-ink-soft hover:bg-paper-sunk',
+                ]}
+              >
+                {p.data.name}
+              </a>
+            </li>
+          ))}
+          <li class="col-span-full">
+            <a
+              href="/topics/"
+              class="flex min-h-11 items-center px-3 py-2 text-sm font-semibold"
+            >
+              All topics
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </details>
+    <div class="flex shrink-0 items-center gap-1.5 lg:ml-auto">
       <a
         href="/search/"
         class="flex items-center gap-1.5 rounded-pill border border-rule px-3 py-1.5 text-sm no-underline text-ink-soft transition-colors hover:bg-paper-sunk hover:text-ink"
@@ -61,26 +111,18 @@ const onPillar = (id: string) => here.startsWith(`/topics/${id}`);
       <ThemeToggle />
     </div>
   </div>
-
-  <!-- Phones and tablets: the same topics as a scrollable row. -->
-  <nav aria-label="Topics" class="border-t border-rule lg:hidden">
-    <ul class="flex gap-1.5 overflow-x-auto px-gutter py-2 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      {pillars.map((p) => (
-        <li class="shrink-0">
-          <a
-            href={`/topics/${p.id}/`}
-            aria-current={onPillar(p.id) ? 'page' : undefined}
-            class:list={[
-              'rounded-pill border px-3 py-1.5 no-underline',
-              onPillar(p.id)
-                ? 'border-brand-deep bg-brand-wash font-semibold text-brand-deep'
-                : 'border-rule text-ink-soft',
-            ]}
-          >
-            {p.data.name}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </nav>
 </header>
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('[data-topic-menu]');
+  if (menu) {
+    addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+    });
+  }
+</script>

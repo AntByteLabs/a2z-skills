@@ -1,0 +1,81 @@
+[
+  {
+    "antipattern": "radial-halo",
+    "name": "Radial-gradient background halo",
+    "description": "A chromatic radial-gradient wash — saturated at the center, fading to transparent — used as a decorative background glow on a dark page. Same tell as glowing shadows, drawn with a gradient instead of a shadow. Ground the surface with a solid or subtly shifted background instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "https://a2zskillsewa.com/",
+    "line": 0,
+    "snippet": "radial-gradient halo (#e5f1ff → transparent) on dark page",
+    "selector": "body"
+  },
+  {
+    "antipattern": "line-length",
+    "name": "Line length too long",
+    "description": "Text lines wider than ~80 characters are hard to read. The eye loses its place tracking back to the start of the next line, so it is measured on the lines that rendered and charged when more than one of them runs long. Add a max-width (65ch to 75ch) to text containers.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "https://a2zskillsewa.com/topics/automation/",
+    "line": 0,
+    "snippet": "~87 chars on 2 of 3 rendered lines (aim for <80)",
+    "selector": "div.prose.mt-3 > p:nth-of-type(1)"
+  },
+  {
+    "antipattern": "line-length",
+    "name": "Line length too long",
+    "description": "Text lines wider than ~80 characters are hard to read. The eye loses its place tracking back to the start of the next line, so it is measured on the lines that rendered and charged when more than one of them runs long. Add a max-width (65ch to 75ch) to text containers.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+    "line": 0,
+    "snippet": "~88 chars on 2 of 6 rendered lines (aim for <80)",
+    "selector": "div.prose.prose-sm > p:nth-of-type(3)"
+  },
+  {
+    "antipattern": "straggler",
+    "name": "Straggler",
+    "description": "The last line of this paragraph holds one word, which leaves a hole under the block. Set text-wrap: pretty on body copy (Chrome, Safari) to pull a word down beside it. Where a browser ignores it, edit the last sentence or bind the last two words with a no-break space. Keep it if the break is intended.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+    "line": 0,
+    "snippet": "\"not.\" alone on the last of 3 lines (5% of the measure)",
+    "advisory": true,
+    "selector": "div.py-3\\.5:nth-of-type(1) > dd.mt-1.text-ink-soft"
+  },
+  {
+    "antipattern": "line-length",
+    "name": "Line length too long",
+    "description": "Text lines wider than ~80 characters are hard to read. The eye loses its place tracking back to the start of the next line, so it is measured on the lines that rendered and charged when more than one of them runs long. Add a max-width (65ch to 75ch) to text containers.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+    "line": 0,
+    "snippet": "~86 chars on 2 of 3 rendered lines (aim for <80)",
+    "selector": "div.py-3\\.5:nth-of-type(2) > dd.mt-1.text-ink-soft"
+  },
+  {
+    "antipattern": "straggler",
+    "name": "Straggler",
+    "description": "The last line of this paragraph holds one word, which leaves a hole under the block. Set text-wrap: pretty on body copy (Chrome, Safari) to pull a word down beside it. Where a browser ignores it, edit the last sentence or bind the last two words with a no-break space. Keep it if the break is intended.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+    "line": 0,
+    "snippet": "\"separately.\" alone on the last of 3 lines (13% of the measure)",
+    "advisory": true,
+    "selector": "div.py-3\\.5:nth-of-type(2) > dd.mt-1.text-ink-soft"
+  },
+  {
+    "antipattern": "first-viewport-column-overflow",
+    "name": "One column stretches the first viewport",
+    "description": "A multi-column opening section lets one column run far past the fold while its sibling fits in a single viewport, so the short column floats in dead space and the fold falls deep inside one section. Balance the columns, cap the tall one, or let the long content flow below the opening row.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+    "line": 0,
+    "snippet": "div.shell.grid.gap-8.py-5.lg:grid-cols-[minmax(0,1fr)_19rem].lg:gap-10 opens the page with one column running 668% of the viewport tall while a sibling fits in 50% — the fold falls deep inside the section",
+    "selector": "#main > div.shell.grid"
+  }
+]

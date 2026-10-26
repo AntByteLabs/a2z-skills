@@ -8,7 +8,7 @@ export const site = {
   alternateName: 'A2Z Skills Ewa',
   tagline: 'Software and tech skills, A to Z',
   description:
-    'Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.',
+    'Tested fixes and sourced explanations for n8n, Cloudflare, Windows, Mac, phones, Excel and AI tools. Find the setup or troubleshooting guide you need.',
   locale: 'en',
   publisher: {
     name: 'AntByte Labs',

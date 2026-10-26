@@ -11,3 +11,6 @@ playwright-report/
 test-results/
 *.local
 worker-configuration.d.ts
+
+.impeccable/critique/design-evidence/
+.impeccable/critique/after/

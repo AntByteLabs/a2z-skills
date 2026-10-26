@@ -37,13 +37,21 @@ const crumbs = [
 ];
 ---
 
-<BaseLayout title={pillar.data.title} description={pillar.data.description} path={path}>
+<BaseLayout
+  title={pillar.data.title}
+  description={pillar.data.description}
+  path={path}
+  activePillar={pillar.id}
+>
   <JsonLd
     slot="head"
     data={collectionPage({
       name: pillar.data.name,
       description: pillar.data.description,
       path,
+      items: groups
+        .flatMap((group) => posts.filter((post) => group.types.includes(post.data.type)))
+        .map((post) => ({ name: post.data.title, path: postPath(post) })),
     })}
   />
   <JsonLd slot="head" data={breadcrumbs(crumbs)} />
@@ -52,11 +60,11 @@ const crumbs = [
     <h1 class="mt-2 font-display text-[1.6rem] font-bold leading-tight sm:text-3xl">
       {pillar.data.title}
     </h1>
-    <div class="prose mt-3 max-w-measure dark:prose-invert sm:prose-lg">
+    <div class="prose mt-3 measure dark:prose-invert sm:prose-lg">
       <Content />
     </div>
 
-    {startHere.length > 0 && (
+    {startHere.length > 0 && posts.length > 3 && (
       <section class="mt-8" aria-labelledby="start-here">
         <h2 id="start-here" class="font-display text-xl font-semibold">
           Start here
@@ -82,11 +90,11 @@ const crumbs = [
       groups.map((g) => {
         const inGroup = posts.filter((p) => g.types.includes(p.data.type));
         return inGroup.length > 0 ? (
-          <section class="mt-8" aria-labelledby={`g-${g.label}`}>
-            <h2 id={`g-${g.label}`} class="font-display text-xl font-semibold">
+          <section class="mt-8" aria-labelledby={`g-${g.types[0]}`}>
+            <h2 id={`g-${g.types[0]}`} class="font-display text-xl font-semibold">
               {g.label}
             </h2>
-            <div class="mt-2">
+            <div class:list={['mt-3 grid gap-3', inGroup.length > 1 && 'sm:grid-cols-2']}>
               {inGroup.map((p) => (
                 <PostCard post={p} />
               ))}

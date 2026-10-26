@@ -145,9 +145,24 @@ export const collectionPage = (c: {
   name: string;
   description: string;
   path: string;
+  items?: { name: string; path: string }[];
 }): WithContext<CollectionPage> => ({
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
+  ...(c.items?.length
+    ? {
+        mainEntity: {
+          '@type': 'ItemList' as const,
+          numberOfItems: c.items.length,
+          itemListElement: c.items.map((item, index) => ({
+            '@type': 'ListItem' as const,
+            position: index + 1,
+            name: item.name,
+            url: absolute(item.path),
+          })),
+        },
+      }
+    : {}),
   '@id': `${absolute(c.path)}#collection`,
   name: c.name,
   description: c.description,

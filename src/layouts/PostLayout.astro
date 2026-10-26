@@ -25,7 +25,7 @@ import Helpful from '../components/post/Helpful.astro';
 import { blogPosting, breadcrumbs, faqPage, type Crumb } from '../lib/schema';
 import { relatedPosts, postPath, livePosts, type Post } from '../lib/posts';
 import { absolute } from '../site';
-import { pillarLabel, readingMinutes } from '../lib/format';
+import { pillarLabel, readingMinutes, postTypeLabel } from '../lib/format';
 
 interface Props {
   post: Post;
@@ -89,6 +89,7 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
   updatedAt={data.updatedAt}
   ogType="article"
   searchable={true}
+  activePillar={data.pillar}
 >
   <JsonLd data={article} slot="head" />
   <ReadingProgress />
@@ -99,8 +100,8 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
     <article class="min-w-0 lg:max-w-[42rem]" data-pagefind-body>
       <Breadcrumbs crumbs={crumbs} />
 
-      <div class="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1">
-        <span class="pill">{data.type}</span>
+      <div data-pagefind-ignore class="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+        <span class="pill">{postTypeLabel(data.type)}</span>
         {pillar && (
           <a href={`/topics/${pillar.id}/`} class="pill no-underline hover:text-ink">
             {pillar.data.name}
@@ -108,11 +109,14 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
         )}
       </div>
 
-      <h1 class="mt-2 font-display text-[1.6rem] font-bold leading-[1.15] sm:text-4xl">
+      <h1
+        data-pagefind-meta="title"
+        class="mt-2 font-display text-[1.6rem] font-bold leading-[1.15] sm:text-4xl"
+      >
         {data.title}
       </h1>
 
-      <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+      <div data-pagefind-ignore class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
         <a
           href={`/authors/${author.id}/`}
           class="flex items-center gap-2 text-sm font-medium no-underline hover:underline"
@@ -162,7 +166,7 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
       )}
 
       <div class="lg:hidden">
-        <Toc headings={headings} />
+        <Toc headings={headings} collapsed={true} />
       </div>
 
       <div class="prose prose-article dark:prose-invert prose-headings:font-display prose-headings:tracking-tight prose-a:text-brand-deep prose-code:before:content-none prose-code:after:content-none [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-paper-sunk [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:font-medium prose-pre:rounded-card prose-pre:border prose-pre:border-rule prose-img:rounded-card prose-table:text-sm">
@@ -171,16 +175,20 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
 
       <AdSlot position="end-article" />
 
-      <Download items={data.downloads} />
-      <ShareRow title={data.title} path={path} />
-      <Helpful slug={post.id} />
+      <div data-pagefind-ignore>
+        <Download items={data.downloads} />
+        <ShareRow title={data.title} path={path} />
+        <Helpful slug={post.id} />
+      </div>
       <FAQ items={data.faq} />
-      <AuthorBox author={author} />
-      <NewsletterForm source={`post:${post.id}`} />
-      <RelatedPosts posts={related} />
-      <PrevNext prev={prev} next={next} />
-      <CopyCode />
-      <ReaderBar />
+      <div data-pagefind-ignore>
+        <AuthorBox author={author} />
+        <NewsletterForm source={`post:${post.id}`} />
+        <RelatedPosts posts={related} />
+        <PrevNext prev={prev} next={next} />
+        <CopyCode />
+        <ReaderBar />
+      </div>
     </article>
 
     <aside class="hidden min-w-0 lg:block">

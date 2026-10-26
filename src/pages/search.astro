@@ -1,11 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Search from '../components/site/Search.astro';
+import { getCollection } from 'astro:content';
+const pillars = (await getCollection('pillars')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <BaseLayout
   title="Search"
-  description="Search every tested guide on A2Z Skills by error message, tool name or task."
+  description="Search A2Z Skills by tool name, error message or task. Find tested guides and sourced explanations for automation, hosting and everyday tech."
   path="/search/"
   noindex={true}
 >
@@ -14,5 +18,26 @@ import Search from '../components/site/Search.astro';
     <div class="mt-6">
       <Search />
     </div>
+    <nav class="mt-8 border-t border-rule pt-6" aria-label="Search alternatives">
+      <h2 class="font-display text-lg font-semibold">Browse by topic</h2>
+      <p class="mt-2 text-sm text-ink-soft">
+        Try a shorter error message or a tool name. You can also start with a topic.
+      </p>
+      <ul class="mt-3 grid gap-2 sm:grid-cols-2">
+        {pillars.map((pillar) => (
+          <li>
+            <a
+              href={`/topics/${pillar.id}/`}
+              class="inline-flex min-h-11 items-center text-sm font-semibold"
+            >
+              {pillar.data.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a href="/#guides" class="mt-3 inline-flex min-h-11 items-center text-sm">
+        Browse every article
+      </a>
+    </nav>
   </div>
 </BaseLayout>

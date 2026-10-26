@@ -575,10 +575,11 @@
 }
 
 @utility reader-chip {
+  min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 2rem;
+  min-width: 2.75rem;
   border-radius: var(--radius-bubble);
   padding: 0.35rem 0.5rem;
   font-family: var(--font-display);
@@ -664,4 +665,55 @@ button,
 summary,
 [role='toolbar'] {
   font-family: var(--font-display);
+}
+
+/* The generated search UI inherits both the system and manually chosen theme. */
+#search,
+#search .pagefind-ui {
+  --pagefind-ui-primary: var(--color-brand-deep);
+  --pagefind-ui-text: var(--color-ink);
+  --pagefind-ui-background: var(--color-paper);
+  --pagefind-ui-border: var(--color-rule);
+  --pagefind-ui-tag: var(--color-paper-sunk);
+  --pagefind-ui-border-radius: var(--radius-soft);
+  --pagefind-ui-font: var(--font-sans);
+}
+
+#search mark {
+  background: var(--color-highlight);
+  color: var(--color-ink);
+}
+
+#search .pagefind-ui__result-title {
+  font-family: var(--font-display);
+}
+
+#search .pagefind-ui__button,
+#search .pagefind-ui__search-clear {
+  min-height: 2.75rem;
+}
+
+/* These pairs must also follow a manual dark choice on a light system. */
+:root[data-theme='dark'] {
+  --color-good-deep: oklch(0.84 0.1 155);
+  --color-good-wash: oklch(0.3 0.05 155);
+  --color-warn-deep: oklch(0.87 0.1 75);
+}
+
+/* Secondary article information is still prose, with the same reading measure. */
+article dd,
+article .prose-sm {
+  max-width: var(--text-measure);
+  text-wrap: pretty;
+}
+
+.reader-chip:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Keyboard focus must bring a resting toolbar back into view. */
+#reader-bar:focus-within {
+  transform: none;
+  opacity: 1;
 }

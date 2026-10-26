@@ -1,0 +1,101 @@
+[
+  {
+    "url": "http://localhost:63594/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1053.2751,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:63594/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1053.0803,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:63594/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1052.5245,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:63594/ai-detectors-flagging-human-writing/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1429.1704,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:63594/ai-detectors-flagging-human-writing/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1428.9183,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:63594/ai-detectors-flagging-human-writing/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1429.0689,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:63594/topics/ai-tools/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1052.5872,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:63594/topics/ai-tools/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1051.9599,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:63594/topics/ai-tools/index.html",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp_ms": 1052.2317,
+    "cls": 0
+  }
+]

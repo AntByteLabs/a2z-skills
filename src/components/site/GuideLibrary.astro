@@ -1,0 +1,126 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Post } from '../../lib/posts';
+import PostCard from '../cards/PostCard.astro';
+
+interface Props {
+  posts: Post[];
+  pillars: CollectionEntry<'pillars'>[];
+}
+const { posts, pillars } = Astro.props;
+---
+
+<section
+  id="guides"
+  class="shell scroll-mt-20 py-8 sm:py-10"
+  aria-labelledby="library-title"
+  data-guide-library
+>
+  <div class="flex flex-wrap items-baseline justify-between gap-2">
+    <h2 id="library-title" class="font-display text-2xl font-semibold sm:text-3xl">
+      Find your next answer
+    </h2>
+    <p class="text-sm text-ink-soft" role="status" data-guide-count>
+      {posts.length} {posts.length === 1 ? 'article' : 'articles'}
+    </p>
+  </div>
+
+  <form
+    class="mt-5 hidden flex-wrap items-end gap-3 rounded-soft bg-paper-sunk p-3 sm:p-4"
+    data-guide-filters
+  >
+    <div class="min-w-0 flex-1 basis-40">
+      <label for="library-topic" class="block text-sm font-semibold">
+        Topic
+      </label>
+      <select
+        id="library-topic"
+        name="topic"
+        class="mt-1 min-h-11 w-full rounded-soft border border-rule bg-paper px-3 py-2 text-base"
+      >
+        <option value="">All topics</option>
+        {pillars.map((pillar) => (
+          <option value={pillar.id}>{pillar.data.name}</option>
+        ))}
+      </select>
+    </div>
+    <div class="min-w-0 flex-1 basis-40">
+      <label for="library-type" class="block text-sm font-semibold">
+        Article type
+      </label>
+      <select
+        id="library-type"
+        name="type"
+        class="mt-1 min-h-11 w-full rounded-soft border border-rule bg-paper px-3 py-2 text-base"
+      >
+        <option value="">All articles</option>
+        <option value="tested">Tested guides</option>
+        <option value="explainer">Explainers</option>
+      </select>
+    </div>
+    <button
+      type="reset"
+      class="min-h-11 rounded-pill border border-rule bg-paper px-4 py-2 text-sm font-semibold hover:border-brand-deep disabled:cursor-default disabled:opacity-50"
+      disabled
+      data-guide-reset
+    >
+      Clear filters
+    </button>
+  </form>
+
+  <p class="mt-5 rounded-soft border border-rule p-5 text-ink-soft" hidden data-guide-empty>
+    No articles match these filters. Choose another topic or clear the filters to see every
+    article.
+  </p>
+  <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-guide-list>
+    {posts.map((post) => (
+      <li
+        class="min-w-0"
+        data-guide-topic={post.data.pillar}
+        data-guide-type={post.data.testedOn ? 'tested' : post.data.type}
+      >
+        <PostCard post={post} showPillar={true} />
+      </li>
+    ))}
+  </ul>
+</section>
+<script>
+  const library = document.querySelector<HTMLElement>('[data-guide-library]');
+  const form = library?.querySelector<HTMLFormElement>('[data-guide-filters]');
+  if (library && form) {
+    const topic = form.querySelector<HTMLSelectElement>('[name="topic"]')!;
+    const type = form.querySelector<HTMLSelectElement>('[name="type"]')!;
+    const reset = form.querySelector<HTMLButtonElement>('[data-guide-reset]')!;
+    const items = [...library.querySelectorAll<HTMLElement>('[data-guide-topic]')];
+    const count = library.querySelector<HTMLElement>('[data-guide-count]')!;
+    const empty = library.querySelector<HTMLElement>('[data-guide-empty]')!;
+    const apply = () => {
+      let visible = 0;
+      for (const item of items) {
+        item.hidden = Boolean(
+          (topic.value && item.dataset.guideTopic !== topic.value) ||
+          (type.value && item.dataset.guideType !== type.value),
+        );
+        if (!item.hidden) visible++;
+      }
+      count.textContent = `${visible} of ${items.length} articles`;
+      empty.hidden = visible > 0;
+      reset.disabled = !topic.value && !type.value;
+    };
+    form.classList.remove('hidden');
+    form.classList.add('flex');
+    form.addEventListener('change', apply);
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      apply();
+    });
+    form.addEventListener('reset', () => {
+      topic.value = '';
+      type.value = '';
+      apply();
+    });
+    // Restored native select values also need to match the visible results.
+    addEventListener('pageshow', apply);
+    apply();
+  }
+</script>

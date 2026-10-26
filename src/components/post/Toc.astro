@@ -2,27 +2,39 @@
 import type { MarkdownHeading } from 'astro';
 interface Props {
   headings: MarkdownHeading[];
+  collapsed?: boolean;
 }
-const { headings } = Astro.props;
+const { headings, collapsed = false } = Astro.props;
 const items = headings.filter((h) => h.depth === 2);
 ---
 
 {items.length > 2 && (
-  <nav class="not-prose my-6 rounded-card border border-rule" aria-labelledby="toc-title">
-    <details open class="group">
-      <summary
-        id="toc-title"
-        class="cursor-pointer list-none px-4 py-3 font-semibold marker:hidden"
-      >
+  <nav
+    class="not-prose my-6 rounded-card border border-rule"
+    aria-label="On this page"
+    data-pagefind-ignore
+  >
+    <details open={!collapsed} class="group" data-toc-details>
+      <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 font-semibold marker:hidden">
         On this page
-        <span aria-hidden="true" class="float-right text-ink-faint group-open:rotate-180">
-          ⌄
-        </span>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 16 16"
+          class="h-4 w-4 text-ink-faint group-open:rotate-180"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+          <path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
       </summary>
       <ol class="space-y-1 border-t border-rule px-4 py-3 text-sm" data-toc>
         {items.map((h) => (
           <li>
-            <a href={`#${h.slug}`} class="text-ink-soft no-underline hover:underline">
+            <a
+              href={`#${h.slug}`}
+              class="block py-1 text-ink-soft no-underline hover:underline"
+            >
               {h.text}
             </a>
           </li>
@@ -32,25 +44,32 @@ const items = headings.filter((h) => h.depth === 2);
   </nav>
 )}
 <script>
-  // Mark the section being read. One IntersectionObserver, no library.
-  const links = Array.from(
-    document.querySelectorAll('[data-toc] a'),
-  ) as HTMLAnchorElement[];
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc] a')];
+  const byId = new Map<string, HTMLAnchorElement[]>();
+  for (const link of links) {
+    const id = decodeURIComponent(link.hash.slice(1));
+    byId.set(id, [...(byId.get(id) ?? []), link]);
+  }
   if (links.length) {
-    const byId = new Map(links.map((a) => [a.hash.slice(1), a]));
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
-          links.forEach((a) => a.classList.remove('text-ink', 'font-semibold'));
-          byId.get(entry.target.id)?.classList.add('text-ink', 'font-semibold');
+          links.forEach((link) => {
+            link.classList.remove('text-ink', 'font-semibold');
+            link.removeAttribute('aria-current');
+          });
+          byId.get(entry.target.id)?.forEach((link) => {
+            link.classList.add('text-ink', 'font-semibold');
+            link.setAttribute('aria-current', 'location');
+          });
         }
       },
-      { rootMargin: '-80px 0px -70% 0px' },
+      { rootMargin: '-72px 0px -65% 0px' },
     );
     byId.forEach((_, id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      const heading = document.getElementById(id);
+      if (heading) observer.observe(heading);
     });
   }
 </script>

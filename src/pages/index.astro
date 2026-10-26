@@ -1,49 +1,44 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PostCard from '../components/cards/PostCard.astro';
-import PillarCard from '../components/cards/PillarCard.astro';
-import { livePosts } from '../lib/posts';
+import JsonLd from '../components/seo/JsonLd.astro';
+import GuideLibrary from '../components/site/GuideLibrary.astro';
+import { livePosts, postPath } from '../lib/posts';
+import { collectionPage } from '../lib/schema';
 import { site } from '../site';
 
 const posts = await livePosts();
 const pillars = (await getCollection('pillars')).sort(
   (a, b) => a.data.order - b.data.order,
 );
-const countFor = (id: string) => posts.filter((p) => p.data.pillar === id).length;
-const latest = posts.slice(0, site.postsPerPage);
-const tested = posts.filter((p) => p.data.testedOn).length;
+const tested = posts.filter((post) => post.data.testedOn).slice(0, 2);
 ---
 
 <BaseLayout
-  title={`${site.name} — ${site.tagline}`}
+  title="Automation, hosting and everyday tech fixes"
   description={site.description}
   path="/"
 >
-  <section class="tint border-b border-rule">
-    <div class="shell py-8 sm:py-11">
-      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <div class="max-w-2xl">
-          <p class="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.12em] text-accent">
-            <span class="rule-accent"></span>
-            Tested fixes and sourced explanations
-          </p>
-          <h1 class="mt-3 font-display text-[1.9rem] font-bold leading-[1.08] sm:text-4xl lg:text-[2.75rem]">
-            Tech fixes that were <span class="marker">actually tried</span> before they were
-            published.
-          </h1>
-          <p class="mt-3 max-w-xl text-ink-soft">
-            Fixes include test records and the errors encountered. Explainers link to
-            product documentation and research so you can check the reasoning.
-          </p>
-        </div>
-
-        <form
-          action="/search/"
-          method="get"
-          role="search"
-          class="flex w-full gap-2 lg:w-80 lg:shrink-0"
-        >
+  <JsonLd
+    slot="head"
+    data={collectionPage({
+      name: 'A2Z Skills guides',
+      description: site.description,
+      path: '/',
+      items: posts.map((post) => ({ name: post.data.title, path: postPath(post) })),
+    })}
+  />
+  <section class="border-b border-rule bg-paper-sunk">
+    <div class="shell grid gap-8 py-8 sm:py-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-16">
+      <div class="min-w-0">
+        <h1 class="max-w-xl font-display text-4xl font-bold leading-[1.06] sm:text-5xl">
+          Practical fixes for everyday tech.
+        </h1>
+        <p class="mt-4 max-w-lg text-ink-soft">
+          Set up n8n, troubleshoot hosting or understand what went wrong. Tested guides and
+          sourced explanations, with the details that matter.
+        </p>
+        <form action="/search/" method="get" role="search" class="mt-6 flex max-w-lg gap-2">
           <label class="sr-only" for="home-q">
             Search guides
           </label>
@@ -51,53 +46,63 @@ const tested = posts.filter((p) => p.data.testedOn).length;
             id="home-q"
             name="q"
             type="search"
-            placeholder="What is broken?"
-            class="min-w-0 flex-1 rounded-pill border border-rule bg-paper px-4 py-2.5 text-base shadow-card"
+            placeholder="Tool name or error message"
+            class="min-w-0 flex-1 rounded-pill border border-rule bg-paper px-4 py-3 text-base shadow-card"
           />
           <button
             type="submit"
-            class="rounded-pill bg-brand-deep px-4 py-2.5 font-semibold text-paper transition-colors hover:bg-brand"
+            class="rounded-pill bg-brand-deep px-5 py-3 font-semibold text-paper transition-colors hover:bg-brand"
           >
             Search
           </button>
         </form>
+        <a
+          href="#guides"
+          class="mt-4 inline-flex min-h-11 items-center text-sm font-semibold"
+        >
+          Browse all {posts.length} articles
+        </a>
       </div>
-    </div>
-  </section>
-
-  <section class="shell py-5" aria-labelledby="latest">
-    <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-      <h2 id="latest" class="font-display text-xl font-semibold sm:text-2xl">
-        Latest guides
-      </h2>
-      {tested > 0 && (
-        <p class="text-sm text-ink-faint">
-          {posts.length} articles, including {tested} tested{' '}
-          {tested === 1 ? 'guide' : 'guides'}
-        </p>
+      {tested.length > 0 && (
+        <div class="min-w-0 lg:border-l lg:border-rule lg:pl-8">
+          <h2 class="font-display text-xl font-semibold">Start with a tested guide</h2>
+          <ul class="mt-2 divide-y divide-rule">
+            {tested.map((post) => (
+              <li class="py-4">
+                <a
+                  href={postPath(post)}
+                  class="font-display text-lg font-semibold leading-snug no-underline hover:underline"
+                >
+                  {post.data.title}
+                </a>
+                <p class="mt-1.5 text-sm text-ink-soft">{post.data.description}</p>
+              </li>
+            ))}
+          </ul>
+          <a href="/editorial-policy/" class="inline-flex min-h-11 items-center text-sm">
+            How we test and source articles
+          </a>
+        </div>
       )}
     </div>
-    {latest.length === 0 ? (
-      <p class="mt-3 text-ink-soft">The first guides are being tested now.</p>
-    ) : (
-      <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {latest.map((p) => (
-          <PostCard post={p} showPillar={true} />
-        ))}
-      </div>
-    )}
   </section>
 
-  <section class="shell py-5" aria-labelledby="topics">
-    <h2 id="topics" class="font-display text-xl font-semibold sm:text-2xl">
-      Start with a topic
-    </h2>
-    <div class="mt-3 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-      {pillars.map((p) => (
-        <PillarCard pillar={p} count={countFor(p.id)} />
+  <nav class="shell border-b border-rule py-5" aria-label="Browse by topic">
+    <ul class="grid grid-cols-2 gap-x-5 gap-y-1 sm:grid-cols-3 lg:grid-cols-6">
+      {pillars.map((pillar) => (
+        <li class="min-w-0">
+          <a
+            href={`/topics/${pillar.id}/`}
+            class="flex min-h-11 items-center gap-2 py-1 text-sm font-semibold no-underline hover:underline"
+          >
+            {pillar.data.name}
+            <span class="font-normal text-ink-faint" data-numeric>
+              {posts.filter((post) => post.data.pillar === pillar.id).length}
+            </span>
+          </a>
+        </li>
       ))}
-    </div>
-  </section>
-
-  <div class="shell"></div>
+    </ul>
+  </nav>
+  <GuideLibrary posts={posts} pillars={pillars} />
 </BaseLayout>

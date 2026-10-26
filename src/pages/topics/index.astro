@@ -28,6 +28,10 @@ const crumbs = [
       name: 'All topics',
       description: 'The six areas A2Z Skills covers.',
       path: '/topics/',
+      items: pillars.map((pillar) => ({
+        name: pillar.data.name,
+        path: `/topics/${pillar.id}/`,
+      })),
     })}
   />
   <JsonLd slot="head" data={breadcrumbs(crumbs)} />

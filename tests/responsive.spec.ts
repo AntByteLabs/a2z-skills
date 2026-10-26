@@ -51,10 +51,12 @@ test.describe('touch targets', () => {
   test('every header control clears 44px on a phone', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    const controls = page.locator('header a, header button');
+    await page.locator('[data-topic-menu] summary').click();
+    const controls = page.locator('header a, header button, header summary');
     const count = await controls.count();
     expect(count).toBeGreaterThan(3);
     for (let i = 0; i < count; i += 1) {
+      if (!(await controls.nth(i).isVisible())) continue;
       const box = await controls.nth(i).boundingBox();
       if (!box) continue;
       const label = (await controls.nth(i).textContent())?.trim().slice(0, 24);

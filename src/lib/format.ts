@@ -16,3 +16,14 @@ export const pillarLabel = (slug: string) =>
     .split('-')
     .map((w) => w[0]!.toUpperCase() + w.slice(1))
     .join(' ');
+
+export const postTypeLabel = (type: string) =>
+  ({
+    'how-to': 'How-to guide',
+    fix: 'Fix',
+    explainer: 'Explainer',
+    comparison: 'Comparison',
+    review: 'Review',
+    list: 'List',
+    asset: 'Download',
+  })[type] ?? type;

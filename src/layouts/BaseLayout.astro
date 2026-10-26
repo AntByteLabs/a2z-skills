@@ -19,9 +19,10 @@ interface Props {
   ogType?: 'website' | 'article';
   wide?: boolean;
   searchable?: boolean;
+  activePillar?: string;
 }
 
-const { wide = false, searchable = false, ...seo } = Astro.props;
+const { wide = false, searchable = false, activePillar, ...seo } = Astro.props;
 const configuredAnalyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? '';
 const analyticsToken = /^[a-f0-9]{32}$/i.test(configuredAnalyticsToken)
   ? configuredAnalyticsToken
@@ -48,13 +49,15 @@ const analyticsToken = /^[a-f0-9]{32}$/i.test(configuredAnalyticsToken)
       type="font/woff2"
       crossorigin="anonymous"
     />
-    <link
-      rel="preload"
-      href="/fonts/literata-var.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
+    {searchable && (
+      <link
+        rel="preload"
+        href="/fonts/literata-var.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous"
+      />
+    )}
     <SEO {...seo} />
     <JsonLd data={website()} />
     <!-- Theme is applied before first paint so the page never flashes. -->
@@ -110,7 +113,7 @@ const analyticsToken = /^[a-f0-9]{32}$/i.test(configuredAnalyticsToken)
     >
       Skip to content
     </a>
-    <Header />
+    <Header activePillar={activePillar} />
     <script>
       // Press / anywhere to search, the way every tool people already use does.
       addEventListener('keydown', (event) => {

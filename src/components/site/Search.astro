@@ -2,6 +2,11 @@
 /** Pagefind is generated after Astro and loaded when a reader searches. */
 ---
 
+<noscript>
+  <p class="mb-4 rounded-soft border border-rule p-4 text-ink-soft">
+    Search needs JavaScript. Browse the topics below to find an article.
+  </p>
+</noscript>
 <div id="search" class="min-h-[6rem]">
   <label for="search-input" class="block text-sm font-semibold">
     Search every guide
@@ -21,6 +26,8 @@
   const status = document.getElementById('search-results');
   const query = new URLSearchParams(location.search).get('q') ?? '';
   let booted = false;
+  let attempts = 0;
+  const initialChildren = container ? [...container.childNodes] : [];
 
   // Ambient types, not values: the base no-unused-vars rule reads the interface
   // members as unused bindings. Same blind spot the config disables no-undef for.
@@ -44,33 +51,46 @@
       css.dataset.searchStyles = '';
       document.head.appendChild(css);
     }
+    if (status) status.textContent = 'Loading search…';
     try {
       // The generated IIFE installs a browser global, not named ESM exports.
-      const bundle = '/pagefind/pagefind-ui.js';
+      const bundle = `/pagefind/pagefind-ui.js${attempts++ ? `?retry=${attempts}` : ''}`;
       await import(/* @vite-ignore */ bundle);
+      const value = input.value;
+      container.replaceChildren();
+      const ui = new window.PagefindUI({
+        element: '#search',
+        showSubResults: false,
+        showImages: false,
+        excerptLength: 25,
+        resetStyles: false,
+      });
+      if (value) ui.triggerSearch(value);
+      const search = container.querySelector<HTMLInputElement>(
+        '.pagefind-ui__search-input',
+      );
+      search?.focus();
+      search?.addEventListener('input', () => {
+        const url = new URL(location.href);
+        if (search.value) url.searchParams.set('q', search.value);
+        else url.searchParams.delete('q');
+        history.replaceState(null, '', url);
+      });
     } catch {
       booted = false;
-      if (status) status.textContent = 'Search could not load. Focus the field to retry.';
-      return;
+      container.replaceChildren(...initialChildren);
+      if (status) {
+        status.textContent =
+          'Search could not load. Check your connection and try again, or browse a topic below.';
+        const retry = document.createElement('button');
+        retry.type = 'button';
+        retry.className =
+          'mt-3 block min-h-11 rounded-pill border border-rule px-4 py-2 font-semibold';
+        retry.textContent = 'Retry search';
+        retry.addEventListener('click', () => void boot());
+        status.append(retry);
+      }
     }
-    const value = input.value;
-    container.replaceChildren();
-    const ui = new window.PagefindUI({
-      element: '#search',
-      showSubResults: true,
-      showImages: false,
-      excerptLength: 25,
-      resetStyles: false,
-    });
-    if (value) ui.triggerSearch(value);
-    const search = container.querySelector<HTMLInputElement>('.pagefind-ui__search-input');
-    search?.focus();
-    search?.addEventListener('input', () => {
-      const url = new URL(location.href);
-      if (search.value) url.searchParams.set('q', search.value);
-      else url.searchParams.delete('q');
-      history.replaceState(null, '', url);
-    });
   }
 
   input?.addEventListener('focus', boot);
