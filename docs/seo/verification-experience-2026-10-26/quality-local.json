@@ -7,12 +7,12 @@
     "skipped": 2
   },
   "unit_tests": {
-    "passed": 8
+    "passed": 9
   },
-  "published_articles": 12,
-  "built_html_pages": 41,
-  "sitemap_urls": 28,
-  "pagefind_pages": 12,
+  "published_articles": 13,
+  "built_html_pages": 43,
+  "sitemap_urls": 29,
+  "pagefind_pages": 13,
   "lighthouse_runs": 9,
   "lighthouse_minimum_scores": {
     "performance": 100,
@@ -20,7 +20,8 @@
     "best-practices": 100,
     "seo": 100
   },
-  "maximum_lab_lcp_ms": 1429.1704,
+  "maximum_lab_lcp_ms": 1429.3415,
   "maximum_lab_cls": 0,
-  "scope": "Local build and local Worker headers; not field performance or proof of indexing"
+  "scope": "Local build and local Worker headers; not field performance or proof of indexing",
+  "source_commit": "74ea530"
 }

@@ -137,6 +137,13 @@ A ninth unit test covers missing/blank testers and draft handling. The keyword
 queue and both webhook briefs point to the published canonical URL to avoid
 competing pages for the same intent.
 
+The integrated check passed all 126 browser tests and nine unit tests, with two
+intentional desktop touch-test skips. All 43 built HTML pages passed link and
+transfer-budget checks. The index contains 13 articles and the sitemap 29 URLs.
+Nine fresh Lighthouse lab runs across three representative pages scored 100 in
+all four categories, with CLS 0. Exact LCP measurements are in the JSON report;
+these are lab results, not field Core Web Vitals.
+
 Final check, Lighthouse and production results are recorded in
 [verification](verification-experience-2026-10-26/). Form tests use mocked
 submissions; this review did not add production signup or feedback records.

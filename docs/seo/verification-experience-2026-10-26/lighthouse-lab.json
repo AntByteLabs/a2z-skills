@@ -1,101 +1,101 @@
 [
   {
-    "url": "http://localhost:63594/index.html",
+    "url": "http://localhost:64963/index.html",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp_ms": 1053.2751,
+    "lcp_ms": 1052.7693,
     "cls": 0
   },
   {
-    "url": "http://localhost:63594/index.html",
+    "url": "http://localhost:64963/index.html",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp_ms": 1053.0803,
+    "lcp_ms": 1053.473,
     "cls": 0
   },
   {
-    "url": "http://localhost:63594/index.html",
+    "url": "http://localhost:64963/index.html",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp_ms": 1052.5245,
+    "lcp_ms": 1052.6891,
     "cls": 0
   },
   {
-    "url": "http://localhost:63594/ai-detectors-flagging-human-writing/index.html",
+    "url": "http://localhost:64963/ai-detectors-flagging-human-writing/index.html",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp_ms": 1429.1704,
+    "lcp_ms": 1429.2713,
     "cls": 0
   },
   {
-    "url": "http://localhost:63594/ai-detectors-flagging-human-writing/index.html",
+    "url": "http://localhost:64963/ai-detectors-flagging-human-writing/index.html",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp_ms": 1428.9183,
+    "lcp_ms": 1429.1631,
     "cls": 0
   },
   {
-    "url": "http://localhost:63594/ai-detectors-flagging-human-writing/index.html",
+    "url": "http://localhost:64963/ai-detectors-flagging-human-writing/index.html",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp_ms": 1429.0689,
+    "lcp_ms": 1429.3415,
     "cls": 0
   },
   {
-    "url": "http://localhost:63594/topics/ai-tools/index.html",
+    "url": "http://localhost:64963/topics/ai-tools/index.html",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp_ms": 1052.5872,
+    "lcp_ms": 1052.0413,
     "cls": 0
   },
   {
-    "url": "http://localhost:63594/topics/ai-tools/index.html",
+    "url": "http://localhost:64963/topics/ai-tools/index.html",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp_ms": 1051.9599,
+    "lcp_ms": 1052.7237,
     "cls": 0
   },
   {
-    "url": "http://localhost:63594/topics/ai-tools/index.html",
+    "url": "http://localhost:64963/topics/ai-tools/index.html",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp_ms": 1052.2317,
+    "lcp_ms": 1052.4812,
     "cls": 0
   }
 ]
