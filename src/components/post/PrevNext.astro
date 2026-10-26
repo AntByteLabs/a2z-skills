@@ -1,0 +1,36 @@
+---
+import type { Post } from '../../lib/posts';
+import { postPath } from '../../lib/posts';
+interface Props {
+  prev?: Post;
+  next?: Post;
+}
+const { prev, next } = Astro.props;
+---
+
+{(prev || next) && (
+  <nav class="not-prose my-8 grid gap-3 sm:grid-cols-2" aria-label="More guides">
+    {prev ? (
+      <a href={postPath(prev)} class="card-link group p-3.5 no-underline">
+        <span class="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+          Previous
+        </span>
+        <span class="mt-1 block font-medium text-ink group-hover:text-brand-deep">
+          {prev.data.title}
+        </span>
+      </a>
+    ) : (
+      <span />
+    )}
+    {next && (
+      <a href={postPath(next)} class="card-link group p-3.5 text-right no-underline">
+        <span class="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+          Next
+        </span>
+        <span class="mt-1 block font-medium text-ink group-hover:text-brand-deep">
+          {next.data.title}
+        </span>
+      </a>
+    )}
+  </nav>
+)}

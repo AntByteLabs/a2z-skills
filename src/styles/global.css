@@ -49,6 +49,8 @@
   --color-accent: oklch(0.53 0.16 42);
   --color-accent-edge: oklch(0.62 0.16 45);
   --color-good: oklch(0.47 0.12 155);
+  --color-good-deep: oklch(0.41 0.11 155);
+  --color-good-wash: oklch(0.94 0.045 155);
   --color-warn: oklch(0.52 0.13 75);
   --color-bad: oklch(0.5 0.18 25);
 
@@ -178,6 +180,8 @@
     --color-accent: oklch(0.78 0.12 45);
     --color-accent-edge: oklch(0.7 0.14 45);
     --color-good: oklch(0.78 0.12 155);
+    --color-good-deep: oklch(0.84 0.1 155);
+    --color-good-wash: oklch(0.3 0.05 155);
     --color-warn: oklch(0.82 0.12 75);
     --color-bad: oklch(0.75 0.14 25);
     --shadow-card: 0 1px 2px oklch(0 0 0 / 0.3);
@@ -233,65 +237,48 @@
 
 /* A small, calm label: post type, counts, tested-on badges. */
 /*
- * The things that stop the page reading like a template. A paper grain, a
- * marker highlight behind the words that matter, a stamp for a tested post,
- * and oversized index numerals on the post list. All CSS: no image is
- * downloaded for any of it, so the performance budget is untouched.
+ * The pieces that make the site feel friendly rather than generated: soft
+ * surfaces, a quiet tint behind a section, and a badge that reads as a fact
+ * rather than a sticker. All CSS, so no image is downloaded for any of it.
  */
-@utility grain {
-  position: relative;
 
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.4;
-    background-image: radial-gradient(
-      circle at 1px 1px,
-      oklch(0.2 0.025 268 / 0.045) 1px,
-      transparent 0
-    );
-    background-size: 14px 14px;
-  }
+/* A soft wash behind a band of the page. */
+@utility tint {
+  background:
+    radial-gradient(80% 120% at 10% 0%, var(--color-brand-wash) 0%, transparent 60%),
+    var(--color-paper-sunk);
 }
 
-/* A hand-drawn marker behind a phrase, sitting under the letters. */
-@utility marker {
-  background-image: linear-gradient(
-    to bottom,
-    transparent 58%,
-    var(--color-highlight) 58%,
-    var(--color-highlight) 94%,
-    transparent 94%
-  );
-  background-repeat: no-repeat;
-  padding-inline: 0.1em;
-}
-
-/* The proof mark. Rotated, because a stamp never lands straight. */
-@utility stamp {
+/* The proof mark: a calm badge, not a sticker. */
+@utility badge-tested {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  transform: rotate(-3deg);
-  border: 2px solid var(--color-good);
-  border-radius: 0.375rem;
-  padding: 0.125rem 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-good);
+  border-radius: var(--radius-pill);
+  background: var(--color-good-wash);
+  padding: 0.1875rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-good-deep);
 }
 
-/* A rule that reads as an editorial divider rather than a border. */
-@utility rule-accent {
-  border: 0;
-  border-top: 3px solid var(--color-accent);
-  width: 2.5rem;
-  margin: 0;
+/* A card that lifts a little when you point at it. */
+@utility card-link {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  box-shadow: var(--shadow-card);
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+
+  &:hover {
+    border-color: var(--color-brand);
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-2px);
+  }
 }
 
 @utility pill {

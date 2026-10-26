@@ -1,0 +1,104 @@
+---
+/**
+ * The one question worth asking a reader: did it work? The answer goes to the
+ * site's own database. Nothing identifying is stored, so there is no banner to
+ * show and nothing to opt out of.
+ */
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+
+<section
+  class="not-prose my-8 rounded-card border border-rule bg-paper-sunk p-4"
+  data-helpful
+  data-slug={slug}
+  aria-labelledby="helpful-q"
+>
+  <p id="helpful-q" class="font-display text-base font-semibold">
+    Did this fix it?
+  </p>
+  <p class="mt-0.5 text-sm text-ink-soft">
+    We re-test the guides that stop working. Telling us is the fastest way to get one fixed.
+  </p>
+  <div class="mt-3 flex flex-wrap gap-2" data-helpful-buttons>
+    <button
+      type="button"
+      data-answer="yes"
+      class="rounded-pill border border-rule bg-paper px-4 py-2 text-sm font-medium transition-colors hover:border-good hover:text-good"
+    >
+      Yes, it worked
+    </button>
+    <button
+      type="button"
+      data-answer="no"
+      class="rounded-pill border border-rule bg-paper px-4 py-2 text-sm font-medium transition-colors hover:border-bad hover:text-bad"
+    >
+      No, still broken
+    </button>
+  </div>
+  <form class="mt-3 hidden" data-helpful-note>
+    <label class="block text-sm font-medium" for={`note-${slug}`}>
+      What happened? Versions help most.
+    </label>
+    <textarea
+      id={`note-${slug}`}
+      name="note"
+      rows="3"
+      maxlength="500"
+      class="mt-1.5 w-full rounded-card border border-rule bg-paper px-3 py-2 text-sm"
+      placeholder="Step 3 did not match what I saw. Windows 11 25H2, Excel 2511."
+    ></textarea>
+    <button
+      type="submit"
+      class="mt-2 rounded-pill bg-brand-deep px-4 py-2 text-sm font-semibold text-paper hover:bg-brand"
+    >
+      Send
+    </button>
+  </form>
+  <p class="mt-3 hidden text-sm font-medium text-good" data-helpful-thanks>
+    Thanks. That goes straight onto the re-test list.
+  </p>
+</section>
+<script>
+  document.querySelectorAll('[data-helpful]').forEach((box) => {
+    const slug = (box as HTMLElement).dataset.slug ?? '';
+    const buttons = box.querySelector('[data-helpful-buttons]');
+    const noteForm = box.querySelector<HTMLFormElement>('[data-helpful-note]');
+    const thanks = box.querySelector('[data-helpful-thanks]');
+
+    const send = async (helpful: string, note = '') => {
+      const body = new FormData();
+      body.set('slug', slug);
+      body.set('helpful', helpful);
+      if (note) body.set('note', note);
+      try {
+        await fetch('/api/feedback', { method: 'POST', body });
+      } catch {
+        // A lost vote is not worth interrupting the reader for.
+      }
+    };
+
+    box.querySelectorAll<HTMLButtonElement>('[data-answer]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const answer = btn.dataset.answer ?? 'yes';
+        send(answer);
+        buttons?.classList.add('hidden');
+        if (answer === 'no') {
+          noteForm?.classList.remove('hidden');
+        } else {
+          thanks?.classList.remove('hidden');
+        }
+      });
+    });
+
+    noteForm?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const note = noteForm.querySelector('textarea')?.value ?? '';
+      send('no', note);
+      noteForm.classList.add('hidden');
+      thanks?.classList.remove('hidden');
+    });
+  });
+</script>

@@ -20,7 +20,7 @@ const tested = posts.filter((p) => p.data.testedOn).length;
   description={site.description}
   path="/"
 >
-  <section class="grain border-b border-rule bg-paper-sunk">
+  <section class="tint border-b border-rule">
     <div class="shell py-8 sm:py-11">
       <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div class="max-w-2xl">
@@ -79,21 +79,11 @@ const tested = posts.filter((p) => p.data.testedOn).length;
     {latest.length === 0 ? (
       <p class="mt-3 text-ink-soft">The first guides are being tested now.</p>
     ) : (
-      <ol class="mt-4 divide-y divide-rule border-t border-rule">
-        {latest.map((p, i) => (
-          <li class="flex gap-4 py-4 sm:gap-6">
-            <span
-              aria-hidden="true"
-              class="w-8 shrink-0 pt-0.5 text-right font-display text-xl font-bold tabular-nums text-ink-faint/70 sm:w-12 sm:text-3xl"
-            >
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <div class="min-w-0 flex-1">
-              <PostCard post={p} showPillar={true} />
-            </div>
-          </li>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {latest.map((p) => (
+          <PostCard post={p} showPillar={true} />
         ))}
-      </ol>
+      </div>
     )}
   </section>
 

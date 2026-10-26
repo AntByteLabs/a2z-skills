@@ -16,8 +16,13 @@ import RelatedPosts from '../components/post/RelatedPosts.astro';
 import AffiliateDisclosure from '../components/money/AffiliateDisclosure.astro';
 import AdSlot from '../components/money/AdSlot.astro';
 import NewsletterForm from '../components/site/NewsletterForm.astro';
+import ReadingProgress from '../components/post/ReadingProgress.astro';
+import CopyCode from '../components/post/CopyCode.astro';
+import ShareRow from '../components/post/ShareRow.astro';
+import PrevNext from '../components/post/PrevNext.astro';
+import Helpful from '../components/post/Helpful.astro';
 import { blogPosting, breadcrumbs, type Crumb } from '../lib/schema';
-import { relatedPosts, postPath, type Post } from '../lib/posts';
+import { relatedPosts, postPath, livePosts, type Post } from '../lib/posts';
 import { absolute } from '../site';
 import { pillarLabel, readingMinutes } from '../lib/format';
 
@@ -38,6 +43,12 @@ const pillar = await getEntry('pillars', data.pillar);
 const path = postPath(post);
 const ogImage = absolute(`/og/${post.id}.png`);
 const related = await relatedPosts(post);
+
+// Newest first, so "previous" is the post published before this one.
+const all = await livePosts();
+const here = all.findIndex((p) => p.id === post.id);
+const next = here > 0 ? all[here - 1] : undefined;
+const prev = here >= 0 && here < all.length - 1 ? all[here + 1] : undefined;
 
 const crumbs: Crumb[] = [
   { name: 'Home', path: '/' },
@@ -73,6 +84,7 @@ const article = blogPosting({
   ogType="article"
 >
   <JsonLd data={article} slot="head" />
+  <ReadingProgress />
   <JsonLd data={breadcrumbs(crumbs)} slot="head" />
 
   <div class="shell grid gap-8 py-5 lg:grid-cols-[minmax(0,1fr)_17rem]">
@@ -143,10 +155,14 @@ const article = blogPosting({
       <AdSlot position="end-article" />
 
       <Download items={data.downloads} />
+      <ShareRow title={data.title} path={path} />
+      <Helpful slug={post.id} />
       <FAQ items={data.faq} />
       <AuthorBox author={author} />
       <NewsletterForm source={`post:${post.id}`} />
       <RelatedPosts posts={related} />
+      <PrevNext prev={prev} next={next} />
+      <CopyCode />
     </article>
 
     <aside class="hidden min-w-0 lg:block">

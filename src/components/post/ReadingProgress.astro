@@ -1,0 +1,46 @@
+---
+/** A thin bar under the header showing how far through the article you are. */
+---
+
+<div
+  id="reading-progress"
+  role="progressbar"
+  aria-label="How far through the article you are"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="0"
+  class="pointer-events-none fixed inset-x-0 top-14 z-30 h-0.5 bg-transparent"
+>
+  <div
+    id="reading-progress-bar"
+    class="h-full w-0 bg-brand transition-[width] duration-75"
+  ></div>
+</div>
+<script>
+  const wrap = document.getElementById('reading-progress');
+  const bar = document.getElementById('reading-progress-bar');
+  const article = document.querySelector('article');
+  if (wrap && bar && article) {
+    let ticking = false;
+    const update = () => {
+      const start = article.offsetTop;
+      const span = article.offsetHeight - window.innerHeight;
+      const done = span > 0 ? (window.scrollY - start) / span : 0;
+      const pct = Math.max(0, Math.min(1, done)) * 100;
+      bar.style.width = `${pct}%`;
+      wrap.setAttribute('aria-valuenow', String(Math.round(pct)));
+      ticking = false;
+    };
+    addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true },
+    );
+    update();
+  }
+</script>

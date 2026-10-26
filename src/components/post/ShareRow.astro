@@ -1,0 +1,93 @@
+---
+import { absolute } from '../../site';
+interface Props {
+  title: string;
+  path: string;
+}
+const { title, path } = Astro.props;
+const url = absolute(path);
+---
+
+<div class="not-prose my-6 flex flex-wrap items-center gap-2 border-y border-rule py-3">
+  <span class="text-sm font-medium text-ink-soft">Share</span>
+  <button
+    type="button"
+    data-share
+    data-url={url}
+    data-title={title}
+    class="hidden items-center gap-1.5 rounded-pill border border-rule px-3 py-1.5 text-sm transition-colors hover:bg-paper-sunk"
+  >
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      class="h-3.5 w-3.5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+    >
+      <path
+        d="M11 5.5a2 2 0 1 0-1.9-2.6L6 4.6a2 2 0 1 0 0 2.8l3.1 1.7a2 2 0 1 0 .5-1l-3.1-1.6"
+        stroke-linecap="round"
+      />
+    </svg>
+    Share
+  </button>
+  <button
+    type="button"
+    data-copy-link
+    data-url={url}
+    class="inline-flex items-center gap-1.5 rounded-pill border border-rule px-3 py-1.5 text-sm transition-colors hover:bg-paper-sunk"
+  >
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      class="h-3.5 w-3.5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+    >
+      <path
+        d="M6.5 9.5 9.5 6.5M7 4.5 8.5 3a2.8 2.8 0 0 1 4 4L11 8.5M9 11.5 7.5 13a2.8 2.8 0 0 1-4-4L5 7.5"
+        stroke-linecap="round"
+      />
+    </svg>
+    <span data-copy-label>Copy link</span>
+  </button>
+  <a
+    href={`https://news.ycombinator.com/submitlink?u=${encodeURIComponent(url)}&t=${encodeURIComponent(title)}`}
+    rel="noopener nofollow"
+    class="inline-flex items-center gap-1.5 rounded-pill border border-rule px-3 py-1.5 text-sm no-underline text-ink transition-colors hover:bg-paper-sunk"
+  >
+    Hacker News
+  </a>
+</div>
+<script>
+  // The native sheet only exists on some devices, so it stays hidden until
+  // it is known to work, and the copy button is always there.
+  const shareBtn = document.querySelector<HTMLButtonElement>('[data-share]');
+  if (shareBtn && typeof navigator.share === 'function') {
+    shareBtn.classList.remove('hidden');
+    shareBtn.classList.add('inline-flex');
+    shareBtn.addEventListener('click', () => {
+      navigator
+        .share({ title: shareBtn.dataset.title, url: shareBtn.dataset.url })
+        .catch(() => {});
+    });
+  }
+
+  document
+    .querySelector<HTMLButtonElement>('[data-copy-link]')
+    ?.addEventListener('click', async (e) => {
+      const btn = e.currentTarget as HTMLButtonElement;
+      const out = btn.querySelector('[data-copy-label]');
+      try {
+        await navigator.clipboard.writeText(btn.dataset.url ?? location.href);
+        if (out) out.textContent = 'Copied';
+      } catch {
+        if (out) out.textContent = 'Copy failed';
+      }
+      setTimeout(() => {
+        if (out) out.textContent = 'Copy link';
+      }, 1600);
+    });
+</script>

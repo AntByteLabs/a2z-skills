@@ -53,6 +53,39 @@ const { wide = false, ...seo } = Astro.props;
       }
     </script>
     <slot name="head" />
+    <style>
+      /* A guide is something people print and carry to the broken machine. */
+      @media print {
+        header,
+        footer,
+        nav,
+        form,
+        #reading-progress,
+        [data-ad-slot],
+        [data-helpful],
+        [data-share],
+        [data-copy-link] {
+          display: none !important;
+        }
+        :root {
+          --color-paper: #fff;
+          --color-paper-sunk: #fff;
+          --color-ink: #000;
+          --color-ink-soft: #222;
+        }
+        a[href^='http']::after {
+          content: ' (' attr(href) ')';
+          font-size: 0.85em;
+          word-break: break-all;
+        }
+        pre,
+        blockquote,
+        figure,
+        table {
+          break-inside: avoid;
+        }
+      }
+    </style>
   </head>
   <body class="min-h-dvh flex flex-col bg-paper text-ink">
     <a
@@ -62,6 +95,26 @@ const { wide = false, ...seo } = Astro.props;
       Skip to content
     </a>
     <Header />
+    <script>
+      // Press / anywhere to search, the way every tool people already use does.
+      addEventListener('keydown', (event) => {
+        if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey) return;
+        const el = document.activeElement;
+        const typing =
+          el instanceof HTMLInputElement ||
+          el instanceof HTMLTextAreaElement ||
+          (el instanceof HTMLElement && el.isContentEditable);
+        if (typing) return;
+        const box = document.querySelector<HTMLInputElement>('input[type="search"]');
+        if (box) {
+          event.preventDefault();
+          box.focus();
+          box.select();
+        } else {
+          location.href = '/search/';
+        }
+      });
+    </script>
     <main id="main" class={wide ? 'flex-1' : 'flex-1 w-full'}>
       <slot />
     </main>

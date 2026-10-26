@@ -6,38 +6,45 @@ import { formatDate, readingMinutes } from '../../lib/format';
 interface Props {
   post: Post;
   showPillar?: boolean;
+  compact?: boolean;
 }
-const { post, showPillar = false } = Astro.props;
+const { post, showPillar = false, compact = false } = Astro.props;
 const { data } = post;
 const shown = data.updatedAt ?? data.publishedAt;
 ---
 
-<article class="group">
-  <a href={postPath(post)} class="block no-underline">
-    <h3 class="font-display text-lg font-semibold leading-snug text-ink group-hover:text-brand-deep sm:text-xl">
-      {data.title}
-    </h3>
-    <p class="mt-1 line-clamp-2 text-sm text-ink-soft">{data.description}</p>
-  </a>
-  <p class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-faint">
+<article class:list={['card-link group flex h-full flex-col p-4', compact && 'p-3.5']}>
+  <div class="flex flex-wrap items-center gap-1.5">
     <span class="pill">{data.type}</span>
     {data.testedOn && (
-      <span class="stamp">
+      <span class="badge-tested">
         <svg aria-hidden="true" viewBox="0 0 12 12" class="h-3 w-3" fill="currentColor">
           <path d="M4.6 9 1.4 5.8l1.1-1.1 2.1 2.1 4.9-4.9 1.1 1.1z" />
         </svg>
-        tested
+        Tested
       </span>
     )}
-    {showPillar && (
-      <a href={`/topics/${data.pillar}/`} class="no-underline hover:underline">
-        {data.pillar}
-      </a>
-    )}
+    {showPillar && <span class="pill">{data.pillar.replace('-', ' & ')}</span>}
+  </div>
+
+  <h3
+    class:list={[
+      'mt-2.5 font-display font-semibold leading-snug text-ink group-hover:text-brand-deep',
+      compact ? 'text-base' : 'text-lg',
+    ]}
+  >
+    <a href={postPath(post)} class="no-underline after:absolute after:inset-0">
+      {data.title}
+    </a>
+  </h3>
+
+  <p class="mt-1.5 line-clamp-3 flex-1 text-sm text-ink-soft">{data.description}</p>
+
+  <p class="mt-3 flex flex-wrap items-center gap-x-2 border-t border-rule pt-2.5 text-xs text-ink-faint">
     <time datetime={shown.toISOString()}>
-      {data.updatedAt ? `updated ${formatDate(shown)}` : formatDate(shown)}
+      {data.updatedAt ? `Updated ${formatDate(shown)}` : formatDate(shown)}
     </time>
     <span aria-hidden="true">·</span>
-    <span>{readingMinutes(post.body ?? '')} min</span>
+    <span>{readingMinutes(post.body ?? '')} min read</span>
   </p>
 </article>

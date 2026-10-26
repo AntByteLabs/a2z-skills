@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PostCard from '../../components/cards/PostCard.astro';
+import { collectionPage, breadcrumbs } from '../../lib/schema';
+import { livePosts, type Post } from '../../lib/posts';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await livePosts();
+  const byTag = new Map<string, Post[]>();
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      byTag.set(tag, [...(byTag.get(tag) ?? []), post]);
+    }
+  }
+  // A tag with one post is a thin page, so it does not get one.
+  return [...byTag.entries()]
+    .filter(([, list]) => list.length >= 2)
+    .map(([tag, list]) => ({ params: { tag }, props: { tag, posts: list } }));
+}) satisfies GetStaticPaths;
+
+const { tag, posts } = Astro.props as { tag: string; posts: Post[] };
+const path = `/tags/${tag}/`;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Topics', path: '/topics/' },
+  { name: tag, path },
+];
+const description =
+  `Every tested guide on A2Z Skills tagged ${tag}: ${posts.length} ` +
+  `${posts.length === 1 ? 'guide' : 'guides'} with the versions each was tried on.`;
+---
+
+<BaseLayout title={`${tag} guides`} description={description.slice(0, 158)} path={path}>
+  <JsonLd slot="head" data={collectionPage({ name: `${tag} guides`, description, path })} />
+  <JsonLd slot="head" data={breadcrumbs(crumbs)} />
+  <div class="shell py-5">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-2 font-display text-[1.6rem] font-bold sm:text-3xl">
+      Guides tagged <span class="text-brand-deep">{tag}</span>
+    </h1>
+    <p class="mt-1.5 text-ink-soft">
+      {posts.length} {posts.length === 1 ? 'guide' : 'guides'}, each listing what it was
+      tested on.
+    </p>
+    <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {posts.map((p) => (
+        <PostCard post={p} showPillar={true} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

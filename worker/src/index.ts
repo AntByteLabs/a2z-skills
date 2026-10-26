@@ -106,6 +106,46 @@ const confirm = async (request: Request, env: Env): Promise<Response> => {
   return Response.redirect(new URL('/thanks/', request.url).toString(), 303);
 };
 
+/**
+ * A vote on whether a guide worked. No cookie, no identifier, no IP stored:
+ * the only thing kept is the slug, the verdict, a country code and an optional
+ * note. It exists to find the guides that do not work, which is the one thing
+ * page views cannot tell you.
+ */
+const feedback = async (request: Request, env: Env): Promise<Response> => {
+  let form: FormData;
+  try {
+    form = await request.formData();
+  } catch {
+    return json({ error: 'Send the form as form data.' }, 400);
+  }
+
+  const slug = String(form.get('slug') ?? '').trim();
+  if (!/^[a-z0-9-]{3,80}$/.test(slug)) return json({ error: 'Unknown page.' }, 400);
+
+  const verdict = String(form.get('helpful') ?? '');
+  if (verdict !== 'yes' && verdict !== 'no') return json({ error: 'Unknown answer.' }, 400);
+
+  const note =
+    String(form.get('note') ?? '')
+      .trim()
+      .slice(0, 500) || null;
+  const country = request.headers.get('CF-IPCountry')?.slice(0, 2) ?? null;
+
+  try {
+    await env.DB.prepare(
+      'INSERT INTO feedback (slug, helpful, country, note) VALUES (?1, ?2, ?3, ?4)',
+    )
+      .bind(slug, verdict === 'yes' ? 1 : 0, country, note)
+      .run();
+  } catch (error) {
+    console.error('feedback insert failed', error);
+    return json({ error: 'Could not record that.' }, 500);
+  }
+
+  return json({ ok: true });
+};
+
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
@@ -113,6 +153,11 @@ export default {
     if (url.pathname === '/api/subscribe') {
       if (request.method !== 'POST') return json({ error: 'POST only.' }, 405);
       return subscribe(request, env);
+    }
+
+    if (url.pathname === '/api/feedback') {
+      if (request.method !== 'POST') return json({ error: 'POST only.' }, 405);
+      return feedback(request, env);
     }
 
     if (url.pathname === '/api/confirm') {

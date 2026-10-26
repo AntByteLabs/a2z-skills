@@ -1,0 +1,39 @@
+---
+/**
+ * A copy button on every code block. Added from script rather than in the
+ * markup, because the blocks come out of MDX and there is nowhere to put it.
+ */
+---
+
+<script>
+  const label = (done: boolean) => (done ? 'Copied' : 'Copy');
+
+  document.querySelectorAll('article pre').forEach((pre) => {
+    if (!(pre instanceof HTMLElement) || pre.dataset.copyReady) return;
+    pre.dataset.copyReady = 'true';
+    pre.classList.add('relative', 'group/code');
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className =
+      'absolute right-2 top-2 rounded border border-white/20 bg-white/10 px-2 py-1 text-xs font-medium text-white/80 opacity-0 transition-opacity hover:bg-white/20 focus-visible:opacity-100 group-hover/code:opacity-100';
+    button.textContent = label(false);
+    button.setAttribute('aria-label', 'Copy the code to the clipboard');
+
+    button.addEventListener('click', async () => {
+      const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(code.trim());
+        button.textContent = label(true);
+      } catch {
+        // Clipboard blocked: say so rather than pretending it worked.
+        button.textContent = 'Press Ctrl+C';
+      }
+      setTimeout(() => {
+        button.textContent = label(false);
+      }, 1600);
+    });
+
+    pre.append(button);
+  });
+</script>
