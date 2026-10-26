@@ -37,7 +37,52 @@ const verifyTurnstile = async (token: unknown, secret: string, ip: string | null
   return result.success === true;
 };
 
+/**
+ * Per-IP throttle, counted in fixed windows.
+ *
+ * Fails open: if the table is missing or D1 is unwell, a real person still gets
+ * to subscribe. A throttle that takes the form down is worse than the abuse it
+ * prevents at this traffic level.
+ */
+const WINDOW_SECONDS = 3600;
+
+const tooManyRequests = async (
+  request: Request,
+  env: Env,
+  bucket: string,
+  limit: number,
+): Promise<boolean> => {
+  const ip = request.headers.get('CF-Connecting-IP') ?? '';
+  if (!ip) return false;
+
+  // Hashed, so the table never holds an address. Truncated: collisions only
+  // make the limit slightly stricter for two strangers, which is acceptable.
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
+  const key = `${bucket}:${[...new Uint8Array(digest)]
+    .slice(0, 8)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')}`;
+  const windowStart = Math.floor(Date.now() / 1000 / WINDOW_SECONDS) * WINDOW_SECONDS;
+
+  try {
+    const row = await env.DB.prepare(
+      `INSERT INTO rate_limit (key, window_start, hits) VALUES (?1, ?2, 1)
+       ON CONFLICT (key, window_start) DO UPDATE SET hits = hits + 1
+       RETURNING hits`,
+    )
+      .bind(key, windowStart)
+      .first<{ hits: number }>();
+    return (row?.hits ?? 0) > limit;
+  } catch (error) {
+    console.error('rate limit check failed', error);
+    return false;
+  }
+};
+
 const subscribe = async (request: Request, env: Env): Promise<Response> => {
+  if (await tooManyRequests(request, env, 'sub', 10))
+    return json({ error: 'Too many attempts. Try again later.' }, 429);
+
   let form: FormData;
   try {
     form = await request.formData();
@@ -113,6 +158,9 @@ const confirm = async (request: Request, env: Env): Promise<Response> => {
  * page views cannot tell you.
  */
 const feedback = async (request: Request, env: Env): Promise<Response> => {
+  if (await tooManyRequests(request, env, 'fb', 60))
+    return json({ error: 'Too many votes.' }, 429);
+
   let form: FormData;
   try {
     form = await request.formData();
