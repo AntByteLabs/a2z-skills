@@ -24,6 +24,7 @@ import {
   TYPES,
   blueprint,
   checkPost,
+  checkBeforeWrite,
   getPost,
   joinPost,
   listPostSlugs,
@@ -148,7 +149,9 @@ const tools = [
         draft: true,
       };
       const body = String(args.body ?? blueprint(String(args.pillar), String(args.type)));
-      const check = checkPost(frontmatter, body, slug);
+      const check = await checkBeforeWrite(env, frontmatter, body, slug);
+      if (!check.ok)
+        return { ...text({ refused: slug, problems: check.problems }), isError: true };
       const result = await writeFile(
         env,
         postPath(slug),
@@ -198,7 +201,9 @@ const tools = [
       if (typeof args.appendBody === 'string')
         body = `${body.trimEnd()}\n\n${args.appendBody}\n`;
 
-      const check = checkPost(frontmatter, body, post.slug);
+      const check = await checkBeforeWrite(env, frontmatter, body, post.slug);
+      if (!check.ok)
+        return { ...text({ refused: post.slug, problems: check.problems }), isError: true };
       const result = await writeFile(
         env,
         postPath(post.slug),
@@ -228,7 +233,7 @@ const tools = [
       if (!post) return text(`No post at ${args.slug}.`);
 
       const frontmatter = { ...post.frontmatter, draft: false };
-      const check = checkPost(frontmatter, post.body, post.slug);
+      const check = await checkBeforeWrite(env, frontmatter, post.body, post.slug);
       if (!check.ok) {
         return {
           ...text({
@@ -475,15 +480,27 @@ const tools = [
       },
       required: ['path', 'content'],
     },
-    handler: async (env: Env, args: Json) =>
-      text(
+    handler: async (env: Env, args: Json) => {
+      const path = String(args.path).replaceAll('\\', '/');
+      if (
+        path.split('/').includes('..') ||
+        path.startsWith('/') ||
+        path.split('/').filter(Boolean).join('/').startsWith('src/content/posts/')
+      ) {
+        return {
+          ...text('Use the post tools for article changes so publishing checks run.'),
+          isError: true,
+        };
+      }
+      return text(
         await writeFile(
           env,
-          String(args.path),
+          path,
           String(args.content),
-          String(args.message ?? `Update ${args.path}`),
+          String(args.message ?? `Update ${path}`),
         ),
-      ),
+      );
+    },
   },
 ] as const;
 

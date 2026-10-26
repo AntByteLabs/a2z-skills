@@ -19,7 +19,10 @@ import { ROOT, red, green, yellow, dim, bold } from './lib';
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
 const SITE = process.env.SITE_URL ?? 'https://a2zskillsewa.com';
 const HOST = new URL(SITE).host;
-const KEY = process.env.INDEXNOW_KEY ?? '';
+const fallbackKey = join(ROOT, 'public/indexnow-key.txt');
+const KEY =
+  process.env.INDEXNOW_KEY ??
+  (existsSync(fallbackKey) ? (await readFile(fallbackKey, 'utf8')).trim() : '');
 
 const args = process.argv.slice(2);
 const has = (f: string) => args.includes(`--${f}`);
@@ -73,6 +76,10 @@ const sitemapUrls = async (): Promise<string[]> => {
 };
 
 const run = async () => {
+  if (!KEY && has('optional')) {
+    console.log('indexnow: no key configured; skipped.');
+    return;
+  }
   if (!KEY) {
     console.error(
       red('INDEXNOW_KEY is not set. Generate one (32+ hex chars) and add it as a secret.'),

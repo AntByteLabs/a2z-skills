@@ -18,13 +18,22 @@ interface Props {
   updatedAt?: Date;
   ogType?: 'website' | 'article';
   wide?: boolean;
+  searchable?: boolean;
 }
 
-const { wide = false, ...seo } = Astro.props;
+const { wide = false, searchable = false, ...seo } = Astro.props;
+const configuredAnalyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? '';
+const analyticsToken = /^[a-f0-9]{32}$/i.test(configuredAnalyticsToken)
+  ? configuredAnalyticsToken
+  : undefined;
 ---
 
 <!doctype html>
-<html lang={site.locale} class="scheme-light dark:scheme-dark">
+<html
+  lang={site.locale}
+  class="scheme-light dark:scheme-dark"
+  data-pagefind-ignore={searchable ? undefined : 'all'}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -126,5 +135,13 @@ const { wide = false, ...seo } = Astro.props;
       <slot />
     </main>
     <Footer />
+    {analyticsToken && import.meta.env.PROD && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+      ></script>
+    )}
   </body>
 </html>

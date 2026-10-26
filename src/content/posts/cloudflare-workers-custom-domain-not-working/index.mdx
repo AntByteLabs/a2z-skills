@@ -38,6 +38,29 @@ way that points somewhere else. We hit all four in an afternoon putting a static
 site on Workers, which is the sort of job the
 [websites and hosting](/topics/websites-hosting/) guides cover.
 
+## Identify which part is failing
+
+A Worker can answer on its workers.dev address while the custom hostname
+still fails. DNS, the zone's account and status, and the Worker attachment
+are separate checks. This guide records the cases encountered during the
+deployment named in the test box.
+
+| Observation                                  | Relevant section                       |
+| -------------------------------------------- | -------------------------------------- |
+| The zone is absent from the Worker's account | Check the zone and account             |
+| The zone is present but pending              | Compare the nameservers                |
+| No workers.dev address is available          | Create the account's Workers subdomain |
+| Login fails before deployment starts         | Read the OAuth/session section         |
+
+A DNS record's cache lifetime is a separate question from whether the Worker
+has a valid domain attachment. [The DNS propagation explanation](/dns-propagation-explained/)
+covers that difference.
+
+Current Cloudflare documentation also describes hostname prerequisites and
+other failure cases. A 522 response or an existing-record conflict needs its
+own diagnosis; neither is proof that the nameservers are wrong. Those cases
+are not claimed as reproduced by the test record on this page.
+
 ## Check the zone is on the same account first
 
 A Workers custom domain needs the domain's zone to live on the same Cloudflare
@@ -210,3 +233,8 @@ The second should show a 307 to the trailing-slash form if you set
 `html_handling` to `force-trailing-slash`. The third should return nothing on
 the real domain. If `dig` still shows the registrar, none of the rest matters
 yet.
+
+## Sources
+
+- [Cloudflare: Workers Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/)
+- [Cloudflare: routes and domains](https://developers.cloudflare.com/workers/configuration/routing/)

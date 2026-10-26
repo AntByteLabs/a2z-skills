@@ -14,10 +14,11 @@ faq:
   - q: 'Does replacing the battery actually make an old phone faster?'
     a: 'If the phone was throttling because of a worn battery, yes, and noticeably. If it was slow because storage is full, a new battery changes nothing. Check which one you have before paying for a battery.'
   - q: 'How full is too full for phone storage?'
-    a: 'Trouble usually starts in the last ten to fifteen percent. Flash storage needs free blocks to write efficiently, and a nearly full drive spends its time shuffling data to make room.'
+    a: "There is no single percentage that diagnoses every phone. Storage pressure can affect performance, but the device, workload and app behaviour matter. Compare the maker's guidance with the actual storage report."
   - q: 'Will a factory reset fix it?'
     a: 'It fixes the software half and does nothing for the battery or the physical storage. Try freeing space first, because it is reversible and a reset is not.'
 draft: false
+updatedAt: '2026-10-26'
 ---
 
 A phone that felt instant in its first year feels tired in its third, and the
@@ -36,10 +37,9 @@ controller writes to blocks that are already clear and tidies up later, when the
 phone is idle.
 
 As the drive fills, that spare room disappears. The controller starts having to
-clear space before it can write, in the middle of whatever you are doing. This
-is why a phone at 95% full feels slower at everything, including things that
-seem unrelated to storage, and why freeing several gigabytes often produces an
-immediate improvement.
+clear space before it can write, in the middle of whatever you are doing. Storage pressure can therefore contribute to a slowdown, but a percentage
+alone does not diagnose it. The effect depends on the device and workload; a
+slow network or a particular app can also be responsible.
 
 ## The battery ages, and the phone protects itself
 
@@ -51,8 +51,9 @@ rather than corrupt anything.
 To avoid that, phones reduce peak performance as the battery degrades. Apple
 added this after a run of unexpected shutdowns, disclosed it following
 considerable criticism for not saying so earlier, and now reports battery health
-and lets you see whether performance management is active. Android makers handle
-it with less visibility but face the same physics.
+and documents how performance management depends on battery condition and
+other factors. Android devices have manufacturer-specific policies; the same
+behaviour should not be assumed for every handset.
 
 <Callout type="tip" title="Check which one you have">
   Battery health is reported in settings on both platforms, and so is free storage. Reading
@@ -73,6 +74,12 @@ costs you security updates and is a bad trade.
 ## What to do about it
 
 Free storage first, because it is free, reversible and frequently the whole
-problem. Check battery health second, because a replacement is cheap next to a
-new phone and fixes throttling completely. Treat the software weight as the
+problem. Check battery health second, because a replacement may cost less than a
+new phone, but its benefit depends on what caused the slowdown. Treat the software weight as the
 reason to eventually replace the handset, rather than as something to fight.
+
+## Sources
+
+- [Apple: iPhone battery and performance](https://support.apple.com/en-ie/101575)
+- [Apple: a slow iPhone or iPad](https://support.apple.com/en-gb/102598)
+- [Google: Android storage](https://support.google.com/android/answer/7431795?hl=en)

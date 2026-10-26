@@ -1,16 +1,16 @@
 import type { APIRoute } from 'astro';
-import { livePosts } from '../lib/posts';
+import { sitemapEntries } from '../lib/sitemap';
+import { latestDate, xmlEscape } from '../lib/seo-dates';
 import { site } from '../site';
 
-/** The URL already submitted to Search Console, so the name is fixed. */
+/** Keep the endpoint already submitted to Search Console. */
 export const GET: APIRoute = async () => {
-  const posts = await livePosts();
-  const newest = posts[0]?.data.updatedAt ?? posts[0]?.data.publishedAt ?? new Date();
+  const newest = latestDate((await sitemapEntries()).map((entry) => entry.lastmod));
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>${site.url}/sitemap-0.xml</loc>
-    <lastmod>${newest.toISOString().slice(0, 10)}</lastmod>
+    <loc>${xmlEscape(site.url)}/sitemap-0.xml</loc>
+    ${newest ? `<lastmod>${newest.toISOString().slice(0, 10)}</lastmod>` : ''}
   </sitemap>
 </sitemapindex>
 `;

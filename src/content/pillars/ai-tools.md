@@ -1,12 +1,14 @@
 ---
-name: AI Tools
-title: AI tools, tested on real work
-description: 'What AI tools actually do when you put real work through them: setup, limits, pricing traps and the tasks each one is genuinely good at.'
+name: 'AI Tools'
+title: 'AI answers and detector results explained'
+description: 'Understand why ChatGPT responses vary and why AI detector results can be wrong, with original research, product documentation and the limits of each claim.'
 order: 4
 accent: '#7a4fd0'
-startHere: []
+startHere:
+  - 'chatgpt-different-answers-same-question'
+  - 'ai-detectors-flagging-human-writing'
 ---
 
-Every AI tool demo looks the same. These guides put the same real task through
-each tool, record what came back, and say plainly where it failed. Pricing and
-limits are checked on the date of testing and listed on the post.
+Start with [why ChatGPT gives different answers](/chatgpt-different-answers-same-question/) for generation and context. [Why AI detectors flag human writing](/ai-detectors-flagging-human-writing/) explains a different question: what a classifier's score can establish.
+
+These explainers link to product documentation and original evaluations. A study's date, samples and tool versions limit what its findings say about today's products.

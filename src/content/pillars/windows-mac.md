@@ -1,12 +1,14 @@
 ---
-name: Windows & Mac
-title: Windows and Mac fixes that work
-description: 'Desktop fixes tested on real machines: update failures, printers, storage, startup problems and speed, on Windows 11 and macOS.'
+name: 'Windows & Mac'
+title: 'Windows and Mac storage and update explanations'
+description: 'Understand why deleting files may not release the expected disk space and why Windows updates can need a restart, with platform documentation to follow.'
 order: 1
 accent: '#3b6fd4'
-startHere: []
+startHere:
+  - 'deleting-files-not-freeing-disk-space'
+  - 'windows-restart-finish-installing-updates'
 ---
 
-Most desktop problems have a cause you can see, once you know where the machine
-writes it down. Every guide here names the exact Windows build or macOS version
-it was tested on, because a fix that works on 24H2 can fail on 25H2.
+Start with [disk space after deleting files](/deleting-files-not-freeing-disk-space/) for storage accounting, app copies and snapshots. [Why Windows needs an update restart](/windows-restart-finish-installing-updates/) explains a separate case where work remains pending.
+
+Windows and macOS have different file and backup behaviour. The explanations distinguish those systems and link to their documentation.

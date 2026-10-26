@@ -3,6 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 /** Smoke tests run against the built output, the same files Cloudflare serves. */
 export default defineConfig({
   testDir: './tests',
+  testIgnore: '**/unit/**',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,

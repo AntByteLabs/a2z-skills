@@ -1,6 +1,6 @@
 ---
 title: 'Why AI detectors flag human writing'
-description: 'AI detectors do not detect AI. They score how predictable your sentences are, which is why careful writers and non-native speakers fail them most often.'
+description: 'AI detectors can produce false positives. Research shows why results depend on the detector, the writing sample and the threshold used to classify it.'
 pillar: 'ai-tools'
 type: 'explainer'
 tags:
@@ -9,77 +9,88 @@ tags:
   - 'ai-tools'
 author: 'ronit-karki'
 publishedAt: '2026-10-26'
-quickAnswer: 'An AI detector measures how predictable a piece of text is, not who wrote it. Plain, well-edited, consistent writing scores as predictable whether a person or a model produced it, which is why careful writers get flagged. No detector can prove authorship.'
+quickAnswer: 'An AI detector classifies text using patterns learned from examples. Its result can be wrong, and a high score does not establish who wrote a document. False-positive rates depend on the tool and the population being tested, so compare the evidence behind the score.'
 faq:
-  - q: 'Can I appeal a detector result?'
-    a: 'Version history is the strongest evidence, because it shows the document being built. A draft with revisions, comments and false starts is far harder to argue with than a finished file.'
-  - q: 'Does editing AI text make it undetectable?'
-    a: 'Usually, yes, which is the clearest sign the tools do not measure what they claim. Heavy editing changes the statistical shape of the text whether or not it changes the authorship.'
-  - q: 'Are paid detectors better than free ones?'
-    a: 'They report more confidently. The underlying signal is the same, and none of the vendors publishes a false positive rate measured on writing from outside their test set.'
+  - q: 'Does a high detector score prove AI authorship?'
+    a: "It is a classification result, not a record of how a document was written. The tool's error rate and the relevance of its evaluation data still matter."
+  - q: 'Do all detectors make the same mistakes?'
+    a: 'No. Their models, thresholds and evaluation samples differ. Results from one study or an older detector version should not be presented as a measurement of every current tool.'
+  - q: 'What evidence helps when a result is disputed?'
+    a: "Drafts, version history, notes and a clear explanation of the work can provide context. They should be considered alongside the assignment rules and the tool's known limitations."
 draft: false
+updatedAt: '2026-10-26'
 ---
 
-An AI detector tells you a number. It does not tell you who wrote the text, and
-the gap between those two things is where the damage happens. More tool
-write-ups are in [AI Tools](/topics/ai-tools/). For other software that guesses
-your intent and gets it wrong, read
-[Excel changing numbers into dates](/excel-changing-numbers-into-dates/) and
-[why automations fail silently](/automations-failing-silently/).
+A detector can flag human writing. That is a false positive: the classification
+and the origin of the document disagree. The useful question is how often that
+happens for the tool and kind of writing being assessed.
 
-## What the score actually measures
+More explanations are in [AI tools](/topics/ai-tools/). Related questions include
+[why ChatGPT responses vary](/chatgpt-different-answers-same-question/) and
+[why an automated check can finish successfully without proving its intended outcome](/automations-failing-silently/).
 
-A language model works by predicting the next word. Any text can therefore be
-scored by how closely it matches what a model would have predicted. Text that
-follows the expected path scores as predictable. Text that takes unusual turns,
-changes rhythm or uses an odd word scores as unpredictable.
+## A score needs an evaluation context
 
-Detectors are built on that signal, often combined with how much the sentence
-lengths and structures vary across a document. The output is a claim about the
-statistical shape of the writing. It is then presented as a claim about its
-origin, which is a different claim and does not follow from the first.
+A detector compares features of submitted text with patterns learned from
+examples. Different tools use different classifiers and thresholds. Some scores
+describe a share of passages classified as AI-like; others are presented in a
+different form. The number should be read using that product's definition.
 
-## Why good writing fails
+A score by itself does not supply the history of a document. It does not show
+the author's notes, revisions or sources. Treating it as a direct observation of
+authorship gives it a meaning that the test has not established.
 
-Clear prose is predictable prose. Short sentences, plain words, one idea at a
-time, consistent structure: every habit that makes writing easier to read also
-makes the next word easier to guess. Editing pushes a draft further in that
-direction, so a piece that has been through several passes scores worse than the
-messy first version it came from.
+## What a study found about non-native writing
 
-The same effect hits anyone writing in a second language. A smaller working
-vocabulary and more conventional sentence patterns produce exactly the profile
-the detectors treat as machine-like, and this bias has been reported repeatedly
-in published evaluations.
+[Liang and colleagues' 2023 study](https://arxiv.org/abs/2304.02819)
+evaluated detectors using writing samples from native and non-native English
+writers. It found a substantial bias against the non-native samples in that
+evaluation. The paper also examined how changes to generated text affected
+detection.
 
-<Callout type="warning" title="The base rate makes it worse">
-  Even a detector that is right most of the time produces more false accusations than true
-  ones when most of the work it scans is human. Accuracy on a balanced test set says nothing
-  useful about a class where nearly everyone wrote their own essay.
-</Callout>
+That is a reason to inspect a tool's evidence before using its score against a
+writer. It is not a current false-positive rate for every detector. The study's
+tools, samples and date are part of the finding.
 
-## Why the vendors cannot fix it
+The previous version of this article attributed detector failures universally
+to predictable sentences and said vendors could not fix the problem. Those
+statements went beyond the evidence. A study can establish a problem in its
+test conditions without proving that all future classifiers behave alike.
 
-The signal degrades as models improve. A model that writes less predictably is
-harder to distinguish from a person who writes unpredictably, and the whole
-method depends on that distinction holding. OpenAI withdrew its own classifier
-for exactly this reason, citing accuracy too low to be useful.
+## Newer evaluations can reach different results
 
-There is also no stable target. Detectors are tuned against the models that
-exist now, and are then run against text produced by models released since,
-edited by people, translated, or passed through a grammar tool. Each of those
-changes the statistics the score depends on.
+[Epoch AI's detector evaluation](https://epoch.ai/data-insights/ai-detectors-false-negatives)
+compares human writing with generated writing under different prompting
+conditions. Its results illustrate why the detector, input population and
+generation method belong beside any performance claim.
 
-A related confusion runs the other way: people expect one fixed answer from a
-tool built to vary. That is covered in
-[why ChatGPT gives a different answer each time](/chatgpt-different-answers-same-question/).
+False negatives matter as well. A tool can miss generated text while rarely
+flagging a particular human sample. It can also perform differently on another
+sample. A single headline accuracy figure hides those separate questions.
 
-## What to do if you are on the receiving end
+When comparing evaluations, look for the kinds of documents tested and the
+decision threshold. An assessment using long edited articles need not describe
+performance on a short classroom response. That difference should be acknowledged
+before a score is used in a decision.
 
-Keep the evidence that a score cannot produce. Document history showing the
-piece being written, with revisions and dead ends, is the thing detectors cannot
-fake and cannot argue with. Save it before you submit, not after you are
-accused.
+## A false-positive rate is not the chance a flagged writer cheated
 
-If you are the one deciding, treat a score as a reason to read the work and ask
-the writer about it, never as a finding.
+How many submissions actually contain prohibited material also affects what
+a positive result means. Even a fairly small error rate can create disputed
+cases in a collection containing mostly human work. The consequences deserve
+more attention when the result could affect someone's education or employment.
+
+This does not mean every flag is false. It means that a classification needs
+supporting evidence and a process for examining mistakes. Running the same
+document through several tools does not automatically create independent proof.
+
+## Review the writing process as well as the output
+
+A fair review can consider drafts, notes, version history and the writer's
+account of their sources. Those records provide context a detector score does
+not contain. They also have limits and should not be described as impossible to
+fake.
+
+For the person making a decision, the important distinction is between a signal
+that merits review and a finding established by evidence. A detector can
+contribute to the first without settling the second.

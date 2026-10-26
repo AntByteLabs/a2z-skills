@@ -17,6 +17,7 @@ faq:
   - q: 'Why do some updates install without a restart?'
     a: 'Because nothing they touch is in use. An app update, a definition update or a driver that is not loaded can all be replaced live. Some editions can also patch certain components without rebooting.'
 draft: false
+updatedAt: '2026-10-26'
 ---
 
 The download finished an hour ago and Windows still wants to restart. That is
@@ -30,10 +31,11 @@ and for the same wearing-out question on a handset,
 
 ## Windows will not let go of a file in use
 
-When a program opens a file, Windows locks it. Nothing else may rename, replace
-or delete it until that handle is released. This is a deliberate difference from
-Unix-like systems, where a file can be unlinked while a process still holds it
-open, and the old contents survive until that process finishes with them.
+Open files can prevent replacement, depending on sharing permissions and the
+operation involved. Windows does not impose the same unconditional lock on
+every open file. Microsoft's documentation distinguishes sharing violations
+and deletion pending the closure of handles. Components in use can still
+require work to be deferred until a restart.
 
 The consequence is simple and inconvenient. If an update needs to replace a
 system library, and something is using that library, the replacement cannot
@@ -76,3 +78,10 @@ finished update is a restart you control.
 
 If a machine is slow to come back repeatedly, the disk is usually the thing to
 look at rather than the update.
+
+## Sources
+
+- [Microsoft: Windows Update FAQ](https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-update-faq)
+- [Microsoft: managing update restarts](https://learn.microsoft.com/en-us/windows/deployment/update/waas-restart)
+
+Microsoft also documents [file sharing and deletion](https://learn.microsoft.com/en-us/windows/win32/fileio/closing-and-deleting-files), including the effect of open handles.

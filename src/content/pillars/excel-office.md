@@ -1,12 +1,14 @@
 ---
-name: Excel & Office
-title: Excel and Office, explained properly
-description: Formulas that return errors, broken lookups, pivot tables, Word layout and Office install problems, with the file we tested on attached.
+name: 'Excel & Office'
+title: 'Excel data conversion and workbook troubleshooting'
+description: "Understand Excel's automatic date conversion and oversized workbooks, with explanations of the underlying data and references to Microsoft documentation."
 order: 3
 accent: '#1e7a4b'
-startHere: []
+startHere:
+  - 'excel-changing-numbers-into-dates'
+  - 'excel-file-size-too-large'
 ---
 
-Spreadsheet problems are usually one of three things: the data is text when you
-think it is a number, the range moved, or the formula is doing exactly what you
-asked. Most guides here ship the workbook we tested on, so you can compare.
+Start with [Excel changing numbers into dates](/excel-changing-numbers-into-dates/) when an import changes identifiers. For a workbook that is unexpectedly large, read [the file-size explanation](/excel-file-size-too-large/).
+
+These explainers describe the mechanisms and link to Microsoft's guidance. A workbook download or a tested walkthrough is identified explicitly when one is available.

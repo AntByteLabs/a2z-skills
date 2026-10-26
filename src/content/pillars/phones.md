@@ -1,12 +1,14 @@
 ---
-name: Phones
-title: Android and iPhone fixes
-description: Battery drain, storage, backups, transfers and settings on Android and iPhone, each step tried on a real handset before publishing.
+name: 'Phones'
+title: 'Android and iPhone storage and performance'
+description: 'Understand phone storage after deleting photos, the difference between cloud and local copies, and the causes of slowdowns on older Android and iPhone devices.'
 order: 2
 accent: '#2f9e6f'
-startHere: []
+startHere:
+  - 'phone-storage-full-after-deleting-photos'
+  - 'phone-slows-down-gets-older'
 ---
 
-Phone guides go stale fastest, because the menu path moves with every OS
-release. Each post here lists the handset and OS version it was tested on, and
-is re-tested when the maker ships a major update.
+A full handset and a full cloud account need different diagnoses. Start with [phone storage after deleting photos](/phone-storage-full-after-deleting-photos/), then read [why phones slow down over time](/phone-slows-down-gets-older/).
+
+These are sourced explanations. Device-specific procedures need a named handset, app and OS version before they can be described as tested.

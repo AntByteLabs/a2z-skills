@@ -10,7 +10,7 @@ const posts = defineCollection({
       .object({
         title: z.string().max(65),
         seoTitle: z.string().max(60).optional(),
-        description: z.string().min(120).max(160),
+        description: z.string().max(160),
         pillar: z.enum(pillars),
         type: z.enum(postTypes),
         tags: z.array(z.string()).max(6).default([]),
@@ -39,9 +39,20 @@ const posts = defineCollection({
         draft: z.boolean().default(false),
         noindex: z.boolean().default(false),
       })
-      .refine((p) => !['how-to', 'fix', 'review'].includes(p.type) || !!p.testedOn, {
-        message: 'how-to, fix and review posts need testedOn',
-        path: ['testedOn'],
+      .refine(
+        (p) => p.draft || !['how-to', 'fix', 'review'].includes(p.type) || !!p.testedOn,
+        {
+          message: 'how-to, fix and review posts need testedOn',
+          path: ['testedOn'],
+        },
+      )
+      .refine((p) => p.draft || p.description.length >= 120, {
+        message: 'Published descriptions need 120 to 160 characters',
+        path: ['description'],
+      })
+      .refine((p) => p.draft || !!p.quickAnswer.trim(), {
+        message: 'Published posts need a short answer',
+        path: ['quickAnswer'],
       })
       .refine((p) => !p.heroImage || !!p.heroAlt, {
         message: 'heroImage needs heroAlt',

@@ -18,6 +18,7 @@ faq:
   - q: 'Does saving as .xlsb actually help?'
     a: 'It usually makes the file smaller and faster to open, because it stores a binary form rather than compressed XML. It does not fix the underlying cause, and some tools cannot read it.'
 draft: false
+updatedAt: '2026-10-26'
 ---
 
 A workbook with three thousand rows of numbers has no business being forty
@@ -78,3 +79,8 @@ re-pivoted without rereading the sheet. That cache is a second copy of the data,
 and if several pivots were built separately rather than sharing one, you may be
 carrying several. Setting a pivot not to save its source data with the file
 shrinks it, at the cost of needing a refresh on open.
+
+## Sources
+
+- [Microsoft: reduce spreadsheet file size](https://support.microsoft.com/en-us/excel/reduce-the-file-size-of-your-excel-spreadsheets)
+- [Microsoft: Excel performance and the used range](https://learn.microsoft.com/en-us/office/vba/excel/concepts/excel-performance/excel-tips-for-optimizing-performance-obstructions)

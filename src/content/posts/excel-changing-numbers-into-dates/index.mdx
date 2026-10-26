@@ -14,19 +14,20 @@ faq:
   - q: 'Why does a leading apostrophe stop it?'
     a: 'The apostrophe tells Excel to skip type detection and store the characters as text. It is not part of the value and does not appear in the cell, though it does show in the formula bar.'
   - q: 'Can I turn date detection off completely?'
-    a: 'Not globally. The usable equivalent is formatting the column as Text before anything is typed into it, or importing the data and marking that column as text during the import.'
+    a: 'Some current Excel versions have Automatic Data Conversion settings, including a control for continuous letters and numbers such as JAN1. That control does not cover every date-like expression. Availability and behaviour depend on the version and the input.'
   - q: 'Does this affect data I paste in?'
     a: 'Yes, and that is the common way a clean export gets damaged. Paste runs the same detection as typing unless the destination column is already formatted as text.'
 draft: false
+seoTitle: 'Stop Excel changing numbers into dates'
+updatedAt: '2026-10-26'
 ---
 
 You type a product code and get a date. You paste a clean export and a column of
 identifiers turns into January. Excel is not corrupting the file at random; it
 is applying a rule, and the rule runs earlier than most people expect. More
-spreadsheet guides are in [Excel & Office](/topics/excel-office/). For other
-software that guesses what you meant and is confident about it, read
-[why AI detectors flag human writing](/ai-detectors-flagging-human-writing/) and
-[why automations fail silently](/automations-failing-silently/).
+spreadsheet guides are in [Excel & Office](/topics/excel-office/). For problems elsewhere in a workbook, read
+[why an Excel file becomes unusually large](/excel-file-size-too-large/).
+Imports also deserve an outcome check: [an automation can succeed while losing useful data](/automations-failing-silently/).
 
 ## A cell's type is decided when you press Enter
 
@@ -59,11 +60,22 @@ longer exists anywhere in the file.
   from the source.
 </Callout>
 
-## The three ways to stop it happening
+## Which conversions can be controlled
+
+Microsoft documents Automatic Data Conversion options in current Excel, including
+one for continuous letters and numbers that look like dates. JAN1 is its example.
+Expressions containing spaces or punctuation may still be interpreted as dates.
+The old version of this article said there was no conversion setting; that was
+too broad. [Microsoft describes the available options and their limits](https://support.microsoft.com/en-us/excel/data-import-and-analysis-options-in-excel).
+
+A setting that preserves a product code is not evidence that every import path
+will preserve it. The input and Excel version still matter.
+
+## Preserve text before conversion
 
 Format the column as Text before any data goes into it. The format is read when
-the entry is made, so setting it first means detection never runs. This is the
-only approach that survives a paste.
+the entry is made, so setting it first means detection never runs. Pasting can also carry source formatting, so the import method and the
+resulting cell value need checking.
 
 Type a leading apostrophe for one-off entries. It instructs Excel to store the
 characters as text and is not kept as part of the value.
@@ -85,3 +97,7 @@ scars as bloat. If yours opens slowly, see
 If the source is gone, the serial numbers do at least tell you what was there.
 A code that became 2 January came from something matching a day and month
 pattern, and the surviving rows will show you which.
+
+## Sources
+
+- [Microsoft: preserving leading zeros and large numbers](https://support.microsoft.com/en-us/excel/keeping-leading-zeros-and-large-numbers)

@@ -18,6 +18,7 @@ faq:
   - q: 'Does changing nameservers work the same way?'
     a: 'No, and this is the slow one. Delegation records live at the registry rather than on your own server, and they typically carry a much longer TTL than the records inside your zone.'
 draft: false
+updatedAt: '2026-10-26'
 ---
 
 The word propagation describes something DNS does not do. Nothing travels
@@ -26,21 +27,22 @@ while you wait. More hosting guides are in
 [Websites & Hosting](/topics/websites-hosting/). A concrete case where this
 bites is
 [Cloudflare Workers custom domain not working](/cloudflare-workers-custom-domain-not-working/),
-and the same pattern on a laptop is in
-[deleting files did not free any disk space](/deleting-files-not-freeing-disk-space/).
+and the hostname also matters when
+[self-hosting n8n on Coolify](/self-host-n8n-coolify/).
 
 ## There is one copy, and then there are caches
 
-Your zone lives on an authoritative nameserver. That server is the only thing
-that knows the truth about your domain, and when you edit a record there, the
-truth changes immediately. Query it directly and you get the new answer at once.
+Your zone lives on an authoritative nameserver. The authoritative service publishes the records. Once an update has reached
+that service, a direct query can show the new value without relying on a
+recursive resolver. Providers can use several authoritative servers, so their
+own update process also matters.
 
 Almost nobody queries it directly. A visitor's device asks a recursive resolver,
 usually run by their internet provider or by a public service. That resolver
 asked your nameserver at some point in the past, kept the answer, and will keep
 serving it until it decides the answer is too old to trust.
 
-## TTL is the whole mechanism
+## TTL controls cached record answers
 
 Every record carries a time to live, measured in seconds. It is an instruction
 to every resolver that caches the record: keep this for no longer than this
@@ -54,8 +56,8 @@ the same time as the change does nothing for anyone who already has a copy.
 
 <Callout type="tip" title="Lower the TTL in advance">
   Drop the TTL to a few minutes a day before a planned move, wait for the old TTL to expire,
-  then make the change. The cutover is then minutes for everyone instead of hours for most
-  people.
+  then make the change. This can shorten the life of old cached answers. Delegation,
+  provider updates and other caches may still affect the result.
 </Callout>
 
 ## Why two people see different sites
@@ -84,5 +86,11 @@ it are real and will see whatever is there.
 ## What to check when it seems stuck
 
 Query your authoritative nameserver directly first. If it returns the new value,
-your work is done and everything after that is waiting. If it returns the old
+compare it with the answers seen by affected visitors. A correct DNS answer
+alone does not prove that the certificate, web server or application is working. If it returns the old
 value, the change did not save, and no amount of waiting will fix it.
+
+## Sources
+
+- [Cloudflare: DNS record TTL](https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/)
+- [Namecheap: DNS propagation](https://www.namecheap.com/support/knowledgebase/article.aspx/9622/10/dns-propagation-explained/)

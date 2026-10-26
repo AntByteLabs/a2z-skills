@@ -1,6 +1,6 @@
 ---
 title: 'Phone storage still full after deleting photos'
-description: 'You deleted hundreds of photos and the storage bar barely moved. On both iPhone and Android, three separate copies have to go, not one.'
+description: 'Phone storage can stay full after deleting photos because local files, recently deleted items and cloud storage are counted differently. Here is why.'
 pillar: 'phones'
 type: 'explainer'
 tags:
@@ -10,73 +10,93 @@ tags:
   - 'photos'
 author: 'krishna-pokharel'
 publishedAt: '2026-10-26'
-quickAnswer: "Deleting a photo moves it to a recently deleted album that keeps it for a set period, so the space does not return until that album is emptied too. A second copy usually exists in the photo app's cache, and a third may be held by iCloud or Google Photos while the deletion syncs."
+quickAnswer: 'Device storage and cloud storage are separate. A photo may remain in a recently deleted area, or it may already use little local space because the original is in the cloud. Deleting from a synced library can also delete the cloud copy, so identify which storage is full first.'
 faq:
-  - q: 'How long does a deleted photo stay in the recently deleted album?'
-    a: 'At the time of writing it is 30 days on iPhone and 60 days in Google Photos. Both count from the deletion, and both empty on their own if you leave them alone.'
-  - q: 'Will deleting photos on my phone delete them from the cloud?'
-    a: 'If sync is on, yes, and that is the point people get caught by. The deletion travels in both directions, so clear your own backup before you clear the phone.'
-  - q: 'Why does the photo app itself take gigabytes?'
-    a: 'Thumbnails and preview renders. The app rebuilds them on demand, so clearing its cache frees space immediately and costs you a slower first scroll afterwards.'
+  - q: 'Does Google Photos keep deleted photos for 60 days?'
+    a: "The current Google Photos Help page checked for this article states 30 days. This corrects the older 60-day claim on this page. Check the app's current recovery notice before relying on a retention period."
+  - q: 'Does buying cloud storage add space to my phone?'
+    a: "It adds capacity to the cloud account. It does not increase the phone's physical storage. Whether local usage falls depends on how the photo service stores originals and device copies."
+  - q: 'Can deleting a photo remove it from other devices?'
+    a: 'Yes. A deletion in a synced photo library can affect other devices and the cloud library. Removing a backed-up device copy is a different operation.'
 draft: false
+updatedAt: '2026-10-26'
 ---
 
-Deleting a few hundred photos should show up as a few gigabytes. Usually it
-shows up as almost nothing, and the reason is that you have deleted one of three
-copies. More handset guides are in [Phones](/topics/phones/). The same mechanism
-on a laptop is in
-[deleting files did not free any disk space](/deleting-files-not-freeing-disk-space/),
-and a cached answer that outlives the change you made is also what makes
-[DNS propagation](/dns-propagation-explained/) confusing.
+Deleting photos changes the library you see, but that count does not explain the
+phone's storage total. Before removing anything else, identify whether the
+warning concerns the device or its cloud account. They are different limits.
 
-## The first copy goes to a holding album
+More handset explanations are in [Phones](/topics/phones/). If the phone also
+feels slow, [storage pressure is one possible contributor](/phone-slows-down-gets-older/).
+The desktop version of the question is
+[why deleting files may not release the space you expected](/deleting-files-not-freeing-disk-space/).
 
-Both platforms treat delete as a move. The photo leaves your library and joins a
-recently deleted album, where it stays for a set period so that an accidental
-deletion can be undone. While it sits there it is still a file on the phone and
-still counted against your storage.
-
-Nothing about the interface suggests this. The library count drops, the grid
-gets shorter, and the storage figure stays where it was. Emptying that album is
-what actually releases the space, and it is a separate action in a separate
-screen.
-
-## The second copy is the app's own cache
-
-A photo app does not read your original file every time it draws a grid. It
-keeps thumbnails, preview renders and sometimes a full-resolution cached copy,
-because decoding a modern photo on demand is slow enough to feel broken.
-
-That cache is sized against your library as it was, not as it is. After a large
-deletion it is holding renders of photos that no longer exist, and it will not
-necessarily prune itself the same day. Clearing it is safe. The cost is that the
-first scroll afterwards is slower while the app rebuilds what it needs.
-
-## The third copy belongs to the cloud
-
-If iCloud Photos or Google Photos is on, the phone is showing you a view of a
-library that lives elsewhere. Deleting locally queues a deletion upstream, and
-until that round trip finishes the local file may still be held.
-
-This is also where people lose photos they meant to keep. Sync is bidirectional.
-A deletion you make to free space on the phone removes the photo from the backup
-as well, which is the opposite of what most people assume a backup does.
-
-<Callout type="danger" title="Clear your own copy first">
-  Before deleting in bulk, get the photos off the phone and off the account, onto something
-  you control. A deletion that syncs is not recoverable once the holding album expires.
+<Callout type="note" title="Correction, 26 October 2026">
+  This article previously described three copies as a universal explanation and gave a
+  60-day Google Photos retention period. Neither is a reliable rule for every device.
+  Google's current deletion documentation states 30 days.
 </Callout>
 
-If the handset feels slow as well as full, storage is only one of three causes:
-see [why a phone slows down as it gets older](/phone-slows-down-gets-older/).
+## Device storage and cloud storage are different
 
-## What to expect once all three are clear
+A full cloud account and a full handset need different diagnoses. Apple
+[distinguishes iCloud capacity from device capacity](https://support.apple.com/en-ie/102670):
+paying for more online space does not enlarge the storage chip in an iPhone.
+A similar distinction matters when a Google account reports its own limit.
 
-Storage figures on both platforms are estimates that settle over minutes, not
-instantly. Expect the number to move in steps rather than at once, and expect a
-category labelled as system or other to absorb some of what you freed, because
-the phone will take a little of it back for its own caches.
+The useful question is which category changed after deletion. A photo count
+alone cannot show whether photos, downloaded video, messages or another app
+accounts for most of the local usage. Deleting more photographs may leave the
+largest category untouched.
 
-The exact wording and position of these screens moves with each major OS
-release, which is why this post describes the mechanism rather than a menu path.
-A tested walkthrough with the current paths is coming.
+## A deleted item can remain recoverable
+
+A recently deleted area allows recovery before permanent removal. The retention
+period depends on the service. The
+[current Google Photos deletion policy](https://support.google.com/photos/answer/6128858?hl=en)
+states 30 days. It also explains where deletions affect backed-up devices and
+where copies can remain.
+
+A recoverable cloud item is not proof that the same full-size file still occupies
+the same amount of space on the handset. The app, backup state and location of
+the original all matter. A deletion count and a storage estimate therefore need
+to be interpreted together.
+
+## An optimised photo may already use little local space
+
+Apple's [photo-storage explanation](https://support.apple.com/en-ie/105061)
+describes keeping originals in iCloud while optimising the copies on the device.
+Deleting an item whose original is already online can free less local space than
+its original file size suggests.
+
+That is why the number of photographs removed is a poor estimate of the space
+recovered. A library of similar-looking thumbnails can contain very different
+amounts of local data. It does not follow that the phone secretly holds three
+complete copies of every picture.
+
+## Removing a device copy is different from deleting the library item
+
+Google describes [freeing device space from safely backed-up photos](https://support.google.com/photos/answer/6128843?hl=en)
+as a separate feature. The pictures can remain visible in the online library
+after their local copies have gone. Some recent device copies may be retained.
+
+<Callout type="warning" title="Check what will be removed">
+  A normal deletion can propagate through a synced library. A cloud library is not an
+  independent backup against every deletion. Keep a separate recoverable copy of anything
+  irreplaceable before using permanent removal.
+</Callout>
+
+This distinction also explains why a photo can still be visible after local
+space has been released. Seeing its thumbnail does not establish where the
+original now lives or whether it is available offline.
+
+## Photos may not be the largest remaining category
+
+Google's [Android storage guidance](https://support.google.com/android/answer/7431795?hl=en)
+separates downloaded content, apps and temporary data. A gallery is only one
+part of that storage. Clearing an app's cache and clearing its data have different
+consequences, so they should not be treated as interchangeable repairs.
+
+This page explains those distinctions. A device-specific walkthrough needs a
+named OS and app version before its screens and results can be described as
+tested.

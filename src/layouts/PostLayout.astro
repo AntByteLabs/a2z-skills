@@ -88,6 +88,7 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
   publishedAt={data.publishedAt}
   updatedAt={data.updatedAt}
   ogType="article"
+  searchable={true}
 >
   <JsonLd data={article} slot="head" />
   <ReadingProgress />
@@ -95,7 +96,7 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
   {faq && <JsonLd data={faq} slot="head" />}
 
   <div class="shell grid gap-8 py-5 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
-    <article class="min-w-0 lg:max-w-[42rem]">
+    <article class="min-w-0 lg:max-w-[42rem]" data-pagefind-body>
       <Breadcrumbs crumbs={crumbs} />
 
       <div class="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -136,7 +137,14 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
         <QuickAnswer text={data.quickAnswer} />
       </div>
 
-      {data.testedOn && <TestedOn testedOn={data.testedOn} author={author.data.name} />}
+      {data.testedOn ? (
+        <TestedOn testedOn={data.testedOn} author={author.data.name} />
+      ) : data.type === 'explainer' ? (
+        <p class="mt-3 text-sm text-ink-soft" data-research-note>
+          Researched explainer. Supporting documentation and research are linked in the
+          article.
+        </p>
+      ) : null}
       {data.affiliates.length > 0 && <AffiliateDisclosure />}
 
       <AdSlot position="after-answer" />

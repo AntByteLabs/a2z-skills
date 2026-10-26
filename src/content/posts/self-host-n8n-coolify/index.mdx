@@ -29,6 +29,7 @@ faq:
   - q: 'Does the free Coolify one-click include a database?'
     a: 'The n8n template runs on SQLite by default, which is fine for a few workflows. Move to the Postgres variant before you depend on it for anything with volume.'
 draft: false
+updatedAt: '2026-10-26'
 ---
 
 Coolify will deploy n8n from its service catalogue in about a minute, and then
@@ -36,6 +37,28 @@ three things get in the way: the domain it picks for you, a credentials API that
 rejects its own documented field, and an email node whose parameters changed
 names. None of them is in the Coolify or n8n docs. This is the sequence that
 works, from the [automation](/topics/automation/) side of things.
+
+## What this setup covers
+
+The test record covers the Coolify and n8n versions listed above, including
+service deployment, the external hostname and API imports. It describes the
+SQLite-based service used in that session. No PostgreSQL restore or load-test
+results are included here.
+
+You need access to the Coolify service and control of the hostname you intend
+to use. Keep the distinction between the service's stored domain and n8n's
+application settings in mind: changing only one can leave generated links
+pointing elsewhere.
+
+| Symptom                                                      | Start with                     |
+| ------------------------------------------------------------ | ------------------------------ |
+| The generated hostname returns after redeployment            | The stored service domain      |
+| The editor opens, but generated links still use the old host | The application URL settings   |
+| A workflow imports but refuses to publish                    | The node's required parameters |
+
+The corresponding sections below contain the observations from that test.
+For a successful run whose destination remains empty, the next question is
+[what the automation actually completed](/automations-failing-silently/).
 
 ## Deploy the service
 
@@ -172,3 +195,8 @@ an opinion about the domain, and they have to be told the same thing twice.
 Once one is running, the thing to plan for is not a crash but a green run that
 did nothing. That failure mode is covered in
 [why automations fail silently](/automations-failing-silently/).
+
+## Sources
+
+- [n8n: configuring webhook URLs behind a reverse proxy](https://docs.n8n.io/hosting/configuration/configuration-examples/webhook-url/)
+- [Coolify: service API update reference](https://coolify.io/docs/api-reference/api/operations/update-service-by-uuid)

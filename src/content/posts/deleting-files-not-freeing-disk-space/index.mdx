@@ -9,24 +9,25 @@ tags:
   - 'macos'
 author: 'devchandra-shrestha'
 publishedAt: '2026-10-26'
-quickAnswer: 'Deleting a file removes its entry from the directory, not the data from the disk. The space returns only once every holder lets go: the Recycle Bin or Trash, a snapshot taken by File History or Time Machine, and any program still holding the file open. The last of those usually clears on restart.'
+quickAnswer: 'Free space depends on which files and copies still occupy the volume. The bin, app downloads, open files and snapshots can affect the figure in different ways. Windows and macOS handle these differently, so a delayed change does not identify the cause by itself.'
 faq:
   - q: 'Does emptying the Recycle Bin actually erase the file?'
     a: 'It frees the space for reuse. The bytes stay on the disk until something else writes over them, which is why recovery tools can sometimes get a file back hours later.'
   - q: 'Why did my free space go up by itself an hour later?'
-    a: 'A snapshot expired. Both Time Machine and File History keep older copies for a set period, and the space comes back when the copy is dropped, not when you delete the file.'
+    a: 'Several background changes can alter the reported figure, including temporary-file cleanup and changes to local copies or snapshots. Time Machine manages local snapshots automatically. A delayed change alone does not identify the responsible mechanism.'
   - q: 'Is a disk that reports zero bytes free dangerous?'
     a: 'It can be. Both systems need scratch space to apply updates and to write swap, so a disk at zero tends to produce failures that look unrelated to storage.'
 draft: false
+updatedAt: '2026-10-26'
 ---
 
 A file you deleted is still costing you space, and the number in the storage
-panel has not moved. That is normal, and there are only four things that cause
-it. More desktop guides are in [Windows & Mac](/topics/windows-mac/); the same
+panel has not moved. Several mechanisms can explain the difference. The cause depends on the
+filesystem, the app and which storage figure you are reading. More desktop guides are in [Windows & Mac](/topics/windows-mac/); the same
 problem on a handset is in
 [phone storage full after deleting photos](/phone-storage-full-after-deleting-photos/),
-and the same shape of problem on a domain is in
-[DNS propagation explained](/dns-propagation-explained/).
+and another storage question is
+[why an Excel workbook can be larger than its visible data](/excel-file-size-too-large/).
 
 ## Deleting removes the entry, not the data
 
@@ -46,31 +47,35 @@ it, the figure does not move, however many times you press delete.
 The space is still allocated and still counted. This is the one most people
 check, and it is the reason the other three get missed.
 
-**Snapshots and backups held locally.** Time Machine on macOS keeps local
-snapshots on the same disk when the backup drive is not attached. File History
-and System Restore on Windows do something comparable. A snapshot exists to hold
-the old version of a file, so deleting the current version cannot release it.
-These expire on their own schedule.
+**Snapshots and local accounting.** A snapshot can preserve data after a file
+changes or disappears from the current view. Apple explains that Time Machine
+local snapshots are managed automatically and their space is counted as
+available storage. A large snapshot figure alone does not prove that macOS
+cannot make room for new work. Windows backup and restore features have
+different storage arrangements; File History is not interchangeable with
+Time Machine.
 
 **A program still holding the file open.** An open handle keeps the blocks
 allocated even after the name is gone. A download manager, a media player or a
 sync client that has not noticed the deletion will all do this. Restarting
 releases every handle at once, which is why a reboot appears to fix it.
 
-**Cloud sync that is still uploading.** A file deleted locally but mid-upload is
-held by the sync client until the transfer resolves. Dropbox, OneDrive, iCloud
-Drive and Google Drive all behave this way, and all of them keep their own
-deleted-items area in addition to the system one.
+**Cloud and local copies.** Sync services can keep downloaded files, offline
+copies and separate deleted-items areas. Their policies differ. A cloud
+account's usage is a different measurement from free space on the computer,
+so compare the relevant local figure before attributing the change to sync.
 
 A related case is an update that will not finish until you restart, explained in
 [why Windows has to restart to finish an update](/windows-restart-finish-installing-updates/).
 
 ## How to tell which one is holding your space
 
-Work from cheapest to most expensive. Empty the bin first and re-read the figure.
-Restart next, which clears open handles and forces sync clients to settle. If
-the space still has not returned, the holder is a snapshot, and snapshots are the
-only one of the four with a delay you cannot shorten by clicking.
+Start by identifying the volume and category that still consumes the space.
+The bin, app downloads and backup storage are different places to investigate.
+A restart can release a process's open files, but a persistent problem after a
+restart does not establish that snapshots caused it. Microsoft's storage
+guidance covers other categories, including system files and locally downloaded
+cloud content.
 
 <Callout type="warning" title="Before you delete a snapshot">
   A snapshot is the copy you would restore from. Deleting the lot to recover space removes
@@ -81,3 +86,9 @@ only one of the four with a delay you cannot shorten by clicking.
 The exact panel that reports storage, and the wording beside it, moves between
 Windows builds and macOS releases, so this post stops at the mechanism. A tested
 walkthrough, with the paths as they appear on a named build, is coming.
+
+## Sources
+
+- [Apple: Time Machine local snapshots](https://support.apple.com/en-ca/102154)
+- [Microsoft: free up drive space](https://support.microsoft.com/en-us/windows/experience/storage-filemanagement/free-up-drive-space-in-windows)
+- [Microsoft: closing and deleting files](https://learn.microsoft.com/en-us/windows/win32/fileio/closing-and-deleting-files)

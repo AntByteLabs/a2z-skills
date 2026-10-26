@@ -1,6 +1,6 @@
 ---
 title: About A2Z Skills
-description: Who runs A2Z Skills, how guides are tested on real machines, and why every post lists the exact software versions it was tried on.
+description: 'Who publishes A2Z Skills, how procedures are tested, and how sourced explainers differ from guides with recorded versions and devices.'
 updatedAt: 2026-10-25
 order: 1
 ---
@@ -13,14 +13,14 @@ because the menu moved two releases ago. We do it the slow way instead: open the
 software, hit the problem, write down what the screen really says, and publish
 the version numbers alongside the fix.
 
-## What you can check on every post
+## What a tested procedure records
 
 - The **date it was tested**, and by whom.
 - The **exact versions** of the operating system and app used.
 - The **device**, where it matters.
 - **What broke** during testing, including the errors that are not supposed to happen.
 
-If a guide has none of that, it is an explainer, and it says so.
+Explainers are labelled separately and link to supporting documentation or research. They do not carry a hands-on test record. The distinction also appears beside the short answer on each article.
 
 ## Who publishes this
 

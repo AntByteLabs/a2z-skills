@@ -33,7 +33,12 @@ const description =
   `${posts.length === 1 ? 'guide' : 'guides'} with the versions each was tried on.`;
 ---
 
-<BaseLayout title={`${tag} guides`} description={description.slice(0, 158)} path={path}>
+<BaseLayout
+  title={`${tag} guides`}
+  description={description.slice(0, 158)}
+  path={path}
+  noindex={true}
+>
   <JsonLd slot="head" data={collectionPage({ name: `${tag} guides`, description, path })} />
   <JsonLd slot="head" data={breadcrumbs(crumbs)} />
   <div class="shell py-5">

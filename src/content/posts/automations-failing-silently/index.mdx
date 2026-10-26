@@ -18,6 +18,7 @@ faq:
   - q: 'Is error handling making this worse?'
     a: 'Often, yes. A catch block that logs and continues converts a loud failure into a quiet one, which is the right trade for a retry and the wrong one for bad data.'
 draft: false
+updatedAt: '2026-10-26'
 ---
 
 The automations that cost you are not the ones that break. They are the ones
@@ -88,3 +89,8 @@ Monitor the outcome, not the run. Three checks cover almost everything: alert
 when a scheduled workflow has not run at all, alert when the record count falls
 outside its normal range, and check the destination rather than the source, so
 you are confirming that the rows arrived rather than that the query ran.
+
+## Sources
+
+- [n8n: error handling](https://docs.n8n.io/flow-logic/error-handling/)
+- [n8n: Webhook workflow development](https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/workflow-development/)

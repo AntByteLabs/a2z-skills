@@ -45,15 +45,6 @@ export const website = () => ({
       inLanguage: site.locale,
       description: site.description,
       publisher: { '@id': ORG_ID },
-      // Lets Google offer a search box for the site in its results.
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: {
-          '@type': 'EntryPoint',
-          urlTemplate: `${site.url}/search/?q={search_term_string}`,
-        },
-        'query-input': 'required name=search_term_string',
-      },
     },
     organization(),
   ],
@@ -168,10 +159,8 @@ export const collectionPage = (c: {
 /**
  * The post's FAQ, as a page-level FAQPage tied to the article.
  *
- * Google withdrew FAQ rich results for most sites, so this is not here for a
- * SERP accordion. It is here because answer engines read it: a question and
- * its answer as one labelled pair is far easier to quote than the same words
- * in prose, and quoting is how this site gets cited.
+ * The questions also render in the page. This markup describes that content;
+ * it does not promise a Google FAQ rich result or an answer-engine citation.
  *
  * Only emitted when the questions are genuinely on the page. Marking up an
  * answer a reader cannot see is exactly what the guidelines forbid.

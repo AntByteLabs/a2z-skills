@@ -98,9 +98,10 @@ does not describe the real problem at all.
 | Deploy command | `npx wrangler deploy`    |
 | Build caching  | on                       |
 
-The build runs the same gate as the pre-push hook: `astro check`, the content
-validator, Pagefind, the asset count and the size budget. A post that fails
-validation fails the build, so it never reaches the live site.
+The automatic build runs content validation, Astro checks, Pagefind, the asset
+count and the transfer-size budget. The local pre-push check also runs lint,
+Worker types, regression tests, a complete built-site link crawl and browser
+tests. A failed content validator stops the automatic build.
 
 ## Known edges
 
@@ -120,3 +121,11 @@ npx wrangler dev --config mcp/wrangler.json --port 8799
 
 The compatibility date must not be in the future, or the runtime refuses to
 start the Worker with a validation error that does not explain itself.
+
+## Article write checks
+
+Create, update and publish tools validate metadata, prose and repository references
+before writing. A bad edit to an already published post is refused before the
+GitHub commit. Generic file writes reject article paths so they cannot skip these
+checks. Drafts can be incomplete, but publication requires a valid test record for
+a procedure and the published-content checks.

@@ -37,34 +37,7 @@ const fail = (file: string, rule: string, message: string) =>
 const warn = (file: string, rule: string, message: string) =>
   warnings.push({ file, rule, message });
 
-/** Phrases that mark a draft nobody edited. */
-const BANNED = [
-  'in today’s fast-paced',
-  "in today's fast-paced",
-  'in the ever-evolving',
-  'it is important to note',
-  'it’s important to note',
-  'delve into',
-  'in conclusion',
-  'unlock the power',
-  'game-changer',
-  'seamlessly',
-  'robust solution',
-  'cutting-edge',
-  'look no further',
-  'let’s dive in',
-  "let's dive in",
-  'at its core',
-  'that being said',
-  'needless to say',
-  'when it comes to',
-  'the bottom line is',
-  'rest assured',
-  'elevate your',
-  'navigate the landscape',
-  'treasure trove',
-  'a testament to',
-];
+import { BANNED } from '../src/lib/content-policy';
 
 /** Patterns Humanizer exists to remove. Flagged, not blocking, except TODOs. */
 const AI_TELLS: { label: string; re: RegExp }[] = [
@@ -129,6 +102,7 @@ const run = async () => {
     '/thanks/',
     '/rss.xml',
     '/llms.txt',
+    '/llms-full.txt',
     ...pillarIds.map((p) => `/topics/${p}/`),
     ...authorIds.map((a) => `/authors/${a}/`),
     ...pageIds.map((p) => `/${p}/`),
@@ -161,7 +135,7 @@ const run = async () => {
     if (f.author && !authorIds.includes(f.author))
       fail(rel, 'author', `Unknown author "${f.author}".`);
 
-    if (f.type && TESTED_TYPES.has(f.type) && !f.testedOn?.date)
+    if (!f.draft && f.type && TESTED_TYPES.has(f.type) && !f.testedOn?.date)
       fail(rel, 'tested-on', `A ${f.type} post must record when it was tested.`);
 
     if (f.testedOn?.versions && Object.keys(f.testedOn.versions).length === 0)
@@ -298,7 +272,7 @@ const run = async () => {
       warn(
         `src/content/authors/${id}.json`,
         'author-profile',
-        'No sameAs link. Add a LinkedIn, GitHub or other profile: it is the strongest author signal there is.',
+        'No verified profile link. Add one when the author provides it.',
       );
     if (raw.avatar && raw.avatar.endsWith('.svg'))
       warn(

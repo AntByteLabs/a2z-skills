@@ -5,14 +5,12 @@ import { site } from '../site';
  * A route rather than a static file, so the sitemap URL can never drift from
  * the one the site actually serves.
  *
- * The AI crawlers are named and allowed on purpose. The whole strategy is to
- * be the source an answer engine cites, and two of these only read a site if
- * it says yes: Google-Extended gates Gemini and AI Overviews training, and
- * Applebot-Extended gates Apple Intelligence. Silence is not consent to them.
+ * Utility pages remain crawlable so their noindex rules can be read.
+ * Googlebot controls Google Search; Google-Extended has a separate role.
  */
 export const GET: APIRoute = () => {
   const aiCrawlers = [
-    'GPTBot', // ChatGPT browsing and training
+    'GPTBot', // Model training; search uses OAI-SearchBot below.
     'OAI-SearchBot', // ChatGPT search
     'ChatGPT-User', // a person asking ChatGPT to open a page
     'ClaudeBot',
@@ -20,7 +18,7 @@ export const GET: APIRoute = () => {
     'anthropic-ai',
     'PerplexityBot',
     'Perplexity-User',
-    'Google-Extended', // Gemini and AI Overviews
+    'Google-Extended', // Does not control Google Search inclusion.
     'Applebot-Extended', // Apple Intelligence
     'CCBot', // Common Crawl, which many models are trained from
     'Bytespider',
@@ -40,9 +38,7 @@ export const GET: APIRoute = () => {
     '',
     '# Nothing worth indexing, and /go/ is affiliate redirects.',
     'Disallow: /go/',
-    'Disallow: /search/',
     'Disallow: /api/',
-    'Disallow: /thanks/',
     '',
     '# Answer engines are welcome here, explicitly.',
     ...aiCrawlers.flatMap((bot) => [

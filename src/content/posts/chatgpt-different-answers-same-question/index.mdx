@@ -1,6 +1,6 @@
 ---
 title: 'Why ChatGPT gives a different answer each time'
-description: 'The same question twice gives two answers, and that is the design rather than a fault. Four separate things make it happen, and only one is random.'
+description: 'ChatGPT can answer the same question differently because generation varies and the surrounding context changes. Here is what can affect the result.'
 pillar: 'ai-tools'
 type: 'explainer'
 tags:
@@ -9,20 +9,21 @@ tags:
   - 'llm'
 author: 'ronit-karki'
 publishedAt: '2026-10-26'
-quickAnswer: 'A language model picks each word by sampling from a ranked list of candidates rather than always taking the top one, so two runs diverge as soon as one word differs. The conversation so far, the hidden system instructions and the model version all change the answer too, and none of those are random.'
+quickAnswer: 'Identical typed questions can produce different responses because generation is not always deterministic and the surrounding context may differ. Model versions, instructions and available information can change too. Variation alone does not tell you which answer is correct.'
 faq:
   - q: 'Can I make the answers repeatable?'
-    a: 'Through the API you can lower the temperature and fix a seed, which gets you close. Even then the output is not guaranteed identical, because the arithmetic on the server does not round the same way every run.'
+    a: 'Some API models support settings intended to make results more repeatable. Supported controls differ by model, and even a fixed seed is not a guarantee. Those API settings should not be assumed to be available in ChatGPT.'
   - q: 'Does a longer conversation make answers worse?'
-    a: 'It makes them different, and sometimes worse. Everything earlier in the thread is read again before each reply, so an early mistake or a stray instruction keeps influencing the output. Starting a fresh chat is the fix.'
+    a: 'Earlier messages can affect a response, but a longer conversation is not automatically worse. The relevant context and any mistakes in it matter. A fresh chat can change the context; it does not guarantee a better answer.'
   - q: 'Why does the same prompt behave differently in an app than on the website?'
-    a: 'Because each product wraps your prompt in its own hidden instructions, and those differ. You are not sending the same input, even though you typed the same words.'
+    a: 'The product may use different instructions, models, tools or conversation context. The same words typed into two products therefore need not be the same complete input.'
 draft: false
+updatedAt: '2026-10-26'
 ---
 
 Ask the same question twice and you get two answers. People read that as the
-tool being unreliable, when it is closer to the opposite: the variation is
-deliberate, and three of the four causes have nothing to do with chance. More
+tool being unreliable. Variation alone does not establish correctness: the
+answer still needs checking against the evidence. More
 tool write-ups are in [AI Tools](/topics/ai-tools/). The same measurement
 confusion from the other direction is in
 [why AI detectors flag human writing](/ai-detectors-flagging-human-writing/),
@@ -31,44 +32,41 @@ and for systems that look consistent while being wrong, read
 
 ## Each word is picked from a shortlist
 
-A language model does not retrieve an answer. It predicts one word at a time,
-producing a ranked list of candidates with a probability attached to each, then
-picking one. If it always took the top candidate, its writing would be flat and
-repetitive, so by default it samples from the shortlist instead.
+A language model generates tokens in context. A token may be a word or part of
+one. Depending on the model and its settings, generation can sample between
+plausible continuations, so separate requests can produce different wording.
+A product may also retrieve information through tools before composing a reply.
 
-Settings called temperature and top-p control how adventurous that pick is. A
-low temperature keeps it close to the most likely word; a higher one lets it
-reach further down the list. Either way, one different word early on changes
+Where supported, settings such as temperature affect sampling. These controls
+are model-specific API options, not a promise that the ChatGPT interface exposes
+the same settings. Either way, one different word early on changes
 what the model is continuing from, so the two answers diverge from that point
 and keep diverging.
 
-## Even the settings that should be deterministic are not quite
+## Repeatability depends on supported controls
 
-Turn the temperature to zero through the API and the model takes the top
-candidate every time, which ought to be repeatable. In practice it usually is
-not, and the reason is arithmetic rather than design.
+OpenAI's [reproducibility guidance](https://developers.openai.com/api/docs/guides/advanced-usage)
+describes controls for supported API models and notes that outputs are not
+guaranteed to be identical. Holding a seed fixed cannot make different models,
+instructions or input histories into the same request.
 
-Floating point addition is not associative: adding the same numbers in a
-different order can give a very slightly different result. On a GPU the work is
-split across many parallel units, and the order in which their results are
-combined depends on how the batch was arranged, which depends on who else is
-using the server. Occasionally a probability shifts enough to change which
-candidate ranks first, and from there the answers separate.
-
-<Callout type="note" title="This is why a seed is not a guarantee">
-  A fixed seed removes the randomness in the sampling. It does not remove the variation in
-  how the arithmetic was batched, so reproducibility is close rather than exact.
-</Callout>
+The earlier version of this page offered a specific GPU arithmetic explanation
+as the cause of differing replies. That was more specific than the evidence
+available for an individual ChatGPT response. Without request-level evidence,
+a reader cannot infer that particular cause from two different answers.
 
 ## The conversation is part of the question
 
-Each reply is produced by reading the entire thread, not just your last message.
-The same question asked at the start of a chat and ten exchanges later is two
-different inputs, because the second one carries everything in between.
+Earlier messages can be part of the input for a reply. Asking a question at the
+start of a chat and asking it later may therefore supply different context.
+Long conversations can also involve context management, so it is too broad to
+say that every message is always reread verbatim. OpenAI's
+[conversation-state documentation](https://developers.openai.com/api/docs/guides/conversation-state)
+explains how API applications manage the context they send.
 
-Saved memories work the same way across sessions. Two people asking an identical
-question get different answers because the model is reading different context,
-not because it changed its mind.
+For a product that personalises responses, saved information can add another
+difference between users. Whether such information is used depends on the
+product and its settings.
 
 ## The wrapper and the model both change
 

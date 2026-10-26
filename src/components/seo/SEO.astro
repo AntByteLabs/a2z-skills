@@ -29,11 +29,12 @@ const {
 const SUFFIX = ` | ${site.name}`;
 const base = seoTitle ?? title;
 // Keep the brand suffix only while the whole title still fits in a SERP.
-const docTitle = (base + SUFFIX).length <= 60 ? base + SUFFIX : base;
+const docTitle =
+  !base.includes(site.name) && (base + SUFFIX).length <= 60 ? base + SUFFIX : base;
 const canonical = absolute(path);
 const ogImage = image ?? absolute('/og/default.png');
 const robots = noindex
-  ? 'noindex, nofollow'
+  ? 'noindex, follow'
   : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 ---
 

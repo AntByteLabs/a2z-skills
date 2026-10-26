@@ -1,12 +1,14 @@
 ---
-name: Automation
-title: Automation that saves real hours
-description: 'n8n, Make, Zapier and scripts: working automations you can import, with the trigger, the error handling and what each run actually costs.'
+name: 'Automation'
+title: 'n8n, Coolify and automation troubleshooting'
+description: 'n8n setup on Coolify and explanations of workflows that finish without useful results, with test records on the setup guide and links to the sources.'
 order: 6
 accent: '#b03a56'
-startHere: []
+startHere:
+  - 'self-host-n8n-coolify'
+  - 'automations-failing-silently'
 ---
 
-An automation that breaks silently is worse than no automation. These guides
-include the error path, not just the happy path, and the workflow file is
-attached so you can import it and read it before you trust it.
+Start with [self-hosting n8n on Coolify](/self-host-n8n-coolify/) for the tested deployment and domain settings. If a workflow reports success but the expected work is missing, read [why automations fail silently](/automations-failing-silently/).
+
+Setup procedures carry their test records. Explanations link to the documentation behind the behaviour they describe.

@@ -5,6 +5,7 @@
  */
 import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
 import { listDir, readFile, type Env } from './github';
+import { checkArticle, type ContentContext } from '../../src/lib/content-policy';
 
 export const PILLARS = [
   'windows-mac',
@@ -107,66 +108,71 @@ export const listPostSlugs = async (env: Env) =>
     .sort();
 
 export const getPost = async (env: Env, slug: string) => {
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error('Invalid post slug');
   const file = await readFile(env, postPath(slug));
   if (!file) return null;
   return { slug, ...splitPost(file.text), raw: file.text };
 };
 
-/** The checks the repository validator would run, as far as one file allows. */
-export const checkPost = (frontmatter: Frontmatter, body: string, slug: string) => {
-  const problems: string[] = [];
-  const warnings: string[] = [];
-  const f = frontmatter as Record<string, any>;
+/** Shared prose, metadata and publishing checks. */
+export const checkPost = checkArticle;
 
-  const words = body
-    .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .trim()
-    .split(/\s+/).length;
-
-  if (!f.title) problems.push('title is missing');
-  else if (String(f.title).length > 65)
-    problems.push(`title is ${String(f.title).length} characters; the limit is 65`);
-
-  const desc = String(f.description ?? '');
-  if (!desc) problems.push('description is missing');
-  else if (desc.length < 120 || desc.length > 160)
-    problems.push(`description is ${desc.length} characters; it must be 120 to 160`);
-
-  if (!PILLARS.includes(f.pillar))
-    problems.push(`pillar must be one of: ${PILLARS.join(', ')}`);
-  if (!TYPES.includes(f.type)) problems.push(`type must be one of: ${TYPES.join(', ')}`);
-  if (!f.author) problems.push('author is missing');
-
-  const quick = String(f.quickAnswer ?? '');
-  if (!quick) problems.push('quickAnswer is missing');
-  else if (quick.length > 300)
-    problems.push(`quickAnswer is ${quick.length} characters; the limit is 300`);
-
-  if (TESTED_TYPES.includes(f.type) && !f.testedOn?.date)
-    problems.push(
-      `a ${f.type} post must record testedOn.date, the versions and the device`,
-    );
-
-  if (
-    /\bTODO\b|\bFIXME\b|\bLorem ipsum\b/i.test(body) ||
-    /\bTODO\b/i.test(JSON.stringify(f))
-  )
-    problems.push('a TODO, FIXME or Lorem ipsum is still in the post');
-
-  if (words < 350 && f.draft === false)
-    problems.push(`${words} words of prose; under 350 is a thin page`);
-
-  if (!new RegExp(`/topics/${f.pillar}/`).test(body))
-    warnings.push(`no link back to the hub, /topics/${f.pillar}/`);
-
-  const h2s = [...body.matchAll(/^##\s+(.+)$/gm)].length;
-  if (h2s < 2) warnings.push('fewer than two H2 sections');
-
-  if (!/^[a-z0-9-]+$/.test(slug))
-    problems.push('slug must be lowercase letters, numbers and hyphens');
-
-  return { ok: problems.length === 0, problems, warnings, words };
+/** Resolve references before a write; a failing published edit never reaches main. */
+export const checkBeforeWrite = async (
+  env: Env,
+  frontmatter: Frontmatter,
+  body: string,
+  slug: string,
+) => {
+  const [slugs, authors, pages, redirectFile] = await Promise.all([
+    listPostSlugs(env),
+    listDir(env, 'src/content/authors'),
+    listDir(env, 'src/content/pages'),
+    readFile(env, 'public/_redirects'),
+  ]);
+  const posts = await Promise.all(
+    slugs.map(async (id) => (id === slug ? { slug, frontmatter } : getPost(env, id))),
+  );
+  const context: ContentContext = {
+    authors: new Set(authors.map((author) => author.name.replace(/\.json$/, ''))),
+    knownPaths: new Set([
+      '/',
+      '/topics/',
+      '/search/',
+      '/thanks/',
+      '/rss.xml',
+      '/llms.txt',
+      '/llms-full.txt',
+      ...PILLARS.map((pillar) => `/topics/${pillar}/`),
+      ...authors.map((author) => `/authors/${author.name.replace(/\.json$/, '')}/`),
+      ...pages.map((page) => `/${page.name.replace(/\.md$/, '')}/`),
+      ...[...new Set([...slugs, slug])].map((id) => `/${id}/`),
+    ]),
+    publishedSlugs: new Set(
+      posts
+        .filter((post) => post && post.frontmatter.draft !== true)
+        .map((post) => post!.slug),
+    ),
+    draftSlugs: new Set(
+      posts.filter((post) => post?.frontmatter.draft === true).map((post) => post!.slug),
+    ),
+    redirects: redirectFile?.text ?? '',
+  };
+  const check = checkArticle(frontmatter, body, slug, context);
+  if (Array.isArray(frontmatter.downloads)) {
+    for (const item of frontmatter.downloads) {
+      if (
+        !item ||
+        typeof item.file !== 'string' ||
+        !/^[a-zA-Z0-9._-]+$/.test(item.file) ||
+        !(await readFile(env, `public/downloads/${item.file}`))
+      ) {
+        check.problems.push('A declared download is missing or has an invalid file name');
+      }
+    }
+  }
+  check.ok = check.problems.length === 0;
+  return check;
 };
 
 export const blueprint = (pillar: string, type: string) => `
