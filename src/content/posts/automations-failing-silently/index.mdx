@@ -77,6 +77,10 @@ Rate limits produce the same shape. A request rejected for volume often returns
 a valid response body with an error inside it, which a step that only checks the
 status code will accept and pass on.
 
+A trigger that stopped firing is the same shape of problem, and on n8n it is
+usually one of two URLs: see
+[n8n webhook not triggering](/n8n-webhook-not-working/).
+
 ## Credentials that expire into a valid response
 
 An expired token is not always a failure. Some APIs answer with a success status

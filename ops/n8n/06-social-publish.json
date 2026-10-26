@@ -33,6 +33,52 @@
     },
     {
       "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.OPENAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $env.OPENAI_MODEL || 'gpt-4o-mini', temperature: 0.4, response_format: { type: 'json_object' }, messages: [ { role: 'system', content: \"You write social copy for A2Z Skills, a site of technology guides that are tested on real machines before publishing.\\\\n\\\\nRULES. Use only facts that appear in the INPUT below. Never add a version number, a price, a statistic, a product name, a claim or a URL that is not already there. If you are unsure, leave it out. British spelling. Plain, short sentences. No hype, no emoji, no words like unlock, supercharge, effortless or game-changer. Do not open with a question.\\\\n\\\\nReturn JSON only: {\\\\\\\"facebook\\\\\\\": \\\\\\\"...\\\\\\\", \\\\\\\"instagram\\\\\\\": \\\\\\\"...\\\\\\\"}\\\\nfacebook: 2 to 3 sentences saying what the guide answers and who it is for. No link, no hashtags; the link is attached separately.\\\\ninstagram: 2 to 4 short lines, same facts, ending with the line \\\\\\\"Full guide on a2zskillsewa.com, link in bio.\\\\\\\" No other link, no hashtags.\" }, { role: 'user', content: 'INPUT\\nTitle: ' + $json.title + '\\nShort answer: ' + $json.answer + '\\nTopic: ' + $json.pillar } ] }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 45000
+        }
+      },
+      "id": "write-copy",
+      "name": "Write the social copy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-290, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// The safety net.\n//\n// The model only ever sees this post's own title, short answer, pillar and\n// tags, so anything it writes that cannot be traced back to those is an\n// invention. Numbers and proper nouns are where that shows up, and on a site\n// whose whole claim is tested facts, an invented version number is the one\n// mistake that cannot be shrugged off.\n//\n// A rejected draft does not block the post. The deterministic copy built from\n// the post's own fields goes out instead, and the run reports what was\n// refused, because silence would make this look like it was working.\nconst src = $('Only genuinely new posts').item.json;\nconst haystack = [src.title, src.answer, src.pillar, src.slug.replace(/-/g, ' ')]\n  .join(' ')\n  .toLowerCase();\n\nconst ALLOW = new Set([\n  'a2z', 'skills', 'a2zskillsewa', 'com', 'full', 'guide', 'link', 'bio', 'read',\n  'the', 'this', 'that', 'your', 'you', 'and', 'but', 'for', 'with', 'what',\n  'why', 'how', 'when', 'if', 'it', 'a', 'an', 'is', 'are', 'was', 'not', 'no',\n  'on', 'in', 'to', 'of', 'most', 'every', 'both', 'here', 'there', 'they',\n]);\n\nconst offenders = (text) => {\n  const t = String(text || '').replace(/#\\w+/g, ' ');\n  const bad = [];\n  for (const m of t.matchAll(/\\b\\d[\\d.,]*\\b/g)) {\n    if (!haystack.includes(m[0].toLowerCase())) bad.push(m[0]);\n  }\n  for (const m of t.matchAll(/https?:\\/\\/[^\\s)]+/g)) {\n    if (!m[0].startsWith('https://a2zskillsewa.com')) bad.push(m[0]);\n  }\n  for (const m of t.matchAll(/\\b[A-Z][A-Za-z0-9+.#]{2,}\\b/g)) {\n    const w = m[0].toLowerCase();\n    if (!haystack.includes(w) && !ALLOW.has(w)) bad.push(m[0]);\n  }\n  return [...new Set(bad)];\n};\n\nlet draft = {};\ntry {\n  const raw = $('Write the social copy').item.json.body.choices[0].message.content;\n  draft = JSON.parse(raw.replace(/^```json\\s*|\\s*```$/g, '').trim());\n} catch (e) {\n  draft = {};\n}\n\nconst problems = [];\nconst fb = String(draft.facebook || '').trim();\nconst ig = String(draft.instagram || '').trim();\n\nconst fbBad = offenders(fb);\nconst igBad = offenders(ig);\nif (!fb) problems.push('Facebook: the model returned nothing usable.');\nelse if (fbBad.length) problems.push(`Facebook: not in the post: ${fbBad.join(', ')}`);\nif (!ig) problems.push('Instagram: the model returned nothing usable.');\nelse if (igBad.length) problems.push(`Instagram: not in the post: ${igBad.join(', ')}`);\n\nconst useModel = problems.length === 0;\nconst tags = src.igCaption.split('\\n').pop();\n\nreturn [\n  {\n    json: {\n      ...src,\n      fbMessage: useModel ? `${fb}\\n\\n${src.link}` : src.fbMessage,\n      igCaption: useModel ? `${ig}\\n\\n${tags}` : src.igCaption,\n      copySource: useModel ? 'model' : 'template',\n      copyProblems: problems,\n    },\n  },\n];\n"
+      },
+      "id": "verify-copy",
+      "name": "Refuse anything it invented",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-180, 160]
+    },
+    {
+      "parameters": {
         "url": "=https://graph.facebook.com/v23.0/{{ $env.META_PAGE_ID }}/feed",
         "method": "POST",
         "sendBody": true,
@@ -41,7 +87,7 @@
           "parameters": [
             {
               "name": "message",
-              "value": "={{ $json.fbMessage }}"
+              "value": "={{ $('Refuse anything it invented').item.json.fbMessage }}"
             },
             {
               "name": "link",
@@ -79,11 +125,11 @@
           "parameters": [
             {
               "name": "image_url",
-              "value": "={{ $('Only genuinely new posts').item.json.ogImage }}"
+              "value": "={{ $('Refuse anything it invented').item.json.ogImage }}"
             },
             {
               "name": "caption",
-              "value": "={{ $('Only genuinely new posts').item.json.igCaption }}"
+              "value": "={{ $('Refuse anything it invented').item.json.igCaption }}"
             },
             {
               "name": "access_token",
@@ -214,7 +260,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Assert on the outcome, not on the run. A green execution that posted nothing\n// is the failure this workflow exists to avoid.\nconst src = $('Only genuinely new posts').item.json;\nconst problems = [];\n\nconst read = (nodeName) => {\n  try {\n    const j = $(nodeName).item.json;\n    return (j && j.body) || j || null;\n  } catch (e) {\n    return null;\n  }\n};\n\nconst fb = read('Post to the Facebook Page');\nif (!fb || !fb.id) problems.push(`Facebook: ${JSON.stringify((fb && fb.error) || fb || 'no response')}`);\n\nconst ig = read('Publish to Instagram');\nif (!ig || !ig.id) {\n  const status = read('Check the container');\n  problems.push(\n    `Instagram: ${JSON.stringify((ig && ig.error) || ig || (status && status.status_code) || 'no response')}`,\n  );\n}\n\nreturn [{ json: { title: src.title, link: src.link, problems, count: problems.length } }];\n"
+        "jsCode": "// Assert on the outcome, not on the run. A green execution that posted nothing\n// is the failure this workflow exists to avoid.\nconst src = $('Refuse anything it invented').item.json;\nconst problems = [];\n\n// A refused draft is not a failed run, but it must never pass unmentioned:\n// silence is how you end up trusting copy nobody checked.\nif (src.copySource === 'template') {\n  problems.push(\n    `Copy: the model's draft was refused and the template was posted instead.\\n  ${src.copyProblems.join('\\n  ')}`,\n  );\n}\n\nconst read = (nodeName) => {\n  try {\n    const j = $(nodeName).item.json;\n    return (j && j.body) || j || null;\n  } catch (e) {\n    return null;\n  }\n};\n\nconst fb = read('Post to the Facebook Page');\nif (!fb || !fb.id) problems.push(`Facebook: ${JSON.stringify((fb && fb.error) || fb || 'no response')}`);\n\nconst ig = read('Publish to Instagram');\nif (!ig || !ig.id) {\n  const status = read('Check the container');\n  problems.push(\n    `Instagram: ${JSON.stringify((ig && ig.error) || ig || (status && status.status_code) || 'no response')}`,\n  );\n}\n\nreturn [{ json: { title: src.title, link: src.link, problems, count: problems.length } }];\n"
       },
       "id": "verify",
       "name": "Did both actually land?",
@@ -251,7 +297,7 @@
     },
     {
       "parameters": {
-        "subject": "=A2Z Skills: social post failed for {{ $json.title }}",
+        "subject": "=A2Z Skills: social post needs a look — {{ $json.title }}",
         "emailFormat": "text",
         "options": {},
         "fromEmail": "antbytelabs@gmail.com",
@@ -287,7 +333,7 @@
       "main": [
         [
           {
-            "node": "Post to the Facebook Page",
+            "node": "Write the social copy",
             "type": "main",
             "index": 0
           }
@@ -388,6 +434,28 @@
           }
         ],
         []
+      ]
+    },
+    "Write the social copy": {
+      "main": [
+        [
+          {
+            "node": "Refuse anything it invented",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refuse anything it invented": {
+      "main": [
+        [
+          {
+            "node": "Post to the Facebook Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
