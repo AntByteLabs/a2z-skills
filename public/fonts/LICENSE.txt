@@ -1,2 +1,10 @@
 Bricolage Grotesque is licensed under the SIL Open Font License 1.1.
 https://github.com/google/fonts/blob/main/ofl/bricolagegrotesque/OFL.txt
+
+Literata is licensed under the SIL Open Font License 1.1.
+Copyright 2017 The Literata Project Authors.
+https://github.com/googlefonts/literata/blob/main/OFL.txt
+
+Both files here are subsets: Latin only, with the weight axis trimmed to the
+range the site actually uses. Regenerate with pyftsubset plus
+fontTools.varLib.instancer if a new weight is ever needed.

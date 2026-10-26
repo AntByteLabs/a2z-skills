@@ -93,8 +93,8 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
   <JsonLd data={breadcrumbs(crumbs)} slot="head" />
   {faq && <JsonLd data={faq} slot="head" />}
 
-  <div class="shell grid gap-8 py-5 lg:grid-cols-[minmax(0,1fr)_17rem]">
-    <article class="min-w-0">
+  <div class="shell grid gap-8 py-5 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
+    <article class="min-w-0 lg:max-w-[42rem]">
       <Breadcrumbs crumbs={crumbs} />
 
       <div class="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -152,9 +152,11 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
         />
       )}
 
-      <Toc headings={headings} />
+      <div class="lg:hidden">
+        <Toc headings={headings} />
+      </div>
 
-      <div class="prose max-w-measure dark:prose-invert sm:prose-lg prose-headings:font-display prose-headings:tracking-tight prose-h2:mt-8 prose-h2:mb-3 prose-p:leading-relaxed prose-a:text-brand-deep prose-code:before:content-none prose-code:after:content-none [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-paper-sunk [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:font-medium prose-pre:rounded-card prose-pre:border prose-pre:border-rule prose-img:rounded-card prose-table:text-sm">
+      <div class="prose prose-article dark:prose-invert prose-headings:font-display prose-headings:tracking-tight prose-a:text-brand-deep prose-code:before:content-none prose-code:after:content-none [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-paper-sunk [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:font-medium prose-pre:rounded-card prose-pre:border prose-pre:border-rule prose-img:rounded-card prose-table:text-sm">
         <slot />
       </div>
 
@@ -185,6 +187,9 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
             <p class="mt-1 text-sm text-ink-soft">{pillar.data.description}</p>
           </div>
         )}
+        <div class="hidden lg:block">
+          <Toc headings={headings} />
+        </div>
         <AdSlot position="sidebar" />
       </div>
     </aside>

@@ -34,6 +34,9 @@
 @theme {
   --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Article prose only. The chrome stays sans: the serif is what marks the
+     difference between a page you navigate and a page you read. */
+  --font-serif: 'Literata', 'Literata Fallback', Georgia, 'Times New Roman', serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   --color-ink: oklch(0.2 0.025 268);
@@ -52,6 +55,9 @@
   --color-good-deep: oklch(0.41 0.11 155);
   --color-good-wash: oklch(0.94 0.045 155);
   --color-warn: oklch(0.52 0.13 75);
+  /* The callout label is small bold text, so it needs 4.5:1, not 3:1.
+     The mid warn tone only reached 4.66 on its own wash. */
+  --color-warn-deep: oklch(0.44 0.115 75);
   --color-bad: oklch(0.5 0.18 25);
 
   --color-ink-invert: oklch(0.16 0.02 268);
@@ -140,6 +146,23 @@
     border-radius: 4px;
   }
 
+  /* Defaults here belong to the browser, not to any design. Theme them. */
+  ::selection {
+    background: var(--color-brand-wash);
+    color: var(--color-ink);
+  }
+
+  :root {
+    caret-color: var(--color-brand);
+    scrollbar-color: var(--color-rule) transparent;
+  }
+
+  /* Versions, dates and counts line up in a column when they are tabular. */
+  time,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+  }
+
   /* A long command in inline code must wrap, or it widens a narrow phone. */
   code {
     overflow-wrap: anywhere;
@@ -193,6 +216,7 @@
     --color-good-deep: oklch(0.84 0.1 155);
     --color-good-wash: oklch(0.3 0.05 155);
     --color-warn: oklch(0.82 0.12 75);
+    --color-warn-deep: oklch(0.87 0.1 75);
     --color-bad: oklch(0.75 0.14 25);
     --shadow-card: 0 1px 2px oklch(0 0 0 / 0.3);
     --shadow-lift: 0 4px 16px oklch(0 0 0 / 0.4);
@@ -225,6 +249,29 @@
   font-weight: 200 800;
   font-display: swap;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'Literata';
+  src: url('/fonts/literata-var.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+/*
+ * Georgia, re-metricked to Literata so the swap does not move a line.
+ * size-adjust is the x-height ratio (0.507 / 0.484); the ascent and descent
+ * overrides are Literata's own (117.7% / 30.8%) divided by that figure.
+ * The CLS budget is 0.05 and body text is most of the page.
+ */
+@font-face {
+  font-family: 'Literata Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('Times');
+  size-adjust: 104.7%;
+  ascent-override: 112.4%;
+  descent-override: 29.4%;
+  line-gap-override: 0%;
 }
 
 @utility measure {
@@ -302,4 +349,179 @@
   font-weight: 600;
   line-height: 1.5;
   color: var(--color-ink-soft);
+}
+
+/*
+ * The reading column.
+ *
+ * Set in Literata rather than the system stack, because this is the surface a
+ * reader stays on for several minutes and the system sans made every guide
+ * look like every other guide. The chrome around it stays sans on purpose:
+ * that contrast is what tells you which part of the page is the article.
+ *
+ * Leading is 1.72 rather than the usual 1.6: a serif at 18px across a 66ch
+ * measure needs the extra room, and the prose plugin's default is tuned for a
+ * sans. Headings keep more space above than below so a section reads as
+ * belonging to the heading that opens it.
+ */
+.prose.prose-article {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.72;
+  letter-spacing: 0.003em;
+  /* Set in rem, not ch: ch follows the font's zero, so the same 66ch measure
+     came out far narrower in Literata than in the sans it replaced. At 18px
+     this is roughly 68 characters, and it matches the blocks above it. */
+  max-width: 42rem;
+  margin-top: 1.75rem;
+
+  & p,
+  & ul,
+  & ol,
+  & blockquote {
+    margin-block: 0 1.15em;
+  }
+
+  & h2 {
+    font-size: 1.45rem;
+    margin-block: 2.5rem 0.6rem;
+  }
+
+  & h3 {
+    font-size: 1.15rem;
+    margin-block: 1.9rem 0.45rem;
+  }
+
+  & strong {
+    font-weight: 650;
+  }
+
+  & a {
+    text-decoration-thickness: 0.07em;
+    text-underline-offset: 0.17em;
+    transition: text-decoration-thickness 120ms ease-out;
+  }
+
+  & a:hover {
+    text-decoration-thickness: 0.13em;
+  }
+
+  /* A quotation is set in, not fenced off with a coloured bar. */
+  & blockquote {
+    border: 0;
+    padding-inline-start: 1.25rem;
+    border-inline-start: 1px solid var(--color-rule);
+    color: var(--color-ink-soft);
+    font-style: normal;
+  }
+
+  & :not(pre) > code {
+    font-size: 0.88em;
+    font-variant-ligatures: none;
+  }
+
+  & li::marker {
+    color: var(--color-ink-faint);
+  }
+
+  @media (min-width: 640px) {
+    font-size: 1.125rem;
+
+    & h2 {
+      font-size: 1.75rem;
+      margin-block: 3rem 0.7rem;
+    }
+
+    & h3 {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+/*
+ * Article asides.
+ *
+ * Tinted from the hue that carries the meaning, with the label set in that
+ * same colour so the type of the aside is readable before the words are. The
+ * old version was grey on grey with a coloured bar down one edge, which is the
+ * documentation-theme default and reads as furniture rather than as a warning.
+ *
+ * Every pairing below is the -deep or body token on its own wash, all of which
+ * clear AA at this size; the dot repeats the hue for readers who are scanning.
+ */
+@utility callout {
+  margin-block: 1.75rem;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--tone-edge);
+  background: var(--tone-wash);
+  padding: 1rem 1.1rem;
+}
+
+@utility callout-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tone-ink);
+}
+
+@utility callout-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--tone-ink);
+  flex: none;
+}
+
+@utility callout-body {
+  margin-top: 0.4rem;
+  color: var(--color-ink);
+}
+
+@utility callout-note {
+  --tone-wash: var(--color-brand-wash);
+  --tone-edge: color-mix(in oklch, var(--color-brand) 28%, transparent);
+  --tone-ink: var(--color-brand-deep);
+}
+
+@utility callout-tip {
+  --tone-wash: var(--color-good-wash);
+  --tone-edge: color-mix(in oklch, var(--color-good) 28%, transparent);
+  --tone-ink: var(--color-good-deep);
+}
+
+@utility callout-warn {
+  --tone-wash: color-mix(in oklch, var(--color-warn) 12%, var(--color-paper));
+  --tone-edge: color-mix(in oklch, var(--color-warn) 32%, transparent);
+  --tone-ink: var(--color-warn-deep);
+}
+
+@utility callout-danger {
+  --tone-wash: color-mix(in oklch, var(--color-bad) 10%, var(--color-paper));
+  --tone-edge: color-mix(in oklch, var(--color-bad) 30%, transparent);
+  --tone-ink: var(--color-bad);
+}
+
+/*
+ * Light type on a dark surface looks thinner and tighter than the same type on
+ * paper, so the reading column is compensated on all three axes rather than
+ * just left alone: a little more leading, a little more tracking, and half a
+ * weight step, which a variable face can give without loading another file.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .prose.prose-article {
+    font-weight: 420;
+    line-height: 1.76;
+    letter-spacing: 0.008em;
+  }
+}
+
+:root[data-theme='dark'] .prose.prose-article {
+  font-weight: 420;
+  line-height: 1.76;
+  letter-spacing: 0.008em;
 }

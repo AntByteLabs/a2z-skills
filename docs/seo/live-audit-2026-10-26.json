@@ -1,0 +1,4090 @@
+{
+  "date": "2026-10-26",
+  "sitemap_urls": [
+    "https://a2zskillsewa.com/",
+    "https://a2zskillsewa.com/topics/",
+    "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/",
+    "https://a2zskillsewa.com/automations-failing-silently/",
+    "https://a2zskillsewa.com/chatgpt-different-answers-same-question/",
+    "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/",
+    "https://a2zskillsewa.com/dns-propagation-explained/",
+    "https://a2zskillsewa.com/excel-changing-numbers-into-dates/",
+    "https://a2zskillsewa.com/excel-file-size-too-large/",
+    "https://a2zskillsewa.com/phone-slows-down-gets-older/",
+    "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/",
+    "https://a2zskillsewa.com/self-host-n8n-coolify/",
+    "https://a2zskillsewa.com/windows-restart-finish-installing-updates/",
+    "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/",
+    "https://a2zskillsewa.com/topics/ai-tools/",
+    "https://a2zskillsewa.com/topics/automation/",
+    "https://a2zskillsewa.com/topics/excel-office/",
+    "https://a2zskillsewa.com/topics/phones/",
+    "https://a2zskillsewa.com/topics/websites-hosting/",
+    "https://a2zskillsewa.com/topics/windows-mac/",
+    "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+    "https://a2zskillsewa.com/authors/krishna-pokharel/",
+    "https://a2zskillsewa.com/authors/ronit-karki/",
+    "https://a2zskillsewa.com/about/",
+    "https://a2zskillsewa.com/affiliate-disclosure/",
+    "https://a2zskillsewa.com/contact/",
+    "https://a2zskillsewa.com/editorial-policy/",
+    "https://a2zskillsewa.com/privacy/"
+  ],
+  "pages": [
+    {
+      "url": "https://a2zskillsewa.com/",
+      "status": 200,
+      "title": "A2Z Skills \u2014 Software and tech skills, A to Z | A2Z Skills",
+      "title_length": 58,
+      "h1": ["Tech fixes that were actually tried before they were published."],
+      "descriptions": [
+        "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published."
+      ],
+      "canonical": ["https://a2zskillsewa.com/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2315,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/ai-detectors-flagging-human-writing/",
+        "/automations-failing-silently/",
+        "/chatgpt-different-answers-same-question/",
+        "/deleting-files-not-freeing-disk-space/",
+        "/dns-propagation-explained/",
+        "/excel-changing-numbers-into-dates/",
+        "/excel-file-size-too-large/",
+        "/phone-slows-down-gets-older/",
+        "/phone-storage-full-after-deleting-photos/",
+        "/self-host-n8n-coolify/",
+        "/windows-restart-finish-installing-updates/",
+        "/cloudflare-workers-custom-domain-not-working/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/",
+      "status": 200,
+      "title": "All topics | A2Z Skills",
+      "title_length": 23,
+      "h1": ["All topics"],
+      "descriptions": [
+        "Every topic on A2Z Skills: Windows and Mac, phones, Excel and Office, AI tools, websites and hosting, and automation. Pick the area you are stuck in."
+      ],
+      "canonical": ["https://a2zskillsewa.com/topics/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1244,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://a2zskillsewa.com/topics/#collection",
+          "name": "All topics",
+          "description": "The six areas A2Z Skills covers.",
+          "url": "https://a2zskillsewa.com/topics/",
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Topics",
+              "item": "https://a2zskillsewa.com/topics/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/",
+      "status": 200,
+      "title": "Why AI detectors flag human writing | A2Z Skills",
+      "title_length": 48,
+      "h1": ["Why AI detectors flag human writing"],
+      "descriptions": [
+        "AI detectors do not detect AI. They score how predictable your sentences are, which is why careful writers and non-native speakers fail them most often."
+      ],
+      "canonical": ["https://a2zskillsewa.com/ai-detectors-flagging-human-writing/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2539,
+      "images": [
+        {
+          "src": "/authors/ronit-karki.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/ronit-karki.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/#article",
+          "headline": "Why AI detectors flag human writing",
+          "description": "AI detectors do not detect AI. They score how predictable your sentences are, which is why careful writers and non-native speakers fail them most often.",
+          "image": "https://a2zskillsewa.com/og/ai-detectors-flagging-human-writing.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Ronit Karki",
+            "url": "https://a2zskillsewa.com/authors/ronit-karki/",
+            "sameAs": []
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "ai-detection, writing, ai-tools",
+          "articleSection": "AI Tools"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "AI Tools",
+              "item": "https://a2zskillsewa.com/topics/ai-tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Why AI detectors flag human writing",
+              "item": "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Can I appeal a detector result?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Version history is the strongest evidence, because it shows the document being built. A draft with revisions, comments and false starts is far harder to argue with than a finished file."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does editing AI text make it undetectable?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Usually, yes, which is the clearest sign the tools do not measure what they claim. Heavy editing changes the statistical shape of the text whether or not it changes the authorship."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are paid detectors better than free ones?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "They report more confidently. The underlying signal is the same, and none of the vendors publishes a false positive rate measured on writing from outside their test set."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/ai-tools/",
+        "/topics/ai-tools/",
+        "/authors/ronit-karki/",
+        "#what-the-score-actually-measures",
+        "#why-good-writing-fails",
+        "#why-the-vendors-cannot-fix-it",
+        "#what-to-do-if-you-are-on-the-receiving-end",
+        "/topics/ai-tools/",
+        "/excel-changing-numbers-into-dates/",
+        "/automations-failing-silently/",
+        "/chatgpt-different-answers-same-question/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fai-detectors-flagging-human-writing%2F&t=Why%20AI%20detectors%20flag%20human%20writing",
+        "/authors/ronit-karki/",
+        "/chatgpt-different-answers-same-question/",
+        "/automations-failing-silently/",
+        "/topics/ai-tools/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/automations-failing-silently/",
+      "status": 200,
+      "title": "Why automations fail silently | A2Z Skills",
+      "title_length": 42,
+      "h1": ["Why automations fail silently"],
+      "descriptions": [
+        "A broken workflow that tells you is a nuisance. One that keeps reporting success is the expensive kind, and there are four reasons it happens."
+      ],
+      "canonical": ["https://a2zskillsewa.com/automations-failing-silently/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2586,
+      "images": [
+        {
+          "src": "/authors/ronit-karki.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/ronit-karki.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/automations-failing-silently/#article",
+          "headline": "Why automations fail silently",
+          "description": "A broken workflow that tells you is a nuisance. One that keeps reporting success is the expensive kind, and there are four reasons it happens.",
+          "image": "https://a2zskillsewa.com/og/automations-failing-silently.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/automations-failing-silently/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Ronit Karki",
+            "url": "https://a2zskillsewa.com/authors/ronit-karki/",
+            "sameAs": []
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "n8n, automation, monitoring",
+          "articleSection": "Automation"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Automation",
+              "item": "https://a2zskillsewa.com/topics/automation/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Why automations fail silently",
+              "item": "https://a2zskillsewa.com/automations-failing-silently/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/automations-failing-silently/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is a dead-man switch in this context?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A separate check that alerts when a run has not happened, rather than when a run has failed. It is the only thing that catches a trigger that stopped firing altogether."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Should every workflow alert on zero results?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Only where zero is abnormal. A workflow that usually returns nothing will train you to ignore the alert, which costs you the alerts that matter."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is error handling making this worse?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Often, yes. A catch block that logs and continues converts a loud failure into a quiet one, which is the right trade for a retry and the wrong one for bad data."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/automation/",
+        "/topics/automation/",
+        "/authors/ronit-karki/",
+        "#a-platform-can-only-see-its-own-steps",
+        "#empty-is-not-an-error",
+        "#error-handling-that-swallows",
+        "#partial-data-read-as-complete",
+        "#credentials-that-expire-into-a-valid-response",
+        "#what-to-monitor-instead",
+        "/topics/automation/",
+        "/self-host-n8n-coolify/",
+        "/ai-detectors-flagging-human-writing/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fautomations-failing-silently%2F&t=Why%20automations%20fail%20silently",
+        "/authors/ronit-karki/",
+        "/self-host-n8n-coolify/",
+        "/chatgpt-different-answers-same-question/",
+        "/ai-detectors-flagging-human-writing/",
+        "/topics/automation/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/chatgpt-different-answers-same-question/",
+      "status": 200,
+      "title": "Why ChatGPT gives a different answer each time | A2Z Skills",
+      "title_length": 59,
+      "h1": ["Why ChatGPT gives a different answer each time"],
+      "descriptions": [
+        "The same question twice gives two answers, and that is the design rather than a fault. Four separate things make it happen, and only one is random."
+      ],
+      "canonical": ["https://a2zskillsewa.com/chatgpt-different-answers-same-question/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2631,
+      "images": [
+        {
+          "src": "/authors/ronit-karki.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/ronit-karki.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/chatgpt-different-answers-same-question/#article",
+          "headline": "Why ChatGPT gives a different answer each time",
+          "description": "The same question twice gives two answers, and that is the design rather than a fault. Four separate things make it happen, and only one is random.",
+          "image": "https://a2zskillsewa.com/og/chatgpt-different-answers-same-question.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/chatgpt-different-answers-same-question/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Ronit Karki",
+            "url": "https://a2zskillsewa.com/authors/ronit-karki/",
+            "sameAs": []
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "chatgpt, ai-tools, llm",
+          "articleSection": "AI Tools"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "AI Tools",
+              "item": "https://a2zskillsewa.com/topics/ai-tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Why ChatGPT gives a different answer each time",
+              "item": "https://a2zskillsewa.com/chatgpt-different-answers-same-question/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/chatgpt-different-answers-same-question/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Can I make the answers repeatable?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Through the API you can lower the temperature and fix a seed, which gets you close. Even then the output is not guaranteed identical, because the arithmetic on the server does not round the same way every run."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does a longer conversation make answers worse?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It makes them different, and sometimes worse. Everything earlier in the thread is read again before each reply, so an early mistake or a stray instruction keeps influencing the output. Starting a fresh chat is the fix."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why does the same prompt behave differently in an app than on the website?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because each product wraps your prompt in its own hidden instructions, and those differ. You are not sending the same input, even though you typed the same words."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/ai-tools/",
+        "/topics/ai-tools/",
+        "/authors/ronit-karki/",
+        "#each-word-is-picked-from-a-shortlist",
+        "#even-the-settings-that-should-be-deterministic-are-not-quite",
+        "#the-conversation-is-part-of-the-question",
+        "#the-wrapper-and-the-model-both-change",
+        "/topics/ai-tools/",
+        "/ai-detectors-flagging-human-writing/",
+        "/automations-failing-silently/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fchatgpt-different-answers-same-question%2F&t=Why%20ChatGPT%20gives%20a%20different%20answer%20each%20time",
+        "/authors/ronit-karki/",
+        "/ai-detectors-flagging-human-writing/",
+        "/deleting-files-not-freeing-disk-space/",
+        "/automations-failing-silently/",
+        "/topics/ai-tools/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/",
+      "status": 200,
+      "title": "Deleting files did not free any disk space | A2Z Skills",
+      "title_length": 55,
+      "h1": ["Deleting files did not free any disk space"],
+      "descriptions": [
+        "You emptied the bin and the free space did not move. Four things hold on to deleted files on Windows and macOS, and each one lets go differently."
+      ],
+      "canonical": ["https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2690,
+      "images": [
+        {
+          "src": "/authors/devchandra-shrestha.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/devchandra-shrestha.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/#article",
+          "headline": "Deleting files did not free any disk space",
+          "description": "You emptied the bin and the free space did not move. Four things hold on to deleted files on Windows and macOS, and each one lets go differently.",
+          "image": "https://a2zskillsewa.com/og/deleting-files-not-freeing-disk-space.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Devchandra Shrestha",
+            "url": "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+            "sameAs": ["https://github.com/DevChandraShrestha"]
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "storage, windows, macos",
+          "articleSection": "Windows & Mac"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Windows & Mac",
+              "item": "https://a2zskillsewa.com/topics/windows-mac/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Deleting files did not free any disk space",
+              "item": "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does emptying the Recycle Bin actually erase the file?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It frees the space for reuse. The bytes stay on the disk until something else writes over them, which is why recovery tools can sometimes get a file back hours later."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why did my free space go up by itself an hour later?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A snapshot expired. Both Time Machine and File History keep older copies for a set period, and the space comes back when the copy is dropped, not when you delete the file."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is a disk that reports zero bytes free dangerous?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It can be. Both systems need scratch space to apply updates and to write swap, so a disk at zero tends to produce failures that look unrelated to storage."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/windows-mac/",
+        "/authors/devchandra-shrestha/",
+        "#deleting-removes-the-entry-not-the-data",
+        "#four-things-that-keep-claiming-the-space",
+        "#how-to-tell-which-one-is-holding-your-space",
+        "/topics/windows-mac/",
+        "/phone-storage-full-after-deleting-photos/",
+        "/dns-propagation-explained/",
+        "/windows-restart-finish-installing-updates/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fdeleting-files-not-freeing-disk-space%2F&t=Deleting%20files%20did%20not%20free%20any%20disk%20space",
+        "/authors/devchandra-shrestha/",
+        "/windows-restart-finish-installing-updates/",
+        "/phone-storage-full-after-deleting-photos/",
+        "/dns-propagation-explained/",
+        "/chatgpt-different-answers-same-question/",
+        "/topics/windows-mac/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/dns-propagation-explained/",
+      "status": 200,
+      "title": "DNS propagation explained | A2Z Skills",
+      "title_length": 38,
+      "h1": ["DNS propagation explained"],
+      "descriptions": [
+        "Nothing propagates. A DNS change is live the moment you save it, and the wait you experience is resolvers holding an answer you already replaced."
+      ],
+      "canonical": ["https://a2zskillsewa.com/dns-propagation-explained/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2632,
+      "images": [
+        {
+          "src": "/authors/devchandra-shrestha.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/devchandra-shrestha.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/dns-propagation-explained/#article",
+          "headline": "DNS propagation explained",
+          "description": "Nothing propagates. A DNS change is live the moment you save it, and the wait you experience is resolvers holding an answer you already replaced.",
+          "image": "https://a2zskillsewa.com/og/dns-propagation-explained.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/dns-propagation-explained/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Devchandra Shrestha",
+            "url": "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+            "sameAs": ["https://github.com/DevChandraShrestha"]
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "dns, domains, hosting",
+          "articleSection": "Websites & Hosting"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Websites & Hosting",
+              "item": "https://a2zskillsewa.com/topics/websites-hosting/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "DNS propagation explained",
+              "item": "https://a2zskillsewa.com/dns-propagation-explained/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/dns-propagation-explained/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why do propagation checkers show different answers?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because each one queries a different resolver, and each resolver cached your record at a different moment. A mix of old and new answers is the expected state, not a fault."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I force a resolver to drop its cache?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Only your own. Some large public resolvers offer a page to flush a single name, but the resolver at your reader\u2019s office is not yours to clear and will hold the old answer for its full TTL."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does changing nameservers work the same way?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, and this is the slow one. Delegation records live at the registry rather than on your own server, and they typically carry a much longer TTL than the records inside your zone."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/websites-hosting/",
+        "/topics/websites-hosting/",
+        "/authors/devchandra-shrestha/",
+        "#there-is-one-copy-and-then-there-are-caches",
+        "#ttl-is-the-whole-mechanism",
+        "#why-two-people-see-different-sites",
+        "#nameserver-changes-are-the-slow-case",
+        "#what-to-check-when-it-seems-stuck",
+        "/topics/websites-hosting/",
+        "/cloudflare-workers-custom-domain-not-working/",
+        "/deleting-files-not-freeing-disk-space/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fdns-propagation-explained%2F&t=DNS%20propagation%20explained",
+        "/authors/devchandra-shrestha/",
+        "/cloudflare-workers-custom-domain-not-working/",
+        "/excel-changing-numbers-into-dates/",
+        "/deleting-files-not-freeing-disk-space/",
+        "/topics/websites-hosting/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/excel-changing-numbers-into-dates/",
+      "status": 200,
+      "title": "Excel keeps changing my numbers into dates | A2Z Skills",
+      "title_length": 55,
+      "h1": ["Excel keeps changing my numbers into dates"],
+      "descriptions": [
+        "Type 1-2 and Excel gives you 2 January. It is a type decision made on entry, it happens before the value is stored, and reformatting will not undo it."
+      ],
+      "canonical": ["https://a2zskillsewa.com/excel-changing-numbers-into-dates/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2656,
+      "images": [
+        {
+          "src": "/authors/krishna-pokharel.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/krishna-pokharel.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/excel-changing-numbers-into-dates/#article",
+          "headline": "Excel keeps changing my numbers into dates",
+          "description": "Type 1-2 and Excel gives you 2 January. It is a type decision made on entry, it happens before the value is stored, and reformatting will not undo it.",
+          "image": "https://a2zskillsewa.com/og/excel-changing-numbers-into-dates.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/excel-changing-numbers-into-dates/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Krishna Pokharel",
+            "url": "https://a2zskillsewa.com/authors/krishna-pokharel/",
+            "sameAs": []
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "excel, formatting, data-entry",
+          "articleSection": "Excel & Office"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Excel & Office",
+              "item": "https://a2zskillsewa.com/topics/excel-office/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Excel keeps changing my numbers into dates",
+              "item": "https://a2zskillsewa.com/excel-changing-numbers-into-dates/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/excel-changing-numbers-into-dates/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why does a leading apostrophe stop it?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The apostrophe tells Excel to skip type detection and store the characters as text. It is not part of the value and does not appear in the cell, though it does show in the formula bar."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I turn date detection off completely?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Not globally. The usable equivalent is formatting the column as Text before anything is typed into it, or importing the data and marking that column as text during the import."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does this affect data I paste in?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, and that is the common way a clean export gets damaged. Paste runs the same detection as typing unless the destination column is already formatted as text."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/excel-office/",
+        "/topics/excel-office/",
+        "/authors/krishna-pokharel/",
+        "#a-cells-type-is-decided-when-you-press-enter",
+        "#why-the-value-is-already-gone",
+        "#the-three-ways-to-stop-it-happening",
+        "#what-to-do-with-a-column-that-is-already-damaged",
+        "/topics/excel-office/",
+        "/ai-detectors-flagging-human-writing/",
+        "/automations-failing-silently/",
+        "/excel-file-size-too-large/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fexcel-changing-numbers-into-dates%2F&t=Excel%20keeps%20changing%20my%20numbers%20into%20dates",
+        "/authors/krishna-pokharel/",
+        "/excel-file-size-too-large/",
+        "/excel-file-size-too-large/",
+        "/dns-propagation-explained/",
+        "/topics/excel-office/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/excel-file-size-too-large/",
+      "status": 200,
+      "title": "Why your Excel file is so large | A2Z Skills",
+      "title_length": 44,
+      "h1": ["Why your Excel file is so large"],
+      "descriptions": [
+        "A sheet with a few thousand rows should not be forty megabytes. Rename the file to .zip and Excel will show you exactly which part is the problem."
+      ],
+      "canonical": ["https://a2zskillsewa.com/excel-file-size-too-large/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2639,
+      "images": [
+        {
+          "src": "/authors/krishna-pokharel.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/krishna-pokharel.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/excel-file-size-too-large/#article",
+          "headline": "Why your Excel file is so large",
+          "description": "A sheet with a few thousand rows should not be forty megabytes. Rename the file to .zip and Excel will show you exactly which part is the problem.",
+          "image": "https://a2zskillsewa.com/og/excel-file-size-too-large.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/excel-file-size-too-large/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Krishna Pokharel",
+            "url": "https://a2zskillsewa.com/authors/krishna-pokharel/",
+            "sameAs": []
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "excel, performance, file-size",
+          "articleSection": "Excel & Office"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Excel & Office",
+              "item": "https://a2zskillsewa.com/topics/excel-office/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Why your Excel file is so large",
+              "item": "https://a2zskillsewa.com/excel-file-size-too-large/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/excel-file-size-too-large/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is it safe to rename an xlsx file to zip?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "On a copy, yes. The format is a zip archive, so the rename changes nothing about the contents. Keep the original and open only the copy."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the used range and why does it matter?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It is the rectangle Excel believes your data occupies, from A1 to the furthest cell that ever held content or formatting. Excel saves and recalculates across it, even where the cells are now empty."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does saving as .xlsb actually help?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It usually makes the file smaller and faster to open, because it stores a binary form rather than compressed XML. It does not fix the underlying cause, and some tools cannot read it."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/excel-office/",
+        "/topics/excel-office/",
+        "/authors/krishna-pokharel/",
+        "#open-the-file-and-look",
+        "#the-used-range-is-bigger-than-the-data",
+        "#formatting-applied-to-whole-columns",
+        "#images-and-pivot-caches",
+        "/topics/excel-office/",
+        "/excel-changing-numbers-into-dates/",
+        "/deleting-files-not-freeing-disk-space/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fexcel-file-size-too-large%2F&t=Why%20your%20Excel%20file%20is%20so%20large",
+        "/authors/krishna-pokharel/",
+        "/excel-changing-numbers-into-dates/",
+        "/phone-slows-down-gets-older/",
+        "/phone-slows-down-gets-older/",
+        "/excel-changing-numbers-into-dates/",
+        "/topics/excel-office/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/phone-slows-down-gets-older/",
+      "status": 200,
+      "title": "Why a phone slows down as it gets older | A2Z Skills",
+      "title_length": 52,
+      "h1": ["Why a phone slows down as it gets older"],
+      "descriptions": [
+        "The processor has not worn out. Three other things change with age, and two of them you can reverse in an afternoon without buying anything."
+      ],
+      "canonical": ["https://a2zskillsewa.com/phone-slows-down-gets-older/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2600,
+      "images": [
+        {
+          "src": "/authors/krishna-pokharel.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/krishna-pokharel.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/phone-slows-down-gets-older/#article",
+          "headline": "Why a phone slows down as it gets older",
+          "description": "The processor has not worn out. Three other things change with age, and two of them you can reverse in an afternoon without buying anything.",
+          "image": "https://a2zskillsewa.com/og/phone-slows-down-gets-older.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/phone-slows-down-gets-older/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Krishna Pokharel",
+            "url": "https://a2zskillsewa.com/authors/krishna-pokharel/",
+            "sameAs": []
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "android, iphone, performance",
+          "articleSection": "Phones"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Phones",
+              "item": "https://a2zskillsewa.com/topics/phones/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Why a phone slows down as it gets older",
+              "item": "https://a2zskillsewa.com/phone-slows-down-gets-older/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/phone-slows-down-gets-older/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does replacing the battery actually make an old phone faster?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "If the phone was throttling because of a worn battery, yes, and noticeably. If it was slow because storage is full, a new battery changes nothing. Check which one you have before paying for a battery."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How full is too full for phone storage?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Trouble usually starts in the last ten to fifteen percent. Flash storage needs free blocks to write efficiently, and a nearly full drive spends its time shuffling data to make room."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Will a factory reset fix it?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It fixes the software half and does nothing for the battery or the physical storage. Try freeing space first, because it is reversible and a reset is not."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/phones/",
+        "/topics/phones/",
+        "/authors/krishna-pokharel/",
+        "#the-storage-fills-and-full-storage-is-slow-storage",
+        "#the-battery-ages-and-the-phone-protects-itself",
+        "#the-software-got-heavier-and-the-hardware-did-not",
+        "#what-to-do-about-it",
+        "/topics/phones/",
+        "/phone-storage-full-after-deleting-photos/",
+        "/windows-restart-finish-installing-updates/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fphone-slows-down-gets-older%2F&t=Why%20a%20phone%20slows%20down%20as%20it%20gets%20older",
+        "/authors/krishna-pokharel/",
+        "/phone-storage-full-after-deleting-photos/",
+        "/excel-file-size-too-large/",
+        "/phone-storage-full-after-deleting-photos/",
+        "/excel-file-size-too-large/",
+        "/topics/phones/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/",
+      "status": 200,
+      "title": "Phone storage still full after deleting photos | A2Z Skills",
+      "title_length": 59,
+      "h1": ["Phone storage still full after deleting photos"],
+      "descriptions": [
+        "You deleted hundreds of photos and the storage bar barely moved. On both iPhone and Android, three separate copies have to go, not one."
+      ],
+      "canonical": ["https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2639,
+      "images": [
+        {
+          "src": "/authors/krishna-pokharel.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/krishna-pokharel.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/#article",
+          "headline": "Phone storage still full after deleting photos",
+          "description": "You deleted hundreds of photos and the storage bar barely moved. On both iPhone and Android, three separate copies have to go, not one.",
+          "image": "https://a2zskillsewa.com/og/phone-storage-full-after-deleting-photos.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Krishna Pokharel",
+            "url": "https://a2zskillsewa.com/authors/krishna-pokharel/",
+            "sameAs": []
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "storage, android, iphone, photos",
+          "articleSection": "Phones"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Phones",
+              "item": "https://a2zskillsewa.com/topics/phones/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Phone storage still full after deleting photos",
+              "item": "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How long does a deleted photo stay in the recently deleted album?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "At the time of writing it is 30 days on iPhone and 60 days in Google Photos. Both count from the deletion, and both empty on their own if you leave them alone."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Will deleting photos on my phone delete them from the cloud?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "If sync is on, yes, and that is the point people get caught by. The deletion travels in both directions, so clear your own backup before you clear the phone."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why does the photo app itself take gigabytes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Thumbnails and preview renders. The app rebuilds them on demand, so clearing its cache frees space immediately and costs you a slower first scroll afterwards."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/phones/",
+        "/topics/phones/",
+        "/authors/krishna-pokharel/",
+        "#the-first-copy-goes-to-a-holding-album",
+        "#the-second-copy-is-the-apps-own-cache",
+        "#the-third-copy-belongs-to-the-cloud",
+        "#what-to-expect-once-all-three-are-clear",
+        "/topics/phones/",
+        "/deleting-files-not-freeing-disk-space/",
+        "/dns-propagation-explained/",
+        "/phone-slows-down-gets-older/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fphone-storage-full-after-deleting-photos%2F&t=Phone%20storage%20still%20full%20after%20deleting%20photos",
+        "/authors/krishna-pokharel/",
+        "/phone-slows-down-gets-older/",
+        "/deleting-files-not-freeing-disk-space/",
+        "/self-host-n8n-coolify/",
+        "/phone-slows-down-gets-older/",
+        "/topics/phones/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+      "status": 200,
+      "title": "Self-host n8n on Coolify | A2Z Skills",
+      "title_length": 37,
+      "h1": ["Self-host n8n on Coolify"],
+      "descriptions": [
+        "Coolify deploys n8n in a click, then three things fight you: the domain, the credentials API and the email node. Here is each one, with the fix."
+      ],
+      "canonical": ["https://a2zskillsewa.com/self-host-n8n-coolify/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 3244,
+      "images": [
+        {
+          "src": "/authors/ronit-karki.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/ronit-karki.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/self-host-n8n-coolify/#article",
+          "headline": "Self-host n8n on Coolify",
+          "description": "Coolify deploys n8n in a click, then three things fight you: the domain, the credentials API and the email node. Here is each one, with the fix.",
+          "image": "https://a2zskillsewa.com/og/self-host-n8n-coolify.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/self-host-n8n-coolify/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Ronit Karki",
+            "url": "https://a2zskillsewa.com/authors/ronit-karki/",
+            "sameAs": []
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "n8n, coolify, self-hosting, deployment",
+          "articleSection": "Automation"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Automation",
+              "item": "https://a2zskillsewa.com/topics/automation/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Self-host n8n on Coolify",
+              "item": "https://a2zskillsewa.com/self-host-n8n-coolify/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/self-host-n8n-coolify/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How much memory does n8n use on a small server?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Around 550 MB resident with the task runners enabled, measured on an idle instance with no workflows. On a 12 GB box that is comfortable; on a 1 GB box it is not."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I import workflows without using the editor?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. POST /api/v1/workflows with an API key accepts name, nodes, connections and settings. It rejects anything else in the payload, including the active flag, so activate separately."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why does my imported workflow refuse to activate?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Usually a node that imported cleanly but has the wrong parameter names for its version. n8n accepts the JSON and only complains when you publish, with a message naming the node but not the field."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does the free Coolify one-click include a database?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The n8n template runs on SQLite by default, which is fine for a few workflows. Move to the Postgres variant before you depend on it for anything with volume."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/automation/",
+        "/topics/automation/",
+        "/authors/ronit-karki/",
+        "#deploy-the-service",
+        "#set-the-domain-the-way-that-actually-works",
+        "#create-the-owner-account-without-the-browser",
+        "#import-workflows-from-files",
+        "#what-this-is-good-for",
+        "/topics/automation/",
+        "/cloudflare-workers-custom-domain-not-working/",
+        "/automations-failing-silently/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fself-host-n8n-coolify%2F&t=Self-host%20n8n%20on%20Coolify",
+        "/authors/ronit-karki/",
+        "/automations-failing-silently/",
+        "/cloudflare-workers-custom-domain-not-working/",
+        "/windows-restart-finish-installing-updates/",
+        "/phone-storage-full-after-deleting-photos/",
+        "/topics/automation/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/windows-restart-finish-installing-updates/",
+      "status": 200,
+      "title": "Why Windows has to restart to finish an update | A2Z Skills",
+      "title_length": 59,
+      "h1": ["Why Windows has to restart to finish an update"],
+      "descriptions": [
+        "Windows cannot overwrite a file that something is using, so updates are staged first and applied in the short window when almost nothing is running."
+      ],
+      "canonical": ["https://a2zskillsewa.com/windows-restart-finish-installing-updates/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 2607,
+      "images": [
+        {
+          "src": "/authors/devchandra-shrestha.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/devchandra-shrestha.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/windows-restart-finish-installing-updates/#article",
+          "headline": "Why Windows has to restart to finish an update",
+          "description": "Windows cannot overwrite a file that something is using, so updates are staged first and applied in the short window when almost nothing is running.",
+          "image": "https://a2zskillsewa.com/og/windows-restart-finish-installing-updates.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/windows-restart-finish-installing-updates/"
+          },
+          "datePublished": "2026-10-26T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Devchandra Shrestha",
+            "url": "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+            "sameAs": ["https://github.com/DevChandraShrestha"]
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "windows, windows-update",
+          "articleSection": "Windows & Mac"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Windows & Mac",
+              "item": "https://a2zskillsewa.com/topics/windows-mac/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Why Windows has to restart to finish an update",
+              "item": "https://a2zskillsewa.com/windows-restart-finish-installing-updates/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/windows-restart-finish-installing-updates/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why does the restart take so long when the download finished hours ago?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because the download was never the slow part. The restart is when the staged files are actually swapped in, and that work is disk-bound and cannot be done while the old files are in use."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to force a shutdown during the update screen?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. That is the one moment when system files are half replaced, and interrupting it is the usual way people end up needing recovery media."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why do some updates install without a restart?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because nothing they touch is in use. An app update, a definition update or a driver that is not loaded can all be replaced live. Some editions can also patch certain components without rebooting."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/windows-mac/",
+        "/authors/devchandra-shrestha/",
+        "#windows-will-not-let-go-of-a-file-in-use",
+        "#so-the-work-is-split-in-two",
+        "#why-the-restart-itself-is-slow",
+        "#what-this-means-in-practice",
+        "/topics/windows-mac/",
+        "/deleting-files-not-freeing-disk-space/",
+        "/phone-slows-down-gets-older/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fwindows-restart-finish-installing-updates%2F&t=Why%20Windows%20has%20to%20restart%20to%20finish%20an%20update",
+        "/authors/devchandra-shrestha/",
+        "/deleting-files-not-freeing-disk-space/",
+        "/cloudflare-workers-custom-domain-not-working/",
+        "/self-host-n8n-coolify/",
+        "/topics/windows-mac/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/",
+      "status": 200,
+      "title": "Cloudflare Workers custom domain not working | A2Z Skills",
+      "title_length": 57,
+      "h1": ["Cloudflare Workers custom domain not working"],
+      "descriptions": [
+        "Four things block a Workers custom domain, and none of them says so plainly. Here is each error as it appears, and what it actually means."
+      ],
+      "canonical": [
+        "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/"
+      ],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 3592,
+      "images": [
+        {
+          "src": "/authors/devchandra-shrestha.svg",
+          "alt": "",
+          "width": "28",
+          "height": "28",
+          "loading": null
+        },
+        {
+          "src": "/authors/devchandra-shrestha.svg",
+          "alt": "",
+          "width": "56",
+          "height": "56",
+          "loading": "lazy"
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/#article",
+          "headline": "Cloudflare Workers custom domain not working",
+          "description": "Four things block a Workers custom domain, and none of them says so plainly. Here is each error as it appears, and what it actually means.",
+          "image": "https://a2zskillsewa.com/og/cloudflare-workers-custom-domain-not-working.png",
+          "inLanguage": "en",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/"
+          },
+          "datePublished": "2026-10-25T00:00:00.000Z",
+          "dateModified": "2026-10-26T00:00:00.000Z",
+          "author": {
+            "@type": "Person",
+            "name": "Devchandra Shrestha",
+            "url": "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+            "sameAs": ["https://github.com/DevChandraShrestha"]
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "keywords": "cloudflare, workers, dns, deployment",
+          "articleSection": "Websites & Hosting"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Websites & Hosting",
+              "item": "https://a2zskillsewa.com/topics/websites-hosting/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Cloudflare Workers custom domain not working",
+              "item": "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Do I have to move my whole domain to Cloudflare just to use a Worker?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "For a custom domain on the apex, yes. The zone has to be on the same Cloudflare account, which means Cloudflare nameservers. If you cannot move the nameservers, a Worker route on a subdomain of a zone you already have there is the way round it."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How long does the zone stay pending after I change nameservers?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Cloudflare rechecks periodically and you can trigger a check from the dashboard. In our experience it is minutes rather than hours, but registrars publish nameserver changes on their own schedule, so plan for it to be slow rather than instant."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is a workers.dev URL safe to leave up once the real domain is live?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It is, as long as it is not indexable. A `_headers` rule matching the workers.dev host with `X-Robots-Tag: noindex` keeps it out of search results so it cannot compete with the real domain for the same content."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why did my first deploy say the Worker had no subdomain?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because the account had never had Workers opened on it. A workers.dev subdomain is created the first time you visit Workers & Pages in the dashboard, or you can set the name directly over the API."
+              }
+            }
+          ],
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/websites-hosting/",
+        "/topics/websites-hosting/",
+        "/authors/devchandra-shrestha/",
+        "#check-the-zone-is-on-the-same-account-first",
+        "#deploy-to-workersdev-while-the-zone-is-pending",
+        "#fix-the-login-error-that-mentions-cookies",
+        "#create-the-workersdev-subdomain-if-the-account-has-never-had-one",
+        "#once-the-zone-is-active-add-the-route-and-redeploy",
+        "#what-to-check-at-the-end",
+        "/topics/websites-hosting/",
+        "/dns-propagation-explained/",
+        "/self-host-n8n-coolify/",
+        "https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fa2zskillsewa.com%2Fcloudflare-workers-custom-domain-not-working%2F&t=Cloudflare%20Workers%20custom%20domain%20not%20working",
+        "/authors/devchandra-shrestha/",
+        "/dns-propagation-explained/",
+        "/self-host-n8n-coolify/",
+        "/windows-restart-finish-installing-updates/",
+        "/topics/websites-hosting/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/ai-tools/",
+      "status": 200,
+      "title": "AI tools, tested on real work | A2Z Skills",
+      "title_length": 42,
+      "h1": ["AI tools, tested on real work"],
+      "descriptions": [
+        "What AI tools actually do when you put real work through them: setup, limits, pricing traps and the tasks each one is genuinely good at."
+      ],
+      "canonical": ["https://a2zskillsewa.com/topics/ai-tools/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1035,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://a2zskillsewa.com/topics/ai-tools/#collection",
+          "name": "AI Tools",
+          "description": "What AI tools actually do when you put real work through them: setup, limits, pricing traps and the tasks each one is genuinely good at.",
+          "url": "https://a2zskillsewa.com/topics/ai-tools/",
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Topics",
+              "item": "https://a2zskillsewa.com/topics/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "AI Tools",
+              "item": "https://a2zskillsewa.com/topics/ai-tools/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/",
+        "/ai-detectors-flagging-human-writing/",
+        "/chatgpt-different-answers-same-question/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/automation/",
+      "status": 200,
+      "title": "Automation that saves real hours | A2Z Skills",
+      "title_length": 45,
+      "h1": ["Automation that saves real hours"],
+      "descriptions": [
+        "n8n, Make, Zapier and scripts: working automations you can import, with the trigger, the error handling and what each run actually costs."
+      ],
+      "canonical": ["https://a2zskillsewa.com/topics/automation/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1035,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://a2zskillsewa.com/topics/automation/#collection",
+          "name": "Automation",
+          "description": "n8n, Make, Zapier and scripts: working automations you can import, with the trigger, the error handling and what each run actually costs.",
+          "url": "https://a2zskillsewa.com/topics/automation/",
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Topics",
+              "item": "https://a2zskillsewa.com/topics/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Automation",
+              "item": "https://a2zskillsewa.com/topics/automation/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/",
+        "/self-host-n8n-coolify/",
+        "/automations-failing-silently/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/excel-office/",
+      "status": 200,
+      "title": "Excel and Office, explained properly | A2Z Skills",
+      "title_length": 49,
+      "h1": ["Excel and Office, explained properly"],
+      "descriptions": [
+        "Formulas that return errors, broken lookups, pivot tables, Word layout and Office install problems, with the file we tested on attached."
+      ],
+      "canonical": ["https://a2zskillsewa.com/topics/excel-office/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1025,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://a2zskillsewa.com/topics/excel-office/#collection",
+          "name": "Excel & Office",
+          "description": "Formulas that return errors, broken lookups, pivot tables, Word layout and Office install problems, with the file we tested on attached.",
+          "url": "https://a2zskillsewa.com/topics/excel-office/",
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Topics",
+              "item": "https://a2zskillsewa.com/topics/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Excel & Office",
+              "item": "https://a2zskillsewa.com/topics/excel-office/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/",
+        "/excel-changing-numbers-into-dates/",
+        "/excel-file-size-too-large/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/phones/",
+      "status": 200,
+      "title": "Android and iPhone fixes | A2Z Skills",
+      "title_length": 37,
+      "h1": ["Android and iPhone fixes"],
+      "descriptions": [
+        "Battery drain, storage, backups, transfers and settings on Android and iPhone, each step tried on a real handset before publishing."
+      ],
+      "canonical": ["https://a2zskillsewa.com/topics/phones/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 998,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://a2zskillsewa.com/topics/phones/#collection",
+          "name": "Phones",
+          "description": "Battery drain, storage, backups, transfers and settings on Android and iPhone, each step tried on a real handset before publishing.",
+          "url": "https://a2zskillsewa.com/topics/phones/",
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Topics",
+              "item": "https://a2zskillsewa.com/topics/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Phones",
+              "item": "https://a2zskillsewa.com/topics/phones/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/",
+        "/phone-slows-down-gets-older/",
+        "/phone-storage-full-after-deleting-photos/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/websites-hosting/",
+      "status": 200,
+      "title": "Websites and hosting without the guesswork | A2Z Skills",
+      "title_length": 55,
+      "h1": ["Websites and hosting without the guesswork"],
+      "descriptions": [
+        "Domains, DNS, hosting, SSL, email and speed: the setup steps in order, with the exact dashboard screens as they looked when tested."
+      ],
+      "canonical": ["https://a2zskillsewa.com/topics/websites-hosting/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1033,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://a2zskillsewa.com/topics/websites-hosting/#collection",
+          "name": "Websites & Hosting",
+          "description": "Domains, DNS, hosting, SSL, email and speed: the setup steps in order, with the exact dashboard screens as they looked when tested.",
+          "url": "https://a2zskillsewa.com/topics/websites-hosting/",
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Topics",
+              "item": "https://a2zskillsewa.com/topics/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Websites & Hosting",
+              "item": "https://a2zskillsewa.com/topics/websites-hosting/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/",
+        "/cloudflare-workers-custom-domain-not-working/",
+        "/dns-propagation-explained/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/windows-mac/",
+      "status": 200,
+      "title": "Windows and Mac fixes that work | A2Z Skills",
+      "title_length": 44,
+      "h1": ["Windows and Mac fixes that work"],
+      "descriptions": [
+        "Desktop fixes tested on real machines: update failures, printers, storage, startup problems and speed, on Windows 11 and macOS."
+      ],
+      "canonical": ["https://a2zskillsewa.com/topics/windows-mac/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1020,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://a2zskillsewa.com/topics/windows-mac/#collection",
+          "name": "Windows & Mac",
+          "description": "Desktop fixes tested on real machines: update failures, printers, storage, startup problems and speed, on Windows 11 and macOS.",
+          "url": "https://a2zskillsewa.com/topics/windows-mac/",
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          },
+          "publisher": {
+            "@id": "https://a2zskillsewa.com/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Topics",
+              "item": "https://a2zskillsewa.com/topics/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Windows & Mac",
+              "item": "https://a2zskillsewa.com/topics/windows-mac/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/topics/",
+        "/deleting-files-not-freeing-disk-space/",
+        "/windows-restart-finish-installing-updates/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+      "status": 200,
+      "title": "Devchandra Shrestha \u2014 Editor, A2Z Skills | A2Z Skills",
+      "title_length": 53,
+      "h1": ["Devchandra Shrestha"],
+      "descriptions": [
+        "Devchandra Shrestha, Editor, A2Z Skills at A2Z Skills. I run A2Z Skills and edit everything that goes out. My own testing is desktop and web: Windows and macO"
+      ],
+      "canonical": ["https://a2zskillsewa.com/authors/devchandra-shrestha/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1260,
+      "images": [
+        {
+          "src": "/authors/devchandra-shrestha.svg",
+          "alt": "",
+          "width": "80",
+          "height": "80",
+          "loading": null
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://a2zskillsewa.com/authors/devchandra-shrestha/#profile",
+          "mainEntity": {
+            "@type": "Person",
+            "name": "Devchandra Shrestha",
+            "jobTitle": "Editor, A2Z Skills",
+            "description": "I run A2Z Skills and edit everything that goes out. My own testing is desktop and web: Windows and macOS repair, domains, DNS and hosting. If a step in one of our guides does not work on your machine, I am the one who reads the email and fixes the post.",
+            "image": "/authors/devchandra-shrestha.svg",
+            "url": "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+            "worksFor": {
+              "@id": "https://a2zskillsewa.com/#organization"
+            },
+            "sameAs": ["https://github.com/DevChandraShrestha"]
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Devchandra Shrestha",
+              "item": "https://a2zskillsewa.com/authors/devchandra-shrestha/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "https://github.com/DevChandraShrestha",
+        "/deleting-files-not-freeing-disk-space/",
+        "/dns-propagation-explained/",
+        "/windows-restart-finish-installing-updates/",
+        "/cloudflare-workers-custom-domain-not-working/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/krishna-pokharel/",
+      "status": 200,
+      "title": "Krishna Pokharel \u2014 Office and mobile tester, A2Z Skills",
+      "title_length": 55,
+      "h1": ["Krishna Pokharel"],
+      "descriptions": [
+        "Krishna Pokharel, Office and mobile tester, A2Z Skills at A2Z Skills. I test the Excel, Word and phone guides on A2Z Skills. That means reproducing the formul"
+      ],
+      "canonical": ["https://a2zskillsewa.com/authors/krishna-pokharel/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1241,
+      "images": [
+        {
+          "src": "/authors/krishna-pokharel.svg",
+          "alt": "",
+          "width": "80",
+          "height": "80",
+          "loading": null
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://a2zskillsewa.com/authors/krishna-pokharel/#profile",
+          "mainEntity": {
+            "@type": "Person",
+            "name": "Krishna Pokharel",
+            "jobTitle": "Office and mobile tester, A2Z Skills",
+            "description": "I test the Excel, Word and phone guides on A2Z Skills. That means reproducing the formula that returns an error or the setting that moved in the last Android release, on a real machine and a real handset, and writing down the version numbers it happened on.",
+            "image": "/authors/krishna-pokharel.svg",
+            "url": "https://a2zskillsewa.com/authors/krishna-pokharel/",
+            "worksFor": {
+              "@id": "https://a2zskillsewa.com/#organization"
+            }
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Krishna Pokharel",
+              "item": "https://a2zskillsewa.com/authors/krishna-pokharel/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/excel-changing-numbers-into-dates/",
+        "/excel-file-size-too-large/",
+        "/phone-slows-down-gets-older/",
+        "/phone-storage-full-after-deleting-photos/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/ronit-karki/",
+      "status": 200,
+      "title": "Ronit Karki \u2014 AI and automation tester, A2Z Skills",
+      "title_length": 50,
+      "h1": ["Ronit Karki"],
+      "descriptions": [
+        "Ronit Karki, AI and automation tester, A2Z Skills at A2Z Skills. I put real work through AI tools and automation platforms for A2Z Skills, then report what ca"
+      ],
+      "canonical": ["https://a2zskillsewa.com/authors/ronit-karki/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1244,
+      "images": [
+        {
+          "src": "/authors/ronit-karki.svg",
+          "alt": "",
+          "width": "80",
+          "height": "80",
+          "loading": null
+        }
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://a2zskillsewa.com/authors/ronit-karki/#profile",
+          "mainEntity": {
+            "@type": "Person",
+            "name": "Ronit Karki",
+            "jobTitle": "AI and automation tester, A2Z Skills",
+            "description": "I put real work through AI tools and automation platforms for A2Z Skills, then report what came back rather than what the marketing page promised. Every workflow I publish is one I have run end to end, including the part where it fails.",
+            "image": "/authors/ronit-karki.svg",
+            "url": "https://a2zskillsewa.com/authors/ronit-karki/",
+            "worksFor": {
+              "@id": "https://a2zskillsewa.com/#organization"
+            }
+          },
+          "isPartOf": {
+            "@id": "https://a2zskillsewa.com/#website"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://a2zskillsewa.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Ronit Karki",
+              "item": "https://a2zskillsewa.com/authors/ronit-karki/"
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/ai-detectors-flagging-human-writing/",
+        "/automations-failing-silently/",
+        "/chatgpt-different-answers-same-question/",
+        "/self-host-n8n-coolify/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/about/",
+      "status": 200,
+      "title": "About A2Z Skills | A2Z Skills",
+      "title_length": 29,
+      "h1": ["About A2Z Skills"],
+      "descriptions": [
+        "Who runs A2Z Skills, how guides are tested on real machines, and why every post lists the exact software versions it was tried on."
+      ],
+      "canonical": ["https://a2zskillsewa.com/about/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1084,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/authors/devchandra-shrestha/",
+        "/authors/krishna-pokharel/",
+        "/authors/ronit-karki/",
+        "mailto:editor@a2zskillsewa.com",
+        "/editorial-policy/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/affiliate-disclosure/",
+      "status": 200,
+      "title": "Affiliate disclosure | A2Z Skills",
+      "title_length": 33,
+      "h1": ["Affiliate disclosure"],
+      "descriptions": [
+        "A2Z Skills earns commission on some links. Which links, how the money works, and the rules that stop it affecting what we recommend."
+      ],
+      "canonical": ["https://a2zskillsewa.com/affiliate-disclosure/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1008,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "mailto:editor@a2zskillsewa.com",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/contact/",
+      "status": 200,
+      "title": "Contact | A2Z Skills",
+      "title_length": 20,
+      "h1": ["Contact"],
+      "descriptions": [
+        "How to reach A2Z Skills: corrections, questions about a guide, partnership enquiries, and what to include so we can reproduce your problem."
+      ],
+      "canonical": ["https://a2zskillsewa.com/contact/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 865,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "mailto:editor@a2zskillsewa.com",
+        "mailto:hello@a2zskillsewa.com",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/editorial-policy/",
+      "status": 200,
+      "title": "Editorial policy | A2Z Skills",
+      "title_length": 29,
+      "h1": ["Editorial policy"],
+      "descriptions": [
+        "How A2Z Skills tests, reviews, updates and corrects its guides, and the rules on affiliate links, AI assistance and sponsored content."
+      ],
+      "canonical": ["https://a2zskillsewa.com/editorial-policy/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1175,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "/affiliate-disclosure/",
+        "/authors/devchandra-shrestha/",
+        "/authors/krishna-pokharel/",
+        "/authors/ronit-karki/",
+        "/privacy/",
+        "mailto:editor@a2zskillsewa.com",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    },
+    {
+      "url": "https://a2zskillsewa.com/privacy/",
+      "status": 200,
+      "title": "Privacy | A2Z Skills",
+      "title_length": 20,
+      "h1": ["Privacy"],
+      "descriptions": [
+        "What A2Z Skills collects, what it does not, where the newsletter list is stored, and how to exercise your rights over it wherever you live."
+      ],
+      "canonical": ["https://a2zskillsewa.com/privacy/"],
+      "robots": [
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      ],
+      "words": 1571,
+      "images": [],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://a2zskillsewa.com/#website",
+              "name": "A2Z Skills",
+              "alternateName": "A2Z Skills Ewa",
+              "url": "https://a2zskillsewa.com/",
+              "inLanguage": "en",
+              "description": "Tested, step-by-step guides for Windows, Mac, phones, Excel, AI tools, websites and automation. Every fix is tried on a real machine before it is published.",
+              "publisher": {
+                "@id": "https://a2zskillsewa.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://a2zskillsewa.com/search/?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://a2zskillsewa.com/#organization",
+              "name": "AntByte Labs",
+              "url": "https://antbytelabs.com",
+              "logo": "https://a2zskillsewa.com/logo.png",
+              "sameAs": ["https://github.com/AntByteLabs"]
+            }
+          ]
+        }
+      ],
+      "hrefs": [
+        "#main",
+        "/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/search/",
+        "/topics/windows-mac/",
+        "/topics/phones/",
+        "/topics/excel-office/",
+        "/topics/ai-tools/",
+        "/topics/websites-hosting/",
+        "/topics/automation/",
+        "/",
+        "mailto:hello@a2zskillsewa.com",
+        "https://antbytelabs.com",
+        "mailto:hello@a2zskillsewa.com",
+        "/affiliate-disclosure/",
+        "https://antbytelabs.com",
+        "/about/",
+        "/editorial-policy/",
+        "/affiliate-disclosure/",
+        "/privacy/",
+        "/contact/",
+        "/rss.xml"
+      ]
+    }
+  ],
+  "extra_links": [
+    {
+      "url": "https://a2zskillsewa.com/rss.xml",
+      "status": 200
+    },
+    {
+      "url": "https://a2zskillsewa.com/search/",
+      "status": 200
+    }
+  ],
+  "robots": "# A2Z Skills \u2014 https://a2zskillsewa.com\n# Tested guides. Quote them, cite them, link them.\n\nUser-agent: *\nAllow: /\n\n# Nothing worth indexing, and /go/ is affiliate redirects.\nDisallow: /go/\nDisallow: /search/\nDisallow: /api/\nDisallow: /thanks/\n\n# Answer engines are welcome here, explicitly.\nUser-agent: GPTBot\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: OAI-SearchBot\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: ChatGPT-User\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: ClaudeBot\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: Claude-Web\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: anthropic-ai\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: PerplexityBot\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: Perplexity-User\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: Google-Extended\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: Applebot-Extended\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: CCBot\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: Bytespider\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: Amazonbot\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: cohere-ai\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: Meta-ExternalAgent\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: DuckAssistBot\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nUser-agent: YouBot\nAllow: /\nDisallow: /go/\nDisallow: /api/\n\nSitemap: https://a2zskillsewa.com/sitemap-index.xml\n\n# A plain-text map of the site for language models: https://a2zskillsewa.com/llms.txt\n# Every guide in full, one file: https://a2zskillsewa.com/llms-full.txt\n",
+  "problems": []
+}

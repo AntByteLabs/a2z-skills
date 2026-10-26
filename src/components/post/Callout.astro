@@ -1,24 +1,32 @@
 ---
+/**
+ * An aside inside an article: a tip, a warning, a thing not to do.
+ *
+ * The label carries the meaning, in the type's own colour, and the surface is
+ * tinted from the same hue. There is no thick coloured bar down the edge: it
+ * is the house style of every documentation theme, and it leaves the box
+ * itself as undifferentiated grey, which is why these were easy to skip.
+ */
 interface Props {
   type?: 'note' | 'warning' | 'danger' | 'tip';
   title?: string;
 }
 const { type = 'note', title } = Astro.props;
+
 const skin = {
-  note: { border: 'border-brand', label: 'Note' },
-  tip: { border: 'border-good', label: 'Tip' },
-  warning: { border: 'border-warn', label: 'Careful' },
-  danger: { border: 'border-bad', label: 'Do not skip' },
+  note: { tone: 'callout-note', label: 'Note' },
+  tip: { tone: 'callout-tip', label: 'Tip' },
+  warning: { tone: 'callout-warn', label: 'Careful' },
+  danger: { tone: 'callout-danger', label: 'Do not skip' },
 }[type];
 ---
 
-<aside
-  class={`not-prose my-6 rounded-card border border-l-4 border-rule ${skin.border} bg-paper-sunk p-4`}
->
-  <p class="text-xs font-semibold uppercase tracking-wide text-ink-soft">
+<aside class={`not-prose callout ${skin.tone}`}>
+  <p class="callout-label">
+    <span class="callout-dot" aria-hidden="true"></span>
     {title ?? skin.label}
   </p>
-  <div class="prose prose-sm mt-1 max-w-none dark:prose-invert">
+  <div class="callout-body prose prose-sm max-w-none dark:prose-invert">
     <slot />
   </div>
 </aside>
