@@ -3,6 +3,6 @@
   "role": "Editor, A2Z Skills",
   "bio": "I run A2Z Skills and edit everything that goes out. My own testing is desktop and web: Windows and macOS repair, domains, DNS and hosting. If a step in one of our guides does not work on your machine, I am the one who reads the email and fixes the post.",
   "avatar": "/authors/devchandra-shrestha.svg",
-  "sameAs": [],
+  "sameAs": ["https://github.com/DevChandraShrestha"],
   "email": "editor@a2zskillsewa.com"
 }

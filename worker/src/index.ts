@@ -72,6 +72,15 @@ const tooManyRequests = async (
     )
       .bind(key, windowStart)
       .first<{ hits: number }>();
+    // Nothing else prunes this table, and a row per address per hour adds up.
+    // Sweeping on roughly one request in fifty keeps it to the live windows
+    // without a scheduled job or a second round trip on the hot path.
+    if (Math.random() < 0.02) {
+      await env.DB.prepare(`DELETE FROM rate_limit WHERE window_start < ?1`)
+        .bind(windowStart - WINDOW_SECONDS * 2)
+        .run();
+    }
+
     return (row?.hits ?? 0) > limit;
   } catch (error) {
     console.error('rate limit check failed', error);
