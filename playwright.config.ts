@@ -17,7 +17,7 @@ export default defineConfig({
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
   ],
   webServer: {
-    command: 'npx http-server dist -p 4321 -s --silent',
+    command: 'wrangler dev --local --ip 127.0.0.1 --port 4321',
     url: 'http://localhost:4321',
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,

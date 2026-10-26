@@ -26,7 +26,8 @@ npm run check
 
 The full check runs lint/formatting, Worker types, focused regression tests,
 content validation, the Astro build, Pagefind, asset/transfer budgets, a crawl
-of every built HTML page, and mobile/desktop browser tests.
+of every built HTML page, and mobile/desktop browser tests. Browser tests use the local Worker so production headers, including CSP,
+are exercised. Form submissions in those tests are mocked.
 
 npm run build includes content validation itself. Cloudflare Workers Builds
 watches main and uses that command, so GitHub API commits pass through the

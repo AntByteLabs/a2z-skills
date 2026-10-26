@@ -5,6 +5,7 @@ Date: 26 October 2026. Branch: seo/research-plan-20261026.
 ## Implemented
 
 - [x] Search initialises correctly, preserves the query and returns relevant guides.
+- [x] Production CSP permits Pagefind WebAssembly; browser tests run against the local Worker and its actual headers.
 - [x] Pagefind indexes the 12 articles instead of utility pages and navigation.
 - [x] The real build command validates content before Astro runs.
 - [x] MCP create, update and publish paths check content before committing.
@@ -34,7 +35,7 @@ Date: 26 October 2026. Branch: seo/research-plan-20261026.
 
 The full local check passed: lint/formatting, Worker types, content validation,
 Astro build/check, asset/transfer budgets, internal links and browser tests.
-There were 100 passing browser tests and two intentionally skipped desktop
+There were 102 passing browser tests and two intentionally skipped desktop
 touch-target tests. Eight focused tests cover publication checks, valid edits,
 directory-index links and modification dates.
 

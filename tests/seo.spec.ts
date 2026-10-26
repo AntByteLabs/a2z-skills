@@ -79,3 +79,16 @@ test('the homepage title contains the brand once', async ({ page }) => {
   await page.goto('/');
   expect((await page.title()).match(/A2Z Skills/g)).toHaveLength(1);
 });
+
+test('search runs with the deployed content security policy', async ({ page }) => {
+  const response = await page.goto('/search/?q=n8n');
+  const policy = response?.headers()['content-security-policy'] ?? '';
+  expect(policy).toContain("'wasm-unsafe-eval'");
+  expect(policy).not.toMatch(/(?:^|\s)'unsafe-eval'(?:\s|;)/);
+  await expect(
+    page
+      .locator('.pagefind-ui__result-link')
+      .filter({ hasText: 'Self-host n8n on Coolify' })
+      .first(),
+  ).toBeVisible();
+});
