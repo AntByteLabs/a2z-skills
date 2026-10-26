@@ -1,0 +1,80 @@
+---
+title: 'Why your Excel file is so large'
+description: 'A sheet with a few thousand rows should not be forty megabytes. Rename the file to .zip and Excel will show you exactly which part is the problem.'
+pillar: 'excel-office'
+type: 'explainer'
+tags:
+  - 'excel'
+  - 'performance'
+  - 'file-size'
+author: 'krishna-pokharel'
+publishedAt: '2026-10-26'
+quickAnswer: 'An .xlsx file is a zip archive of XML parts, so you can rename a copy to .zip and open it to see which part is large. The usual causes are a used range far bigger than the data, formatting applied to whole columns, uncompressed images, and pivot caches holding a second copy of the source.'
+faq:
+  - q: 'Is it safe to rename an xlsx file to zip?'
+    a: 'On a copy, yes. The format is a zip archive, so the rename changes nothing about the contents. Keep the original and open only the copy.'
+  - q: 'What is the used range and why does it matter?'
+    a: 'It is the rectangle Excel believes your data occupies, from A1 to the furthest cell that ever held content or formatting. Excel saves and recalculates across it, even where the cells are now empty.'
+  - q: 'Does saving as .xlsb actually help?'
+    a: 'It usually makes the file smaller and faster to open, because it stores a binary form rather than compressed XML. It does not fix the underlying cause, and some tools cannot read it.'
+draft: false
+---
+
+A workbook with three thousand rows of numbers has no business being forty
+megabytes, and Excel will not tell you why it is. It will, however, let you look
+inside. More spreadsheet guides are in [Excel & Office](/topics/excel-office/).
+For another case of Excel storing something other than what you typed, read
+[Excel keeps changing my numbers into dates](/excel-changing-numbers-into-dates/),
+and for the same question about a disk rather than a file,
+[deleting files did not free any disk space](/deleting-files-not-freeing-disk-space/).
+
+## Open the file and look
+
+An `.xlsx` is a zip archive. Copy the file, rename the copy to `.zip`, and open
+it. Inside is a folder of XML parts: one per worksheet, one for the shared
+strings, a media folder if there are images, and a folder per pivot cache.
+
+Sort that listing by size and the answer is usually obvious within seconds. A
+single sheet XML of thirty megabytes means the problem is in that sheet. A media
+folder of thirty megabytes means it is the pictures. This takes less time than
+any guesswork and it tells you which of the causes below you actually have.
+
+## The used range is bigger than the data
+
+Excel remembers the furthest cell that has ever held content or formatting, and
+treats everything up to it as part of the sheet. Delete the contents of a
+million rows and the used range does not shrink, because deleting the values did
+not remove the cells' formatting records.
+
+Press `Ctrl+End`. If it lands far below or to the right of your real data, that
+is your bloat. The repair is to select the empty rows and columns beyond the
+data, delete the rows and columns themselves rather than their contents, then
+save and reopen so the range is recalculated.
+
+## Formatting applied to whole columns
+
+Clicking a column header and applying a fill, border or number format tells
+Excel about a million cells rather than the few hundred that hold data. Done to
+a dozen columns, across several sheets, it accounts for a surprising amount of a
+file on its own.
+
+Conditional formatting multiplies the same way, particularly when rules have
+been copied and pasted until the same range carries dozens of overlapping ones.
+
+<Callout type="tip" title="Check the rules count">
+  Conditional Formatting then Manage Rules, with the scope set to the whole sheet, shows the
+  real number. Workbooks that have been edited by several people for a few years routinely
+  hold hundreds of rules nobody intended.
+</Callout>
+
+## Images and pivot caches
+
+Images are stored at whatever resolution they were pasted at. A screenshot
+dropped in from a phone can be several megabytes, and nothing compresses it
+unless you ask.
+
+A pivot table keeps its own cached copy of the source data so it can be
+re-pivoted without rereading the sheet. That cache is a second copy of the data,
+and if several pivots were built separately rather than sharing one, you may be
+carrying several. Setting a pivot not to save its source data with the file
+shrinks it, at the cost of needing a refresh on open.

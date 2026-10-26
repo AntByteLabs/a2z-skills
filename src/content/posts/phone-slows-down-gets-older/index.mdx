@@ -1,0 +1,78 @@
+---
+title: 'Why a phone slows down as it gets older'
+description: 'The processor has not worn out. Three other things change with age, and two of them you can reverse in an afternoon without buying anything.'
+pillar: 'phones'
+type: 'explainer'
+tags:
+  - 'android'
+  - 'iphone'
+  - 'performance'
+author: 'krishna-pokharel'
+publishedAt: '2026-10-26'
+quickAnswer: 'A three-year-old phone has the same processor it shipped with. What changed is the storage, which gets slower as it fills; the battery, which can no longer supply peak current and makes the phone throttle itself; and the software, which grew heavier with each update.'
+faq:
+  - q: 'Does replacing the battery actually make an old phone faster?'
+    a: 'If the phone was throttling because of a worn battery, yes, and noticeably. If it was slow because storage is full, a new battery changes nothing. Check which one you have before paying for a battery.'
+  - q: 'How full is too full for phone storage?'
+    a: 'Trouble usually starts in the last ten to fifteen percent. Flash storage needs free blocks to write efficiently, and a nearly full drive spends its time shuffling data to make room.'
+  - q: 'Will a factory reset fix it?'
+    a: 'It fixes the software half and does nothing for the battery or the physical storage. Try freeing space first, because it is reversible and a reset is not.'
+draft: false
+---
+
+A phone that felt instant in its first year feels tired in its third, and the
+processor in it is exactly the same one. More handset guides are in
+[Phones](/topics/phones/). The storage half of this is covered in
+[phone storage still full after deleting photos](/phone-storage-full-after-deleting-photos/),
+and the desktop version of the same ageing question is in
+[why Windows has to restart to finish an update](/windows-restart-finish-installing-updates/).
+
+## The storage fills, and full storage is slow storage
+
+Phones use flash memory, which cannot overwrite a block in place. To write to a
+block that holds old data, the controller has to erase it first, and erasing
+happens in larger units than writing. While there is plenty of free space, the
+controller writes to blocks that are already clear and tidies up later, when the
+phone is idle.
+
+As the drive fills, that spare room disappears. The controller starts having to
+clear space before it can write, in the middle of whatever you are doing. This
+is why a phone at 95% full feels slower at everything, including things that
+seem unrelated to storage, and why freeing several gigabytes often produces an
+immediate improvement.
+
+## The battery ages, and the phone protects itself
+
+A lithium battery loses the ability to deliver peak current long before it loses
+the ability to hold charge. When a processor suddenly demands a burst of power,
+an aged battery's voltage sags, and if it sags far enough the phone shuts down
+rather than corrupt anything.
+
+To avoid that, phones reduce peak performance as the battery degrades. Apple
+added this after a run of unexpected shutdowns, disclosed it following
+considerable criticism for not saying so earlier, and now reports battery health
+and lets you see whether performance management is active. Android makers handle
+it with less visibility but face the same physics.
+
+<Callout type="tip" title="Check which one you have">
+  Battery health is reported in settings on both platforms, and so is free storage. Reading
+  those two numbers takes a minute and tells you whether to spend money on a battery or an
+  afternoon deleting things.
+</Callout>
+
+## The software got heavier and the hardware did not
+
+Each OS release is built against the phones being sold that year. Features are
+added, background services multiply, and the apps you use ship bigger updates
+targeting newer devices. None of it is dramatic on its own. Three years of it
+compounds.
+
+This is the part you cannot undo, short of staying on an old release, which
+costs you security updates and is a bad trade.
+
+## What to do about it
+
+Free storage first, because it is free, reversible and frequently the whole
+problem. Check battery health second, because a replacement is cheap next to a
+new phone and fixes throttling completely. Treat the software weight as the
+reason to eventually replace the handset, rather than as something to fight.

@@ -1,0 +1,78 @@
+---
+title: 'Why Windows has to restart to finish an update'
+description: 'Windows cannot overwrite a file that something is using, so updates are staged first and applied in the short window when almost nothing is running.'
+pillar: 'windows-mac'
+type: 'explainer'
+tags:
+  - 'windows'
+  - 'windows-update'
+author: 'devchandra-shrestha'
+publishedAt: '2026-10-26'
+quickAnswer: 'Windows locks a file while a program has it open, so an update cannot replace a system file that is in use. The download and staging happen while you work, and the replacement happens during the restart, in the gap after your programs have closed and before the desktop starts.'
+faq:
+  - q: 'Why does the restart take so long when the download finished hours ago?'
+    a: 'Because the download was never the slow part. The restart is when the staged files are actually swapped in, and that work is disk-bound and cannot be done while the old files are in use.'
+  - q: 'Is it safe to force a shutdown during the update screen?'
+    a: 'No. That is the one moment when system files are half replaced, and interrupting it is the usual way people end up needing recovery media.'
+  - q: 'Why do some updates install without a restart?'
+    a: 'Because nothing they touch is in use. An app update, a definition update or a driver that is not loaded can all be replaced live. Some editions can also patch certain components without rebooting.'
+draft: false
+---
+
+The download finished an hour ago and Windows still wants to restart. That is
+not Windows being slow or obstructive, and the reason is a design decision that
+goes back decades. More desktop guides are in
+[Windows & Mac](/topics/windows-mac/). For another case where the system holds
+on to something you thought was dealt with, read
+[deleting files did not free any disk space](/deleting-files-not-freeing-disk-space/),
+and for the same wearing-out question on a handset,
+[why a phone slows down as it gets older](/phone-slows-down-gets-older/).
+
+## Windows will not let go of a file in use
+
+When a program opens a file, Windows locks it. Nothing else may rename, replace
+or delete it until that handle is released. This is a deliberate difference from
+Unix-like systems, where a file can be unlinked while a process still holds it
+open, and the old contents survive until that process finishes with them.
+
+The consequence is simple and inconvenient. If an update needs to replace a
+system library, and something is using that library, the replacement cannot
+happen. On a running desktop almost every core system file is in use by
+something, often by several things at once.
+
+## So the work is split in two
+
+The part that can happen while you work does. Windows downloads the packages,
+verifies them, and stages the new files alongside the old ones. None of this
+touches anything in use, which is why your machine keeps running normally and
+why the progress bar reaching 100% changes nothing you can see.
+
+The part that cannot wait for a quiet moment gets one made for it. During a
+restart there is a window after your programs have closed and before the desktop
+and its services start, when very little holds a lock on anything. The component
+that applies updates runs in that window and swaps the staged files in.
+
+<Callout type="danger" title="This is the one time not to pull the plug">
+  The update screen is the moment when some files are new and some are still old. A forced
+  power-off part way through is the common route to a machine that needs recovery media to
+  boot.
+</Callout>
+
+## Why the restart itself is slow
+
+Nothing is being downloaded during that screen. The time goes on file operations:
+replacing components, updating the registry, and rebuilding caches that depend on
+what just changed. That work is limited by your disk, which is why the same
+update finishes in a minute on an SSD and takes far longer on a mechanical drive.
+
+It is also why the percentage figure moves unevenly. It tracks stages of work,
+not bytes, and some stages are much larger than others.
+
+## What this means in practice
+
+Restart on your own schedule rather than waiting to be told. Once the staging is
+done, the pending work is sitting on disk and the only thing between you and a
+finished update is a restart you control.
+
+If a machine is slow to come back repeatedly, the disk is usually the thing to
+look at rather than the update.

@@ -1,0 +1,81 @@
+---
+title: 'Why ChatGPT gives a different answer each time'
+description: 'The same question twice gives two answers, and that is the design rather than a fault. Four separate things make it happen, and only one is random.'
+pillar: 'ai-tools'
+type: 'explainer'
+tags:
+  - 'chatgpt'
+  - 'ai-tools'
+  - 'llm'
+author: 'ronit-karki'
+publishedAt: '2026-10-26'
+quickAnswer: 'A language model picks each word by sampling from a ranked list of candidates rather than always taking the top one, so two runs diverge as soon as one word differs. The conversation so far, the hidden system instructions and the model version all change the answer too, and none of those are random.'
+faq:
+  - q: 'Can I make the answers repeatable?'
+    a: 'Through the API you can lower the temperature and fix a seed, which gets you close. Even then the output is not guaranteed identical, because the arithmetic on the server does not round the same way every run.'
+  - q: 'Does a longer conversation make answers worse?'
+    a: 'It makes them different, and sometimes worse. Everything earlier in the thread is read again before each reply, so an early mistake or a stray instruction keeps influencing the output. Starting a fresh chat is the fix.'
+  - q: 'Why does the same prompt behave differently in an app than on the website?'
+    a: 'Because each product wraps your prompt in its own hidden instructions, and those differ. You are not sending the same input, even though you typed the same words.'
+draft: false
+---
+
+Ask the same question twice and you get two answers. People read that as the
+tool being unreliable, when it is closer to the opposite: the variation is
+deliberate, and three of the four causes have nothing to do with chance. More
+tool write-ups are in [AI Tools](/topics/ai-tools/). The same measurement
+confusion from the other direction is in
+[why AI detectors flag human writing](/ai-detectors-flagging-human-writing/),
+and for systems that look consistent while being wrong, read
+[why automations fail silently](/automations-failing-silently/).
+
+## Each word is picked from a shortlist
+
+A language model does not retrieve an answer. It predicts one word at a time,
+producing a ranked list of candidates with a probability attached to each, then
+picking one. If it always took the top candidate, its writing would be flat and
+repetitive, so by default it samples from the shortlist instead.
+
+Settings called temperature and top-p control how adventurous that pick is. A
+low temperature keeps it close to the most likely word; a higher one lets it
+reach further down the list. Either way, one different word early on changes
+what the model is continuing from, so the two answers diverge from that point
+and keep diverging.
+
+## Even the settings that should be deterministic are not quite
+
+Turn the temperature to zero through the API and the model takes the top
+candidate every time, which ought to be repeatable. In practice it usually is
+not, and the reason is arithmetic rather than design.
+
+Floating point addition is not associative: adding the same numbers in a
+different order can give a very slightly different result. On a GPU the work is
+split across many parallel units, and the order in which their results are
+combined depends on how the batch was arranged, which depends on who else is
+using the server. Occasionally a probability shifts enough to change which
+candidate ranks first, and from there the answers separate.
+
+<Callout type="note" title="This is why a seed is not a guarantee">
+  A fixed seed removes the randomness in the sampling. It does not remove the variation in
+  how the arithmetic was batched, so reproducibility is close rather than exact.
+</Callout>
+
+## The conversation is part of the question
+
+Each reply is produced by reading the entire thread, not just your last message.
+The same question asked at the start of a chat and ten exchanges later is two
+different inputs, because the second one carries everything in between.
+
+Saved memories work the same way across sessions. Two people asking an identical
+question get different answers because the model is reading different context,
+not because it changed its mind.
+
+## The wrapper and the model both change
+
+Every product wraps your prompt in hidden instructions about tone, format and
+what to refuse. A custom assistant, a company deployment and the public website
+all use different ones, so the same typed words arrive as different inputs.
+
+Underneath, the model itself is updated. An answer you got last month may be
+unreproducible today for the plain reason that the thing answering is not the
+same version. If an exact output matters, save it when you get it.
