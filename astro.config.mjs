@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 const SITE = 'https://a2zskillsewa.com';
@@ -12,16 +11,8 @@ export default defineConfig({
   trailingSlash: 'always',
   build: { format: 'directory' },
   integrations: [
+    // The sitemap is a route of our own: see src/pages/sitemap-0.xml.ts.
     mdx(),
-    sitemap({
-      // Keep thin, private and redirect routes out of the index.
-      filter: (page) => !/\/(search|thanks|go|og)\//.test(page) && !page.endsWith('.png'),
-      serialize(item) {
-        if (item.url === `${SITE}/`) item.priority = 1.0;
-        else if (/\/topics\//.test(item.url)) item.priority = 0.8;
-        return item;
-      },
-    }),
   ],
   image: { responsiveStyles: true },
   markdown: {

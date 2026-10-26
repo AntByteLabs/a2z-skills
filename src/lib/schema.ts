@@ -10,7 +10,6 @@ import type {
   Person,
   ProfilePage,
   SoftwareApplication,
-  WebSite,
   WithContext,
 } from 'schema-dts';
 import { site, absolute } from '../site';
@@ -27,17 +26,36 @@ export const organization = (): Organization => ({
   sameAs: Object.values(site.social).filter(Boolean) as string[],
 });
 
-export const website = (): WithContext<WebSite> => ({
+/**
+ * One graph with both nodes in it. The Organization used to be referenced by
+ * @id and never emitted, which left every page pointing at a publisher that
+ * did not exist in the markup.
+ */
+export const website = () => ({
   '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  '@id': SITE_ID,
-  // Google reads `name` for the site name in search results.
-  name: site.name,
-  alternateName: site.alternateName,
-  url: `${site.url}/`,
-  inLanguage: site.locale,
-  description: site.description,
-  publisher: { '@id': ORG_ID },
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': SITE_ID,
+      // Google reads `name` for the site name in search results.
+      name: site.name,
+      alternateName: site.alternateName,
+      url: `${site.url}/`,
+      inLanguage: site.locale,
+      description: site.description,
+      publisher: { '@id': ORG_ID },
+      // Lets Google offer a search box for the site in its results.
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${site.url}/search/?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    organization(),
+  ],
 });
 
 export type Crumb = { name: string; path: string };
@@ -55,6 +73,8 @@ export const breadcrumbs = (crumbs: Crumb[]): WithContext<BreadcrumbList> => ({
 
 export type PostSchemaInput = {
   title: string;
+  keywords?: string[];
+  section?: string;
   description: string;
   path: string;
   image: string;
@@ -87,6 +107,8 @@ export const blogPosting = (p: PostSchemaInput): WithContext<BlogPosting> => {
     publisher: { '@id': ORG_ID },
     isPartOf: { '@id': SITE_ID },
   };
+  if (p.keywords?.length) node.keywords = p.keywords.join(', ');
+  if (p.section) node.articleSection = p.section;
   if (p.subject) {
     // Review subject only. No aggregateRating: we do not invent scores.
     const app: SoftwareApplication = {

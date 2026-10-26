@@ -1,9 +1,0 @@
-# A2Z Skills — https://a2zskillsewa.com
-User-agent: *
-Allow: /
-Disallow: /go/
-Disallow: /search/
-Disallow: /api/
-Disallow: /thanks/
-
-Sitemap: https://a2zskillsewa.com/sitemap-index.xml

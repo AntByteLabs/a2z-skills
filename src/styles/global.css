@@ -140,6 +140,16 @@
     border-radius: 4px;
   }
 
+  /* A long command in inline code must wrap, or it widens a narrow phone. */
+  code {
+    overflow-wrap: anywhere;
+  }
+
+  /* Inside a block it scrolls instead, so a command stays on one line. */
+  pre code {
+    overflow-wrap: normal;
+  }
+
   /* Images always reserve their space: the CLS budget is 0.05. */
   img,
   video,

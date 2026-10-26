@@ -69,6 +69,8 @@ const article = blogPosting({
     sameAs: author.data.sameAs,
   },
   subject: data.type === 'review' ? { name: data.title } : undefined,
+  keywords: data.tags,
+  section: pillar?.data.name,
 });
 ---
 
