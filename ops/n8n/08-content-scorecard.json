@@ -1,0 +1,202 @@
+{
+  "name": "A2Z — weekly content scorecard",
+  "meta": {
+    "instanceId": "a2z-skills"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [1],
+              "triggerAtHour": 7,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "id": "cron",
+      "name": "Monday morning",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-620, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://a2z-skills-mcp.a2zskills.workers.dev",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.A2Z_MCP_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc:'2.0', id:1, method:'tools/call', params:{ name:'list_posts', arguments:{ includeDrafts: true } } }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "id": "list",
+      "name": "Ask for every post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-420, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $json.body;\nif (b?.error) throw new Error(`list_posts: ${b.error.message}`);\nreturn JSON.parse(b.result.content[0].text).posts.map((p) => ({ json: p }));\n"
+      },
+      "id": "rows",
+      "name": "One item per post",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-220, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://a2z-skills-mcp.a2zskills.workers.dev",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.A2Z_MCP_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc:'2.0', id:1, method:'tools/call', params:{ name:'get_post', arguments:{ slug: $json.slug } } }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "id": "get",
+      "name": "Read each post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-20, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// The weekly state of the corpus, from the repository rather than from memory.\nconst RETEST_DAYS = 120;\nconst posts = $input.all().map((i) => JSON.parse(i.json.body.result.content[0].text));\nconst live = posts.filter((p) => !p.frontmatter.draft);\n\nconst slugs = new Set(live.map((p) => p.slug));\nconst inbound = new Map(live.map((p) => [p.slug, 0]));\nconst thin = [];\nconst noHero = [];\nconst noFaq = [];\nconst stale = [];\nconst byPillar = {};\nlet tested = 0;\n\nfor (const p of live) {\n  const f = p.frontmatter;\n  byPillar[f.pillar] = (byPillar[f.pillar] ?? 0) + 1;\n  if (f.testedOn?.date) {\n    tested += 1;\n    const due = new Date(f.testedOn.date).getTime() + RETEST_DAYS * 86400000;\n    if (due < Date.now()) stale.push(`${p.slug} (due ${new Date(due).toISOString().slice(0, 10)})`);\n  }\n  if (!f.heroImage) noHero.push(p.slug);\n  if (!f.faq || f.faq.length === 0) noFaq.push(p.slug);\n\n  const links = [...String(p.body).matchAll(/\\]\\((\\/[^)\\s#]+)/g)]\n    .map((m) => m[1].replace(/^\\/|\\/$/g, ''))\n    .filter((s) => slugs.has(s) && s !== p.slug);\n  if (new Set(links).size < 2) thin.push(`${p.slug} (${new Set(links).size})`);\n  for (const l of new Set(links)) inbound.set(l, (inbound.get(l) ?? 0) + 1);\n}\n\nconst orphans = [...inbound].filter(([, n]) => n === 0).map(([s]) => s);\nconst pillars = Object.entries(byPillar).sort((a, b) => b[1] - a[1]);\nconst empty = ['windows-mac','phones','excel-office','ai-tools','websites-hosting','automation']\n  .filter((p) => !byPillar[p]);\n\nconst block = (title, items) =>\n  items.length ? `${title} (${items.length})\\n  ${items.join('\\n  ')}\\n` : `${title}: none\\n`;\n\nconst report = [\n  `Live posts: ${live.length}    Tested: ${tested}    With a hero: ${live.length - noHero.length}`,\n  '',\n  'Posts per pillar',\n  ...pillars.map(([k, v]) => `  ${k.padEnd(20)} ${v}`),\n  empty.length ? `  EMPTY: ${empty.join(', ')}` : '',\n  '',\n  block('Fewer than two internal links', thin),\n  block('No inbound link from any post', orphans),\n  block('No hero image', noHero),\n  block('No FAQ', noFaq),\n  block('Due for re-test', stale),\n].filter((l) => l !== '').join('\\n');\n\nreturn [{ json: { report, live: live.length, actions: thin.length + orphans.length + stale.length } }];\n"
+      },
+      "id": "score",
+      "name": "Build the scorecard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [180, 0]
+    },
+    {
+      "parameters": {
+        "subject": "=A2Z Skills: {{ $json.live }} posts, {{ $json.actions }} things to fix",
+        "emailFormat": "text",
+        "options": {},
+        "fromEmail": "antbytelabs@gmail.com",
+        "toEmail": "antbytelabs@gmail.com",
+        "text": "={{ $json.report }}"
+      },
+      "id": "email",
+      "name": "Email the scorecard",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [380, 0],
+      "credentials": {
+        "smtp": {
+          "id": "8OZYj3nkqzPcBsm8",
+          "name": "SMTP — antbytelabs"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Monday morning": {
+      "main": [
+        [
+          {
+            "node": "Ask for every post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask for every post": {
+      "main": [
+        [
+          {
+            "node": "One item per post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One item per post": {
+      "main": [
+        [
+          {
+            "node": "Read each post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read each post": {
+      "main": [
+        [
+          {
+            "node": "Build the scorecard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build the scorecard": {
+      "main": [
+        [
+          {
+            "node": "Email the scorecard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kathmandu"
+  },
+  "tags": []
+}

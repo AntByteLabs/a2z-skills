@@ -217,3 +217,29 @@ reports that the hero was set. Anything else emails you.
 Image generation is billed per image, and the price depends on the model, size
 and quality tier you choose. Check OpenAI's current pricing before you activate
 this, and run it by hand once to see what one costs you.
+
+### 08 — weekly content scorecard
+
+Monday 07:30: asks the MCP for every post, reads each one, and emails the state
+of the corpus. Counts per pillar, how many are tested, how many have a hero,
+which posts carry fewer than two internal links, which have no inbound link at
+all, which have no FAQ, and which are past their re-test date.
+
+It reads the repository rather than the live site, so it sees drafts and
+frontmatter, not just what rendered. Run against the corpus on the day it was
+written it reported: 13 live, 3 tested, 0 with a hero, every pillar covered,
+no thin-link posts and nothing stale.
+
+Needs `A2Z_MCP_TOKEN` and the SMTP credential. Both are set, and it is active.
+
+## Env access had to be unblocked
+
+Coolify's n8n template sets `N8N_BLOCK_ENV_ACCESS_IN_NODE` to `true` by
+default, which makes every `$env.` reference in a node return nothing. Three of
+these workflows read their credentials that way, so they would have failed
+quietly rather than loudly. It is now `false` on the service.
+
+The trade: any workflow on this instance can read the service's environment.
+That is acceptable here because one person owns every workflow on it. If that
+ever stops being true, move the tokens into n8n credentials of type Header Auth
+and set the flag back.
