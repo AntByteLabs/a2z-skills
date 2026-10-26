@@ -87,6 +87,37 @@ test.describe('what crawlers are served', () => {
     expect(article.publisher['@id']).toBe(org['@id']);
   });
 
+  test('the FAQ is marked up, and only where a reader can see it', async ({ page }) => {
+    test.skip(!postPath, 'no posts in this build');
+    await page.goto(postPath!);
+
+    const nodes = (
+      await page.locator('script[type="application/ld+json"]').allTextContents()
+    ).flatMap((g) => {
+      const parsed = JSON.parse(g);
+      return parsed['@graph'] ?? [parsed];
+    });
+    const faq = nodes.find((n: { '@type': string }) => n['@type'] === 'FAQPage');
+
+    // A post without an FAQ must not emit an empty one.
+    const visible = page.locator('#faq, [data-faq]');
+    if ((await visible.count()) === 0) {
+      expect(faq, 'no FAQ on the page, so no FAQPage in the markup').toBeUndefined();
+      return;
+    }
+
+    expect(faq).toBeTruthy();
+    expect(faq.mainEntity.length).toBeGreaterThan(0);
+
+    // Marking up an answer the reader cannot find is what the guidelines forbid.
+    const body = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
+    for (const q of faq.mainEntity) {
+      expect(q['@type']).toBe('Question');
+      expect(q.acceptedAnswer.text.length).toBeGreaterThan(0);
+      expect(body, `the page must show: ${q.name}`).toContain(q.name.replace(/\s+/g, ' '));
+    }
+  });
+
   test('the feed is served and lists the posts', async ({ request }) => {
     const res = await request.get('/rss.xml');
     expect(res.ok()).toBeTruthy();

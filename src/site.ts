@@ -65,5 +65,18 @@ export const testedTypes: PostType[] = ['how-to', 'fix', 'review'];
 /** Affiliate programmes, keyed by the slug used in post frontmatter. */
 export const affiliates: Record<string, { label: string; url: string }> = {};
 
+/**
+ * Turnstile site key for the newsletter form.
+ *
+ * Public by design: it is rendered into every page's HTML, and Cloudflare
+ * treats it as public. The matching secret lives only as the Worker secret
+ * `TURNSTILE_SECRET` and is never in this repo.
+ *
+ * The Worker enforces Turnstile only when that secret is set. Until it is,
+ * the widget renders but nothing checks it, and the honeypot is the only
+ * protection the subscribe endpoint has.
+ */
+export const TURNSTILE_SITE_KEY = '0x4AAAAAAFmEYeu6fVmXyt7w';
+
 export const absolute = (path: string) =>
   new URL(path.startsWith('/') ? path : `/${path}`, site.url).href;

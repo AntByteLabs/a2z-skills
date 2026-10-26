@@ -6,6 +6,7 @@ import type {
   BlogPosting,
   BreadcrumbList,
   CollectionPage,
+  FAQPage,
   Organization,
   Person,
   ProfilePage,
@@ -162,4 +163,30 @@ export const collectionPage = (c: {
   url: absolute(c.path),
   isPartOf: { '@id': SITE_ID },
   publisher: { '@id': ORG_ID },
+});
+
+/**
+ * The post's FAQ, as a page-level FAQPage tied to the article.
+ *
+ * Google withdrew FAQ rich results for most sites, so this is not here for a
+ * SERP accordion. It is here because answer engines read it: a question and
+ * its answer as one labelled pair is far easier to quote than the same words
+ * in prose, and quoting is how this site gets cited.
+ *
+ * Only emitted when the questions are genuinely on the page. Marking up an
+ * answer a reader cannot see is exactly what the guidelines forbid.
+ */
+export const faqPage = (f: {
+  path: string;
+  questions: { q: string; a: string }[];
+}): WithContext<FAQPage> => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${absolute(f.path)}#faq`,
+  mainEntity: f.questions.map((item) => ({
+    '@type': 'Question' as const,
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer' as const, text: item.a },
+  })),
+  isPartOf: { '@id': SITE_ID },
 });

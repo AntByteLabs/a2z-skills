@@ -5,6 +5,15 @@
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://a2zskillsewa.com; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com; frame-src https://challenges.cloudflare.com; connect-src 'self' https://cloudflareinsights.com; upgrade-insecure-requests
+
+# The CSP above keeps 'unsafe-inline' for scripts: the theme toggle, the table of
+# contents and the newsletter form are inline on purpose, and hashing thirteen
+# blocks that change every build breaks more often than it protects. The value is
+# in the rest of it: object-src and base-uri shut off the injection routes that do
+# not need an inline script, and connect-src stops an injected script exfiltrating
+# anywhere. challenges.cloudflare.com is Turnstile; cloudflareinsights is the
+# analytics beacon Cloudflare injects at the edge.
 
 # Hashed build output never changes under the same name.
 /_astro/*

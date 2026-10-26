@@ -9,14 +9,14 @@ const year = new Date().getFullYear();
 
 <footer class="mt-12 border-t border-rule bg-paper-sunk">
   <div class="shell grid gap-7 py-8 md:grid-cols-3">
-    <div>
+    <div class="min-w-0">
       <p class="font-display text-lg font-bold">{site.name}</p>
       <p class="mt-1 text-sm text-ink-soft">{site.tagline}</p>
       <p class="mt-4 text-sm text-ink-soft">
         Published by <a href={site.publisher.url}>{site.publisher.name}</a>.
       </p>
     </div>
-    <nav aria-label="Site information">
+    <nav class="min-w-0" aria-label="Site information">
       <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-soft">The site</h2>
       <ul class="mt-2 space-y-1 text-sm">
         {pages.map((p) => (
@@ -29,7 +29,7 @@ const year = new Date().getFullYear();
         </li>
       </ul>
     </nav>
-    <div>
+    <div class="min-w-0">
       <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-soft">
         One tested guide a week
       </h2>

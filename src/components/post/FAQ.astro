@@ -1,7 +1,8 @@
 ---
 /**
- * Rendered as ordinary page content. No FAQPage markup: Google stopped
- * showing those rich results for most sites, so it is weight without benefit.
+ * Rendered as ordinary page content. The matching FAQPage JSON-LD is emitted by
+ * PostLayout, under the same condition as this component, so the markup can
+ * never describe questions a reader cannot see.
  *
  * FAQ answers come from frontmatter, which is a plain string, so `backticks`
  * would otherwise print as literal characters. They are turned into real code

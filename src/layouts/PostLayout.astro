@@ -21,7 +21,7 @@ import CopyCode from '../components/post/CopyCode.astro';
 import ShareRow from '../components/post/ShareRow.astro';
 import PrevNext from '../components/post/PrevNext.astro';
 import Helpful from '../components/post/Helpful.astro';
-import { blogPosting, breadcrumbs, type Crumb } from '../lib/schema';
+import { blogPosting, breadcrumbs, faqPage, type Crumb } from '../lib/schema';
 import { relatedPosts, postPath, livePosts, type Post } from '../lib/posts';
 import { absolute } from '../site';
 import { pillarLabel, readingMinutes } from '../lib/format';
@@ -72,6 +72,9 @@ const article = blogPosting({
   keywords: data.tags,
   section: pillar?.data.name,
 });
+
+// Only when the FAQ is actually rendered below.
+const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undefined;
 ---
 
 <BaseLayout
@@ -88,6 +91,7 @@ const article = blogPosting({
   <JsonLd data={article} slot="head" />
   <ReadingProgress />
   <JsonLd data={breadcrumbs(crumbs)} slot="head" />
+  {faq && <JsonLd data={faq} slot="head" />}
 
   <div class="shell grid gap-8 py-5 lg:grid-cols-[minmax(0,1fr)_17rem]">
     <article class="min-w-0">
