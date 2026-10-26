@@ -279,6 +279,89 @@ The caption carries the article link, so Facebook renders the publisher's own
 preview card. It does not re-upload the publisher's photo, which would be
 someone else's image on a monetised Page.
 
+### 10 — Muse: news to an illustrated post
+
+Muse does the watching and the writing. This workflow turns what it sends into
+an illustrated photo post on the Facebook Page.
+
+```
+Muse  ->  POST /webhook/muse-illustrated-post  ->  image  ->  Page photo post
+```
+
+The body needs `message`, and **one** of these two:
+
+| Field          | What happens                                                    |
+| -------------- | --------------------------------------------------------------- |
+| `image_prompt` | n8n calls `POST /v1/images/generations` and generates the image |
+| `image_base64` | Muse generated it already; n8n uploads what it was given        |
+
+`link`, `term` and `source` are optional. A photo post does not render a link
+preview card the way a feed post does, so when `link` is present it is appended
+to the caption text instead.
+
+```bash
+curl -X POST https://n8n.apps.antbytelabs.com/webhook/muse-illustrated-post \
+  -H "x-muse-secret: $MUSE_WEBHOOK_SECRET" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": "The caption Muse wrote.",
+    "image_prompt": "a stadium at dusk, seen from the stands",
+    "link": "https://example.com/story",
+    "term": "the topic, used only in the failure email"
+  }'
+```
+
+The image always arrives as base64 and there is no way around that:
+`response_format` is deprecated and unsupported for the GPT image models, which
+always return base64, and the DALL·E models that could return a hosted URL are
+retired. A **Convert to File** node turns it into a real `image/jpeg`, which is
+then uploaded to `POST /{page-id}/photos` as multipart `source`.
+
+Images are generated as JPEG at 1024x1024, square so it works on both networks,
+and `quality` defaults to `medium` through `OPENAI_IMAGE_QUALITY`. The prompt
+wraps whatever Muse sends with a house style and a hard instruction against
+text, logos, interface chrome and identifiable people, because image models
+render text badly and a garbled word on a monetised Page is worse than no
+illustration.
+
+The gate refuses a request with no `message`, with neither image field, with a
+non-https `link`, with an `image_base64` that is not base64 or decodes to under
+2 KB, and any request whose secret does not match. It fails closed.
+
+Variables: `OPENAI_API_KEY`, `OPENAI_IMAGE_MODEL` (`gpt-image-1`),
+`OPENAI_IMAGE_QUALITY` (`medium`), `MUSE_WEBHOOK_SECRET`, `META_PAGE_ID`,
+`META_ACCESS_TOKEN`.
+
+It is **inactive**, and needs an OpenAI key for the `image_prompt` route and a
+Page token for either route. Every generated image is a paid OpenAI call, so
+the cost scales with how often Muse fires.
+
+#### What was verified, and what was not
+
+The `image_base64` route was run end to end through the live instance with a
+real 15,156-byte JPEG. Convert to File produced `image/jpeg`, `post.jpg`,
+15.2 kB, and the multipart upload reached Facebook, which rejected it with
+`(#100) 0 does not resolve to a valid user ID`: the empty `META_PAGE_ID`. A
+malformed upload returns `(#324) Missing or invalid image file` instead, so the
+file reached Facebook intact and only the Page id was missing.
+
+The `image_prompt` route has **not** been run. There is no OpenAI key on the
+service, so the generation call itself is untested here.
+
+#### Instagram is not wired up
+
+An Instagram container takes `image_url` and will not accept an uploaded file,
+so publishing a generated image there needs the image on a public URL first.
+Nothing here hosts one: there is no R2 bucket on the account, and the site is
+static assets on a Worker.
+
+Two ways to add it, neither built:
+
+- Read the Facebook photo's own CDN URL back from the Graph API after the post
+  lands, and hand that to the Instagram container. No new infrastructure.
+- Put the image in an R2 bucket with a public URL. More moving parts, and the
+  URL does not expire.
+
 ## Connecting Muse, or anything else, to this n8n
 
 Muse needs two things, and both already exist:

@@ -1,0 +1,355 @@
+{
+  "name": "A2Z — Muse: news to an illustrated post",
+  "meta": {
+    "instanceId": "a2z-skills"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "muse-illustrated-post",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "hook",
+      "name": "Muse sends a news item",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 200],
+      "webhookId": "muse-illustrated-post"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The gate in front of the webhook, and the routing decision.\n//\n// Muse is expected to have done the watching and the writing already. This\n// node's job is to refuse anything it should not publish, and to work out\n// whether an image still has to be generated or one arrived with the request.\n// It fails closed: no secret on the service means every call is refused.\nconst secret = String($env.MUSE_WEBHOOK_SECRET || '');\nif (!secret) {\n  throw new Error(\n    'MUSE_WEBHOOK_SECRET is not set on the n8n service, so this webhook refuses every call. Set it in Coolify and redeploy.',\n  );\n}\n\nconst headers = $json.headers || {};\nconst given = String(headers['x-muse-secret'] || headers['x-webhook-secret'] || '');\nconst same =\n  given.length === secret.length &&\n  given.split('').reduce((acc, c, i) => acc + (c === secret[i] ? 0 : 1), 0) === 0;\nif (!same) throw new Error('Refused: the x-muse-secret header was missing or did not match.');\n\nconst body = $json.body || {};\nconst message = String(body.message ?? body.text ?? body.caption ?? '').trim();\nif (!message) {\n  throw new Error('Refused: the body had no \"message\". Send {\"message\": \"...\", \"image_prompt\": \"...\"}.');\n}\nif (message.length > 63206) {\n  throw new Error(`Refused: the message is ${message.length} characters and Facebook accepts 63206.`);\n}\n\nconst link = String(body.link ?? body.url ?? '').trim();\nif (link && !/^https:\\/\\/[^\\s]+$/.test(link)) {\n  throw new Error(`Refused: \"link\" must be a single https URL, got \"${link.slice(0, 80)}\".`);\n}\n\n// Either Muse describes the image and n8n generates it, or Muse sends the\n// image itself. Both are accepted; one of them is required, because this\n// workflow publishes a photo post and a photo post needs a photo.\nconst prompt = String(body.image_prompt ?? body.imagePrompt ?? body.scene ?? '').trim();\nconst supplied = String(body.image_base64 ?? body.imageBase64 ?? '').replace(/^data:image\\/\\w+;base64,/, '').trim();\n\nif (!prompt && !supplied) {\n  throw new Error('Refused: send either \"image_prompt\" for n8n to generate one, or \"image_base64\" with your own image.');\n}\nif (supplied && !/^[A-Za-z0-9+/=\\s]+$/.test(supplied)) {\n  throw new Error('Refused: \"image_base64\" is not base64.');\n}\nif (supplied && supplied.length < 2000) {\n  throw new Error(`Refused: \"image_base64\" decodes to about ${Math.round((supplied.length * 3) / 4)} bytes, which is too small to be a real image.`);\n}\nif (prompt && prompt.length > 30000) {\n  throw new Error('Refused: \"image_prompt\" is longer than the image API accepts.');\n}\n\nreturn [\n  {\n    json: {\n      origin: 'muse',\n      topic: String(body.term ?? body.topic ?? body.headline ?? '').trim() || '(sent by Muse)',\n      message,\n      link,\n      source: String(body.source ?? '').trim(),\n      // A photo post does not render a link preview card the way a feed post\n      // does, so the link has to be in the caption or it is not there at all.\n      fbMessage: link ? `${message}\\n\\n${link}` : message,\n      imagePrompt: prompt,\n      imageBase64: supplied,\n      // Drives the IF that follows: generate, or use what arrived.\n      needsGenerating: !supplied && !!prompt,\n    },\n  },\n];\n"
+      },
+      "id": "gate",
+      "name": "Check what Muse sent",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.needsGenerating }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ifgen",
+      "name": "Does it need an image?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [440, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.OPENAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $env.OPENAI_IMAGE_MODEL || 'gpt-image-1', prompt: 'Editorial illustration for a news post about: ' + $json.imagePrompt + '. Style: clean flat vector shapes, generous negative space, warm off-white background, one deep blue and one warm orange accent, soft shadow, no gradients. ABSOLUTELY NO text, letters, numbers, words, labels, captions, logos, brand marks, watermarks, user interface, windows, dialog boxes or anything resembling a screenshot. Do not depict real identifiable people. Illustration only.', n: 1, size: '1024x1024', quality: $env.OPENAI_IMAGE_QUALITY || 'medium', output_format: 'jpeg' }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 180000
+        }
+      },
+      "id": "gen",
+      "name": "Generate the illustration",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [660, 100]
+    },
+    {
+      "parameters": {
+        "jsCode": "// GPT image models always return base64: response_format is deprecated and\n// unsupported for them, and the DALL-E models that could return a URL are\n// retired. So there is no hosted-URL option to fall back on, and this node\n// exists to pull the base64 out and refuse anything that is not an image.\nconst body = $json.body;\nconst b64 = body && body.data && body.data[0] ? body.data[0].b64_json : '';\n\nif (!b64) {\n  const why = (body && body.error && body.error.message) || JSON.stringify(body || {}).slice(0, 300);\n  throw new Error(`Image generation returned nothing: ${why}`);\n}\n// An empty or truncated image uploads as a broken photo post, which is worse\n// than no post at all, so this fails rather than publishing it.\nif (b64.length < 5000) {\n  throw new Error(`Image generation returned about ${Math.round((b64.length * 3) / 4)} bytes, which is too small to be a real image.`);\n}\n\nconst src = $('Check what Muse sent').item.json;\nreturn [{ json: { ...src, imageBase64: b64, imageBytes: Math.round((b64.length * 3) / 4), imageFrom: 'generated' } }];\n"
+      },
+      "id": "take",
+      "name": "Take the generated image",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 100]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Muse sent the image itself. Nothing to generate; normalise the item so both\n// routes hand the same shape to the file conversion that follows.\nconst src = $json;\nreturn [\n  {\n    json: {\n      ...src,\n      imageBytes: Math.round((String(src.imageBase64 || '').length * 3) / 4),\n      imageFrom: 'sent by Muse',\n    },\n  },\n];\n"
+      },
+      "id": "supp",
+      "name": "Use the image Muse sent",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 320]
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "imageBase64",
+        "binaryPropertyName": "data",
+        "options": {
+          "fileName": "post.jpg",
+          "mimeType": "image/jpeg"
+        }
+      },
+      "id": "tofile",
+      "name": "Base64 to a real file",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [1100, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v23.0/{{ $env.META_PAGE_ID }}/photos",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "source",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.fbMessage }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $env.META_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 120000
+        }
+      },
+      "id": "post",
+      "name": "Post the photo to the Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1320, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// A photo post answers with a photo id and, when it reaches the Page's feed,\n// a post_id as well. Facebook also answers 200 with an error object in the\n// body, so the status code on its own is not proof that anything was\n// published: the post counts as landed only when an id comes back.\nconst res = $json || {};\nconst body = res.body || {};\nconst status = Number(res.statusCode || 0);\nconst photoId = body.id ? String(body.id) : '';\nconst postId = body.post_id ? String(body.post_id) : '';\nconst landed = status >= 200 && status < 300 && !!photoId && !body.error;\n\n// Whichever route ran. Calling $() on a node that did not execute throws.\nlet src = null;\nfor (const name of ['Take the generated image', 'Use the image Muse sent']) {\n  try {\n    const j = $(name).first().json;\n    if (j && j.message) {\n      src = j;\n      break;\n    }\n  } catch (e) {\n    /* that route did not run */\n  }\n}\nsrc = src || { topic: '(unknown)', message: '', link: '', imageFrom: 'unknown', imageBytes: 0 };\n\nconst reason = landed\n  ? ''\n  : body.error\n    ? `Facebook refused it: ${body.error.message || JSON.stringify(body.error)}`\n    : `Facebook answered ${status || 'nothing'} with no photo id. Body: ${JSON.stringify(body).slice(0, 400)}`;\n\nreturn [\n  {\n    json: {\n      landed,\n      failed: !landed,\n      topic: src.topic,\n      imageFrom: src.imageFrom,\n      imageBytes: src.imageBytes,\n      photoId,\n      postId,\n      permalink: postId ? `https://www.facebook.com/${postId}` : '',\n      link: src.link || '',\n      message: src.message,\n      reason,\n    },\n  },\n];\n"
+      },
+      "id": "land",
+      "name": "Did it actually land?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1540, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.failed }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "iffail",
+      "name": "Did it fail?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1760, 200]
+    },
+    {
+      "parameters": {
+        "subject": "=A2Z: the illustrated post did not go out ({{ $json.topic }})",
+        "emailFormat": "text",
+        "options": {},
+        "fromEmail": "antbytelabs@gmail.com",
+        "toEmail": "antbytelabs@gmail.com",
+        "text": "={{ $json.reason }}\n\nTopic: {{ $json.topic }}\nImage: {{ $json.imageFrom }}, about {{ $json.imageBytes }} bytes\nLink in the caption: {{ $json.link || '(none)' }}\n\nThe caption it tried to publish:\n{{ $json.message }}\n\nNothing retries on its own. Muse can send the same item again once the cause is fixed."
+      },
+      "id": "mail",
+      "name": "Email what failed",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1980, 100],
+      "credentials": {
+        "smtp": {
+          "id": "8OZYj3nkqzPcBsm8",
+          "name": "SMTP — antbytelabs"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Muse sends a news item": {
+      "main": [
+        [
+          {
+            "node": "Check what Muse sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check what Muse sent": {
+      "main": [
+        [
+          {
+            "node": "Does it need an image?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Does it need an image?": {
+      "main": [
+        [
+          {
+            "node": "Generate the illustration",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Use the image Muse sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate the illustration": {
+      "main": [
+        [
+          {
+            "node": "Take the generated image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take the generated image": {
+      "main": [
+        [
+          {
+            "node": "Base64 to a real file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use the image Muse sent": {
+      "main": [
+        [
+          {
+            "node": "Base64 to a real file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Base64 to a real file": {
+      "main": [
+        [
+          {
+            "node": "Post the photo to the Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post the photo to the Page": {
+      "main": [
+        [
+          {
+            "node": "Did it actually land?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Did it actually land?": {
+      "main": [
+        [
+          {
+            "node": "Did it fail?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Did it fail?": {
+      "main": [
+        [
+          {
+            "node": "Email what failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kathmandu"
+  },
+  "tags": []
+}
