@@ -1,0 +1,265 @@
+{
+  "name": "A2Z — trends to the Facebook Page",
+  "meta": {
+    "instanceId": "a2z-skills"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9,14,20 * * *"
+            }
+          ]
+        }
+      },
+      "id": "sched",
+      "name": "Three times a day",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "url": "=https://trends.google.com/trending/rss?geo={{ $env.TRENDS_GEO || 'NP' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (compatible; A2ZSkillsBot/1.0)"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "fetch",
+      "name": "Today's Google Trends",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pick one trend from today's feed that has not been posted yet, and build the\n// caption from the feed's own words. Nothing here is written by a model: the\n// search term, the headline and the outlet name all come from Google, so there\n// is no step at which a fact can be invented.\n//\n// Returning [] is a normal outcome. It means every trend today was either\n// already posted, had no article attached, or read as grief or crime.\n\n// Grief, crime and disaster words. A page that earns from reach still has to\n// be a page someone wants to follow, and \"it is trending\" is not a reason to\n// post a death notice between two cricket updates.\nconst SENSITIVE = [\n  'died', 'dies', 'death', 'dead', 'killed', 'kill', 'murder', 'shot', 'shooting',\n  'rape', 'raped', 'assault', 'suicide', 'crash', 'crashed', 'earthquake', 'quake',\n  'flood', 'landslide', 'accident', 'arrest', 'arrested', 'jailed', 'scandal',\n  'bomb', 'bombing', 'terror', 'obituary', 'funeral', 'missing', 'injured',\n  'hospitalised', 'hospitalized', 'fraud', 'scam', 'corruption', 'outbreak',\n  'cancer', 'massacre', 'stabbed', 'abuse', 'overdose', 'collapse',\n];\n\nfunction decode(s) {\n  return s\n    .replace(/<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>/g, '$1')\n    .replace(/&lt;/g, '<')\n    .replace(/&gt;/g, '>')\n    .replace(/&quot;/g, '\"')\n    .replace(/&#0?39;/g, \"'\")\n    .replace(/&apos;/g, \"'\")\n    .replace(/&amp;/g, '&')\n    .trim();\n}\n\nfunction parseTrends(xml) {\n  const items = [];\n  for (const block of xml.split('<item>').slice(1)) {\n    const body = block.split('</item>')[0];\n    const pick = (tag) => {\n      const m = body.match(new RegExp(`<${tag}>([\\\\s\\\\S]*?)</${tag}>`));\n      return m ? decode(m[1]) : '';\n    };\n    const term = pick('title');\n    if (!term) continue;\n\n    const news = [];\n    for (const n of body.split('<ht:news_item>').slice(1)) {\n      const nb = n.split('</ht:news_item>')[0];\n      const g = (tag) => {\n        const m = nb.match(new RegExp(`<${tag}>([\\\\s\\\\S]*?)</${tag}>`));\n        return m ? decode(m[1]) : '';\n      };\n      const url = g('ht:news_item_url');\n      const headline = g('ht:news_item_title');\n      if (url && headline) news.push({ headline, url, source: g('ht:news_item_source') });\n    }\n\n    items.push({\n      term,\n      traffic: pick('ht:approx_traffic'),\n      picture: pick('ht:picture'),\n      pubDate: pick('pubDate'),\n      news,\n    });\n  }\n  return items;\n}\n\n// Only the term and the lead headline are screened, because only those two go\n// into the post. Screening the secondary headlines as well rejected an anime\n// finale for the words \"Thousand-Year Blood War\" and a markets story for\n// \"Trade War Rout\", neither of which would have appeared in the caption.\nfunction isSensitive(trend, extraWords) {\n  const words = SENSITIVE.concat(extraWords || []).filter(Boolean);\n  const hay = [trend.term, trend.news[0] ? trend.news[0].headline : '']\n    .join(' ')\n    .toLowerCase();\n  return words.find((w) => new RegExp(`\\\\b${w}\\\\b`, 'i').test(hay)) || null;\n}\n\n// The search term is quoted rather than dropped into the sentence as a name.\n// Google Trends reports terms lowercase (\"ipl\", \"nepse\"), and title-casing\n// them guesses wrong in both directions: \"Ipl\" and \"Fc Bayern Munich\". Quoted,\n// it is accurate, because a search phrase is exactly what it is.\nfunction caption(trend, opts) {\n  const place = (opts && opts.place) || 'Nepal';\n  const lead = trend.news[0];\n  const out = [];\n  const volume = trend.traffic ? `, around ${trend.traffic} searches so far` : '';\n  out.push(`People in ${place} are searching for \"${trend.term}\" today${volume}.`);\n  out.push('');\n  out.push(`${lead.headline}${lead.source ? ` (${lead.source})` : ''}`);\n  const others = trend.news.slice(1).map((n) => n.source).filter(Boolean);\n  if (others.length) out.push(`Also reported by ${others.slice(0, 2).join(' and ')}.`);\n  return { message: out.join('\\n'), link: lead.url, source: lead.source || '' };\n}\n\n\n\nconst xml = String($json.data ?? $json.body ?? '');\nif (!xml.includes('<item>')) {\n  throw new Error(`Google Trends returned nothing that looks like the feed (${xml.length} characters). Nothing was posted.`);\n}\n\nconst place = $env.TRENDS_PLACE || 'Nepal';\nconst extra = String($env.TRENDS_BLOCKLIST || '')\n  .split(',')\n  .map((w) => w.trim().toLowerCase())\n  .filter(Boolean);\n\n// A term is not offered again for this many days. Without it the same story\n// goes out every run for as long as it keeps trending.\nconst COOLDOWN_DAYS = Number($env.TRENDS_COOLDOWN_DAYS || 14);\nconst store = $getWorkflowStaticData('global');\nstore.posted = Array.isArray(store.posted) ? store.posted : [];\nconst cutoff = Date.now() - COOLDOWN_DAYS * 86400000;\nstore.posted = store.posted.filter((p) => p && p.at > cutoff);\nconst alreadyPosted = new Set(store.posted.map((p) => String(p.term).toLowerCase()));\n\nconst trends = parseTrends(xml);\nconst skipped = [];\nconst usable = [];\n\nfor (const t of trends) {\n  if (!t.news.length) {\n    skipped.push(`${t.term}: no article attached`);\n    continue;\n  }\n  if (alreadyPosted.has(t.term.toLowerCase())) {\n    skipped.push(`${t.term}: posted in the last ${COOLDOWN_DAYS} days`);\n    continue;\n  }\n  const word = isSensitive(t, extra);\n  if (word) {\n    skipped.push(`${t.term}: reads as grief or crime (\"${word}\")`);\n    continue;\n  }\n  usable.push(t);\n}\n\nif (!usable.length) {\n  console.log(`Nothing to post. ${trends.length} trends examined:\\n  ${skipped.join('\\n  ')}`);\n  return [];\n}\n\n// Picked at random rather than by volume, so the page does not post the same\n// top story shape every day.\nconst chosen = usable[Math.floor(Math.random() * usable.length)];\nconst built = caption(chosen, { place });\n\nreturn [\n  {\n    json: {\n      origin: 'trends',\n      term: chosen.term,\n      message: built.message,\n      link: built.link,\n      source: built.source,\n      considered: usable.length,\n      skipped,\n    },\n  },\n];\n"
+      },
+      "id": "pick",
+      "name": "Pick a trend nobody has posted",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "muse-facebook-post",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "hook",
+      "name": "Muse sends a post",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 300],
+      "webhookId": "muse-facebook-post"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The gate in front of the webhook.\n//\n// Anything holding the shared secret can publish to the Page through here, so\n// this node is the only thing between a loose URL and the Page's wall. It\n// fails closed: no secret configured on the service means every call is\n// refused, rather than the webhook quietly accepting unsigned ones.\nconst secret = String($env.MUSE_WEBHOOK_SECRET || '');\nif (!secret) {\n  throw new Error(\n    'MUSE_WEBHOOK_SECRET is not set on the n8n service, so this webhook refuses every call. Set it in Coolify and redeploy.',\n  );\n}\n\nconst headers = $json.headers || {};\nconst given = String(headers['x-muse-secret'] || headers['x-webhook-secret'] || '');\n// Constant-time-ish: compare full length, never short-circuit on first byte.\nconst same =\n  given.length === secret.length &&\n  given.split('').reduce((acc, c, i) => acc + (c === secret[i] ? 0 : 1), 0) === 0;\nif (!same) {\n  throw new Error('Refused: the x-muse-secret header was missing or did not match.');\n}\n\nconst body = $json.body || {};\nconst message = String(body.message ?? body.text ?? body.caption ?? '').trim();\nif (!message) {\n  throw new Error('Refused: the body had no \"message\". Send {\"message\": \"...\", \"link\": \"https://...\"}.');\n}\n// Facebook's own limit on a feed post.\nif (message.length > 63206) {\n  throw new Error(`Refused: the message is ${message.length} characters and Facebook accepts 63206.`);\n}\n\nconst link = String(body.link ?? body.url ?? '').trim();\nif (link && !/^https:\\/\\/[^\\s]+$/.test(link)) {\n  throw new Error(`Refused: \"link\" must be a single https URL, got \"${link.slice(0, 80)}\".`);\n}\n\nreturn [\n  {\n    json: {\n      origin: 'muse',\n      term: String(body.term ?? body.topic ?? '').trim() || '(sent by Muse)',\n      message,\n      link,\n      source: String(body.source ?? '').trim(),\n    },\n  },\n];\n"
+      },
+      "id": "gate",
+      "name": "Check what Muse sent",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v23.0/{{ $env.META_PAGE_ID }}/feed",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify(Object.assign({ message: $json.message, access_token: $env.META_ACCESS_TOKEN }, $json.link ? { link: $json.link } : {})) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "post",
+      "name": "Post to the Facebook Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 150]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Facebook answers 200 with an error object in the body, so the status code on\n// its own is not proof that anything was published. The post counts as landed\n// only when a post id comes back.\n//\n// The term is recorded as posted here and nowhere earlier: marking it before\n// the Page confirmed would silently drop a trend on every failed run.\nconst res = $json || {};\nconst body = res.body || {};\nconst status = Number(res.statusCode || 0);\nconst postId = body.id ? String(body.id) : '';\nconst landed = status >= 200 && status < 300 && !!postId && !body.error;\n\n// Whichever branch ran. Calling $() on a node that did not execute throws.\nlet src = null;\nfor (const name of ['Pick a trend nobody has posted', 'Check what Muse sent']) {\n  try {\n    const j = $(name).first().json;\n    if (j && j.message) {\n      src = j;\n      break;\n    }\n  } catch (e) {\n    /* that branch did not run */\n  }\n}\nsrc = src || { origin: 'unknown', term: '(unknown)', message: '', link: '' };\n\nif (landed && src.origin === 'trends') {\n  const store = $getWorkflowStaticData('global');\n  store.posted = Array.isArray(store.posted) ? store.posted : [];\n  store.posted.push({ term: src.term, at: Date.now() });\n  // Keep the file small; the cooldown filter prunes by date on the way in.\n  if (store.posted.length > 400) store.posted = store.posted.slice(-400);\n}\n\nconst reason = landed\n  ? ''\n  : body.error\n    ? `Facebook refused it: ${body.error.message || JSON.stringify(body.error)}`\n    : `Facebook answered ${status || 'nothing'} with no post id. Body: ${JSON.stringify(body).slice(0, 400)}`;\n\nreturn [\n  {\n    json: {\n      landed,\n      failed: !landed,\n      origin: src.origin,\n      term: src.term,\n      postId,\n      permalink: postId ? `https://www.facebook.com/${postId}` : '',\n      link: src.link || '',\n      message: src.message,\n      reason,\n    },\n  },\n];\n"
+      },
+      "id": "land",
+      "name": "Did it actually land?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [920, 150]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.failed }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "iffail",
+      "name": "Did it fail?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1140, 150]
+    },
+    {
+      "parameters": {
+        "subject": "=A2Z: the Facebook Page post did not go out ({{ $json.term }})",
+        "emailFormat": "text",
+        "options": {},
+        "fromEmail": "antbytelabs@gmail.com",
+        "toEmail": "antbytelabs@gmail.com",
+        "text": "={{ $json.reason }}\n\nTrend or topic: {{ $json.term }}\nCame from: {{ $json.origin }}\nLink it would have carried: {{ $json.link || '(none)' }}\n\nThe caption it tried to publish:\n{{ $json.message }}\n\nNothing retries on its own. A trend is only marked as posted once the Page confirms it, so this one will be offered again on the next run."
+      },
+      "id": "mail",
+      "name": "Email what failed",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1360, 60],
+      "credentials": {
+        "smtp": {
+          "id": "8OZYj3nkqzPcBsm8",
+          "name": "SMTP — antbytelabs"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Three times a day": {
+      "main": [
+        [
+          {
+            "node": "Today's Google Trends",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Today's Google Trends": {
+      "main": [
+        [
+          {
+            "node": "Pick a trend nobody has posted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick a trend nobody has posted": {
+      "main": [
+        [
+          {
+            "node": "Post to the Facebook Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Muse sends a post": {
+      "main": [
+        [
+          {
+            "node": "Check what Muse sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check what Muse sent": {
+      "main": [
+        [
+          {
+            "node": "Post to the Facebook Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to the Facebook Page": {
+      "main": [
+        [
+          {
+            "node": "Did it actually land?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Did it actually land?": {
+      "main": [
+        [
+          {
+            "node": "Did it fail?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Did it fail?": {
+      "main": [
+        [
+          {
+            "node": "Email what failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kathmandu"
+  },
+  "tags": []
+}

@@ -232,6 +232,82 @@ no thin-link posts and nothing stale.
 
 Needs `A2Z_MCP_TOKEN` and the SMTP credential. Both are set, and it is active.
 
+### 09 — trends to the Facebook Page
+
+Posts a trending topic to a Facebook Page. It has two ways in and they share
+everything downstream:
+
+- **The schedule.** 09:00, 14:00 and 20:00 Asia/Kathmandu, it reads
+  `https://trends.google.com/trending/rss?geo=$TRENDS_GEO`, picks one trend
+  nobody has posted, and builds the caption from the feed's own words. The
+  search term, the headline and the outlet name all come from Google, so no
+  step in the schedule path can invent a fact.
+- **The webhook.** `POST /webhook/muse-facebook-post` takes a caption that Muse
+  (or anything else holding the secret) has already written, and publishes it.
+
+Both land on the same Graph API call, the same check that the post really
+appeared, and the same failure email.
+
+What the picker refuses, so the Page stays worth following:
+
+| Skipped when                                                    | Why                                                                                 |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| No news article attached to the trend                           | There would be nothing to say and nothing to link                                   |
+| The term or the lead headline reads as grief, crime or disaster | "It is trending" is not a reason to post a death notice between two cricket updates |
+| The term was posted in the last `TRENDS_COOLDOWN_DAYS` days     | Otherwise the same story goes out every run for as long as it keeps trending        |
+| A word in `TRENDS_BLOCKLIST` matches                            | Anything the Page should stay out of                                                |
+
+Only the term and the **lead** headline are screened, not all three articles.
+Screening all of them rejected an anime finale for the words "Thousand-Year
+Blood War" and a markets story for "Trade War Rout", neither of which would
+have appeared in the caption.
+
+A trend is recorded as posted **after** the Page confirms it, never before, so
+a failed run leaves it in the pool instead of silently dropping it. Facebook
+answers `200` with an error object in the body, so the status code alone is not
+treated as proof: the post counts as published only when a post id comes back.
+
+Variables: `TRENDS_GEO` (`NP`), `TRENDS_PLACE` (`Nepal`),
+`TRENDS_COOLDOWN_DAYS` (`14`), `TRENDS_BLOCKLIST` (empty),
+`MUSE_WEBHOOK_SECRET`, `META_PAGE_ID`, `META_ACCESS_TOKEN`.
+
+It is **inactive** until `META_PAGE_ID` and `META_ACCESS_TOKEN` hold a real
+Page id and a Page access token with `pages_manage_posts`. Activating it before
+then would email a failure three times a day.
+
+The caption carries the article link, so Facebook renders the publisher's own
+preview card. It does not re-upload the publisher's photo, which would be
+someone else's image on a monetised Page.
+
+## Connecting Muse, or anything else, to this n8n
+
+Muse needs two things, and both already exist:
+
+| Field    | Value                                                                          |
+| -------- | ------------------------------------------------------------------------------ |
+| Base URL | `https://n8n.apps.antbytelabs.com` (some connectors want `/api/v1` on the end) |
+| API key  | In `~/oracle-free/n8n-api-key`. It has no expiry                               |
+
+The key is a full-access public-API key: anything holding it can read, edit,
+create and delete every workflow on the instance. n8n has no scope system for
+these, so there is no narrower key to hand out. If Muse should only be able to
+publish a post and nothing else, give it the **webhook** and
+`MUSE_WEBHOOK_SECRET` instead of the API key, and keep the key for yourself.
+
+The webhook is the narrow door:
+
+```bash
+curl -X POST https://n8n.apps.antbytelabs.com/webhook/muse-facebook-post \
+  -H "x-muse-secret: $MUSE_WEBHOOK_SECRET" \
+  -H 'Content-Type: application/json' \
+  -d '{"message":"The caption, already written.","link":"https://example.com/article"}'
+```
+
+`message` is required. `link` is optional and must be https. `term` and
+`source` are accepted and only used in the failure email. It fails closed: if
+`MUSE_WEBHOOK_SECRET` is not set on the service, every call is refused rather
+than accepted unsigned.
+
 ## Env access had to be unblocked
 
 Coolify's n8n template sets `N8N_BLOCK_ENV_ACCESS_IN_NODE` to `true` by
