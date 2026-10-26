@@ -1,0 +1,475 @@
+{
+  "checkedAt": "2026-10-26T14:11:01.671Z",
+  "site": "https://a2zskillsewa.com",
+  "generated_assets": 14,
+  "pictures": [
+    {
+      "slug": "home",
+      "url": "https://a2zskillsewa.com/_astro/tech-workbench.CXiXrMkP_IU8Ur.webp",
+      "status": 200
+    },
+    {
+      "slug": "ai-detectors-flagging-human-writing",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.DHvkQWZ9_ZVjUkQ.webp",
+      "status": 200,
+      "alt": "A pencil and handwritten sheet under an uncertain inspection lens.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "automations-failing-silently",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.C41d4PsE_ZOoBqX.webp",
+      "status": 200,
+      "alt": "Connected workflow tiles ending at a gap before an empty receiving tray.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "chatgpt-different-answers-same-question",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.pbB7NVj__Z9xqrr.webp",
+      "status": 200,
+      "alt": "One question bubble branching into three different illustrated replies.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "cloudflare-workers-custom-domain-not-working",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.nb7BxBVZ_k8oj.webp",
+      "status": 200,
+      "alt": "A cloud and domain globe separated by an unconnected cable.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "deleting-files-not-freeing-disk-space",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.CkyIJgom_Kcs43.webp",
+      "status": 200,
+      "alt": "A packed storage drive beside a basket containing discarded file tiles.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "dns-propagation-explained",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.fVWXsa6V_l4udF.webp",
+      "status": 200,
+      "alt": "A central server connected to globe nodes holding different cached record tiles.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "excel-changing-numbers-into-dates",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.fRpRH3tA_cwsgo.webp",
+      "status": 200,
+      "alt": "A spreadsheet tile transforming into a calendar-shaped tile.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "excel-file-size-too-large",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.Cjjc2zrA_Z29vwSP.webp",
+      "status": 200,
+      "alt": "An overstuffed spreadsheet folder with layered sheets beneath a magnifying glass.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "n8n-webhook-not-working",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.shBAxGbD_Z2cRqdv.webp",
+      "status": 200,
+      "alt": "Two illustrated webhook paths leading from a laptop to different workflow endpoints.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "phone-slows-down-gets-older",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.DgMC6Pn-_1v2qbJ.webp",
+      "status": 200,
+      "alt": "A phone surrounded by application tiles and a slow-moving tortoise.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "phone-storage-full-after-deleting-photos",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.D-USohZp_1U6oNo.webp",
+      "status": 200,
+      "alt": "Photo tiles grouped around a phone, cloud and recently-deleted basket.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "self-host-n8n-coolify",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.pZ86Eyyw_ZVPBb8.webp",
+      "status": 200,
+      "alt": "A small server connected to a cloud and colourful workflow blocks.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "windows-restart-finish-installing-updates",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.CQhdKqVk_Z1A4Wd9.webp",
+      "status": 200,
+      "alt": "A laptop and interlocking update pieces surrounded by a restart arrow.",
+      "format": "webp",
+      "width": 1200,
+      "height": 750
+    }
+  ],
+  "social": [
+    {
+      "slug": "home",
+      "url": "https://a2zskillsewa.com/_astro/tech-workbench.CXiXrMkP_Z2d1Tp8.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "ai-detectors-flagging-human-writing",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.DHvkQWZ9_Z1iW0Q7.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "automations-failing-silently",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.C41d4PsE_Z1c1GWe.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "chatgpt-different-answers-same-question",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.pbB7NVj__ZwavWH.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "cloudflare-workers-custom-domain-not-working",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.nb7BxBVZ_ZmhW6W.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "deleting-files-not-freeing-disk-space",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.CkyIJgom_nzmxM.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "dns-propagation-explained",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.fVWXsa6V_Z1xAhA.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "excel-changing-numbers-into-dates",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.fRpRH3tA_Za5CeR.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "excel-file-size-too-large",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.Cjjc2zrA_Z2w8Cp6.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "n8n-webhook-not-working",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.shBAxGbD_2uGC5a.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "phone-slows-down-gets-older",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.DgMC6Pn-_18pkFt.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "phone-storage-full-after-deleting-photos",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.D-USohZp_1xtji8.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "self-host-n8n-coolify",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.pZ86Eyyw_Z1jsGGo.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "slug": "windows-restart-finish-installing-updates",
+      "url": "https://a2zskillsewa.com/_astro/cover-illustration.CQhdKqVk_Z1WH2Ip.jpeg",
+      "status": 200,
+      "width": 1200,
+      "height": 630
+    }
+  ],
+  "layouts": [
+    {
+      "path": "/",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "path": "/topics/",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "path": "/topics/automation/",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "path": "/self-host-n8n-coolify/",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "path": "/",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "path": "/topics/",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "path": "/topics/automation/",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "path": "/self-host-n8n-coolify/",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "path": "/",
+      "width": 1280,
+      "overflow": false
+    },
+    {
+      "path": "/topics/",
+      "width": 1280,
+      "overflow": false
+    },
+    {
+      "path": "/topics/automation/",
+      "width": 1280,
+      "overflow": false
+    },
+    {
+      "path": "/self-host-n8n-coolify/",
+      "width": 1280,
+      "overflow": false
+    }
+  ],
+  "search_pointer_verified": true,
+  "sitemap_image_count": 13,
+  "all_sitemap_images_200": true,
+  "sitemap_page_count": 29,
+  "all_sitemap_pages_pass": true,
+  "browser_errors": [],
+  "pages": [
+    {
+      "url": "https://a2zskillsewa.com/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/automations-failing-silently/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/chatgpt-different-answers-same-question/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/dns-propagation-explained/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/excel-changing-numbers-into-dates/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/excel-file-size-too-large/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/n8n-webhook-not-working/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/phone-slows-down-gets-older/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/windows-restart-finish-installing-updates/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/ai-tools/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/automation/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/excel-office/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/phones/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/websites-hosting/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/topics/windows-mac/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/devchandra-shrestha/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/krishna-pokharel/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/authors/ronit-karki/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/about/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/affiliate-disclosure/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/contact/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/editorial-policy/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    },
+    {
+      "url": "https://a2zskillsewa.com/privacy/",
+      "status": 200,
+      "canonical": true,
+      "noindex": false
+    }
+  ],
+  "worker_version": "c08caff7-ad43-48ac-971d-b87f42e01569",
+  "source_commit": "a14090c"
+}

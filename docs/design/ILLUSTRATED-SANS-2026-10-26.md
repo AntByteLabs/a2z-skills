@@ -78,4 +78,13 @@ captures. All twelve principal captures had no document overflow. Visual
 review also found and fixed a featured-thumbnail container that could shrink
 inside its row. Screenshots remain local in `/tmp/a2z-illustrated-review/`.
 
-Deployment and live-image checks will be recorded after publication.
+Published to [a2zskillsewa.com](https://a2zskillsewa.com/) and pushed to main.
+The live browser decoded all fourteen artwork images and all fourteen unique
+1200 by 630 sharing images. All thirteen image-sitemap entries and all 29 page
+URLs returned 200. Page canonicals remained correct. Phone, tablet and desktop
+layout checks found no overflow; pointer search worked and no browser errors
+were recorded. Article text used the sans-serif stack on the live site.
+
+Worker version: `c08caff7-ad43-48ac-971d-b87f42e01569`.
+See [live verification and public asset URLs](live-illustrated-2026-10-26.json).
+The local preview server was stopped after verification.
