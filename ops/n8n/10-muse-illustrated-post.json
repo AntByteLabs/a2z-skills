@@ -15,7 +15,7 @@
       "name": "Muse sends a news item",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [0, 200],
+      "position": [0, 300],
       "webhookId": "muse-illustrated-post"
     },
     {
@@ -26,7 +26,7 @@
       "name": "Check what Muse sent",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [220, 200]
+      "position": [200, 300]
     },
     {
       "parameters": {
@@ -54,7 +54,7 @@
       "name": "Does it need an image?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
-      "position": [440, 200]
+      "position": [400, 300]
     },
     {
       "parameters": {
@@ -90,7 +90,7 @@
       "name": "Generate the illustration",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [660, 100]
+      "position": [620, 200]
     },
     {
       "parameters": {
@@ -100,7 +100,7 @@
       "name": "Take the generated image",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [880, 100]
+      "position": [840, 200]
     },
     {
       "parameters": {
@@ -110,7 +110,7 @@
       "name": "Use the image Muse sent",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [660, 320]
+      "position": [620, 420]
     },
     {
       "parameters": {
@@ -126,7 +126,7 @@
       "name": "Base64 to a real file",
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
-      "position": [1100, 200]
+      "position": [1060, 300]
     },
     {
       "parameters": {
@@ -165,7 +165,7 @@
       "name": "Post the photo to the Page",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1320, 200]
+      "position": [1260, 300]
     },
     {
       "parameters": {
@@ -175,7 +175,266 @@
       "name": "Did it actually land?",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1540, 200]
+      "position": [1460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.landed }}",
+              "rightValue": ""
+            },
+            {
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              },
+              "leftValue": "={{ $env.META_IG_USER_ID }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ifig",
+      "name": "Post to Instagram too?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1660, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.facebook.com/v23.0/{{ $json.photoId }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "images"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $env.META_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "readback",
+      "name": "Read the photo back",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1880, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Choose which stored representation of the photo to hand Instagram.\n//\n// The Photo node's \"images\" field is \"the different stored representations of\n// the photo\", and the number of them varies with the size of the original, so\n// the list cannot be indexed blindly. Instagram wants a JPEG between 320 and\n// 1440 pixels wide, so this takes the widest variant that still fits and\n// refuses rather than guessing when none does.\nconst res = $json || {};\nconst body = res.body || {};\nconst status = Number(res.statusCode || 0);\n\nif (body.error) {\n  throw new Error(`Could not read the photo back from Facebook: ${body.error.message || JSON.stringify(body.error)}`);\n}\nconst images = Array.isArray(body.images) ? body.images : [];\nif (!images.length) {\n  throw new Error(`Facebook answered ${status} with no \"images\" for the photo it just accepted. Body: ${JSON.stringify(body).slice(0, 300)}`);\n}\n\nconst MIN_W = 320;\nconst MAX_W = 1440;\nconst usable = images\n  .filter((i) => i && i.source && Number(i.width) >= MIN_W && Number(i.width) <= MAX_W)\n  .sort((a, b) => Number(b.width) - Number(a.width));\n\nif (!usable.length) {\n  const widths = images.map((i) => i.width).join(', ');\n  throw new Error(`None of the stored sizes fit what Instagram accepts (${MIN_W}-${MAX_W}px wide). Available widths: ${widths}.`);\n}\n\nconst chosen = usable[0];\nconst fb = $('Did it actually land?').first().json;\n\nreturn [\n  {\n    json: {\n      ...fb,\n      igImageUrl: chosen.source,\n      igImageWidth: Number(chosen.width),\n      igImageHeight: Number(chosen.height),\n      // Instagram makes no link clickable in a caption, so it gets the caption\n      // Muse wrote without the link that was appended for Facebook.\n      igCaption: fb.message,\n    },\n  },\n];\n"
+      },
+      "id": "pickurl",
+      "name": "Pick a usable image url",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2080, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v23.0/{{ $env.META_IG_USER_ID }}/media",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.igImageUrl }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $json.igCaption }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $env.META_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "container",
+      "name": "Create the Instagram container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2280, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.body.id }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ifcont",
+      "name": "Container created?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [2480, 200]
+    },
+    {
+      "parameters": {
+        "amount": 20,
+        "unit": "seconds"
+      },
+      "id": "wait",
+      "name": "Let it process",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2680, 120]
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.facebook.com/v23.0/{{ $('Create the Instagram container').item.json.body.id }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "status_code"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $env.META_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "check",
+      "name": "Check the container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2880, 120]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.body.status_code }}",
+              "rightValue": "FINISHED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ifready",
+      "name": "Container ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [3080, 120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v23.0/{{ $env.META_IG_USER_ID }}/media_publish",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $('Create the Instagram container').item.json.body.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $env.META_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "pub",
+      "name": "Publish to Instagram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3280, 40]
+    },
+    {
+      "parameters": {
+        "jsCode": "// One report covering both networks.\n//\n// Facebook and Instagram fail independently here: the Instagram branch only\n// runs when Facebook already succeeded and META_IG_USER_ID is set, so a\n// Facebook failure reports alone and an Instagram failure never implies the\n// Facebook post is missing. Reading a node that did not run throws, so each\n// lookup is guarded and absence is itself the signal.\nconst read = (name) => {\n  try {\n    return $(name).first().json;\n  } catch (e) {\n    return null;\n  }\n};\n\nconst fb = read('Did it actually land?') || {\n  landed: false,\n  topic: '(unknown)',\n  message: '',\n  reason: 'The Facebook step did not run.',\n};\n\nconst container = read('Create the Instagram container');\nconst checked = read('Check the container');\nconst published = read('Publish to Instagram');\nconst picked = read('Pick a usable image url');\n\nconst problems = [];\nif (!fb.landed) problems.push(`Facebook: ${fb.reason}`);\n\nlet igState;\nlet igId = '';\nif (!container) {\n  igState = $env.META_IG_USER_ID ? 'not attempted' : 'skipped, META_IG_USER_ID is not set';\n} else {\n  const cBody = (container.body ?? container) || {};\n  if (cBody.error) {\n    const m = cBody.error.message || JSON.stringify(cBody.error);\n    igState = 'the container was refused';\n    problems.push(\n      `Instagram: ${m}` +\n        (/fetch|download|uri|url/i.test(m)\n          ? ` — Instagram downloads image_url itself, and this one is a signed Facebook CDN link. If this keeps happening, the image needs a long-lived public URL instead.`\n          : ''),\n    );\n  } else if (published) {\n    const pBody = (published.body ?? published) || {};\n    if (pBody.error) {\n      igState = 'publishing was refused';\n      problems.push(`Instagram: ${pBody.error.message || JSON.stringify(pBody.error)}`);\n    } else if (pBody.id) {\n      igState = 'published';\n      igId = String(pBody.id);\n    } else {\n      igState = 'publishing returned no id';\n      problems.push(`Instagram: no media id came back. Body: ${JSON.stringify(pBody).slice(0, 300)}`);\n    }\n  } else {\n    const sBody = (checked && (checked.body ?? checked)) || {};\n    const code = sBody.status_code || '(unknown)';\n    igState = `the container never reached FINISHED (${code})`;\n    problems.push(\n      `Instagram: the container was still \"${code}\" when it was checked. Raising the wait would give it longer.`,\n    );\n  }\n}\n\nreturn [\n  {\n    json: {\n      ...fb,\n      igState,\n      igMediaId: igId,\n      igImageUrl: picked ? picked.igImageUrl : '',\n      failed: problems.length > 0,\n      problems,\n      reason: problems.join('\\n\\n'),\n    },\n  },\n];\n"
+      },
+      "id": "collect",
+      "name": "Collect both results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3500, 300]
     },
     {
       "parameters": {
@@ -200,25 +459,25 @@
         "options": {}
       },
       "id": "iffail",
-      "name": "Did it fail?",
+      "name": "Did anything fail?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
-      "position": [1760, 200]
+      "position": [3700, 300]
     },
     {
       "parameters": {
-        "subject": "=A2Z: the illustrated post did not go out ({{ $json.topic }})",
+        "subject": "=A2Z: the illustrated post needs a look ({{ $json.topic }})",
         "emailFormat": "text",
         "options": {},
         "fromEmail": "antbytelabs@gmail.com",
         "toEmail": "antbytelabs@gmail.com",
-        "text": "={{ $json.reason }}\n\nTopic: {{ $json.topic }}\nImage: {{ $json.imageFrom }}, about {{ $json.imageBytes }} bytes\nLink in the caption: {{ $json.link || '(none)' }}\n\nThe caption it tried to publish:\n{{ $json.message }}\n\nNothing retries on its own. Muse can send the same item again once the cause is fixed."
+        "text": "={{ $json.problems.join('\\n\\n') }}\n\nTopic: {{ $json.topic }}\nFacebook: {{ $json.landed ? 'posted, ' + $json.permalink : 'not posted' }}\nInstagram: {{ $json.igState }}\nImage: {{ $json.imageFrom }}, about {{ $json.imageBytes }} bytes\n\nThe caption it tried to publish:\n{{ $json.message }}\n\nNothing retries on its own. If Facebook posted and Instagram did not, re-sending the same item would post to Facebook twice."
       },
       "id": "mail",
       "name": "Email what failed",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
-      "position": [1980, 100],
+      "position": [3900, 200],
       "credentials": {
         "smtp": {
           "id": "8OZYj3nkqzPcBsm8",
@@ -327,14 +586,145 @@
       "main": [
         [
           {
-            "node": "Did it fail?",
+            "node": "Post to Instagram too?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Did it fail?": {
+    "Post to Instagram too?": {
+      "main": [
+        [
+          {
+            "node": "Read the photo back",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Collect both results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read the photo back": {
+      "main": [
+        [
+          {
+            "node": "Pick a usable image url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick a usable image url": {
+      "main": [
+        [
+          {
+            "node": "Create the Instagram container",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create the Instagram container": {
+      "main": [
+        [
+          {
+            "node": "Container created?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Container created?": {
+      "main": [
+        [
+          {
+            "node": "Let it process",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Collect both results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Let it process": {
+      "main": [
+        [
+          {
+            "node": "Check the container",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check the container": {
+      "main": [
+        [
+          {
+            "node": "Container ready?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Container ready?": {
+      "main": [
+        [
+          {
+            "node": "Publish to Instagram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Collect both results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publish to Instagram": {
+      "main": [
+        [
+          {
+            "node": "Collect both results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect both results": {
+      "main": [
+        [
+          {
+            "node": "Did anything fail?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Did anything fail?": {
       "main": [
         [
           {

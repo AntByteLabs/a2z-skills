@@ -348,19 +348,49 @@ file reached Facebook intact and only the Page id was missing.
 The `image_prompt` route has **not** been run. There is no OpenAI key on the
 service, so the generation call itself is untested here.
 
-#### Instagram is not wired up
+#### Instagram, through Facebook's own CDN
 
 An Instagram container takes `image_url` and will not accept an uploaded file,
-so publishing a generated image there needs the image on a public URL first.
-Nothing here hosts one: there is no R2 bucket on the account, and the site is
-static assets on a Worker.
+so the image has to be on a public URL before Instagram will touch it. Nothing
+here hosts one: there is no R2 bucket on the account, and the site is static
+assets on a Worker.
 
-Two ways to add it, neither built:
+So the Facebook post becomes the host. Once the photo lands, the workflow reads
+it back with `GET /{photo-id}?fields=images` and hands one of those URLs to the
+Instagram container. No new infrastructure, and the image is one the Page has
+already accepted.
 
-- Read the Facebook photo's own CDN URL back from the Graph API after the post
-  lands, and hand that to the Instagram container. No new infrastructure.
-- Put the image in an R2 bucket with a public URL. More moving parts, and the
-  URL does not expire.
+```
+photo post lands -> read images back -> pick a width -> container -> wait -> publish
+```
+
+`images` is "the different stored representations of the photo" and the number
+of them "can vary based upon the size of the original", so the list cannot be
+indexed blindly. The workflow takes the widest variant between 320 and 1440
+pixels, which is what Instagram accepts, and fails with the available widths
+listed when none of them fits.
+
+The two networks fail independently. Instagram is only attempted when Facebook
+already succeeded and `META_IG_USER_ID` is set, so a Facebook failure reports
+on its own and an Instagram failure never implies the Facebook post is missing.
+The email names which network did what.
+
+**The known risk.** Instagram downloads `image_url` itself, and a Facebook CDN
+URL is signed. Meta's own guidance is to use a long-lived public URL rather
+than a short-lived signed one, so this is the weak point of the approach. When
+the container is refused with a fetch error, the email says so and names the
+signed URL as the likely cause, rather than reporting a generic failure. If it
+turns out to be unreliable in practice, the fix is an R2 bucket with a public
+URL, and only the two nodes between the photo post and the container change.
+
+Variables for this part: `META_IG_USER_ID`, and the same `META_ACCESS_TOKEN`.
+Leave `META_IG_USER_ID` empty and the workflow posts to Facebook only, which
+the report states rather than passing over in silence.
+
+**Untested.** The Instagram branch has not run against the live API: it needs a
+Page token and a linked Instagram account, neither of which is on the service.
+The branch logic was tested against seven simulated outcomes, including a
+refused container, a container stuck at `IN_PROGRESS`, and a refused publish.
 
 ## Connecting Muse, or anything else, to this n8n
 
