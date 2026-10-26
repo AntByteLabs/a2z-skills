@@ -9,12 +9,12 @@ interface Props {
 }
 const { post, showPillar = false } = Astro.props;
 const { data } = post;
-const stamp = data.updatedAt ?? data.publishedAt;
+const shown = data.updatedAt ?? data.publishedAt;
 ---
 
-<article class="group border-b border-rule py-3.5 last:border-b-0">
+<article class="group">
   <a href={postPath(post)} class="block no-underline">
-    <h3 class="font-display text-base font-semibold text-ink group-hover:text-brand-deep sm:text-lg">
+    <h3 class="font-display text-lg font-semibold leading-snug text-ink group-hover:text-brand-deep sm:text-xl">
       {data.title}
     </h3>
     <p class="mt-1 line-clamp-2 text-sm text-ink-soft">{data.description}</p>
@@ -22,7 +22,7 @@ const stamp = data.updatedAt ?? data.publishedAt;
   <p class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-faint">
     <span class="pill">{data.type}</span>
     {data.testedOn && (
-      <span class="pill text-good">
+      <span class="stamp">
         <svg aria-hidden="true" viewBox="0 0 12 12" class="h-3 w-3" fill="currentColor">
           <path d="M4.6 9 1.4 5.8l1.1-1.1 2.1 2.1 4.9-4.9 1.1 1.1z" />
         </svg>
@@ -34,8 +34,8 @@ const stamp = data.updatedAt ?? data.publishedAt;
         {data.pillar}
       </a>
     )}
-    <time datetime={stamp.toISOString()}>
-      {data.updatedAt ? `updated ${formatDate(stamp)}` : formatDate(stamp)}
+    <time datetime={shown.toISOString()}>
+      {data.updatedAt ? `updated ${formatDate(shown)}` : formatDate(shown)}
     </time>
     <span aria-hidden="true">·</span>
     <span>{readingMinutes(post.body ?? '')} min</span>

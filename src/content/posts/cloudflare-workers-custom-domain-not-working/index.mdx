@@ -154,6 +154,10 @@ With the zone active, put the route back and deploy again:
 }
 ```
 
+The same split shows up when self-hosting: in
+[self-host n8n on Coolify](/self-host-n8n-coolify/) the platform and the
+application each hold their own copy of the hostname, and both have to be told.
+
 A custom domain cannot redirect `www` to the apex. That is a Redirect Rule in
 the dashboard, free to add, and it is not a line in `_redirects`. And
 `_redirects` and `_headers` do work on Workers static assets, which a lot of

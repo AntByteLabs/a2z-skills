@@ -1,0 +1,166 @@
+---
+title: Self-host n8n on Coolify
+description: 'Coolify deploys n8n in a click, then three things fight you: the domain, the credentials API and the email node. Here is each one, with the fix.'
+pillar: automation
+type: how-to
+tags: [n8n, coolify, self-hosting, automation]
+author: ronit-karki
+publishedAt: 2026-10-26
+quickAnswer: "Coolify's one-click n8n works, but the domain it generates cannot be changed through the environment variables that look like they control it. Use PATCH /api/v1/services/{uuid} with a urls array, then change N8N_HOST, WEBHOOK_URL and N8N_EDITOR_BASE_URL to match."
+testedOn:
+  date: 2026-10-26
+  versions:
+    Coolify: '4.5.0'
+    n8n: '2.10.2'
+    Ubuntu: '24.04 arm64'
+  device: Oracle Always Free VM, 2 OCPU and 12 GB
+  testedBy: Ronit Karki
+faq:
+  - q: 'How much memory does n8n use on a small server?'
+    a: 'Around 550 MB resident with the task runners enabled, measured on an idle instance with no workflows. On a 12 GB box that is comfortable; on a 1 GB box it is not.'
+  - q: 'Can I import workflows without using the editor?'
+    a: 'Yes. POST /api/v1/workflows with an API key accepts name, nodes, connections and settings. It rejects anything else in the payload, including the active flag, so activate separately.'
+  - q: 'Why does my imported workflow refuse to activate?'
+    a: 'Usually a node that imported cleanly but has the wrong parameter names for its version. n8n accepts the JSON and only complains when you publish, with a message naming the node but not the field.'
+  - q: 'Does the free Coolify one-click include a database?'
+    a: 'The n8n template runs on SQLite by default, which is fine for a few workflows. Move to the Postgres variant before you depend on it for anything with volume.'
+draft: false
+---
+
+Coolify will deploy n8n from its service catalogue in about a minute, and then
+three things get in the way: the domain it picks for you, a credentials API that
+rejects its own documented field, and an email node whose parameters changed
+names. None of them is in the Coolify or n8n docs. This is the sequence that
+works, from the [automation](/topics/automation/) side of things.
+
+## Deploy the service
+
+In Coolify, add a new Service, choose n8n, and pick the server and project. The
+template brings up two containers, `n8n` and `task-runners`, and they are
+healthy within a minute or so.
+
+<Callout type="note">
+  n8n 2.10 logs a deprecation on startup: `N8N_RUNNERS_ENABLED` is no longer needed. The
+  Coolify template still sets it. Harmless, but do not copy it into anything new.
+</Callout>
+
+## Set the domain, the way that actually works
+
+Coolify gives the service a generated hostname like
+`n8n-citjvi7i6byqkriqljgsnlap.apps.example.com`. The obvious fix is to change
+`SERVICE_FQDN_N8N`, the environment variable that holds it.
+
+That does not work. Coolify regenerates the value from the stored domain on
+every deploy, so your change survives until the next redeploy and then vanishes.
+The domain is a property of the service, not an environment variable.
+
+The API does expose it, under a name that is hard to guess:
+
+```bash
+curl -X PATCH "https://coolify.example.com/api/v1/services/<service-uuid>" \
+  -H "Authorization: Bearer $COOLIFY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"urls":[{"name":"n8n","url":"https://n8n.example.com"}]}'
+```
+
+`name` is the **compose service name**, not the Coolify service name. If you get
+the shape wrong, the validation error tells you what it wants:
+
+```text
+{"message":"Validation failed.","errors":{"urls.0":[
+"An item in the urls array has invalid fields. Only name and url fields are supported."]}}
+```
+
+<Steps>
+  <Step title="Patch the domain">
+    The call above. The response echoes the domain, which is how you know it took.
+  </Step>
+  <Step title="Change the three settings that embed the hostname">
+    `N8N_HOST`, `WEBHOOK_URL` and `N8N_EDITOR_BASE_URL`. Miss these and every form URL and
+    webhook n8n generates still points at the old hostname, which is the kind of bug you
+    find a week later in a live workflow.
+  </Step>
+  <Step title="Redeploy and check">
+    ```bash curl -s -o /dev/null -w '%{http_code}\n' https://n8n.example.com/healthz ``` 200
+    means Traefik has a route and a certificate for the new name.
+  </Step>
+</Steps>
+
+## Create the owner account without the browser
+
+The first run needs an owner. It is one call, and doing it from the terminal
+means the password goes straight into your password manager rather than through
+a browser form:
+
+```bash
+curl -X POST "https://n8n.example.com/rest/owner/setup" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com","firstName":"Your","lastName":"Name","password":"<generated>"}'
+```
+
+Then log in to get a session cookie, and create an API key with
+`POST /rest/api-keys`. The key is what the public API at `/api/v1/` accepts.
+
+## Import workflows from files
+
+`POST /api/v1/workflows` takes `name`, `nodes`, `connections` and `settings`,
+and rejects a payload carrying anything else. Keep your workflow JSON in version
+control and import it rather than clicking it together twice.
+
+Two things will catch you out, and both pass import silently.
+
+**The SMTP credential rejects its own schema.** `GET /api/v1/credentials/schema/smtp`
+lists `disableStartTls` as a property. Send it, and the API refuses the whole
+credential:
+
+```text
+request.body.data does not match allOf schema [subschema 0]
+```
+
+Send only `user`, `password`, `host`, `port` and `secure`, and it works.
+
+**The email node's parameters are not the Gmail node's.** `emailSend` v2.1 wants
+`fromEmail`, `toEmail` and `text`. If you write `sendTo` and `message`, the
+workflow imports without complaint and then refuses to publish:
+
+```text
+Cannot publish workflow: 1 node have configuration issues:
+Node "Email the problems":
+  - Missing or invalid required parameters (2 issues)
+```
+
+It names the node and not the fields, which is why this one costs an hour if you
+do not already know.
+
+<WhatBroke>
+  Three things, none of them documented where we were looking.
+
+**The domain.** We changed `SERVICE_FQDN_N8N`, redeployed, and the generated
+hostname came back. We only found the `urls` field by sending deliberately
+wrong payloads to the PATCH endpoint and reading the validation errors, which
+named the accepted fields.
+
+**Testing the SMTP credential proved nothing.** `POST /rest/credentials/test`
+returned an empty status and an empty message rather than a pass or a fail. The
+only way to know the credential worked was to build a one-node workflow with a
+manual trigger, run it, and read the execution: `accepted: [the address],
+  rejected: []` straight from Gmail.
+
+**A schedule-triggered workflow cannot be run from the public API.** There is
+no endpoint for it. The editor uses `POST /rest/workflows/{id}/run` with a
+session cookie, and so can you, passing the full workflow data in the body.
+
+Memory, for sizing: n8n and its task runners sat at about 550 MB resident with
+no workflows running.
+
+</WhatBroke>
+
+## What this is good for
+
+Once it runs, n8n is the glue for everything that is not worth writing a service
+for: a form that opens a ticket, a schedule that checks a live site and emails
+only when something is wrong, a weekly report pulled from an API. The same
+pattern as the
+[Cloudflare Workers custom domain](/cloudflare-workers-custom-domain-not-working/)
+problem shows up here too: the hosting layer and the application layer each have
+an opinion about the domain, and they have to be told the same thing twice.

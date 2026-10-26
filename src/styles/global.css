@@ -36,21 +36,24 @@
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  --color-ink: oklch(0.235 0.022 265);
+  --color-ink: oklch(0.2 0.025 268);
   --color-ink-soft: oklch(0.455 0.02 265);
   --color-ink-faint: oklch(0.525 0.016 265);
   --color-paper: oklch(0.993 0.006 85);
   --color-paper-sunk: oklch(0.965 0.012 85);
   --color-rule: oklch(0.885 0.012 85);
 
-  --color-brand: oklch(0.52 0.15 255);
-  --color-brand-deep: oklch(0.405 0.135 258);
+  --color-brand: oklch(0.5 0.16 258);
+  --color-brand-deep: oklch(0.36 0.14 260);
   --color-brand-wash: oklch(0.955 0.025 255);
-  --color-accent: oklch(0.53 0.15 45);
+  --color-accent: oklch(0.53 0.16 42);
   --color-accent-edge: oklch(0.62 0.16 45);
   --color-good: oklch(0.47 0.12 155);
   --color-warn: oklch(0.52 0.13 75);
   --color-bad: oklch(0.5 0.18 25);
+
+  --color-ink-invert: oklch(0.16 0.02 268);
+  --color-highlight: oklch(0.93 0.09 95);
 
   --radius-card: 0.75rem;
   --radius-pill: 999px;
@@ -167,6 +170,7 @@
     --color-ink-faint: oklch(0.655 0.014 262);
     --color-paper: oklch(0.205 0.016 262);
     --color-paper-sunk: oklch(0.255 0.018 262);
+    --color-highlight: oklch(0.42 0.1 95);
     --color-rule: oklch(0.345 0.02 262);
     --color-brand: oklch(0.76 0.12 255);
     --color-brand-deep: oklch(0.82 0.1 255);
@@ -187,6 +191,7 @@
   --color-ink-faint: oklch(0.655 0.014 262);
   --color-paper: oklch(0.205 0.016 262);
   --color-paper-sunk: oklch(0.255 0.018 262);
+  --color-highlight: oklch(0.42 0.1 95);
   --color-rule: oklch(0.345 0.02 262);
   --color-brand: oklch(0.76 0.12 255);
   --color-brand-deep: oklch(0.82 0.1 255);
@@ -227,6 +232,68 @@
 }
 
 /* A small, calm label: post type, counts, tested-on badges. */
+/*
+ * The things that stop the page reading like a template. A paper grain, a
+ * marker highlight behind the words that matter, a stamp for a tested post,
+ * and oversized index numerals on the post list. All CSS: no image is
+ * downloaded for any of it, so the performance budget is untouched.
+ */
+@utility grain {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      oklch(0.2 0.025 268 / 0.045) 1px,
+      transparent 0
+    );
+    background-size: 14px 14px;
+  }
+}
+
+/* A hand-drawn marker behind a phrase, sitting under the letters. */
+@utility marker {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 58%,
+    var(--color-highlight) 58%,
+    var(--color-highlight) 94%,
+    transparent 94%
+  );
+  background-repeat: no-repeat;
+  padding-inline: 0.1em;
+}
+
+/* The proof mark. Rotated, because a stamp never lands straight. */
+@utility stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transform: rotate(-3deg);
+  border: 2px solid var(--color-good);
+  border-radius: 0.375rem;
+  padding: 0.125rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-good);
+}
+
+/* A rule that reads as an editorial divider rather than a border. */
+@utility rule-accent {
+  border: 0;
+  border-top: 3px solid var(--color-accent);
+  width: 2.5rem;
+  margin: 0;
+}
+
 @utility pill {
   display: inline-flex;
   align-items: center;
