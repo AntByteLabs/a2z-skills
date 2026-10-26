@@ -32,3 +32,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 ## Responsive library amendment
 
 User requested three article cards per row from the collection shown in their screenshot, with future ads organised properly. Keep one column below 640px, two from 640px and three from 1280px. Narrow the desktop topic sidebar to 15rem. Prepare one optional full-width advertising row after six matching cards, only when at least nine match; filtering repositions or hides it. Keep both advertising flags disabled and render no empty space while disabled.
+
+## Full-width collection correction
+
+The user’s next screenshot clarified that the right-hand sidebar gap must be filled by cards. The three-column collection now spans the full shell; topic links, editorial information and RSS follow below it. Preserve one/two/three responsive columns and the optional full-row advertising placement.

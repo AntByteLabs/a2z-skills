@@ -165,7 +165,7 @@ The pairing is friendly, direct and practical. Headings use tight tracking and b
 
 The shared shell has a maximum width of 83rem with 1rem gutters, increasing to 1.5rem from 640px. The masthead is 4rem high, increasing to 5rem from 1024px. Desktop navigation and inline search appear at 1024px; smaller screens use a native topic disclosure and separate search access.
 
-The home introduction stays short. Its featured guides split into a lead and supporting column at 1024px, with the lead illustration kept small beside the summary. The article library uses one card column below 640px and two from 640px and three from 1280px, with a 1.25rem gap. A 15rem topic sidebar joins at 1024px, separated by a vertical rule; it follows the cards on narrow screens.
+The home introduction stays short. Its featured guides split into a lead and supporting column at 1024px, with the lead illustration kept small beside the summary. The article library uses one card column below 640px and two from 640px and three from 1280px, with a 1.25rem gap. The library spans the full shell width at every breakpoint. Topic links, editorial information and RSS follow in a compact band below the cards, avoiding an empty side column.
 
 Topic hubs use a narrower 56rem wrapper, grouped cards and restrained section spacing. Article templates use a 19rem desktop sidebar and a main article capped at 42rem; the reading prose itself remains capped at 40rem. Secondary prose uses the existing 66ch measure. Tables of contents move into the article on small screens.
 

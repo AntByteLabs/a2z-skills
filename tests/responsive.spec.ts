@@ -271,6 +271,20 @@ test('the article library adapts from one to three readable columns', async ({ p
         return { x, y, width, right };
       }),
     );
+    const widths = await page.locator('[data-guide-library]').evaluate((library) => {
+      const style = getComputedStyle(library);
+      return {
+        available:
+          library.getBoundingClientRect().width -
+          parseFloat(style.paddingLeft) -
+          parseFloat(style.paddingRight),
+        grid: library.querySelector('[data-guide-list]')!.getBoundingClientRect().width,
+      };
+    });
+    expect(widths.grid, 'cards use the full available content width').toBeCloseTo(
+      widths.available,
+      0,
+    );
     const firstRow = boxes.filter((box) => Math.abs(box.y - boxes[0]!.y) < 1);
     expect(firstRow, `columns at ${width}px`).toHaveLength(columns!);
     expect(boxes[columns!]!.y).toBeGreaterThan(boxes[0]!.y);

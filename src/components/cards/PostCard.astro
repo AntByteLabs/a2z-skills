@@ -27,7 +27,7 @@ const shown = data.updatedAt ?? data.publishedAt;
       fit="cover"
       formats={['avif', 'webp']}
       fallbackFormat="webp"
-      sizes="(min-width: 1280px) 310px, (min-width: 1024px) 430px, (min-width: 640px) 46vw, 94vw"
+      sizes="(min-width: 1280px) 420px, (min-width: 640px) 46vw, 94vw"
       loading="lazy"
       class="aspect-[2/1] w-full object-cover"
       data-editorial-art
@@ -56,10 +56,10 @@ const shown = data.updatedAt ?? data.publishedAt;
         {data.title}
       </a>
     </h3>
-    <p class="mt-2 line-clamp-3 flex-1 text-base leading-relaxed text-ink-soft">
+    <p class="mt-2 mb-4 line-clamp-3 text-base leading-relaxed text-ink-soft">
       {data.description}
     </p>
-    <p class="mt-4 flex flex-wrap items-center gap-x-2 border-t border-rule pt-3 text-xs text-ink-faint">
+    <p class="mt-auto flex flex-wrap items-center gap-x-2 border-t border-rule pt-3 text-xs text-ink-faint">
       <time datetime={shown.toISOString()}>
         {data.updatedAt ? `Updated ${formatDate(shown)}` : formatDate(shown)}
       </time>
