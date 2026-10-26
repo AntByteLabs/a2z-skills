@@ -177,3 +177,43 @@ published, not queued.
 The token is the thing that will break this. Long-lived Page tokens last about
 60 days and then stop working. The verification step catches it, because an
 expired token returns a response with no `id`, and you get the email.
+
+### 07 — hero images from ChatGPT
+
+Every morning: asks the site's own MCP server which posts exist, reads each
+one, takes the first published post with no `heroImage`, generates an
+illustration for it with OpenAI's image API, and attaches it through
+`upload_image`, which commits the file and sets `heroImage` and `heroAlt`.
+Committing starts a build, so the image is live without anyone opening the
+repository. All thirteen published posts currently have no hero.
+
+**One image per run, on purpose.** The node that picks the post runs once per
+execution. Images are the only part of this stack that costs money per unit, so
+a bad prompt costs one picture rather than thirteen, and the daily schedule
+fills the backlog over a fortnight while you watch what comes out.
+
+**The prompt forbids text, interfaces and anything resembling a screenshot.**
+This is the important line. A generated picture of an Excel window or a Windows
+dialog is a fabricated screenshot, and on a site whose whole claim is that a
+person ran the steps, a plausible fake screenshot is the worst thing we could
+publish. The illustrations are flat, abstract and wordless by instruction, and
+the scene is chosen from a fixed map per pillar so the set looks related.
+
+Generated art is decoration, not evidence. A real screenshot still has to be
+captured during a real test, and it belongs in the body, not the hero.
+
+**It fails loudly.** An empty or suspiciously small response throws rather than
+uploading a broken hero, and the run only counts as successful if `upload_image`
+reports that the hero was set. Anything else emails you.
+
+#### Environment variables for 07
+
+| Variable             | What it is                                  |
+| -------------------- | ------------------------------------------- |
+| `A2Z_MCP_TOKEN`      | The MCP bearer token, from `~/oracle-free/` |
+| `OPENAI_API_KEY`     | A key with access to the images endpoint    |
+| `OPENAI_IMAGE_MODEL` | Optional. Defaults to `gpt-image-1`         |
+
+Image generation is billed per image, and the price depends on the model, size
+and quality tier you choose. Check OpenAI's current pricing before you activate
+this, and run it by hand once to see what one costs you.

@@ -1,0 +1,375 @@
+{
+  "name": "A2Z — hero images from ChatGPT",
+  "meta": {
+    "instanceId": "a2z-skills"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "id": "cron",
+      "name": "Every morning",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-720, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://a2z-skills-mcp.a2zskills.workers.dev",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.A2Z_MCP_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'list_posts', arguments: { includeDrafts: false } } }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "id": "list",
+      "name": "Ask the site for its posts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-520, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// The MCP answers JSON-RPC; the payload is a JSON string inside content[0].\nconst body = $json.body;\nif (body?.error) throw new Error(`list_posts: ${body.error.message}`);\nconst payload = JSON.parse(body.result.content[0].text);\nreturn payload.posts.map((p) => ({ json: p }));\n"
+      },
+      "id": "rows",
+      "name": "One item per post",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-320, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://a2z-skills-mcp.a2zskills.workers.dev",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.A2Z_MCP_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'get_post', arguments: { slug: $json.slug } } }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "id": "get",
+      "name": "Read each post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-120, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Only posts that have no hero yet. One image per run keeps the spend\n// predictable and means a bad prompt costs one picture, not thirteen.\nconst body = $json.body;\nif (body?.error) throw new Error(`get_post: ${body.error.message}`);\nconst post = JSON.parse(body.result.content[0].text);\nconst f = post.frontmatter ?? {};\nif (f.heroImage) return [];\nif (f.draft) return [];\n\nconst pillarScene = {\n  'windows-mac': 'a desktop computer and a hard drive, seen from a low angle',\n  phones: 'a single handset lying flat, seen from directly above',\n  'excel-office': 'a grid of cells and a single highlighted column',\n  'ai-tools': 'abstract nodes and connecting lines, loosely arranged',\n  'websites-hosting': 'a globe and a server rack, simplified to basic shapes',\n  automation: 'interlocking gears and a branching flow line',\n};\n\nreturn [\n  {\n    json: {\n      slug: post.slug,\n      title: f.title,\n      pillar: f.pillar,\n      scene: pillarScene[f.pillar] ?? 'simple geometric shapes',\n      alt: `Illustration for ${f.title}`,\n    },\n  },\n];\n"
+      },
+      "id": "pick",
+      "name": "Choose a post with no hero",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [60, 0],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.OPENAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $env.OPENAI_IMAGE_MODEL || 'gpt-image-1', size: '1536x1024', n: 1, prompt: 'Flat editorial illustration for an article titled \\\"' + $json.title + '\\\". Subject: ' + $json.scene + '. Style: clean vector shapes, generous negative space, warm off-white background, one deep blue and one warm orange accent, soft shadow, no gradients. ABSOLUTELY NO text, letters, numbers, words, labels, logos, brand marks, user interface, windows, dialog boxes, menus, buttons or anything resembling a screenshot of real software. Illustration only.' }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 180000
+        }
+      },
+      "id": "generate",
+      "name": "Generate the illustration",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [260, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// gpt-image-1 returns base64. Fail loudly: an empty image that uploads as a\n// zero-byte hero is worse than no hero, because the page then looks broken.\nconst body = $json.body;\nconst b64 = body?.data?.[0]?.b64_json;\nif (!b64) {\n  const why = body?.error?.message ?? JSON.stringify(body).slice(0, 300);\n  throw new Error(`Image generation returned nothing: ${why}`);\n}\nif (b64.length < 5000) throw new Error('Image generation returned a suspiciously small file.');\nconst src = $('Choose a post with no hero').item.json;\nreturn [{ json: { ...src, base64: b64, bytes: Math.round((b64.length * 3) / 4) } }];\n"
+      },
+      "id": "take",
+      "name": "Take the image",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://a2z-skills-mcp.a2zskills.workers.dev",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.A2Z_MCP_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'upload_image', arguments: { slug: $json.slug, alt: $json.alt, base64: $json.base64 } } }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "id": "upload",
+      "name": "Attach it as the hero",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [660, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Confirm the hero is actually set, rather than that the call returned 200.\nconst body = $json.body;\nconst problems = [];\nlet out = '';\ntry {\n  out = body.result.content[0].text;\n} catch (e) {\n  problems.push(`upload_image gave no usable answer: ${JSON.stringify(body).slice(0, 300)}`);\n}\nif (out && !/heroSet/.test(out)) problems.push(`upload_image did not set a hero: ${out.slice(0, 300)}`);\nconst src = $('Take the image').item.json;\nreturn [{ json: { slug: src.slug, title: src.title, bytes: src.bytes, problems, count: problems.length } }];\n"
+      },
+      "id": "verify",
+      "name": "Did the hero actually set?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [860, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              },
+              "leftValue": "={{ $json.count }}",
+              "rightValue": 0
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "if",
+      "name": "Anything fail?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1060, 0]
+    },
+    {
+      "parameters": {
+        "subject": "=A2Z Skills: hero image failed for {{ $json.slug }}",
+        "emailFormat": "text",
+        "options": {},
+        "fromEmail": "antbytelabs@gmail.com",
+        "toEmail": "antbytelabs@gmail.com",
+        "text": "={{ $json.problems.join('\\n\\n') }}\n\nPost: {{ $json.slug }}"
+      },
+      "id": "email",
+      "name": "Email what failed",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1260, -120],
+      "credentials": {
+        "smtp": {
+          "id": "SET_IN_UI",
+          "name": "SMTP — antbytelabs"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every morning": {
+      "main": [
+        [
+          {
+            "node": "Ask the site for its posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask the site for its posts": {
+      "main": [
+        [
+          {
+            "node": "One item per post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One item per post": {
+      "main": [
+        [
+          {
+            "node": "Read each post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read each post": {
+      "main": [
+        [
+          {
+            "node": "Choose a post with no hero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Choose a post with no hero": {
+      "main": [
+        [
+          {
+            "node": "Generate the illustration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate the illustration": {
+      "main": [
+        [
+          {
+            "node": "Take the image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take the image": {
+      "main": [
+        [
+          {
+            "node": "Attach it as the hero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach it as the hero": {
+      "main": [
+        [
+          {
+            "node": "Did the hero actually set?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Did the hero actually set?": {
+      "main": [
+        [
+          {
+            "node": "Anything fail?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anything fail?": {
+      "main": [
+        [
+          {
+            "node": "Email what failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kathmandu"
+  },
+  "tags": []
+}
