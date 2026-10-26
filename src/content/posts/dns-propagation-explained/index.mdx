@@ -1,0 +1,88 @@
+---
+title: 'DNS propagation explained'
+description: 'Nothing propagates. A DNS change is live the moment you save it, and the wait you experience is resolvers holding an answer you already replaced.'
+pillar: 'websites-hosting'
+type: 'explainer'
+tags:
+  - 'dns'
+  - 'domains'
+  - 'hosting'
+author: 'devchandra-shrestha'
+publishedAt: '2026-10-26'
+quickAnswer: "DNS changes do not spread outward. Your authoritative nameserver is updated the moment you save, and every other resolver keeps serving its cached copy until that copy's TTL expires. The TTL that was in force before you made the change is what decides the wait."
+faq:
+  - q: 'Why do propagation checkers show different answers?'
+    a: 'Because each one queries a different resolver, and each resolver cached your record at a different moment. A mix of old and new answers is the expected state, not a fault.'
+  - q: 'Can I force a resolver to drop its cache?'
+    a: 'Only your own. Some large public resolvers offer a page to flush a single name, but the resolver at your reader’s office is not yours to clear and will hold the old answer for its full TTL.'
+  - q: 'Does changing nameservers work the same way?'
+    a: 'No, and this is the slow one. Delegation records live at the registry rather than on your own server, and they typically carry a much longer TTL than the records inside your zone.'
+draft: false
+---
+
+The word propagation describes something DNS does not do. Nothing travels
+outward from your domain, and no update is working its way around the world
+while you wait. More hosting guides are in
+[Websites & Hosting](/topics/websites-hosting/). A concrete case where this
+bites is
+[Cloudflare Workers custom domain not working](/cloudflare-workers-custom-domain-not-working/),
+and the same pattern on a laptop is in
+[deleting files did not free any disk space](/deleting-files-not-freeing-disk-space/).
+
+## There is one copy, and then there are caches
+
+Your zone lives on an authoritative nameserver. That server is the only thing
+that knows the truth about your domain, and when you edit a record there, the
+truth changes immediately. Query it directly and you get the new answer at once.
+
+Almost nobody queries it directly. A visitor's device asks a recursive resolver,
+usually run by their internet provider or by a public service. That resolver
+asked your nameserver at some point in the past, kept the answer, and will keep
+serving it until it decides the answer is too old to trust.
+
+## TTL is the whole mechanism
+
+Every record carries a time to live, measured in seconds. It is an instruction
+to every resolver that caches the record: keep this for no longer than this
+many seconds. A record with a TTL of 86400 may be served from cache for a full
+day after it was fetched.
+
+This produces the part that confuses people most. The TTL that governs your wait
+is the one that was published before you made the change, because that is the
+value resolvers were given when they cached the old answer. Lowering the TTL at
+the same time as the change does nothing for anyone who already has a copy.
+
+<Callout type="tip" title="Lower the TTL in advance">
+  Drop the TTL to a few minutes a day before a planned move, wait for the old TTL to expire,
+  then make the change. The cutover is then minutes for everyone instead of hours for most
+  people.
+</Callout>
+
+## Why two people see different sites
+
+Each resolver fetched your record at its own moment, so each one expires at its
+own moment. During a change the internet genuinely holds two answers at once,
+and which one a given visitor gets depends on which resolver they use and when
+that resolver last asked.
+
+This is also why a propagation checker is of limited help. It queries a list of
+resolvers and reports what each returns. A mixed result tells you the change is
+in progress, which you already knew, and tells you nothing about when the last
+cache will expire.
+
+## Nameserver changes are the slow case
+
+Changing the records inside your zone is governed by your own TTLs. Changing
+which nameservers are authoritative is not. That delegation is held by the
+registry for your top level domain, it carries its own TTL, and that TTL is
+typically far longer than anything you would set on an A record.
+
+That is the case worth planning around. Keep the old host serving the site until
+the delegation has fully turned over, because the visitors still being sent to
+it are real and will see whatever is there.
+
+## What to check when it seems stuck
+
+Query your authoritative nameserver directly first. If it returns the new value,
+your work is done and everything after that is waiting. If it returns the old
+value, the change did not save, and no amount of waiting will fix it.

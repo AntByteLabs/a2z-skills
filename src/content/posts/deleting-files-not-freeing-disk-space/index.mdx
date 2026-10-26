@@ -1,0 +1,81 @@
+---
+title: 'Deleting files did not free any disk space'
+description: 'You emptied the bin and the free space did not move. Four things hold on to deleted files on Windows and macOS, and each one lets go differently.'
+pillar: 'windows-mac'
+type: 'explainer'
+tags:
+  - 'storage'
+  - 'windows'
+  - 'macos'
+author: 'devchandra-shrestha'
+publishedAt: '2026-10-26'
+quickAnswer: 'Deleting a file removes its entry from the directory, not the data from the disk. The space returns only once every holder lets go: the Recycle Bin or Trash, a snapshot taken by File History or Time Machine, and any program still holding the file open. The last of those usually clears on restart.'
+faq:
+  - q: 'Does emptying the Recycle Bin actually erase the file?'
+    a: 'It frees the space for reuse. The bytes stay on the disk until something else writes over them, which is why recovery tools can sometimes get a file back hours later.'
+  - q: 'Why did my free space go up by itself an hour later?'
+    a: 'A snapshot expired. Both Time Machine and File History keep older copies for a set period, and the space comes back when the copy is dropped, not when you delete the file.'
+  - q: 'Is a disk that reports zero bytes free dangerous?'
+    a: 'It can be. Both systems need scratch space to apply updates and to write swap, so a disk at zero tends to produce failures that look unrelated to storage.'
+draft: false
+---
+
+A file you deleted is still costing you space, and the number in the storage
+panel has not moved. That is normal, and there are only four things that cause
+it. More desktop guides are in [Windows & Mac](/topics/windows-mac/); the same
+problem on a handset is in
+[phone storage full after deleting photos](/phone-storage-full-after-deleting-photos/),
+and the same shape of problem on a domain is in
+[DNS propagation explained](/dns-propagation-explained/).
+
+## Deleting removes the entry, not the data
+
+A filesystem keeps two separate things: a directory of what exists and where it
+lives, and the blocks of data themselves. Deleting a file edits the directory.
+It marks the blocks as available and stops listing the name. It does not go and
+overwrite the blocks, because on a large file that would take minutes rather
+than milliseconds.
+
+The practical result is that free space is an accounting figure. It goes up when
+the last thing that claims a block gives up its claim. If something still claims
+it, the figure does not move, however many times you press delete.
+
+## Four things that keep claiming the space
+
+**The Recycle Bin or Trash.** Deleting moves the file rather than releasing it.
+The space is still allocated and still counted. This is the one most people
+check, and it is the reason the other three get missed.
+
+**Snapshots and backups held locally.** Time Machine on macOS keeps local
+snapshots on the same disk when the backup drive is not attached. File History
+and System Restore on Windows do something comparable. A snapshot exists to hold
+the old version of a file, so deleting the current version cannot release it.
+These expire on their own schedule.
+
+**A program still holding the file open.** An open handle keeps the blocks
+allocated even after the name is gone. A download manager, a media player or a
+sync client that has not noticed the deletion will all do this. Restarting
+releases every handle at once, which is why a reboot appears to fix it.
+
+**Cloud sync that is still uploading.** A file deleted locally but mid-upload is
+held by the sync client until the transfer resolves. Dropbox, OneDrive, iCloud
+Drive and Google Drive all behave this way, and all of them keep their own
+deleted-items area in addition to the system one.
+
+## How to tell which one is holding your space
+
+Work from cheapest to most expensive. Empty the bin first and re-read the figure.
+Restart next, which clears open handles and forces sync clients to settle. If
+the space still has not returned, the holder is a snapshot, and snapshots are the
+only one of the four with a delay you cannot shorten by clicking.
+
+<Callout type="warning" title="Before you delete a snapshot">
+  A snapshot is the copy you would restore from. Deleting the lot to recover space removes
+  your ability to undo whatever you did last week. Let them expire unless the disk is
+  actually full.
+</Callout>
+
+The exact panel that reports storage, and the exact wording beside it, moves
+between Windows builds and macOS releases, so we have not reproduced a menu path
+here. The mechanism above has been the same for years and is what the paths are
+all reaching for.

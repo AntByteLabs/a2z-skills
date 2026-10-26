@@ -154,6 +154,11 @@ With the zone active, put the route back and deploy again:
 }
 ```
 
+Waiting on the zone is a separate question from waiting on a record, and the
+second one is explained in [DNS propagation](/dns-propagation-explained/):
+nothing travels outward, and the TTL you published before the change is what
+sets the delay.
+
 The same split shows up when self-hosting: in
 [self-host n8n on Coolify](/self-host-n8n-coolify/) the platform and the
 application each hold their own copy of the hostname, and both have to be told.

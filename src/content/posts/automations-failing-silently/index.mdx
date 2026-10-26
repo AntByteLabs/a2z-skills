@@ -1,0 +1,90 @@
+---
+title: 'Why automations fail silently'
+description: 'A broken workflow that tells you is a nuisance. One that keeps reporting success is the expensive kind, and there are four reasons it happens.'
+pillar: 'automation'
+type: 'explainer'
+tags:
+  - 'n8n'
+  - 'automation'
+  - 'monitoring'
+author: 'ronit-karki'
+publishedAt: '2026-10-26'
+quickAnswer: 'An automation fails silently when the step that broke still hands the next step something it accepts. Empty results, swallowed errors, partial pages and expired credentials all look like success to the platform, so the run is marked green and nobody is told.'
+faq:
+  - q: 'What is a dead-man switch in this context?'
+    a: 'A separate check that alerts when a run has not happened, rather than when a run has failed. It is the only thing that catches a trigger that stopped firing altogether.'
+  - q: 'Should every workflow alert on zero results?'
+    a: 'Only where zero is abnormal. A workflow that usually returns nothing will train you to ignore the alert, which costs you the alerts that matter.'
+  - q: 'Is error handling making this worse?'
+    a: 'Often, yes. A catch block that logs and continues converts a loud failure into a quiet one, which is the right trade for a retry and the wrong one for bad data.'
+draft: false
+---
+
+The automations that cost you are not the ones that break. They are the ones
+that keep running, keep reporting success, and have quietly been doing nothing
+for three weeks. More automation guides are in
+[Automation](/topics/automation/), the platform these were tested on is in
+[self-host n8n on Coolify](/self-host-n8n-coolify/), and another tool that is
+confidently wrong is covered in
+[why AI detectors flag human writing](/ai-detectors-flagging-human-writing/).
+
+## A platform can only see its own steps
+
+Every automation platform reports on execution, not on outcome. It knows whether
+each node ran and whether each one threw. It has no idea what the workflow was
+supposed to achieve, so it cannot tell you that the achievement stopped.
+
+That distinction is where silent failure lives. If every node runs and none of
+them throws, the run is green. Whether anything useful happened is a question
+the platform never asks.
+
+## Empty is not an error
+
+The most common cause by a distance. A search step that matches nothing, a query
+that returns no rows, a filter that excludes everything: each returns an empty
+list, and an empty list is a valid result. The steps after it loop over nothing
+and succeed at doing nothing.
+
+This is also the failure that follows a small upstream change. A renamed field,
+a changed label or a moved folder turns a working filter into one that matches
+nothing, and the workflow carries on reporting success at its usual interval.
+
+<Callout type="tip" title="Assert on the count">
+  Add a step that fails the run when the result count is outside what you expect. Zero rows
+  from a report that normally returns forty is a failure, and only your workflow knows that.
+</Callout>
+
+## Error handling that swallows
+
+Retries and catch blocks exist for a reason, and both convert a visible failure
+into an invisible one. A retry that eventually gives up and continues has
+produced a run that looks fine and is missing data. A catch block that logs and
+moves on has done the same thing more deliberately.
+
+The right split is by cause. Transient problems, such as a timeout or a rate
+limit, should be retried quietly. Bad data and rejected requests should stop the
+run, because continuing past them produces output nobody will check.
+
+## Partial data read as complete
+
+Any API that paginates will hand you the first page and a cursor. A workflow
+that ignores the cursor processes that first page every time and reports
+success. It worked correctly while the dataset was small, and started losing
+records on the day the dataset outgrew one page.
+
+Rate limits produce the same shape. A request rejected for volume often returns
+a valid response body with an error inside it, which a step that only checks the
+status code will accept and pass on.
+
+## Credentials that expire into a valid response
+
+An expired token is not always a failure. Some APIs answer with a success status
+and a body explaining that you are not authenticated. Others return an empty
+result set, which lands you back at the first cause in this list.
+
+## What to monitor instead
+
+Monitor the outcome, not the run. Three checks cover almost everything: alert
+when a scheduled workflow has not run at all, alert when the record count falls
+outside its normal range, and check the destination rather than the source, so
+you are confirming that the rows arrived rather than that the query ran.

@@ -1,0 +1,83 @@
+---
+title: 'Excel keeps changing my numbers into dates'
+description: 'Type 1-2 and Excel gives you 2 January. It is a type decision made on entry, it happens before the value is stored, and reformatting will not undo it.'
+pillar: 'excel-office'
+type: 'explainer'
+tags:
+  - 'excel'
+  - 'formatting'
+  - 'data-entry'
+author: 'krishna-pokharel'
+publishedAt: '2026-10-26'
+quickAnswer: 'Excel decides what type a cell holds from the characters you type, and several patterns that read as numbers also read as dates. The conversion happens on entry, so the cell already holds a date serial number. Reformatting afterwards reveals that number rather than restoring what you typed.'
+faq:
+  - q: 'Why does a leading apostrophe stop it?'
+    a: 'The apostrophe tells Excel to skip type detection and store the characters as text. It is not part of the value and does not appear in the cell, though it does show in the formula bar.'
+  - q: 'Can I turn date detection off completely?'
+    a: 'Not globally. The usable equivalent is formatting the column as Text before anything is typed into it, or importing the data and marking that column as text during the import.'
+  - q: 'Does this affect data I paste in?'
+    a: 'Yes, and that is the common way a clean export gets damaged. Paste runs the same detection as typing unless the destination column is already formatted as text.'
+draft: false
+---
+
+You type a product code and get a date. You paste a clean export and a column of
+identifiers turns into January. Excel is not corrupting the file at random; it
+is applying a rule, and the rule runs earlier than most people expect. More
+spreadsheet guides are in [Excel & Office](/topics/excel-office/). For other
+software that guesses what you meant and is confident about it, read
+[why AI detectors flag human writing](/ai-detectors-flagging-human-writing/) and
+[why automations fail silently](/automations-failing-silently/).
+
+## A cell's type is decided when you press Enter
+
+A cell formatted as General has no type until something is entered in it. Excel
+reads the characters, matches them against the patterns it knows, and picks one.
+A string of digits becomes a number. Something that looks like a date becomes a
+date. Anything left over stays text.
+
+The patterns that read as dates are broader than people assume. Two numbers
+separated by a hyphen or a slash qualify. So does a number followed by a month
+abbreviation, which is how identifiers like MAR1 and SEP2 become dates. This
+caused enough damage in published genetics research that the naming body
+eventually renamed the affected genes rather than keep fighting the spreadsheet.
+
+## Why the value is already gone
+
+Excel stores dates as serial numbers counted from a fixed starting point, with
+the display format applied on top. Once the conversion has happened, the cell
+holds a number. Your original characters were never stored.
+
+That is why the obvious repair does not work. Selecting the column and setting
+the format to Text tells Excel how to display what is in the cell, and what is
+in the cell is now a serial number. The display changes from a date to five
+digits. It does not change back to the text you typed, because that text no
+longer exists anywhere in the file.
+
+<Callout type="warning" title="Undo is your only cheap repair">
+  Immediately after a bad paste, undo still holds the previous state. Once the file has been
+  saved and reopened, the original characters are gone and the column has to be re-imported
+  from the source.
+</Callout>
+
+## The three ways to stop it happening
+
+Format the column as Text before any data goes into it. The format is read when
+the entry is made, so setting it first means detection never runs. This is the
+only approach that survives a paste.
+
+Type a leading apostrophe for one-off entries. It instructs Excel to store the
+characters as text and is not kept as part of the value.
+
+Mark the column as text during import. Bringing data in through the import tools
+rather than pasting gives you a per-column type choice, and that choice is
+applied before any cell is written.
+
+## What to do with a column that is already damaged
+
+Re-import it from the source. Any attempt to convert the serial numbers back
+assumes you can reconstruct the original string from the date, and for
+identifiers that assumption usually fails on the ones that mattered.
+
+If the source is gone, the serial numbers do at least tell you what was there.
+A code that became 2 January came from something matching a day and month
+pattern, and the surviving rows will show you which.

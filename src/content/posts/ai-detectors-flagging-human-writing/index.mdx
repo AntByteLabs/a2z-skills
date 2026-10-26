@@ -1,0 +1,83 @@
+---
+title: 'Why AI detectors flag human writing'
+description: 'AI detectors do not detect AI. They score how predictable your sentences are, which is why careful writers and non-native speakers fail them most often.'
+pillar: 'ai-tools'
+type: 'explainer'
+tags:
+  - 'ai-detection'
+  - 'writing'
+  - 'ai-tools'
+author: 'ronit-karki'
+publishedAt: '2026-10-26'
+quickAnswer: 'An AI detector measures how predictable a piece of text is, not who wrote it. Plain, well-edited, consistent writing scores as predictable whether a person or a model produced it, which is why careful writers get flagged. No detector can prove authorship.'
+faq:
+  - q: 'Can I appeal a detector result?'
+    a: 'Version history is the strongest evidence, because it shows the document being built. A draft with revisions, comments and false starts is far harder to argue with than a finished file.'
+  - q: 'Does editing AI text make it undetectable?'
+    a: 'Usually, yes, which is the clearest sign the tools do not measure what they claim. Heavy editing changes the statistical shape of the text whether or not it changes the authorship.'
+  - q: 'Are paid detectors better than free ones?'
+    a: 'They report more confidently. The underlying signal is the same, and none of the vendors publishes a false positive rate measured on writing from outside their test set.'
+draft: false
+---
+
+An AI detector tells you a number. It does not tell you who wrote the text, and
+the gap between those two things is where the damage happens. More tool
+write-ups are in [AI Tools](/topics/ai-tools/). For other software that guesses
+your intent and gets it wrong, read
+[Excel changing numbers into dates](/excel-changing-numbers-into-dates/) and
+[why automations fail silently](/automations-failing-silently/).
+
+## What the score actually measures
+
+A language model works by predicting the next word. Any text can therefore be
+scored by how closely it matches what a model would have predicted. Text that
+follows the expected path scores as predictable. Text that takes unusual turns,
+changes rhythm or uses an odd word scores as unpredictable.
+
+Detectors are built on that signal, often combined with how much the sentence
+lengths and structures vary across a document. The output is a claim about the
+statistical shape of the writing. It is then presented as a claim about its
+origin, which is a different claim and does not follow from the first.
+
+## Why good writing fails
+
+Clear prose is predictable prose. Short sentences, plain words, one idea at a
+time, consistent structure: every habit that makes writing easier to read also
+makes the next word easier to guess. Editing pushes a draft further in that
+direction, so a piece that has been through several passes scores worse than the
+messy first version it came from.
+
+The same effect hits anyone writing in a second language. A smaller working
+vocabulary and more conventional sentence patterns produce exactly the profile
+the detectors treat as machine-like, and this bias has been reported repeatedly
+in published evaluations.
+
+<Callout type="warning" title="The base rate makes it worse">
+  Even a detector that is right most of the time produces more false accusations than true
+  ones when most of the work it scans is human. Accuracy on a balanced test set says nothing
+  useful about a class where nearly everyone wrote their own essay.
+</Callout>
+
+## Why the vendors cannot fix it
+
+The signal degrades as models improve. A model that writes less predictably is
+harder to distinguish from a person who writes unpredictably, and the whole
+method depends on that distinction holding. OpenAI withdrew its own classifier
+for exactly this reason, citing accuracy too low to be useful.
+
+There is also no stable target. Detectors are tuned against the models that
+exist now, and are then run against text produced by models released since,
+edited by people, translated, or passed through a grammar tool. Each of those
+changes the statistics the score depends on.
+
+## What to do if you are on the receiving end
+
+Keep the evidence that a score cannot produce. Document history showing the
+piece being written, with revisions and dead ends, is the thing detectors cannot
+fake and cannot argue with. Save it before you submit, not after you are
+accused.
+
+If you are the one deciding, treat a score as a reason to read the work and ask
+the writer about it, never as a finding. A number with no published error rate,
+applied to a population that is overwhelmingly innocent, is not evidence of
+anything.

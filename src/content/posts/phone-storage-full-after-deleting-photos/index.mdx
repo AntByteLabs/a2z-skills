@@ -1,0 +1,79 @@
+---
+title: 'Phone storage still full after deleting photos'
+description: 'You deleted hundreds of photos and the storage bar barely moved. On both iPhone and Android, three separate copies have to go, not one.'
+pillar: 'phones'
+type: 'explainer'
+tags:
+  - 'storage'
+  - 'android'
+  - 'iphone'
+  - 'photos'
+author: 'krishna-pokharel'
+publishedAt: '2026-10-26'
+quickAnswer: "Deleting a photo moves it to a recently deleted album that keeps it for a set period, so the space does not return until that album is emptied too. A second copy usually exists in the photo app's cache, and a third may be held by iCloud or Google Photos while the deletion syncs."
+faq:
+  - q: 'How long does a deleted photo stay in the recently deleted album?'
+    a: 'At the time of writing it is 30 days on iPhone and 60 days in Google Photos. Both count from the deletion, and both empty on their own if you leave them alone.'
+  - q: 'Will deleting photos on my phone delete them from the cloud?'
+    a: 'If sync is on, yes, and that is the point people get caught by. The deletion travels in both directions, so clear your own backup before you clear the phone.'
+  - q: 'Why does the photo app itself take gigabytes?'
+    a: 'Thumbnails and preview renders. The app rebuilds them on demand, so clearing its cache frees space immediately and costs you a slower first scroll afterwards.'
+draft: false
+---
+
+Deleting a few hundred photos should show up as a few gigabytes. Usually it
+shows up as almost nothing, and the reason is that you have deleted one of three
+copies. More handset guides are in [Phones](/topics/phones/). The same mechanism
+on a laptop is in
+[deleting files did not free any disk space](/deleting-files-not-freeing-disk-space/),
+and a cached answer that outlives the change you made is also what makes
+[DNS propagation](/dns-propagation-explained/) confusing.
+
+## The first copy goes to a holding album
+
+Both platforms treat delete as a move. The photo leaves your library and joins a
+recently deleted album, where it stays for a set period so that an accidental
+deletion can be undone. While it sits there it is still a file on the phone and
+still counted against your storage.
+
+Nothing about the interface suggests this. The library count drops, the grid
+gets shorter, and the storage figure stays where it was. Emptying that album is
+what actually releases the space, and it is a separate action in a separate
+screen.
+
+## The second copy is the app's own cache
+
+A photo app does not read your original file every time it draws a grid. It
+keeps thumbnails, preview renders and sometimes a full-resolution cached copy,
+because decoding a modern photo on demand is slow enough to feel broken.
+
+That cache is sized against your library as it was, not as it is. After a large
+deletion it is holding renders of photos that no longer exist, and it will not
+necessarily prune itself the same day. Clearing it is safe. The cost is that the
+first scroll afterwards is slower while the app rebuilds what it needs.
+
+## The third copy belongs to the cloud
+
+If iCloud Photos or Google Photos is on, the phone is showing you a view of a
+library that lives elsewhere. Deleting locally queues a deletion upstream, and
+until that round trip finishes the local file may still be held.
+
+This is also where people lose photos they meant to keep. Sync is bidirectional.
+A deletion you make to free space on the phone removes the photo from the backup
+as well, which is the opposite of what most people assume a backup does.
+
+<Callout type="danger" title="Clear your own copy first">
+  Before deleting in bulk, get the photos off the phone and off the account, onto something
+  you control. A deletion that syncs is not recoverable once the holding album expires.
+</Callout>
+
+## What to expect once all three are clear
+
+Storage figures on both platforms are estimates that settle over minutes, not
+instantly. Expect the number to move in steps rather than at once, and expect a
+category labelled as system or other to absorb some of what you freed, because
+the phone will take a little of it back for its own caches.
+
+The exact wording and position of these screens moves with each major OS
+release, which is why this post describes the mechanism rather than a menu path.
+A tested walkthrough with the current paths is coming.
