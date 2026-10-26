@@ -6,7 +6,7 @@ order: 4
 ---
 
 The short version: no advertising cookies, no account needed to read anything,
-and the only personal data we hold is an email address you typed in yourself.
+and you can choose whether to provide an email address or article feedback.
 
 ## Who is responsible
 
@@ -27,8 +27,11 @@ and sooner in practice.
 | Aggregate page views, referrers and countries                                    | To know which guides are worth updating | Rolling, in aggregate only                   |
 | Standard server request logs, including IP addresses                             | Security and abuse handling             | Short retention, set by Cloudflare           |
 
-That is the whole list. We do not collect names, we do not ask you to register,
-and we do not build profiles of readers.
+Article feedback also stores the guide, verdict, optional note, country code
+and submission time so we can review problems. Please keep credentials and
+private information out of feedback notes. Request limits use short-lived hashed
+IP keys; expired windows are pruned on later requests. No reader account is
+required.
 
 ## Analytics without tracking
 

@@ -41,7 +41,7 @@ the platform never asks.
 
 ## Empty is not an error
 
-The most common cause by a distance. A search step that matches nothing, a query
+One possible cause is an empty result. A search step that matches nothing, a query
 that returns no rows, a filter that excludes everything: each returns an empty
 list, and an empty list is a valid result. The steps after it loop over nothing
 and succeed at doing nothing.
@@ -58,8 +58,8 @@ nothing, and the workflow carries on reporting success at its usual interval.
 ## Error handling that swallows
 
 Retries and catch blocks exist for a reason, and both convert a visible failure
-into an invisible one. A retry that eventually gives up and continues has
-produced a run that looks fine and is missing data. A catch block that logs and
+into an invisible one. A retry configured to give up and continue can produce
+a run that looks fine and is missing data. A catch block that logs and
 moves on has done the same thing more deliberately.
 
 The right split is by cause. Transient problems, such as a timeout or a rate
@@ -68,8 +68,8 @@ run, because continuing past them produces output nobody will check.
 
 ## Partial data read as complete
 
-Any API that paginates will hand you the first page and a cursor. A workflow
-that ignores the cursor processes that first page every time and reports
+An API can paginate using pages, cursors or another continuation mechanism. A workflow
+that ignores the continuation processes that first page every time and reports
 success. It worked correctly while the dataset was small, and started losing
 records on the day the dataset outgrew one page.
 
@@ -85,10 +85,23 @@ result set, which lands you back at the first cause in this list.
 
 ## What to monitor instead
 
-Monitor the outcome, not the run. Three checks cover almost everything: alert
+Include the intended outcome in monitoring. Useful checks include an alert
 when a scheduled workflow has not run at all, alert when the record count falls
 outside its normal range, and check the destination rather than the source, so
 you are confirming that the rows arrived rather than that the query ran.
+
+## Applying the distinction to n8n
+
+A successful execution and a successful business outcome are different things
+to measure. The expected result might be a saved record or a delivered message,
+not merely the absence of an execution error. An empty result can also be
+legitimate, so the workflow's purpose determines whether it needs attention.
+
+A [vendor-hosted n8n monitoring template](https://n8n.io/workflows/18914-monitor-empty-successful-workflows-via-the-n8n-api-data-tables-and-slack/)
+illustrates checks for successful but empty executions and missing runs. It is
+a research reference here, not a workflow we claim to have tested or supplied
+as a download. A published walkthrough of our own needs a named tester's
+record of the input, node outputs and destination result.
 
 ## Sources
 

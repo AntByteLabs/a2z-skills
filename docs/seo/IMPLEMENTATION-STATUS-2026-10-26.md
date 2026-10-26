@@ -25,14 +25,17 @@ Date: 26 October 2026. Branch: seo/research-plan-20261026.
 - [x] Home, About and article labels distinguish tested procedures from researched explainers.
 - [x] Weak cross-topic links were replaced where relevant existing articles were available.
 - [x] README and MCP publishing documentation reflect the current checks.
+- [x] Feedback submits once, reports failures and supports retry.
+- [x] Newsletter confirmations accurately describe the pending notification list.
+- [x] A local D1 backup was created before the form changes; browser submissions were mocked.
 - [x] Eight new keyword briefs are prepared with human-test requirements and overlap boundaries.
 
 ## Validation
 
 The full local check passed: lint/formatting, Worker types, content validation,
 Astro build/check, asset/transfer budgets, internal links and browser tests.
-There were 92 passing browser tests and two intentionally skipped desktop
-touch-target tests. Seven focused tests cover publication checks, valid edits,
+There were 100 passing browser tests and two intentionally skipped desktop
+touch-target tests. Eight focused tests cover publication checks, valid edits,
 directory-index links and modification dates.
 
 Nine Lighthouse runs across the home page, an article and a topic hub each

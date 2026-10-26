@@ -72,6 +72,24 @@ resolvers and reports what each returns. A mixed result tells you the change is
 in progress, which you already knew, and tells you nothing about when the last
 cache will expire.
 
+## A TTL example, and two limits
+
+Consider a hypothetical resolver that fetched a record at 12:00 with a TTL of
+3,600 seconds. The record changes at 12:10. If the resolver uses its existing
+cached answer until ordinary expiry, that old answer can remain in use until
+13:00. A resolver that first asks after the update may already see the new
+value. This is an illustration of the clock, not a measured cutover guarantee.
+
+A missing name can also be cached. [RFC 2308](https://www.rfc-editor.org/rfc/rfc2308)
+describes negative caching: a previous answer that a name does not exist can
+persist after the record has been created. That is different from caching an
+old address, and it helps explain why a newly added hostname can appear absent.
+
+Ordinary expiry is not the only policy in use. [RFC 8767](https://www.rfc-editor.org/rfc/rfc8767)
+describes serving stale DNS data in particular failure conditions to preserve
+resolution. That exception is another reason a TTL calculation cannot promise
+the exact moment every visitor sees a change.
+
 ## Nameserver changes are the slow case
 
 Changing the records inside your zone is governed by your own TTLs. Changing
