@@ -148,6 +148,41 @@ explicit dimensions.
 - No ads on comparison or review pages: affiliate links earn more there.
 - Never fabricate a rating, a price or a discount code.
 
+## Spam, secrets and backups
+
+The subscribe endpoint has two defences. The honeypot always runs. Turnstile
+runs **only when the Worker secret `TURNSTILE_SECRET` is set**, and it is not
+set, so today the honeypot is the only check.
+
+```bash
+npx wrangler secret put TURNSTILE_SECRET     # turn enforcement on
+npx wrangler secret delete TURNSTILE_SECRET  # turn it straight back off
+```
+
+Two things to know before you run the first one:
+
+- **A visitor with JavaScript off can no longer subscribe.** Turnstile needs
+  JavaScript to produce a token, and the Worker will reject a submission
+  without one. Everything else on the site still works without JavaScript.
+- **Nobody has watched a real token being issued.** Turnstile refuses to issue
+  one to an automated browser, which is the point of it, so the path cannot be
+  tested from a script. Subscribe once yourself, in a real browser, straight
+  after setting the secret. If it fails, delete the secret and you are back to
+  where you were.
+
+The site key is public and lives in `src/site.ts`. The secret belongs in the
+Worker and nowhere else: not in the repo, not in a workflow file, not in chat.
+
+Back up before you touch anything that writes to D1:
+
+```bash
+npm run backup   # exports to ~/a2z-skills-backups, keeps the last 14
+```
+
+D1 Time Travel already covers a bad migration for 30 days. The export covers
+the thing it cannot: losing access to the Cloudflare account. The subscriber
+list is the only data here that cannot be rebuilt from this repo.
+
 ## What not to touch
 
 - `wrangler.json` routes and the D1 binding, without being asked.
