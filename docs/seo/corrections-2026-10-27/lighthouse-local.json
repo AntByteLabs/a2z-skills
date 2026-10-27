@@ -1,0 +1,38 @@
+[
+  {
+    "url": "http://127.0.0.1:4384/",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "LCP": 1210.4712,
+    "CLS": 0,
+    "TBT": 0
+  },
+  {
+    "url": "http://127.0.0.1:4384/dns-propagation-explained/",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "LCP": 1511.0691,
+    "CLS": 0,
+    "TBT": 0
+  },
+  {
+    "url": "http://127.0.0.1:4384/n8n-webhook-not-working/",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "LCP": 1512.2358,
+    "CLS": 0,
+    "TBT": 0
+  }
+]

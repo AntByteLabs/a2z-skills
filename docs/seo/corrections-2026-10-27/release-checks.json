@@ -1,0 +1,855 @@
+{
+  "checkedAt": "2026-10-27T14:20:44.206Z",
+  "scope": "Built release before final minor copy edits; deployment verification is recorded separately.",
+  "articleCount": 16,
+  "errors": [],
+  "sources": [
+    {
+      "url": "https://epoch.ai/data-insights/ai-detectors-false-negatives",
+      "status": 200,
+      "finalUrl": "https://epoch.ai/data-insights/ai-detectors-false-negatives"
+    },
+    {
+      "url": "https://arxiv.org/abs/2304.02819",
+      "status": 200,
+      "finalUrl": "https://arxiv.org/abs/2304.02819"
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/advanced-usage",
+      "status": 200,
+      "finalUrl": "https://developers.openai.com/api/docs/guides/advanced-usage"
+    },
+    {
+      "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/workflow-development/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/workflow-development"
+    },
+    {
+      "url": "https://docs.n8n.io/flow-logic/error-handling/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/build/flow-logic/handle-errors-gracefully"
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+      "status": 200,
+      "finalUrl": "https://developers.openai.com/api/docs/guides/conversation-state"
+    },
+    {
+      "url": "https://docs.n8n.io/workflows/executions/all-executions/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/build/understand-workflows/understand-executions/view-all-executions"
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/flexible/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/flexible/"
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full-strict/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full-strict/"
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/"
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full/"
+    },
+    {
+      "url": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/"
+    },
+    {
+      "url": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/"
+    },
+    {
+      "url": "https://developers.cloudflare.com/dns/zone-setups/partial-setup/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/dns/zone-setups/partial-setup/"
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/configuration/routing/custom-domains/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/workers/configuration/routing/custom-domains/"
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/configuration/routing/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/workers/configuration/routing/"
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc8767",
+      "status": 200,
+      "finalUrl": "https://www.rfc-editor.org/info/rfc8767/"
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc2308",
+      "status": 200,
+      "finalUrl": "https://www.rfc-editor.org/info/rfc2308/"
+    },
+    {
+      "url": "https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/",
+      "status": 200,
+      "finalUrl": "https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/closing-and-deleting-files",
+      "status": 200,
+      "finalUrl": "https://learn.microsoft.com/en-us/windows/win32/fileio/closing-and-deleting-files"
+    },
+    {
+      "url": "https://support.apple.com/en-ca/102154",
+      "status": 200,
+      "finalUrl": "https://support.apple.com/en-ca/102154"
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/windows/experience/backup-recovery/windows-file-recovery",
+      "status": 200,
+      "finalUrl": "https://support.microsoft.com/en-us/windows/experience/backup-recovery/windows-file-recovery"
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/windows/experience/storage-filemanagement/free-up-drive-space-in-windows",
+      "status": 200,
+      "finalUrl": "https://support.microsoft.com/en-us/windows/experience/storage-filemanagement/free-up-drive-space-in-windows"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/office/open-xml/spreadsheet/structure-of-a-spreadsheetml-document",
+      "status": 200,
+      "finalUrl": "https://learn.microsoft.com/en-us/office/open-xml/spreadsheet/structure-of-a-spreadsheetml-document"
+    },
+    {
+      "url": "https://www.namecheap.com/support/knowledgebase/article.aspx/9622/10/dns-propagation-explained/",
+      "status": 200,
+      "finalUrl": "https://www.namecheap.com/support/knowledgebase/article.aspx/9622/10/dns-propagation-explained/"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/office/vba/excel/concepts/excel-performance/excel-tips-for-optimizing-performance-obstructions",
+      "status": 200,
+      "finalUrl": "https://learn.microsoft.com/en-us/office/vba/excel/concepts/excel-performance/excel-tips-for-optimizing-performance-obstructions"
+    },
+    {
+      "url": "https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-concepts/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/reference-data/link-data-items/how-items-link-through-workflows"
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/excel/data-import-and-analysis-options-in-excel",
+      "status": 200,
+      "finalUrl": "https://support.microsoft.com/en-us/excel/data-import-and-analysis-options-in-excel"
+    },
+    {
+      "url": "https://docs.n8n.io/code/builtin/output-other-nodes/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/transform-data/expression-reference/nodeoutputdata"
+    },
+    {
+      "url": "https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-code-node/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/reference-data/link-data-items/preserving-linking-in-the-code-node"
+    },
+    {
+      "url": "https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-errors/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/reference-data/link-data-items/item-linking-errors"
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/excel/stop-automatically-changing-numbers-to-dates",
+      "status": 200,
+      "finalUrl": "https://support.microsoft.com/en-us/excel/stop-automatically-changing-numbers-to-dates"
+    },
+    {
+      "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook"
+    },
+    {
+      "url": "https://support.apple.com/en-gb/102598",
+      "status": 200,
+      "finalUrl": "https://support.apple.com/en-gb/102598"
+    },
+    {
+      "url": "https://docs.n8n.io/code/cookbook/builtin/itemmatching/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/reference-data/link-data-items/accessing-linked-items-in-the-code-node"
+    },
+    {
+      "url": "https://support.apple.com/en-ie/101575",
+      "status": 200,
+      "finalUrl": "https://support.apple.com/en-ie/101575"
+    },
+    {
+      "url": "https://support.apple.com/en-ie/102670",
+      "status": 200,
+      "finalUrl": "https://support.apple.com/en-ie/102670"
+    },
+    {
+      "url": "https://support.microsoft.com/en-gb/excel/date-systems-in-excel",
+      "status": 200,
+      "finalUrl": "https://support.microsoft.com/en-gb/excel/date-systems-in-excel"
+    },
+    {
+      "url": "https://docs.n8n.io/hosting/configuration/configuration-examples/webhook-url/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/configuration-examples/configure-webhook-urls-with-reverse-proxy"
+    },
+    {
+      "url": "https://support.apple.com/en-ie/105061",
+      "status": 200,
+      "finalUrl": "https://support.apple.com/en-ie/105061"
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/excel/reduce-the-file-size-of-your-excel-spreadsheets",
+      "status": 200,
+      "finalUrl": "https://support.microsoft.com/en-us/excel/reduce-the-file-size-of-your-excel-spreadsheets"
+    },
+    {
+      "url": "https://docs.n8n.io/api/api-reference/",
+      "status": 200,
+      "finalUrl": "https://docs.n8n.io/connect/n8n-api/user"
+    },
+    {
+      "url": "https://coolify.io/docs/services/n8n",
+      "status": 200,
+      "finalUrl": "https://coolify.io/docs/services/n8n"
+    },
+    {
+      "url": "https://support.google.com/android/answer/7667018?hl=en",
+      "status": 200,
+      "finalUrl": "https://support.google.com/android/answer/7667018?hl=en"
+    },
+    {
+      "url": "https://support.google.com/photos/answer/6128858?hl=en",
+      "status": 200,
+      "finalUrl": "https://support.google.com/photos/answer/6128858?hl=en"
+    },
+    {
+      "url": "https://support.google.com/photos/answer/6128843?hl=en",
+      "status": 200,
+      "finalUrl": "https://support.google.com/photos/answer/6128843?hl=en"
+    },
+    {
+      "url": "https://support.google.com/android/answer/7431795?hl=en",
+      "status": 200,
+      "finalUrl": "https://support.google.com/android/answer/7431795?hl=en"
+    },
+    {
+      "url": "https://coolify.io/docs/api-reference/api/operations/update-service-by-uuid",
+      "status": 200,
+      "finalUrl": "https://coolify.io/docs/api/endpoints/services/update-service-by-uuid"
+    },
+    {
+      "url": "https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#use-the-x-github-delivery-header",
+      "status": 200,
+      "finalUrl": "https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks"
+    },
+    {
+      "url": "https://docs.github.com/en/webhooks/using-webhooks/handling-failed-webhook-deliveries",
+      "status": 200,
+      "finalUrl": "https://docs.github.com/en/webhooks/using-webhooks/handling-failed-webhook-deliveries"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/deployment/update/waas-restart",
+      "status": 200,
+      "finalUrl": "https://learn.microsoft.com/en-us/windows/deployment/update/waas-restart"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/powertools/python/latest/utilities/idempotency/#concurrent-identical-in-flight-requests",
+      "status": 200,
+      "finalUrl": "https://docs.aws.amazon.com/powertools/python/latest/utilities/idempotency/"
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-update-faq",
+      "status": 200,
+      "finalUrl": "https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-update-faq"
+    },
+    {
+      "url": "https://docs.stripe.com/webhooks#automatic-retries",
+      "status": 200,
+      "finalUrl": "https://docs.stripe.com/webhooks"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/deployment/update/how-windows-update-works",
+      "status": 200,
+      "finalUrl": "https://learn.microsoft.com/en-us/windows/deployment/update/how-windows-update-works"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-faq",
+      "status": 200,
+      "finalUrl": "https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-faq"
+    },
+    {
+      "url": "https://docs.stripe.com/api/idempotent_requests",
+      "status": 200,
+      "finalUrl": "https://docs.stripe.com/api/idempotent_requests"
+    }
+  ],
+  "articles": [
+    {
+      "slug": "ai-detectors-flagging-human-writing",
+      "status": 200,
+      "h1": [
+        "Why AI detectors flag human writing"
+      ],
+      "title": "Why AI detectors flag human writing | A2Z Skills",
+      "description": "AI detectors can produce false positives. Research shows why results depend on the detector, the writing sample and the threshold used to classify it.",
+      "canonical": "https://a2zskillsewa.com/ai-detectors-flagging-human-writing/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "automations-failing-silently",
+      "status": 200,
+      "h1": [
+        "Why automations fail silently"
+      ],
+      "title": "Why automations fail silently | A2Z Skills",
+      "description": "A broken workflow that tells you is a nuisance. One that keeps reporting success is the expensive kind, and there are four reasons it happens.",
+      "canonical": "https://a2zskillsewa.com/automations-failing-silently/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "chatgpt-different-answers-same-question",
+      "status": 200,
+      "h1": [
+        "Why ChatGPT gives a different answer each time"
+      ],
+      "title": "Why ChatGPT gives a different answer each time | A2Z Skills",
+      "description": "ChatGPT can answer the same question differently because generation varies and the surrounding context changes. Here is what can affect the result.",
+      "canonical": "https://a2zskillsewa.com/chatgpt-different-answers-same-question/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "cloudflare-ssl-modes-explained",
+      "status": 200,
+      "h1": [
+        "Cloudflare SSL modes: Flexible, Full and Full (strict)"
+      ],
+      "title": "Cloudflare SSL modes: Flexible, Full and Full (strict)",
+      "description": "Compare Cloudflare Flexible, Full and Full (strict): which connections use HTTPS, which certificates are checked and what errors 525 and 526 mean.",
+      "canonical": "https://a2zskillsewa.com/cloudflare-ssl-modes-explained/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "cloudflare-workers-custom-domain-not-working",
+      "status": 200,
+      "h1": [
+        "Cloudflare Workers custom domain not working"
+      ],
+      "title": "Cloudflare Workers custom domain not working | A2Z Skills",
+      "description": "Recorded Workers deployment failures involving zone status, account setup and Wrangler login, with exact errors, observed fixes and DNS scope limits.",
+      "canonical": "https://a2zskillsewa.com/cloudflare-workers-custom-domain-not-working/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "deleting-files-not-freeing-disk-space",
+      "status": 200,
+      "h1": [
+        "Deleting files did not free any disk space"
+      ],
+      "title": "Deleting files did not free any disk space | A2Z Skills",
+      "description": "You emptied the bin and the free space did not move. Four things hold on to deleted files on Windows and macOS, and each one lets go differently.",
+      "canonical": "https://a2zskillsewa.com/deleting-files-not-freeing-disk-space/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "dns-propagation-explained",
+      "status": 200,
+      "h1": [
+        "DNS propagation explained"
+      ],
+      "title": "DNS propagation explained | A2Z Skills",
+      "description": "DNS changes involve authoritative publication and cached answers. Learn how TTL, negative caching and nameserver changes affect what visitors see.",
+      "canonical": "https://a2zskillsewa.com/dns-propagation-explained/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "excel-changing-numbers-into-dates",
+      "status": 200,
+      "h1": [
+        "Why Excel changes numbers into dates"
+      ],
+      "title": "Why Excel changes numbers into dates | A2Z Skills",
+      "description": "Excel can interpret codes such as 1-2 as dates, depending on locale and input. Learn why reformatting cannot reliably restore the original characters.",
+      "canonical": "https://a2zskillsewa.com/excel-changing-numbers-into-dates/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "excel-file-size-too-large",
+      "status": 200,
+      "h1": [
+        "Why your Excel file is so large"
+      ],
+      "title": "Why your Excel file is so large | A2Z Skills",
+      "description": "A large Excel workbook can contain more than its visible data: excess formatting, pictures and pivot caches all matter. Learn what each one stores.",
+      "canonical": "https://a2zskillsewa.com/excel-file-size-too-large/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "n8n-item-linking-explained",
+      "status": 200,
+      "h1": [
+        "n8n item linking: why .item and .first() behave differently"
+      ],
+      "title": "n8n item linking: why .item and .first() behave differently",
+      "description": "Understand n8n item linking, pairedItem metadata and why replacing .item with .first() can remove an expression error while selecting the wrong record.",
+      "canonical": "https://a2zskillsewa.com/n8n-item-linking-explained/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "n8n-webhook-not-working",
+      "status": 200,
+      "h1": [
+        "n8n webhook not working: test and production 404s"
+      ],
+      "title": "n8n webhook not working: test and production 404s",
+      "description": "Two recorded n8n webhook 404 responses show test-listener and production-registration failures. Compare their hints, URL paths and version-specific limits.",
+      "canonical": "https://a2zskillsewa.com/n8n-webhook-not-working/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "phone-slows-down-gets-older",
+      "status": 200,
+      "h1": [
+        "Why a phone slows down as it gets older"
+      ],
+      "title": "Why a phone slows down as it gets older | A2Z Skills",
+      "description": "An older phone can slow down because of storage, apps, heat or battery-related limits. Learn which explanations apply to iPhone and Android.",
+      "canonical": "https://a2zskillsewa.com/phone-slows-down-gets-older/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "phone-storage-full-after-deleting-photos",
+      "status": 200,
+      "h1": [
+        "Phone storage still full after deleting photos"
+      ],
+      "title": "Phone storage still full after deleting photos | A2Z Skills",
+      "description": "Phone storage can stay full after deleting photos because local files, recently deleted items and cloud storage are counted differently. Here is why.",
+      "canonical": "https://a2zskillsewa.com/phone-storage-full-after-deleting-photos/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "self-host-n8n-coolify",
+      "status": 200,
+      "h1": [
+        "Self-host n8n on Coolify: domain, API and email"
+      ],
+      "title": "Self-host n8n on Coolify: domain, API and email | A2Z Skills",
+      "description": "A recorded n8n 2.10.2 setup on Coolify 4.5.0: stored domains, public URL settings, API imports and SMTP errors, with the observed fixes and limits.",
+      "canonical": "https://a2zskillsewa.com/self-host-n8n-coolify/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "webhook-retries-duplicate-events",
+      "status": 200,
+      "h1": [
+        "Why webhooks arrive twice: retries and duplicate events"
+      ],
+      "title": "Why webhooks arrive twice: retries and duplicate events",
+      "description": "Understand duplicate webhook deliveries, provider retry differences and why event IDs, concurrency and durable processing matter for automation workflows.",
+      "canonical": "https://a2zskillsewa.com/webhook-retries-duplicate-events/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    },
+    {
+      "slug": "windows-restart-finish-installing-updates",
+      "status": 200,
+      "h1": [
+        "Why Windows has to restart to finish an update"
+      ],
+      "title": "Why Windows has to restart to finish an update | A2Z Skills",
+      "description": "Windows can download an update before it is ready to finish. Learn why some system changes need a restart and why installation time varies.",
+      "canonical": "https://a2zskillsewa.com/windows-restart-finish-installing-updates/",
+      "types": [
+        "WebSite",
+        "Organization",
+        "BlogPosting",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "hero": {
+        "loading": "eager",
+        "priority": "high"
+      },
+      "viewportChecks": [
+        {
+          "width": 390,
+          "scroll": 390
+        },
+        {
+          "width": 768,
+          "scroll": 768
+        },
+        {
+          "width": 1440,
+          "scroll": 1440
+        }
+      ]
+    }
+  ]
+}

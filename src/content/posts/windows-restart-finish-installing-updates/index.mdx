@@ -1,6 +1,6 @@
 ---
 title: 'Why Windows has to restart to finish an update'
-description: 'Windows cannot overwrite a file that something is using, so updates are staged first and applied in the short window when almost nothing is running.'
+description: 'Windows can download an update before it is ready to finish. Learn why some system changes need a restart and why installation time varies.'
 pillar: 'windows-mac'
 type: 'explainer'
 tags:
@@ -8,84 +8,86 @@ tags:
   - 'windows-update'
 author: 'devchandra-shrestha'
 publishedAt: '2026-10-26'
-quickAnswer: 'Windows locks a file while a program has it open, so an update cannot replace a system file that is in use. The download and staging happen while you work, and the replacement happens during the restart, in the gap after your programs have closed and before the desktop starts.'
+quickAnswer: 'Some Windows updates need a restart to finish changes to components in use. Downloading and staging can happen beforehand, but a completed download is not a completed installation. File-sharing rules, the update and the device affect what can be replaced while Windows runs.'
 faq:
-  - q: 'Why does the restart take so long when the download finished hours ago?'
-    a: 'Because the download was never the slow part. The restart is when the staged files are actually swapped in, and that work is disk-bound and cannot be done while the old files are in use.'
-  - q: 'Is it safe to force a shutdown during the update screen?'
-    a: 'No. That is the one moment when system files are half replaced, and interrupting it is the usual way people end up needing recovery media.'
+  - q: 'Why does the restart take time after the download finished?'
+    a: 'The download is only one stage. Installation and the final commit can still need work. Duration depends on the update and device; a slow restart alone does not prove that the disk is faulty.'
+  - q: 'Should I force a shutdown during an update?'
+    a: 'Avoid interrupting an update. An interruption can leave installation incomplete, although it does not always make Windows unbootable. If progress appears stuck, use Microsoft’s guidance for the specific symptom rather than treating an estimated duration as a deadline.'
   - q: 'Why do some updates install without a restart?'
-    a: 'Because nothing they touch is in use. An app update, a definition update or a driver that is not loaded can all be replaced live. Some editions can also patch certain components without rebooting.'
+    a: 'Some changes can finish while Windows runs. Eligible hotpatch updates can also avoid a restart under supported conditions. This does not apply to every Windows device or every update.'
 # prettier-ignore
 heroImage: "./cover-illustration.webp"
 # prettier-ignore
 heroAlt: "A laptop and interlocking update pieces surrounded by a restart arrow."
 draft: false
-updatedAt: '2026-10-26'
+updatedAt: '2026-10-27'
 ---
 
-The download finished an hour ago and Windows still wants to restart. That is
-not Windows being slow or obstructive, and the reason is a design decision that
-goes back decades. More desktop guides are in
-[Windows & Mac](/topics/windows-mac/). For another case where the system holds
-on to something you thought was dealt with, read
-[deleting files did not free any disk space](/deleting-files-not-freeing-disk-space/),
-and for the same wearing-out question on a handset,
-[why a phone slows down as it gets older](/phone-slows-down-gets-older/).
+The download has finished, but Windows still asks for a restart. Download,
+installation and completion are separate stages, so the prompt does not mean
+the download failed. More explanations are in [Windows & Mac](/topics/windows-mac/).
 
-## Windows will not let go of a file in use
-
-Open files can prevent replacement, depending on sharing permissions and the
-operation involved. Windows does not impose the same unconditional lock on
-every open file. Microsoft's documentation distinguishes sharing violations
-and deletion pending the closure of handles. Components in use can still
-require work to be deferred until a restart.
-
-The consequence is simple and inconvenient. If an update needs to replace a
-system library, and something is using that library, the replacement cannot
-happen. On a running desktop almost every core system file is in use by
-something, often by several things at once.
-
-## So the work is split in two
-
-The part that can happen while you work does. Windows downloads the packages,
-verifies them, and stages the new files alongside the old ones. None of this
-touches anything in use, which is why your machine keeps running normally and
-why the progress bar reaching 100% changes nothing you can see.
-
-The part that cannot wait for a quiet moment gets one made for it. During a
-restart there is a window after your programs have closed and before the desktop
-and its services start, when very little holds a lock on anything. The component
-that applies updates runs in that window and swaps the staged files in.
-
-<Callout type="danger" title="This is the one time not to pull the plug">
-  The update screen is the moment when some files are new and some are still old. A forced
-  power-off part way through is the common route to a machine that needs recovery media to
-  boot.
+<Callout type="note" title="Correction, 27 October 2026">
+  An earlier version said every open file was locked, every slow update was disk-bound and
+  interrupting an update usually required recovery media. Those claims were too broad.
 </Callout>
 
-## Why the restart itself is slow
+## A completed download still leaves installation work
 
-Nothing is being downloaded during that screen. The time goes on file operations:
-replacing components, updating the registry, and rebuilding caches that depend on
-what just changed. That work is limited by your disk, which is why the same
-update finishes in a minute on an SSD and takes far longer on a mechanical drive.
+Microsoft's [Windows Update architecture](https://learn.microsoft.com/en-us/windows/deployment/update/how-windows-update-works)
+describes scanning, downloading, installing and committing an update. The files
+can already be on the computer while later stages remain unfinished.
 
-It is also why the percentage figure moves unevenly. It tracks stages of work,
-not bytes, and some stages are much larger than others.
+That distinction matters when interpreting a progress indicator. A download
+percentage describes that phase; it cannot promise that the desktop will be
+ready after the same amount of time again. Different packages and machines
+need different work. This article does not report a measured installation time
+or a comparison between storage devices.
 
-## What this means in practice
+## Components in use can need a restart
 
-Restart on your own schedule rather than waiting to be told. Once the staging is
-done, the pending work is sitting on disk and the only thing between you and a
-finished update is a restart you control.
+A system update can affect components that Windows or its services are using.
+A restart allows pending changes to finish as the system transitions to the
+updated components. Microsoft's [restart guidance](https://learn.microsoft.com/en-us/windows/deployment/update/waas-restart)
+explains the restart requirement and the policies that control its timing.
 
-If a machine is slow to come back repeatedly, the disk is usually the thing to
-look at rather than the update.
+Open files are part of this explanation, but Windows does not lock every open
+file in the same way. Sharing permissions and the operation involved matter.
+Microsoft's [file-handle documentation](https://learn.microsoft.com/en-us/windows/win32/fileio/closing-and-deleting-files)
+describes cases where deletion waits for handles to close and where sharing
+violations prevent an operation. Those rules do not establish that every file
+replacement behaves identically.
 
-## Sources
+The same distinction appears in [disk space after file deletion](/deleting-files-not-freeing-disk-space/):
+a name disappearing and the system releasing its storage are separate events.
 
-- [Microsoft: Windows Update FAQ](https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-update-faq)
-- [Microsoft: managing update restarts](https://learn.microsoft.com/en-us/windows/deployment/update/waas-restart)
+## A long restart does not diagnose a failing disk
 
-Microsoft also documents [file sharing and deletion](https://learn.microsoft.com/en-us/windows/win32/fileio/closing-and-deleting-files), including the effect of open handles.
+The update, the computer and the work remaining all affect duration. A single
+slow restart provides too little evidence to identify a storage fault or to
+promise that another machine would finish in a minute. Comparisons need the
+same update and recorded conditions.
+
+If the update shows an error, that message is more useful than assuming the
+storage device caused it. Microsoft's [Windows Update FAQ](https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-update-faq)
+is the starting point for its supported troubleshooting guidance. The precise
+symptom and Windows version determine which instructions apply.
+
+<Callout type="warning" title="Avoid interrupting installation">
+  Cutting power can interrupt pending changes. Keep the machine powered during an update. A
+  stalled screen needs symptom-specific troubleshooting; elapsed time alone does not
+  establish that a forced shutdown is the right action.
+</Callout>
+
+## Some changes can finish without restarting
+
+A restart is not required for every change. Microsoft also documents
+[hotpatch updates for eligible devices](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-faq).
+Their availability has specific requirements, and some updates still need a
+restart. A claim that all Windows updates can finish live would be as misleading
+as a claim that none can.
+
+A phone slowing down is a different diagnosis, even if it first becomes
+noticeable after an update. [Phone performance](/phone-slows-down-gets-older/)
+can involve an app, storage, temperature or battery behaviour as well as software.

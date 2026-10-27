@@ -177,7 +177,8 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
             fallbackFormat="webp"
             quality={78}
             sizes="(min-width: 1024px) 672px, 94vw"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
             class="illustration-frame aspect-[8/5] w-full object-cover"
           />
           <figcaption class="mt-2 text-right text-xs text-ink-faint">

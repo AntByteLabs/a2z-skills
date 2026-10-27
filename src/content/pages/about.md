@@ -1,17 +1,17 @@
 ---
 title: About A2Z Skills
 description: 'Who publishes A2Z Skills, how procedures are tested, and how sourced explainers differ from guides with recorded versions and devices.'
-updatedAt: 2026-10-25
+updatedAt: 2026-10-27
 order: 1
 ---
 
-A2Z Skills publishes tech guides that someone actually followed before you did.
+A2Z Skills publishes practical tech guides and researched explanations for
+readers working with automation, hosting, spreadsheets and everyday devices.
 
-Most "how to fix" pages are written from documentation, or from another page
-written from documentation. The steps look right and fail on the third one,
-because the menu moved two releases ago. We do it the slow way instead: open the
-software, hit the problem, write down what the screen really says, and publish
-the version numbers alongside the fix.
+Tested procedures include the versions, device and errors recorded during a
+real setup. Explainers answer a different kind of question using linked vendor
+documentation and research. The evidence label beside each short answer helps
+you distinguish them.
 
 ## What a tested procedure records
 
@@ -26,9 +26,8 @@ Explainers are labelled separately and link to supporting documentation or resea
 
 A2Z Skills is published by **AntByte Labs**, a small software and web studio
 operating from Nepal, which also builds and maintains client sites and internal
-tools. The same people who ship that work write these guides, which is why the
-posts are about problems we hit in real projects rather than whatever is
-trending.
+tools. The hosting and automation guides include recorded project
+problems; other articles explain documented behaviour.
 
 Three of us write here:
 
@@ -37,9 +36,10 @@ Three of us write here:
 - [Krishna Pokharel](/authors/krishna-pokharel/) — Excel, Word and phones.
 - [Ronit Karki](/authors/ronit-karki/) — AI tools and automation.
 
-Testing runs on our own machines: a Windows 11 desktop, a Mac, and Android and
-iPhone handsets kept on current and one-behind OS versions, because that is what
-readers are actually running.
+The test box on each procedure names the actual environment used. An article
+about a platform does not by itself establish that the team owns or tested every
+device discussed. AI assistance and the evidence requirements are described in
+the [editorial policy](/editorial-policy/).
 
 ## Corrections
 

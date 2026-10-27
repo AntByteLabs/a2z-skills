@@ -1,6 +1,6 @@
 ---
 title: 'Cloudflare Workers custom domain not working'
-description: 'Four things block a Workers custom domain, and none of them says so plainly. Here is each error as it appears, and what it actually means.'
+description: 'Recorded Workers deployment failures involving zone status, account setup and Wrangler login, with exact errors, observed fixes and DNS scope limits.'
 pillar: 'websites-hosting'
 type: 'fix'
 tags:
@@ -10,7 +10,7 @@ tags:
   - 'deployment'
 author: 'devchandra-shrestha'
 publishedAt: '2026-10-25'
-quickAnswer: "A Workers custom domain only attaches if the domain's zone is on the same Cloudflare account, which means its nameservers must point at Cloudflare. Adding the domain is not enough: until the registrar's nameservers change, the zone stays pending and the route will not work."
+quickAnswer: 'A Workers Custom Domain needs an active Cloudflare zone accessible to the Worker’s account. This test used a full DNS setup, where registrar nameservers had to change before activation. A pending zone is one cause of failure; it does not explain every DNS, certificate or routing error.'
 testedOn:
   date: '2026-10-25'
   versions:
@@ -21,7 +21,7 @@ testedOn:
   testedBy: 'Devchandra Shrestha'
 faq:
   - q: 'Do I have to move my whole domain to Cloudflare just to use a Worker?'
-    a: 'For a custom domain on the apex, yes. The zone has to be on the same Cloudflare account, which means Cloudflare nameservers. If you cannot move the nameservers, a Worker route on a subdomain of a zone you already have there is the way round it.'
+    a: 'The recorded full-zone setup required changing the registrar’s nameservers. Cloudflare also documents other zone setups with different prerequisites. A Worker route is not a universal workaround for an inactive or unsupported zone; check the setup that applies to your account.'
   - q: 'How long does the zone stay pending after I change nameservers?'
     a: 'Cloudflare rechecks periodically and you can trigger a check from the dashboard. In our experience it is minutes rather than hours, but registrars publish nameserver changes on their own schedule, so plan for it to be slow rather than instant.'
   - q: 'Is a workers.dev URL safe to leave up once the real domain is live?'
@@ -33,7 +33,7 @@ heroImage: "./cover-illustration.webp"
 # prettier-ignore
 heroAlt: "A cloud and domain globe separated by an unconnected cable."
 draft: false
-updatedAt: '2026-10-26'
+updatedAt: '2026-10-27'
 ---
 
 Adding a domain to Cloudflare and having a Worker answer on it are two
@@ -69,8 +69,10 @@ are not claimed as reproduced by the test record on this page.
 
 A Workers custom domain needs the domain's zone to live on the same Cloudflare
 account as the Worker. Pointing DNS at Cloudflare is not the same thing. The
-zone has to be on the account, which in practice means the registrar's
-nameservers are Cloudflare's.
+zone must also be active. This test used Cloudflare’s full DNS setup, in which
+the registrar delegates to Cloudflare nameservers. Cloudflare’s
+[partial setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup/)
+has different prerequisites; a full-zone test is not evidence for every setup.
 
 Check that before you deploy:
 
@@ -132,10 +134,9 @@ Cloudflare outage:
     The request is not allowed. No CSRF value available in the session cookie.
 ```
 
-Nothing is wrong with your account. The OAuth page needs an existing
-`dash.cloudflare.com` session in whichever browser it opens, and it opens your
-default one. Sign in to Cloudflare in a different browser and this is the error
-you get.
+In this session the problem was the browser’s Cloudflare login state. Using an
+authenticated browser resolved it. The message alone does not prove that every
+account or OAuth configuration is otherwise correct.
 
 Pick the browser yourself:
 
@@ -183,15 +184,15 @@ With the zone active, put the route back and deploy again:
 
 Waiting on the zone is a separate question from waiting on a record, and the
 second one is explained in [DNS propagation](/dns-propagation-explained/):
-nothing travels outward, and the TTL you published before the change is what
-sets the delay.
+cached answers use their earlier TTL, while provider publication, delegation
+and exceptional cache behaviour can also affect the delay.
 
 The same split shows up when self-hosting: in
 [self-host n8n on Coolify](/self-host-n8n-coolify/) the platform and the
 application each hold their own copy of the hostname, and both have to be told.
 
-A custom domain cannot redirect `www` to the apex. That is a Redirect Rule in
-the dashboard, free to add, and it is not a line in `_redirects`. And
+Attaching a Custom Domain does not by itself configure a `www` redirect to the
+apex. This setup handled that separately with a Cloudflare Redirect Rule. And
 `_redirects` and `_headers` do work on Workers static assets, which a lot of
 advice still treats as a Pages-only feature; the limits are 2,000 static
 redirects, 100 dynamic ones and 100 header rules.
@@ -235,8 +236,9 @@ dig +short yourdomain.com NS
 
 The second should show a 307 to the trailing-slash form if you set
 `html_handling` to `force-trailing-slash`. The third should return nothing on
-the real domain. If `dig` still shows the registrar, none of the rest matters
-yet.
+the real domain. In this full-zone setup, registrar nameservers indicated that
+the intended delegation was not visible through the resolver queried. Other zone
+setups need their own checks.
 
 ## A separate origin server
 

@@ -12,7 +12,7 @@ publishedAt: '2026-10-26'
 quickAnswer: 'Free space depends on which files and copies still occupy the volume. The bin, app downloads, open files and snapshots can affect the figure in different ways. Windows and macOS handle these differently, so a delayed change does not identify the cause by itself.'
 faq:
   - q: 'Does emptying the Recycle Bin actually erase the file?'
-    a: 'It frees the space for reuse. The bytes stay on the disk until something else writes over them, which is why recovery tools can sometimes get a file back hours later.'
+    a: 'It normally releases the bin’s allocation for reuse, but this is not a promise that recovery is possible. SSD trimming, encryption, later writes and retained copies affect recoverability. Emptying the bin should be treated as permanent removal.'
   - q: 'Why did my free space go up by itself an hour later?'
     a: 'Several background changes can alter the reported figure, including temporary-file cleanup and changes to local copies or snapshots. Time Machine manages local snapshots automatically. A delayed change alone does not identify the responsible mechanism.'
   - q: 'Is a disk that reports zero bytes free dangerous?'
@@ -22,7 +22,7 @@ heroImage: "./cover-illustration.webp"
 # prettier-ignore
 heroAlt: "A packed storage drive beside a basket containing discarded file tiles."
 draft: false
-updatedAt: '2026-10-26'
+updatedAt: '2026-10-27'
 ---
 
 A file you deleted is still costing you space, and the number in the storage
@@ -33,17 +33,23 @@ problem on a handset is in
 and another storage question is
 [why an Excel workbook can be larger than its visible data](/excel-file-size-too-large/).
 
-## Deleting removes the entry, not the data
+<Callout type="note" title="Correction, 27 October 2026">
+  The earlier recovery answer implied deleted bytes remain recoverable until overwritten.
+  Recoverability depends on the storage and filesystem; emptying the bin is not a safe way
+  to preserve a file for later recovery.
+</Callout>
 
-A filesystem keeps two separate things: a directory of what exists and where it
-lives, and the blocks of data themselves. Deleting a file edits the directory.
-It marks the blocks as available and stops listing the name. It does not go and
-overwrite the blocks, because on a large file that would take minutes rather
-than milliseconds.
+## Removing a name and releasing storage are different events
 
-The practical result is that free space is an accounting figure. It goes up when
-the last thing that claims a block gives up its claim. If something still claims
-it, the figure does not move, however many times you press delete.
+Free space depends on the allocations that remain on the volume. Moving a file
+to a bin can retain its allocation. A snapshot or another retained copy can also
+preserve content after it disappears from the current folder.
+
+Deletion is not a recovery guarantee. The filesystem, SSD trimming, encryption
+and subsequent activity can affect whether old content remains accessible.
+[Microsoft's recovery guidance](https://support.microsoft.com/en-us/windows/experience/backup-recovery/windows-file-recovery)
+explains why recovery cannot be assumed. A separate backup is a different
+protection from hoping deleted data can be reconstructed.
 
 ## Four things that keep claiming the space
 
@@ -59,10 +65,11 @@ cannot make room for new work. Windows backup and restore features have
 different storage arrangements; File History is not interchangeable with
 Time Machine.
 
-**A program still holding the file open.** An open handle keeps the blocks
-allocated even after the name is gone. A download manager, a media player or a
-sync client that has not noticed the deletion will all do this. Restarting
-releases every handle at once, which is why a reboot appears to fix it.
+**A program still holding a file open.** Handle and sharing rules can delay
+deletion or prevent it, depending on the operating system and operation.
+Microsoft documents deletion waiting for handles to close. Ending the relevant
+process can release its handles, but that does not remove snapshots or other
+retained copies.
 
 **Cloud and local copies.** Sync services can keep downloaded files, offline
 copies and separate deleted-items areas. Their policies differ. A cloud
@@ -82,14 +89,14 @@ guidance covers other categories, including system files and locally downloaded
 cloud content.
 
 <Callout type="warning" title="Before you delete a snapshot">
-  A snapshot is the copy you would restore from. Deleting the lot to recover space removes
-  your ability to undo whatever you did last week. Let them expire unless the disk is
-  actually full.
+  Removing a snapshot removes that restore point. Other backups may exist, but deleting
+  backup history is a different decision from removing a temporary download. Apple manages
+  Time Machine local snapshots automatically and counts their space as available.
 </Callout>
 
 The exact panel that reports storage, and the wording beside it, moves between
-Windows builds and macOS releases, so this post stops at the mechanism. A tested
-walkthrough, with the paths as they appear on a named build, is coming.
+Windows builds and macOS releases, so this post explains the mechanisms. The vendor sources below provide their
+current instructions; this page does not claim a device-specific repair test.
 
 ## Sources
 

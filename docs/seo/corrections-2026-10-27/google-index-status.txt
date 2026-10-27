@@ -1,0 +1,41 @@
+inspecting 32 URL(s); this takes a moment each.
+  /                                              Submitted and indexed      2026-10-25 
+  /topics/                                       Submitted and indexed      2026-10-25 
+  /cloudflare-ssl-modes-explained/               URL is unknown to Google   never      
+  /n8n-item-linking-explained/                   URL is unknown to Google   never      
+  /webhook-retries-duplicate-events/             URL is unknown to Google   never      
+  /ai-detectors-flagging-human-writing/          Submitted and indexed      2026-10-26 
+  /automations-failing-silently/                 Submitted and indexed      2026-10-26 
+  /chatgpt-different-answers-same-question/      Submitted and indexed      2026-10-26 
+  /deleting-files-not-freeing-disk-space/        Submitted and indexed      2026-10-26 
+  /dns-propagation-explained/                    Submitted and indexed      2026-10-26 
+  /excel-changing-numbers-into-dates/            Submitted and indexed      2026-10-26 
+  /excel-file-size-too-large/                    Submitted and indexed      2026-10-26 
+  /n8n-webhook-not-working/                      Submitted and indexed      2026-10-26 
+  /phone-slows-down-gets-older/                  Submitted and indexed      2026-10-26 
+  /phone-storage-full-after-deleting-photos/     Submitted and indexed      2026-10-26 
+  /self-host-n8n-coolify/                        Submitted and indexed      2026-10-26 
+  /windows-restart-finish-installing-updates/    Submitted and indexed      2026-10-26 
+  /cloudflare-workers-custom-domain-not-working/ Submitted and indexed      2026-10-26 
+  /topics/ai-tools/                              Submitted and indexed      2026-10-25 
+  /topics/automation/                            Submitted and indexed      2026-10-25 
+  /topics/excel-office/                          Submitted and indexed      2026-10-26 
+  /topics/phones/                                Submitted and indexed      2026-10-25 
+  /topics/websites-hosting/                      Submitted and indexed      2026-10-26 
+  /topics/windows-mac/                           Submitted and indexed      2026-10-25 
+  /authors/devchandra-shrestha/                  Submitted and indexed      2026-10-25 
+  /authors/krishna-pokharel/                     Submitted and indexed      2026-10-25 
+  /authors/ronit-karki/                          Submitted and indexed      2026-10-25 
+  /about/                                        Submitted and indexed      2026-10-25 
+  /affiliate-disclosure/                         Submitted and indexed      2026-10-25 
+  /contact/                                      Submitted and indexed      2026-10-25 
+  /editorial-policy/                             Submitted and indexed      2026-10-25 
+  /privacy/                                      Submitted and indexed      2026-10-25 
+
+32 URL(s):
+   29  Submitted and indexed
+    3  URL is unknown to Google
+
+No canonical disagreements.
+
+3 not yet crawled, which is normal soon after publishing.

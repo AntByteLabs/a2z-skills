@@ -9,14 +9,14 @@ tags:
   - 'monitoring'
 author: 'ronit-karki'
 publishedAt: '2026-10-26'
-quickAnswer: 'An automation fails silently when the step that broke still hands the next step something it accepts. Empty results, swallowed errors, partial pages and expired credentials all look like success to the platform, so the run is marked green and nobody is told.'
+quickAnswer: 'A workflow can finish without an execution error while missing its intended result. Empty results, incomplete pagination or configured error handling can allow that. Authentication and rate-limit failures may instead fail the run; the API response and node settings determine what happens.'
 faq:
   - q: 'What is a dead-man switch in this context?'
-    a: 'A separate check that alerts when a run has not happened, rather than when a run has failed. It is the only thing that catches a trigger that stopped firing altogether.'
+    a: 'A separate check that alerts when a run has not happened, rather than when a run has failed. It can reveal a trigger that stopped firing without creating a failed execution.'
   - q: 'Should every workflow alert on zero results?'
     a: 'Only where zero is abnormal. A workflow that usually returns nothing will train you to ignore the alert, which costs you the alerts that matter.'
   - q: 'Is error handling making this worse?'
-    a: 'Often, yes. A catch block that logs and continues converts a loud failure into a quiet one, which is the right trade for a retry and the wrong one for bad data.'
+    a: 'It can hide a problem if it continues without checking the outcome. Retry safety depends on whether the operation may already have completed. Error handling should preserve evidence and make unresolved failures visible.'
 # prettier-ignore
 heroImage: "./cover-illustration.webp"
 # prettier-ignore
@@ -25,23 +25,28 @@ draft: false
 updatedAt: '2026-10-27'
 ---
 
-The automations that cost you are not the ones that break. They are the ones
-that keep running, keep reporting success, and have been doing nothing
-for three weeks. More automation guides are in
-[Automation](/topics/automation/), the platform these were tested on is in
+A workflow can report successful executions while its destination remains
+empty. The missing result is a different observation from an execution error. More automation guides are in
+[Automation](/topics/automation/). A separately tested setup is in
 [self-host n8n on Coolify](/self-host-n8n-coolify/), and another tool that is
 confidently wrong is covered in
 [why AI detectors flag human writing](/ai-detectors-flagging-human-writing/).
 
-## A platform can only see its own steps
+<Callout type="note" title="Correction, 27 October 2026">
+  The earlier summary implied that expired credentials and rate limits always appear as
+  successful runs. They can fail a run. The response handling and node configuration
+  determine whether a failure remains visible.
+</Callout>
 
-Every automation platform reports on execution, not on outcome. It knows whether
-each node ran and whether each one threw. It has no idea what the workflow was
-supposed to achieve, so it cannot tell you that the achievement stopped.
+## Execution status needs context
+
+An execution status describes what the platform recorded. Unless the workflow
+also checks its intended outcome, that status may not establish whether a record
+arrived or a report contained the expected data. Platforms can support outcome
+checks, but those checks need to be part of the workflow or monitoring.
 
 That distinction is where silent failure lives. If every node runs and none of
-them throws, the run is green. Whether anything useful happened is a question
-the platform never asks.
+them throws, the run is green. Whether the result is useful still depends on the checks configured for it.
 
 ## Empty is not an error
 
@@ -55,20 +60,22 @@ a changed label or a moved folder turns a working filter into one that matches
 nothing, and the workflow carries on reporting success at its usual interval.
 
 <Callout type="tip" title="Assert on the count">
-  Add a step that fails the run when the result count is outside what you expect. Zero rows
-  from a report that normally returns forty is a failure, and only your workflow knows that.
+  An expected record count can make a missing outcome visible. For a hypothetical report
+  that should contain forty records, zero needs investigation. A normally empty report needs
+  a different rule.
 </Callout>
 
 ## Error handling that swallows
 
-Retries and catch blocks exist for a reason, and both convert a visible failure
-into an invisible one. A retry configured to give up and continue can produce
+Retries and catch blocks can allow execution to continue after a problem,
+depending on their configuration. A retry configured to give up and continue can produce
 a run that looks fine and is missing data. A catch block that logs and
 moves on has done the same thing more deliberately.
 
-The right split is by cause. Transient problems, such as a timeout or a rate
-limit, should be retried quietly. Bad data and rejected requests should stop the
-run, because continuing past them produces output nobody will check.
+Whether retrying is appropriate depends on the cause and the operation. A
+timeout does not establish that the remote action failed, so a retry may repeat
+work. Error handling needs to preserve enough evidence to investigate the
+outcome; n8n documents configurable [error workflows](https://docs.n8n.io/flow-logic/error-handling/).
 
 ## Partial data read as complete
 
@@ -77,19 +84,20 @@ that ignores the continuation processes that first page every time and reports
 success. It worked correctly while the dataset was small, and started losing
 records on the day the dataset outgrew one page.
 
-Rate limits produce the same shape. A request rejected for volume often returns
-a valid response body with an error inside it, which a step that only checks the
-status code will accept and pass on.
+A rate-limited API can return an error status that fails a node. A response body
+may also contain an application-level error, depending on the API. Whether either
+case remains visible depends on the response handling and node configuration.
 
 A trigger that stopped firing is the same shape of problem, and on n8n it is
-usually one of two URLs: see
+sometimes an endpoint registration problem: see
 [n8n webhook not triggering](/n8n-webhook-not-working/).
 
 ## Credentials that expire into a valid response
 
-An expired token is not always a failure. Some APIs answer with a success status
-and a body explaining that you are not authenticated. Others return an empty
-result set, which lands you back at the first cause in this list.
+An expired token can fail a request with an authentication error. If a workflow
+continues after that error or substitutes an empty result, the execution outcome
+can conceal missing work. It is too broad to say expired credentials always
+appear successful: the API contract and error-handling settings matter.
 
 ## What to monitor instead
 
@@ -114,6 +122,8 @@ monitoring walkthrough would need a named tester's record of both sides.
 ## Related data and delivery problems
 
 A successful expression can select the wrong person if a workflow replaces a matching-item reference with the first record. [n8n item linking](/n8n-item-linking-explained/) explains that distinction. [Webhook retries and duplicate events](/webhook-retries-duplicate-events/) covers a separate outcome problem: the same incoming notification causing work to happen again.
+
+A spreadsheet import needs a similar check: [Excel can turn identifiers into dates](/excel-changing-numbers-into-dates/) even when the import finishes. A generated answer also needs evidence: [ChatGPT responses can vary](/chatgpt-different-answers-same-question/) without the wording alone establishing which answer is correct.
 
 ## Sources
 

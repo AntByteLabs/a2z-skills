@@ -1,6 +1,6 @@
 ---
-title: 'Self-host n8n on Coolify'
-description: 'Coolify deploys n8n in a click, then three things fight you: the domain, the credentials API and the email node. Here is each one, with the fix.'
+title: 'Self-host n8n on Coolify: domain, API and email'
+description: 'A recorded n8n 2.10.2 setup on Coolify 4.5.0: stored domains, public URL settings, API imports and SMTP errors, with the observed fixes and limits.'
 pillar: 'automation'
 type: 'how-to'
 tags:
@@ -10,7 +10,7 @@ tags:
   - 'deployment'
 author: 'ronit-karki'
 publishedAt: '2026-10-26'
-quickAnswer: "Coolify's one-click n8n works, but the domain it generates cannot be changed through the environment variables that look like they control it. Use PATCH /api/v1/services/{uuid} with a urls array, then change N8N_HOST, WEBHOOK_URL and N8N_EDITOR_BASE_URL to match."
+quickAnswer: 'In this Coolify 4.5.0 test, changing only SERVICE_FQDN_N8N did not preserve the custom domain after redeployment. Updating the stored service URL and n8n’s public URL settings resolved that case. The record below also covers API import and email-node errors in n8n 2.10.2.'
 testedOn:
   date: '2026-10-26'
   versions:
@@ -21,26 +21,25 @@ testedOn:
   testedBy: 'Ronit Karki'
 faq:
   - q: 'How much memory does n8n use on a small server?'
-    a: 'Around 550 MB resident with the task runners enabled, measured on an idle instance with no workflows. On a 12 GB box that is comfortable; on a 1 GB box it is not.'
+    a: 'Around 550 MB resident for n8n and its task runners in this idle test, with no workflows running. This is an observation for the recorded setup, not a capacity estimate for active workloads or the whole server.'
   - q: 'Can I import workflows without using the editor?'
-    a: 'Yes. POST /api/v1/workflows with an API key accepts name, nodes, connections and settings. It rejects anything else in the payload, including the active flag, so activate separately.'
+    a: 'Yes. POST /api/v1/workflows with an API key accepts name, nodes, connections and settings. The recorded request rejected the active flag, so publication was handled separately. Other versions and API fields need their own reference check.'
   - q: 'Why does my imported workflow refuse to activate?'
-    a: 'Usually a node that imported cleanly but has the wrong parameter names for its version. n8n accepts the JSON and only complains when you publish, with a message naming the node but not the field.'
+    a: 'In the recorded case, emailSend v2.1 had incorrect required parameter names. Import succeeded, but publication failed. Other activation failures need their own error evidence; the recorded message does not diagnose every workflow.'
   - q: 'Does the free Coolify one-click include a database?'
-    a: 'The n8n template runs on SQLite by default, which is fine for a few workflows. Move to the Postgres variant before you depend on it for anything with volume.'
+    a: 'The recorded setup used SQLite. Coolify also documents PostgreSQL variants. Choosing a database needs workload, backup and recovery requirements; this page includes no PostgreSQL migration or load test.'
 # prettier-ignore
 heroImage: "./cover-illustration.webp"
 # prettier-ignore
 heroAlt: "A small server connected to a cloud and colourful workflow blocks."
 draft: false
-updatedAt: '2026-10-26'
+updatedAt: '2026-10-27'
 ---
 
-Coolify will deploy n8n from its service catalogue in about a minute, and then
-three things get in the way: the domain it picks for you, a credentials API that
-rejects its own documented field, and an email node whose parameters changed
-names. None of them is in the Coolify or n8n docs. This is the sequence that
-works, from the [automation](/topics/automation/) side of things.
+This recorded setup encountered a domain that reverted on redeployment, an SMTP
+credential schema mismatch and email-node parameter errors. The commands and
+outputs below belong to the versions in the test box. More guides are in
+[Automation](/topics/automation/).
 
 ## What this setup covers
 
@@ -66,9 +65,10 @@ For a successful run whose destination remains empty, the next question is
 
 ## Deploy the service
 
-In Coolify, add a new Service, choose n8n, and pick the server and project. The
-template brings up two containers, `n8n` and `task-runners`, and they are
-healthy within a minute or so.
+In Coolify, add a new Service, choose n8n, and pick the server and project. In the
+recorded template, `n8n` and `task-runners` became healthy within about a minute.
+Current [Coolify n8n templates](https://coolify.io/docs/services/n8n) have several
+variants; their container layout and startup time should not be assumed identical.
 
 <Callout type="note">
   n8n 2.10 logs a deprecation on startup: `N8N_RUNNERS_ENABLED` is no longer needed. The
@@ -107,21 +107,24 @@ the shape wrong, the validation error tells you what it wants:
     The call above. The response echoes the domain, which is how you know it took.
   </Step>
   <Step title="Change the three settings that embed the hostname">
-    `N8N_HOST`, `WEBHOOK_URL` and `N8N_EDITOR_BASE_URL`. Miss these and every form URL and
-    webhook n8n generates still points at the old hostname, which is the kind of bug you
-    find a week later in a live workflow.
+    `N8N_HOST`, `WEBHOOK_URL` and `N8N_EDITOR_BASE_URL`. In this test, the application
+    settings also needed the new public hostname. They serve different purposes; verify the
+    URLs generated by the editor after the change.
   </Step>
   <Step title="Redeploy and check">
     ```bash curl -s -o /dev/null -w '%{http_code}\n' https://n8n.example.com/healthz ``` 200
-    means Traefik has a route and a certificate for the new name.
+    over verified HTTPS confirms that this health request succeeded through the configured
+    endpoint. It does not prove every generated webhook URL or workflow is correct.
   </Step>
 </Steps>
 
 ## Create the owner account without the browser
 
-The first run needs an owner. It is one call, and doing it from the terminal
-means the password goes straight into your password manager rather than through
-a browser form:
+The recorded first-run owner setup used the following endpoint. The `/rest/`
+endpoints are internal editor APIs, so their behaviour should not be assumed
+stable across versions. A password placed directly in a command can also be
+retained in shell history or exposed through process arguments; the placeholder
+below is not a safe secret-storage method:
 
 ```bash
 curl -X POST "https://n8n.example.com/rest/owner/setup" \
@@ -135,10 +138,10 @@ Then log in to get a session cookie, and create an API key with
 ## Import workflows from files
 
 `POST /api/v1/workflows` takes `name`, `nodes`, `connections` and `settings`,
-and rejects a payload carrying anything else. Keep your workflow JSON in version
+and rejected the extra fields submitted in this test. Keep your workflow JSON in version
 control and import it rather than clicking it together twice.
 
-Two things will catch you out, and both pass import silently.
+Two parameter problems surfaced in the recorded setup.
 
 **The SMTP credential rejects its own schema.** `GET /api/v1/credentials/schema/smtp`
 lists `disableStartTls` as a property. Send it, and the API refuses the whole
@@ -210,5 +213,6 @@ did nothing. That failure mode is covered in
 
 ## Sources
 
+- [n8n: public API reference](https://docs.n8n.io/api/api-reference/)
 - [n8n: configuring webhook URLs behind a reverse proxy](https://docs.n8n.io/hosting/configuration/configuration-examples/webhook-url/)
 - [Coolify: service API update reference](https://coolify.io/docs/api-reference/api/operations/update-service-by-uuid)

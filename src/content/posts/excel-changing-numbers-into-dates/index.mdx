@@ -1,6 +1,6 @@
 ---
-title: 'Excel keeps changing my numbers into dates'
-description: 'Type 1-2 and Excel gives you 2 January. It is a type decision made on entry, it happens before the value is stored, and reformatting will not undo it.'
+title: 'Why Excel changes numbers into dates'
+description: 'Excel can interpret codes such as 1-2 as dates, depending on locale and input. Learn why reformatting cannot reliably restore the original characters.'
 pillar: 'excel-office'
 type: 'explainer'
 tags:
@@ -9,99 +9,84 @@ tags:
   - 'data-entry'
 author: 'krishna-pokharel'
 publishedAt: '2026-10-26'
-quickAnswer: 'Excel decides what type a cell holds from the characters you type, and several patterns that read as numbers also read as dates. The conversion happens on entry, so the cell already holds a date serial number. Reformatting afterwards reveals that number rather than restoring what you typed.'
+quickAnswer: 'Excel can interpret date-like text as a date during entry or import. The stored value then represents a date rather than the original code. Changing the display format afterwards cannot reliably reconstruct that code; locale, version and input method affect conversion.'
 faq:
-  - q: 'Why does a leading apostrophe stop it?'
-    a: 'The apostrophe tells Excel to skip type detection and store the characters as text. It is not part of the value and does not appear in the cell, though it does show in the formula bar.'
+  - q: 'Why does a leading apostrophe help preserve a code?'
+    a: 'Microsoft documents a leading apostrophe as a way to enter characters as text. It is an entry convention, not part of the displayed cell value. It does not reconstruct a code that was already converted.'
   - q: 'Can I turn date detection off completely?'
-    a: 'Some current Excel versions have Automatic Data Conversion settings, including a control for continuous letters and numbers such as JAN1. That control does not cover every date-like expression. Availability and behaviour depend on the version and the input.'
-  - q: 'Does this affect data I paste in?'
-    a: 'Yes, and that is the common way a clean export gets damaged. Paste runs the same detection as typing unless the destination column is already formatted as text.'
+    a: 'Some current Excel versions offer Automatic Data Conversion options, including one for continuous letters and numbers such as JAN1. That control does not cover every date-like expression. The version, locale and input method still matter.'
+  - q: 'Can pasted or imported data become dates?'
+    a: 'Yes. The conversion depends on the import or paste path and its type handling. Text formatting and import type choices can help preserve identifiers, but the resulting values still need checking against the source.'
 # prettier-ignore
 heroImage: "./cover-illustration.webp"
 # prettier-ignore
 heroAlt: "A spreadsheet tile transforming into a calendar-shaped tile."
 draft: false
-seoTitle: 'Stop Excel changing numbers into dates'
-updatedAt: '2026-10-26'
+seoTitle: 'Why Excel changes numbers into dates'
+updatedAt: '2026-10-27'
 ---
 
-You type a product code and get a date. You paste a clean export and a column of
-identifiers turns into January. Excel is not corrupting the file at random; it
-is applying a rule, and the rule runs earlier than most people expect. More
-spreadsheet guides are in [Excel & Office](/topics/excel-office/). For problems elsewhere in a workbook, read
-[why an Excel file becomes unusually large](/excel-file-size-too-large/).
-Imports also deserve an outcome check: [an automation can succeed while losing useful data](/automations-failing-silently/).
+A product code can become a date when Excel interprets the characters as a date
+pattern. The result depends on regional settings and how the value enters the
+workbook. More explanations are in [Excel & Office](/topics/excel-office/).
 
-## A cell's type is decided when you press Enter
-
-A cell formatted as General has no type until something is entered in it. Excel
-reads the characters, matches them against the patterns it knows, and picks one.
-A string of digits becomes a number. Something that looks like a date becomes a
-date. Anything left over stays text.
-
-The patterns that read as dates are broader than people assume. Two numbers
-separated by a hyphen or a slash qualify. So does a number followed by a month
-abbreviation, which is how identifiers like MAR1 and SEP2 become dates. This
-caused enough damage in published genetics research that the naming body
-eventually renamed the affected genes rather than keep fighting the spreadsheet.
-
-## Why the value is already gone
-
-Excel stores dates as serial numbers counted from a fixed starting point, with
-the display format applied on top. Once the conversion has happened, the cell
-holds a number. Your original characters were never stored.
-
-That is why the obvious repair does not work. Selecting the column and setting
-the format to Text tells Excel how to display what is in the cell, and what is
-in the cell is now a serial number. The display changes from a date to five
-digits. It does not change back to the text you typed, because that text no
-longer exists anywhere in the file.
-
-<Callout type="warning" title="Undo is your only cheap repair">
-  Immediately after a bad paste, undo still holds the previous state. Once the file has been
-  saved and reopened, the original characters are gone and the column has to be re-imported
-  from the source.
+<Callout type="note" title="Correction, 27 October 2026">
+  The earlier page treated date interpretation as identical across locales and import
+  methods, and claimed Undo or re-import were the only recovery options. Those claims were
+  too broad. This page explains conversion; it does not claim a tested repair procedure.
 </Callout>
 
-## Which conversions can be controlled
+## Entry and display are different decisions
 
-Microsoft documents Automatic Data Conversion options in current Excel, including
-one for continuous letters and numbers that look like dates. JAN1 is its example.
-Expressions containing spaces or punctuation may still be interpreted as dates.
-The old version of this article said there was no conversion setting; that was
-too broad. [Microsoft describes the available options and their limits](https://support.microsoft.com/en-us/excel/data-import-and-analysis-options-in-excel).
+A date-like entry in a General-formatted cell can be interpreted as a date.
+An example such as `1-2` is ambiguous: its meaning depends on regional date
+conventions. It should not be described as always producing 2 January.
 
-A setting that preserves a product code is not evidence that every import path
-will preserve it. The input and Excel version still matter.
+[Microsoft's date-conversion guidance](https://support.microsoft.com/en-us/excel/stop-automatically-changing-numbers-to-dates)
+explains why text-like codes can be affected and describes text entry conventions.
+The important distinction is between preserving the original characters at
+entry and changing the appearance of a value already stored.
 
-## Preserve text before conversion
+## A date value does not preserve every original character
 
-Format the column as Text before any data goes into it. The format is read when
-the entry is made, so setting it first means detection never runs. Pasting can also carry source formatting, so the import method and the
-resulting cell value need checking.
+Excel represents dates using serial values and applies a display format.
+Microsoft documents its [1900 and 1904 date systems](https://support.microsoft.com/en-gb/excel/date-systems-in-excel),
+including differences that matter when workbooks use different systems.
 
-Type a leading apostrophe for one-off entries. It instructs Excel to store the
-characters as text and is not kept as part of the value.
+Once a code has become a date, a format change cannot reliably tell you whether
+the source used a slash, a hyphen or a month name. Several source strings can
+lead to a date value. Showing a serial number in place of a date therefore does
+not establish that the identifier was recovered.
 
-Mark the column as text during import. Bringing data in through the import tools
-rather than pasting gives you a per-column type choice, and that choice is
-applied before any cell is written.
+A surviving source export, an undo history or a previous workbook version may
+provide evidence of the original. Their availability depends on the workflow.
+The page should not promise that saved files always contain a recoverable
+original, or that reopening always destroys every possible recovery route.
 
-## What to do with a column that is already damaged
+## Conversion controls have specific limits
 
-Re-import it from the source. Any attempt to convert the serial numbers back
-assumes you can reconstruct the original string from the date, and for
-identifiers that assumption usually fails on the ones that mattered.
+Microsoft's [Automatic Data Conversion options](https://support.microsoft.com/en-us/excel/data-import-and-analysis-options-in-excel)
+include a control for continuous letters and numbers such as `JAN1`. Its guidance
+distinguishes that pattern from expressions containing spaces or separators,
+which may still be recognised as dates.
 
-A workbook that has been repaired this way several times tends to carry the
-scars as bloat. If yours opens slowly, see
-[why your Excel file is so large](/excel-file-size-too-large/).
+A setting that handles one pattern is therefore not proof that every date-like
+code will survive every import. The available controls and their behaviour
+need to be checked for the Excel version and input path in use.
 
-If the source is gone, the serial numbers do at least tell you what was there.
-A code that became 2 January came from something matching a day and month
-pattern, and the surviving rows will show you which.
+## Preserving identifiers means preserving text
 
-## Sources
+Text entry, text-formatted destinations and explicit import types are related
+ways of expressing that a code is a string. Microsoft's entry guidance describes
+the leading apostrophe convention. These choices affect conversion before or
+during entry; they cannot infer characters already lost.
 
-- [Microsoft: preserving leading zeros and large numbers](https://support.microsoft.com/en-us/excel/keeping-leading-zeros-and-large-numbers)
+Pasting can also bring formatting from the source. An import tool can infer a
+type independently of the destination's appearance. The useful check is whether
+the resulting identifier matches the source, including punctuation and leading
+zeros, rather than whether the column merely looks plausible.
+
+An [automation can report success while producing incorrect data](/automations-failing-silently/).
+A finished spreadsheet import needs the same outcome check. File size is another
+question: [a large workbook](/excel-file-size-too-large/) may contain excess
+formatting, pictures or caches even when its identifiers are correct.

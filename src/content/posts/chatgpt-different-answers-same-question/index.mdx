@@ -22,7 +22,7 @@ heroImage: "./cover-illustration.webp"
 # prettier-ignore
 heroAlt: "One question bubble branching into three different illustrated replies."
 draft: false
-updatedAt: '2026-10-26'
+updatedAt: '2026-10-27'
 ---
 
 Ask the same question twice and you get two answers. People read that as the
@@ -34,7 +34,7 @@ confusion from the other direction is in
 and for systems that look consistent while being wrong, read
 [why automations fail silently](/automations-failing-silently/).
 
-## Each word is picked from a shortlist
+## Token generation can produce different continuations
 
 A language model generates tokens in context. A token may be a word or part of
 one. Depending on the model and its settings, generation can sample between
@@ -74,10 +74,9 @@ product and its settings.
 
 ## The wrapper and the model both change
 
-Every product wraps your prompt in hidden instructions about tone, format and
-what to refuse. A custom assistant, a company deployment and the public website
-all use different ones, so the same typed words arrive as different inputs.
+Products can add instructions about tone, format or permitted actions. A custom
+assistant, a company deployment and the public website can supply different
+context, so the same typed words need not form the same complete input.
 
-Underneath, the model itself is updated. An answer you got last month may be
-unreproducible today for the plain reason that the thing answering is not the
-same version. If an exact output matters, save it when you get it.
+Underneath, the model itself is updated. A different model version is one possible reason an earlier
+answer cannot be reproduced; it cannot be inferred from the wording alone. If an exact output matters, save it when you get it.
