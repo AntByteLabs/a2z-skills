@@ -8,6 +8,9 @@
  *   tsx scripts/gsc.ts --pages           pages only, more rows
  *   tsx scripts/gsc.ts --limit 50        rows per table
  *   tsx scripts/gsc.ts --json            the raw API response, for piping
+ *   tsx scripts/gsc.ts --index           index status of every URL in the sitemap
+ *   tsx scripts/gsc.ts --sitemaps        what Search Console holds for the sitemaps
+ *   tsx scripts/gsc.ts --submit          ask Google to re-read the sitemaps
  *
  * The credential is read-only (webmasters.readonly) and belongs outside this
  * repo. Set GSC_CLIENT_EMAIL and GSC_PRIVATE_KEY, or point GSC_KEY_FILE at the
@@ -16,6 +19,10 @@
  *
  * Google reports search data two to three days behind, so the most recent days
  * in any window are usually incomplete.
+ *
+ * --submit needs the read/write scope. Everything else is read-only. Google
+ * fetches a submitted sitemap on its own schedule, so a child sitemap can sit
+ * at isPending for a while before its URL count catches up.
  */
 import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -25,6 +32,8 @@ import { createSign } from 'node:crypto';
 import { red, green, yellow, dim, bold, isoDate } from './lib';
 
 const SCOPE = 'https://www.googleapis.com/auth/webmasters.readonly';
+const WRITE_SCOPE = 'https://www.googleapis.com/auth/webmasters';
+const INSPECT_URL = 'https://searchconsole.googleapis.com/v1/urlInspection/index:inspect';
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const API = 'https://www.googleapis.com/webmasters/v3';
 const SITE_HOST = 'a2zskillsewa.com';
@@ -76,13 +85,16 @@ const b64url = (input: string | Buffer) =>
     .replace(/=+$/, '');
 
 /** A signed JWT exchanged for a bearer token. No dependency beyond node:crypto. */
-const accessToken = async ({ email, key }: Credential): Promise<string> => {
+const accessToken = async (
+  { email, key }: Credential,
+  scope: string = SCOPE,
+): Promise<string> => {
   const now = Math.floor(Date.now() / 1000);
   const header = b64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
   const claims = b64url(
     JSON.stringify({
       iss: email,
-      scope: SCOPE,
+      scope,
       aud: TOKEN_URL,
       iat: now,
       exp: now + 3600,
@@ -206,6 +218,135 @@ const table = (title: string, rows: Row[], width: number) => {
   }
 };
 
+type SitemapEntry = {
+  path: string;
+  lastSubmitted?: string;
+  lastDownloaded?: string;
+  isPending?: boolean;
+  isSitemapsIndex?: boolean;
+  errors?: string;
+  warnings?: string;
+  contents?: { type: string; submitted?: string }[];
+};
+
+const sitemapState = async (token: string, site: string): Promise<SitemapEntry[]> => {
+  const res = await fetch(`${API}/sites/${encodeURIComponent(site)}/sitemaps`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) {
+    console.error(red(`Could not read sitemaps: HTTP ${res.status} ${res.statusText}.`));
+    process.exit(1);
+  }
+  return ((await res.json()).sitemap ?? []) as SitemapEntry[];
+};
+
+const showSitemaps = (entries: SitemapEntry[]) => {
+  if (!entries.length) {
+    console.log(yellow('No sitemap is submitted to Search Console.'));
+    return;
+  }
+  for (const e of entries) {
+    const errors = Number(e.errors ?? 0);
+    const warnings = Number(e.warnings ?? 0);
+    console.log(bold(e.path.replace(`https://${SITE_HOST}`, '')));
+    console.log(
+      dim(
+        `  submitted ${e.lastSubmitted?.slice(0, 19) ?? 'never'}   downloaded ${e.lastDownloaded?.slice(0, 19) ?? 'never'}`,
+      ),
+    );
+    const counts = (e.contents ?? [])
+      .map((c) => `${c.type} ${c.submitted ?? '?'}`)
+      .join(', ');
+    console.log(
+      `  urls ${counts || 'none reported'}   errors ${errors ? red(String(errors)) : '0'}   warnings ${warnings ? yellow(String(warnings)) : '0'}${e.isPending ? dim('   (queued for fetch)') : ''}`,
+    );
+  }
+};
+
+type Inspection = {
+  coverageState?: string;
+  lastCrawlTime?: string;
+  googleCanonical?: string;
+  userCanonical?: string;
+};
+
+/**
+ * The only way to learn Google's chosen canonical and whether a URL is in the
+ * index. Rate limited per property, so this walks the list rather than
+ * flooding it.
+ */
+const inspect = async (
+  token: string,
+  site: string,
+  url: string,
+): Promise<Inspection | string> => {
+  const res = await fetch(INSPECT_URL, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ inspectionUrl: url, siteUrl: site }),
+  });
+  if (!res.ok) return `HTTP ${res.status}`;
+  return ((await res.json()).inspectionResult?.indexStatusResult ?? {}) as Inspection;
+};
+
+const liveSitemapUrls = async (): Promise<string[]> => {
+  const res = await fetch(`https://${SITE_HOST}/sitemap-0.xml`, {
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (!res.ok) {
+    console.error(red(`Could not read the live sitemap: HTTP ${res.status}.`));
+    process.exit(1);
+  }
+  const xml = await res.text();
+  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!);
+};
+
+const indexReport = async (token: string, site: string) => {
+  const urls = await liveSitemapUrls();
+  console.log(dim(`inspecting ${urls.length} URL(s); this takes a moment each.`));
+  const states = new Map<string, number>();
+  const disagreements: string[] = [];
+  const uncrawled: string[] = [];
+
+  for (const url of urls) {
+    const r = await inspect(token, site, url);
+    const short = url.replace(`https://${SITE_HOST}`, '') || '/';
+    if (typeof r === 'string') {
+      states.set(r, (states.get(r) ?? 0) + 1);
+      console.log(`  ${red(short.padEnd(46))} ${r}`);
+      continue;
+    }
+    const state = r.coverageState ?? 'unknown';
+    states.set(state, (states.get(state) ?? 0) + 1);
+    const differs = !!r.googleCanonical && r.googleCanonical !== r.userCanonical;
+    if (differs) disagreements.push(`${short} -> ${r.googleCanonical}`);
+    if (!r.lastCrawlTime) uncrawled.push(short);
+    const mark = differs ? red(' canonical differs') : '';
+    console.log(
+      `  ${short.padEnd(46)} ${(state ?? '').padEnd(26)} ${(r.lastCrawlTime?.slice(0, 10) ?? 'never').padEnd(11)}${mark}`,
+    );
+    await new Promise((done) => setTimeout(done, 150));
+  }
+
+  console.log();
+  console.log(bold(`${urls.length} URL(s):`));
+  for (const [state, n] of [...states].sort((a, b) => b[1] - a[1])) {
+    console.log(`  ${String(n).padStart(3)}  ${state}`);
+  }
+  if (disagreements.length) {
+    console.log();
+    console.log(red(`Google picked a different canonical for ${disagreements.length}:`));
+    for (const d of disagreements) console.log(`  ${d}`);
+  } else {
+    console.log(green('\nNo canonical disagreements.'));
+  }
+  if (uncrawled.length) {
+    console.log(
+      dim(`\n${uncrawled.length} not yet crawled, which is normal soon after publishing.`),
+    );
+  }
+};
+
 const run = async () => {
   const token = await accessToken(await credential());
 
@@ -224,6 +365,41 @@ const run = async () => {
   }
 
   const site = await resolveSite(token);
+
+  if (has('sitemaps')) {
+    showSitemaps(await sitemapState(token, site));
+    return;
+  }
+
+  if (has('submit')) {
+    // Both the index and the child, because re-reading the index does not make
+    // Google re-read what it points at.
+    const write = await accessToken(await credential(), WRITE_SCOPE);
+    const entries = await sitemapState(token, site);
+    const paths = entries.length
+      ? entries.map((e) => e.path)
+      : [`https://${SITE_HOST}/sitemap-index.xml`, `https://${SITE_HOST}/sitemap-0.xml`];
+    for (const path of paths) {
+      const res = await fetch(
+        `${API}/sites/${encodeURIComponent(site)}/sitemaps/${encodeURIComponent(path)}`,
+        { method: 'PUT', headers: { Authorization: `Bearer ${write}` } },
+      );
+      const label = path.replace(`https://${SITE_HOST}`, '');
+      console.log(
+        res.ok
+          ? green(`submitted ${label}`)
+          : red(`${label}: HTTP ${res.status} ${res.statusText}`),
+      );
+    }
+    console.log(dim('Google fetches on its own schedule; check again with --sitemaps.'));
+    return;
+  }
+
+  if (has('index')) {
+    await indexReport(token, site);
+    return;
+  }
+
   const days = number('days', 28, 1, 480);
   const limit = number('limit', has('queries') || has('pages') ? 25 : 10, 1, 1000);
   const end = new Date();

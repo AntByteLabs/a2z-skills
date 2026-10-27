@@ -4,6 +4,26 @@ Search Console is verified, according to the owner. No private performance
 export or indexing report was available during implementation. The initial
 Google click count and actual indexed count remain unmeasured.
 
+## What the first reading showed, 27 October 2026
+
+Zero clicks and zero impressions over every window up to 480 days. That is not
+an indexing fault. The URL inspection API reported 29 of the 32 live URLs as
+"Submitted and indexed", with Google's chosen canonical agreeing with ours on
+every one of them. The three exceptions were published that morning and were
+still unknown to Google.
+
+Google's first crawl dates were 25 and 26 October, so the site was about two
+days old in its index when this was read. Google also starts collecting
+performance data when a property is added and takes a few days to accrue it.
+Zero impressions at that point says the pages had not yet ranked for anybody's
+query, not that anything is broken.
+
+Search Console had last downloaded the child sitemap on 26 October, before the
+three new posts existed, and reported 19 URLs. Submitting it again through the
+API brought it to 32 web and 16 image URLs the same minute.
+
+All 49 external links in the build returned a successful status on the same day.
+
 ## Record the baseline
 
 In the verified a2zskillsewa.com property, record the date range, Web search
@@ -14,9 +34,18 @@ Submit /sitemap-index.xml if it has not already been submitted.
 ## Reading it from this repo
 
 `npm run gsc` queries the Search Console API with a Google service account and
-prints the totals, top queries and top pages. `npm run gsc -- --sites` lists the
-properties the account can read, which is the quickest way to confirm a grant
-worked. The scope is `webmasters.readonly`.
+prints the totals, top queries and top pages. The other modes:
+
+| Command | What it shows |
+| --- | --- |
+| `npm run gsc -- --sites` | properties the account can read, and its role |
+| `npm run gsc -- --index` | index status and Google's chosen canonical, per URL |
+| `npm run gsc -- --sitemaps` | what Search Console holds for each sitemap |
+| `npm run gsc -- --submit` | asks Google to re-read the sitemaps |
+
+Everything is read-only except `--submit`, which asks for the read/write scope.
+Re-reading the sitemap index does not make Google re-read the child sitemap it
+points at, so `--submit` sends both.
 
 The account `antbytelabs@project-8d191be8-b32a-46d2-bc6.iam.gserviceaccount.com`
 was added to the a2zskillsewa.com property as a user on 27 October 2026. The
@@ -60,6 +89,7 @@ site. Separate visitor measurements from Lighthouse lab scores.
 | Week ending      | Web clicks   | Impressions  | Indexed priority URLs | Main relevant queries   | Changes and next action                    |
 | ---------------- | ------------ | ------------ | --------------------- | ----------------------- | ------------------------------------------ |
 | Initial baseline | Not measured | Not measured | Not measured          | Awaiting private export | Technical and content corrections deployed |
+| 27 Oct 2026, 480-day window | 0 | 0 | 0 clicks, 0 impressions | Read through the API | 29 of 32 URLs indexed, no canonical disagreements |
 
 Use source/medium reporting for referral or social visits. Those visits are not
 Google Search clicks, and page views are a separate measure again.
