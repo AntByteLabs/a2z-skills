@@ -24,7 +24,7 @@ What it does not hold is anything a person has to see with their own eyes.
 
 ## What was not done
 
-**No keyword research.** These ten topics were chosen on judgement about search
+**No keyword research.** These four topics were chosen on judgement about search
 intent, not from volume or difficulty data. Ahrefs is connected to this account
 but every endpoint returns "Insufficient plan", including the free domain
 rating, so none of it could be measured here.
