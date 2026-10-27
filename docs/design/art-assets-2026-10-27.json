@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "n8n-item-linking-explained",
+    "path": "src/content/posts/n8n-item-linking-explained/cover-illustration.webp",
+    "width": 1440,
+    "height": 960,
+    "bytes": 27770,
+    "provenance": "Original prompt in adjacent .webp.json sidecar and docs/design/art-prompts-2026-10-27.json"
+  },
+  {
+    "slug": "webhook-retries-duplicate-events",
+    "path": "src/content/posts/webhook-retries-duplicate-events/cover-illustration.webp",
+    "width": 1440,
+    "height": 960,
+    "bytes": 25192,
+    "provenance": "Original prompt in adjacent .webp.json sidecar and docs/design/art-prompts-2026-10-27.json"
+  },
+  {
+    "slug": "cloudflare-ssl-modes-explained",
+    "path": "src/content/posts/cloudflare-ssl-modes-explained/cover-illustration.webp",
+    "width": 1440,
+    "height": 960,
+    "bytes": 38934,
+    "provenance": "Original prompt in adjacent .webp.json sidecar and docs/design/art-prompts-2026-10-27.json"
+  }
+]

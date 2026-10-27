@@ -1,0 +1,130 @@
+---
+title: 'Why webhooks arrive twice: retries and duplicate events'
+description: 'Understand duplicate webhook deliveries, provider retry differences and why event IDs, concurrency and durable processing matter for automation workflows.'
+pillar: 'automation'
+type: 'explainer'
+tags: ['webhooks', 'n8n', 'idempotency', 'automation']
+author: 'devchandra-shrestha'
+publishedAt: '2026-10-27'
+quickAnswer: 'A webhook can arrive again when the sender cannot confirm a successful delivery or somebody requests a resend. Retry rules vary by provider. Preventing duplicate effects requires identifying an event and tracking its processing safely, including concurrent attempts.'
+faq:
+  - q: 'Do all webhook providers retry failed deliveries automatically?'
+    a: "No. Stripe documents automatic retries, while GitHub says failed webhook deliveries are not automatically redelivered. The sender's delivery policy determines what happens."
+  - q: 'Does replying successfully prove the workflow completed?'
+    a: 'A successful response acknowledges delivery. If processing continues afterwards, the receiver still needs durable work storage, failure handling and evidence that the destination action completed.'
+  - q: 'Will a webhook secret prevent duplicate processing?'
+    a: 'Signature validation helps establish the sender and payload integrity. A legitimate delivery can still be resent. Duplicate handling and sender verification address separate problems.'
+heroImage: './cover-illustration.webp'
+heroAlt: 'Two matching envelopes following delivery and retry paths into a tray that produces one record.'
+draft: false
+---
+
+Two workflow executions can begin with the same notification. That can happen
+even when the sender generated only one event: the first delivery may have reached
+your system without its acknowledgement reaching the sender.
+
+A second execution also needs evidence before it can be called a duplicate.
+Related events about the same order may describe different changes. This article
+covers the delivery and processing concepts, with provider-specific examples
+linked to their documentation. More explanations are in
+[Automation](/topics/automation/).
+
+## A delivery attempt and a completed action are different records
+
+Consider a hypothetical notification that creates a support ticket. The receiver
+creates the ticket, then its connection closes before the sender receives a
+response. A later delivery of the same notification reaches the receiver again.
+Creating another ticket would repeat an action that already succeeded.
+
+The sender's delivery history and the destination's ticket history describe
+different parts of that sequence. A failed delivery entry alone cannot establish
+whether the ticket was created. A workflow execution count also cannot establish
+how many distinct events occurred.
+
+This distinction is relevant when investigating
+[automations that report success without the expected result](/automations-failing-silently/).
+In one case work is repeated; in the other it may be missing. Both require evidence
+from the destination.
+
+## Retry behaviour depends on the sender
+
+[Stripe's webhook documentation](https://docs.stripe.com/webhooks#automatic-retries)
+describes automatic retries after unsuccessful delivery. It also says a manual
+resend does not cancel an existing automatic retry sequence, even if the resend
+receives a successful response.
+
+[GitHub's failed-delivery documentation](https://docs.github.com/en/webhooks/using-webhooks/handling-failed-webhook-deliveries)
+says GitHub does not automatically redeliver failures. Redelivery can instead be
+requested manually or performed by code.
+
+<div class="overflow-x-auto [&_table]:min-w-[32rem] [&_code]:whitespace-nowrap" tabindex="0" role="region" aria-label="Webhook retry policies by provider">
+
+| Sender | Automatic retries documented? | Consequence when reading logs                                                    |
+| ------ | ----------------------------- | -------------------------------------------------------------------------------- |
+| Stripe | Yes                           | A later attempt may belong to the same event, including after a manual resend    |
+| GitHub | No                            | Redelivery requires another mechanism; absence of a retry does not prove success |
+
+</div>
+
+A retry policy copied from another provider can therefore produce the wrong
+explanation for the same symptom. The sender, event identity and delivery history
+are part of the diagnosis.
+
+## Event identity and business identity serve different purposes
+
+Stripe documents tracking processed event IDs to recognise repeated deliveries.
+It also notes that separate Event objects can sometimes represent duplicates,
+for which the object ID and event type are relevant. Those are provider-specific
+rules, not a universal instruction to discard every event about the same object.
+
+For a hypothetical order, an update and a cancellation can share an order ID while
+representing different work. A rule that discards everything after the first
+appearance of that order could lose the cancellation.
+
+[GitHub's webhook best practices](https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#use-the-x-github-delivery-header)
+specify `X-GitHub-Delivery` as the delivery identifier and explain that a requested
+redelivery keeps the original value. The identifier belongs to the provider's
+contract; hashing an entire payload is a different design with different assumptions.
+
+## Concurrent attempts complicate duplicate handling
+
+Imagine two identical deliveries arriving together. Each receiver checks a list,
+finds no completed record and starts work. A later insertion into the list cannot
+undo the two actions already started.
+
+AWS documents this problem in its
+[Powertools idempotency design](https://docs.aws.amazon.com/powertools/python/latest/utilities/idempotency/#concurrent-identical-in-flight-requests).
+It distinguishes work in progress from completed work and uses a persistence layer
+to prevent concurrent execution of the same operation. Its documentation also
+covers expiry and failure states.
+
+The crash points matter too. Recording completion before creating the ticket can
+lose the ticket if processing stops between those actions. Creating the ticket
+first can allow repetition if processing stops before completion is recorded.
+The correct boundary depends on the storage and destination API; a simple
+“already seen” check does not by itself resolve both cases.
+
+## Fast acknowledgement still needs durable processing
+
+GitHub recommends timely responses and describes queueing work for background
+processing. A receiver that acknowledges before finishing needs a durable record
+of the work it accepted. Otherwise a restart can leave the sender with a success
+response and the destination with nothing.
+
+For n8n, a separate question is whether the endpoint is registered and listening.
+That is covered by the tested [n8n webhook diagnosis](/n8n-webhook-not-working/).
+An endpoint registration problem and duplicate downstream actions should not be
+combined into one presumed cause.
+
+## Verification and idempotency are separate controls
+
+GitHub recommends validating deliveries with a webhook secret. Authentication
+helps establish that a request came from the expected sender; a valid request
+can still be delivered again.
+
+An outgoing API's retry protection has its own scope. For example,
+[Stripe's idempotent-request documentation](https://docs.stripe.com/api/idempotent_requests)
+describes keys that protect supported outgoing API requests against repeated
+operations. That does not automatically deduplicate every action in a webhook
+receiver, such as creating a ticket in another service. A tested implementation
+would need evidence for the whole path from incoming event to destination result.

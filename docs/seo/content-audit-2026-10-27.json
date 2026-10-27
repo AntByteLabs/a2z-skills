@@ -1,0 +1,544 @@
+{
+  "date": "2026-10-27",
+  "posts": [
+    {
+      "slug": "ai-detectors-flagging-human-writing",
+      "type": "explainer",
+      "title": "Why AI detectors flag human writing",
+      "descriptionLength": 150,
+      "testedBy": null
+    },
+    {
+      "slug": "automations-failing-silently",
+      "type": "explainer",
+      "title": "Why automations fail silently",
+      "descriptionLength": 142,
+      "testedBy": null
+    },
+    {
+      "slug": "chatgpt-different-answers-same-question",
+      "type": "explainer",
+      "title": "Why ChatGPT gives a different answer each time",
+      "descriptionLength": 147,
+      "testedBy": null
+    },
+    {
+      "slug": "cloudflare-ssl-modes-explained",
+      "type": "explainer",
+      "title": "Cloudflare SSL modes: Flexible, Full and Full (strict)",
+      "descriptionLength": 146,
+      "testedBy": null
+    },
+    {
+      "slug": "cloudflare-workers-custom-domain-not-working",
+      "type": "fix",
+      "title": "Cloudflare Workers custom domain not working",
+      "descriptionLength": 138,
+      "testedBy": "Devchandra Shrestha"
+    },
+    {
+      "slug": "deleting-files-not-freeing-disk-space",
+      "type": "explainer",
+      "title": "Deleting files did not free any disk space",
+      "descriptionLength": 145,
+      "testedBy": null
+    },
+    {
+      "slug": "dns-propagation-explained",
+      "type": "explainer",
+      "title": "DNS propagation explained",
+      "descriptionLength": 145,
+      "testedBy": null
+    },
+    {
+      "slug": "excel-changing-numbers-into-dates",
+      "type": "explainer",
+      "title": "Excel keeps changing my numbers into dates",
+      "descriptionLength": 150,
+      "testedBy": null
+    },
+    {
+      "slug": "excel-file-size-too-large",
+      "type": "explainer",
+      "title": "Why your Excel file is so large",
+      "descriptionLength": 146,
+      "testedBy": null
+    },
+    {
+      "slug": "n8n-item-linking-explained",
+      "type": "explainer",
+      "title": "n8n item linking: why .item and .first() behave differently",
+      "descriptionLength": 151,
+      "testedBy": null
+    },
+    {
+      "slug": "n8n-webhook-not-working",
+      "type": "fix",
+      "title": "n8n webhook not working",
+      "descriptionLength": 151,
+      "testedBy": "Ronit Karki"
+    },
+    {
+      "slug": "phone-slows-down-gets-older",
+      "type": "explainer",
+      "title": "Why a phone slows down as it gets older",
+      "descriptionLength": 140,
+      "testedBy": null
+    },
+    {
+      "slug": "phone-storage-full-after-deleting-photos",
+      "type": "explainer",
+      "title": "Phone storage still full after deleting photos",
+      "descriptionLength": 149,
+      "testedBy": null
+    },
+    {
+      "slug": "self-host-n8n-coolify",
+      "type": "how-to",
+      "title": "Self-host n8n on Coolify",
+      "descriptionLength": 144,
+      "testedBy": "Ronit Karki"
+    },
+    {
+      "slug": "webhook-retries-duplicate-events",
+      "type": "explainer",
+      "title": "Why webhooks arrive twice: retries and duplicate events",
+      "descriptionLength": 154,
+      "testedBy": null
+    },
+    {
+      "slug": "windows-restart-finish-installing-updates",
+      "type": "explainer",
+      "title": "Why Windows has to restart to finish an update",
+      "descriptionLength": 148,
+      "testedBy": null
+    }
+  ],
+  "externalSources": [
+    {
+      "url": "https://arxiv.org/abs/2304.02819",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://arxiv.org/abs/2304.02819",
+      "from": [
+        "ai-detectors-flagging-human-writing"
+      ]
+    },
+    {
+      "url": "https://coolify.io/docs/api-reference/api/operations/update-service-by-uuid",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://coolify.io/docs/api/endpoints/services/update-service-by-uuid",
+      "from": [
+        "self-host-n8n-coolify"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/",
+      "from": [
+        "dns-propagation-explained"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/",
+      "from": [
+        "cloudflare-ssl-modes-explained"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/flexible/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/flexible/",
+      "from": [
+        "cloudflare-ssl-modes-explained"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full-strict/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full-strict/",
+      "from": [
+        "cloudflare-ssl-modes-explained"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full/",
+      "from": [
+        "cloudflare-ssl-modes-explained"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/",
+      "from": [
+        "cloudflare-ssl-modes-explained"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/",
+      "from": [
+        "cloudflare-ssl-modes-explained"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/configuration/routing/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.cloudflare.com/workers/configuration/routing/",
+      "from": [
+        "cloudflare-workers-custom-domain-not-working"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/configuration/routing/custom-domains/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.cloudflare.com/workers/configuration/routing/custom-domains/",
+      "from": [
+        "cloudflare-workers-custom-domain-not-working"
+      ]
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/advanced-usage",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.openai.com/api/docs/guides/advanced-usage",
+      "from": [
+        "chatgpt-different-answers-same-question"
+      ]
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://developers.openai.com/api/docs/guides/conversation-state",
+      "from": [
+        "chatgpt-different-answers-same-question"
+      ]
+    },
+    {
+      "url": "https://docs.aws.amazon.com/powertools/python/latest/utilities/idempotency/#concurrent-identical-in-flight-requests",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://docs.aws.amazon.com/powertools/python/latest/utilities/idempotency/",
+      "from": [
+        "webhook-retries-duplicate-events"
+      ]
+    },
+    {
+      "url": "https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#use-the-x-github-delivery-header",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks",
+      "from": [
+        "webhook-retries-duplicate-events"
+      ]
+    },
+    {
+      "url": "https://docs.github.com/en/webhooks/using-webhooks/handling-failed-webhook-deliveries",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://docs.github.com/en/webhooks/using-webhooks/handling-failed-webhook-deliveries",
+      "from": [
+        "webhook-retries-duplicate-events"
+      ]
+    },
+    {
+      "url": "https://docs.n8n.io/code/builtin/output-other-nodes/",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/transform-data/expression-reference/nodeoutputdata",
+      "from": [
+        "n8n-item-linking-explained"
+      ]
+    },
+    {
+      "url": "https://docs.n8n.io/code/cookbook/builtin/itemmatching/",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/reference-data/link-data-items/accessing-linked-items-in-the-code-node",
+      "from": [
+        "n8n-item-linking-explained"
+      ]
+    },
+    {
+      "url": "https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-code-node/",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/reference-data/link-data-items/preserving-linking-in-the-code-node",
+      "from": [
+        "n8n-item-linking-explained"
+      ]
+    },
+    {
+      "url": "https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-concepts/",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/reference-data/link-data-items/how-items-link-through-workflows",
+      "from": [
+        "n8n-item-linking-explained"
+      ]
+    },
+    {
+      "url": "https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-errors/",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://docs.n8n.io/build/work-with-data/reference-data/link-data-items/item-linking-errors",
+      "from": [
+        "n8n-item-linking-explained"
+      ]
+    },
+    {
+      "url": "https://docs.n8n.io/flow-logic/error-handling/",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://docs.n8n.io/build/flow-logic/handle-errors-gracefully",
+      "from": [
+        "automations-failing-silently"
+      ]
+    },
+    {
+      "url": "https://docs.n8n.io/hosting/configuration/configuration-examples/webhook-url/",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/configuration-examples/configure-webhook-urls-with-reverse-proxy",
+      "from": [
+        "self-host-n8n-coolify"
+      ]
+    },
+    {
+      "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/workflow-development/",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/workflow-development",
+      "from": [
+        "automations-failing-silently"
+      ]
+    },
+    {
+      "url": "https://docs.n8n.io/workflows/executions/all-executions/",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://docs.n8n.io/build/understand-workflows/understand-executions/view-all-executions",
+      "from": [
+        "automations-failing-silently"
+      ]
+    },
+    {
+      "url": "https://docs.stripe.com/api/idempotent_requests",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://docs.stripe.com/api/idempotent_requests",
+      "from": [
+        "webhook-retries-duplicate-events"
+      ]
+    },
+    {
+      "url": "https://docs.stripe.com/webhooks#automatic-retries",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://docs.stripe.com/webhooks",
+      "from": [
+        "webhook-retries-duplicate-events"
+      ]
+    },
+    {
+      "url": "https://epoch.ai/data-insights/ai-detectors-false-negatives",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://epoch.ai/data-insights/ai-detectors-false-negatives",
+      "from": [
+        "ai-detectors-flagging-human-writing"
+      ]
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/office/vba/excel/concepts/excel-performance/excel-tips-for-optimizing-performance-obstructions",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://learn.microsoft.com/en-us/office/vba/excel/concepts/excel-performance/excel-tips-for-optimizing-performance-obstructions",
+      "from": [
+        "excel-file-size-too-large"
+      ]
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/deployment/update/waas-restart",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://learn.microsoft.com/en-us/windows/deployment/update/waas-restart",
+      "from": [
+        "windows-restart-finish-installing-updates"
+      ]
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/closing-and-deleting-files",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://learn.microsoft.com/en-us/windows/win32/fileio/closing-and-deleting-files",
+      "from": [
+        "deleting-files-not-freeing-disk-space",
+        "windows-restart-finish-installing-updates"
+      ]
+    },
+    {
+      "url": "https://support.apple.com/en-ca/102154",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.apple.com/en-ca/102154",
+      "from": [
+        "deleting-files-not-freeing-disk-space"
+      ]
+    },
+    {
+      "url": "https://support.apple.com/en-gb/102598",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.apple.com/en-gb/102598",
+      "from": [
+        "phone-slows-down-gets-older"
+      ]
+    },
+    {
+      "url": "https://support.apple.com/en-ie/101575",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.apple.com/en-ie/101575",
+      "from": [
+        "phone-slows-down-gets-older"
+      ]
+    },
+    {
+      "url": "https://support.apple.com/en-ie/102670",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.apple.com/en-ie/102670",
+      "from": [
+        "phone-storage-full-after-deleting-photos"
+      ]
+    },
+    {
+      "url": "https://support.apple.com/en-ie/105061",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.apple.com/en-ie/105061",
+      "from": [
+        "phone-storage-full-after-deleting-photos"
+      ]
+    },
+    {
+      "url": "https://support.google.com/android/answer/7431795?hl=en",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.google.com/android/answer/7431795?hl=en",
+      "from": [
+        "phone-slows-down-gets-older",
+        "phone-storage-full-after-deleting-photos"
+      ]
+    },
+    {
+      "url": "https://support.google.com/photos/answer/6128843?hl=en",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.google.com/photos/answer/6128843?hl=en",
+      "from": [
+        "phone-storage-full-after-deleting-photos"
+      ]
+    },
+    {
+      "url": "https://support.google.com/photos/answer/6128858?hl=en",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.google.com/photos/answer/6128858?hl=en",
+      "from": [
+        "phone-storage-full-after-deleting-photos"
+      ]
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/excel/data-import-and-analysis-options-in-excel",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.microsoft.com/en-us/excel/data-import-and-analysis-options-in-excel",
+      "from": [
+        "excel-changing-numbers-into-dates"
+      ]
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/excel/keeping-leading-zeros-and-large-numbers",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.microsoft.com/en-us/excel/keeping-leading-zeros-and-large-numbers",
+      "from": [
+        "excel-changing-numbers-into-dates"
+      ]
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/excel/reduce-the-file-size-of-your-excel-spreadsheets",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.microsoft.com/en-us/excel/reduce-the-file-size-of-your-excel-spreadsheets",
+      "from": [
+        "excel-file-size-too-large"
+      ]
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-update-faq",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-update-faq",
+      "from": [
+        "windows-restart-finish-installing-updates"
+      ]
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/windows/experience/storage-filemanagement/free-up-drive-space-in-windows",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://support.microsoft.com/en-us/windows/experience/storage-filemanagement/free-up-drive-space-in-windows",
+      "from": [
+        "deleting-files-not-freeing-disk-space"
+      ]
+    },
+    {
+      "url": "https://www.namecheap.com/support/knowledgebase/article.aspx/9622/10/dns-propagation-explained/",
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://www.namecheap.com/support/knowledgebase/article.aspx/9622/10/dns-propagation-explained/",
+      "from": [
+        "dns-propagation-explained"
+      ]
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc2308",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://www.rfc-editor.org/info/rfc2308/",
+      "from": [
+        "dns-propagation-explained"
+      ]
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc8767",
+      "status": 200,
+      "redirected": true,
+      "finalUrl": "https://www.rfc-editor.org/info/rfc8767/",
+      "from": [
+        "dns-propagation-explained"
+      ]
+    }
+  ]
+}

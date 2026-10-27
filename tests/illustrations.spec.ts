@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 
-const assets: { slug: string; path: string }[] = JSON.parse(
-  readFileSync('docs/design/art-assets-2026-10-26.json', 'utf8'),
-);
+const assets: { slug: string; path: string }[] = readdirSync('docs/design')
+  .filter((name) => /^art-assets-\d{4}-\d{2}-\d{2}\.json$/.test(name))
+  .sort()
+  .flatMap((name) => JSON.parse(readFileSync(`docs/design/${name}`, 'utf8')));
 const articles = assets.filter((asset) => asset.slug !== 'home');
 
 test('each published article has a readable, responsive illustration', async ({

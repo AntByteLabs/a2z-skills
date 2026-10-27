@@ -238,6 +238,10 @@ The second should show a 307 to the trailing-slash form if you set
 the real domain. If `dig` still shows the registrar, none of the rest matters
 yet.
 
+## A separate origin server
+
+For a traditional website proxied to a server, [Cloudflare SSL modes](/cloudflare-ssl-modes-explained/) explains Flexible, Full and Full (strict). That origin connection differs from serving a Worker directly on its Custom Domain.
+
 ## Sources
 
 - [Cloudflare: Workers Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/)

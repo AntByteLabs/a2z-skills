@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-27",
+  "method": "Built-in image_gen tool",
+  "assets": [
+    {
+      "slug": "n8n-item-linking-explained",
+      "prompt": "Create one original editorial illustration for the A2Z Skills technology blog. Horizontal 3:2 composition, all main objects inside middle 80% so it crops well to 2:1. Contemporary flat gouache and cut-paper art, crisp dark navy outlines, subtle paper grain, friendly recognisable objects, warm ivory background, cobalt blue, muted coral orange, sage green and pale sky blue. Sophisticated, simple single focal metaphor. No text, letters, numbers, logos, people, screenshots, watermarks, collage panels or decorative sparkles. Subject: three small source cards each with a different simple coloured shape, linked by clearly separate threads to three matching output cards. A small cobalt laptop below anchors the workflow. A single loose broken thread conveys missing item lineage without making the picture chaotic.",
+      "destination": "src/content/posts/n8n-item-linking-explained/cover-illustration.webp"
+    },
+    {
+      "slug": "webhook-retries-duplicate-events",
+      "prompt": "Create one original editorial illustration for the A2Z Skills technology blog. Horizontal 3:2 composition, all main objects inside middle 80% so it crops well to 2:1. Contemporary flat gouache and cut-paper art, crisp dark navy outlines, subtle paper grain, friendly recognisable objects, warm ivory background, cobalt blue, muted coral orange, sage green and pale sky blue. Sophisticated, simple single focal metaphor. No text, letters, numbers, logos, people, screenshots, watermarks, collage panels or decorative sparkles. Subject: two identical cream envelopes bearing the same small blue circle approach a cobalt receiving tray along two gently curved delivery paths; only one envelope is filed into a single sage-green record card. A subtle retry loop around the second path conveys repeat delivery, one resulting record. No locks or security claims.",
+      "destination": "src/content/posts/webhook-retries-duplicate-events/cover-illustration.webp"
+    },
+    {
+      "slug": "cloudflare-ssl-modes-explained",
+      "prompt": "Create one original editorial illustration for the A2Z Skills technology blog. Horizontal 3:2 composition, all main objects inside middle 80% so it crops well to 2:1. Contemporary flat gouache and cut-paper art, crisp dark navy outlines, subtle paper grain, friendly recognisable objects, warm ivory background, cobalt blue, muted coral orange, sage green and pale sky blue. Sophisticated, simple single focal metaphor. No text, letters, numbers, logos, people, screenshots, watermarks, collage panels or decorative sparkles. Subject: a friendly laptop on the left, a pale blue cloud in the middle and a cobalt server on the right, connected by two distinct curved cables. Each connection has a small simple blue padlock, and a sage certificate card with an abstract check shape sits beside the server. Focus on two connection legs and verification at the server. No vendor logos.",
+      "destination": "src/content/posts/cloudflare-ssl-modes-explained/cover-illustration.webp"
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+[
+  {
+    "slug": "n8n-item-linking-explained",
+    "width": 320,
+    "title": "n8n item linking: why .item and .first() behave differently",
+    "overflow": false,
+    "sourceLinks": 5,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "n8n item selection rules",
+        "width": 272,
+        "scrollWidth": 512,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "n8n-item-linking-explained",
+    "width": 390,
+    "title": "n8n item linking: why .item and .first() behave differently",
+    "overflow": false,
+    "sourceLinks": 5,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "n8n item selection rules",
+        "width": 342,
+        "scrollWidth": 512,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "n8n-item-linking-explained",
+    "width": 768,
+    "title": "n8n item linking: why .item and .first() behave differently",
+    "overflow": false,
+    "sourceLinks": 5,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "n8n item selection rules",
+        "width": 640,
+        "scrollWidth": 640,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "n8n-item-linking-explained",
+    "width": 1440,
+    "title": "n8n item linking: why .item and .first() behave differently",
+    "overflow": false,
+    "sourceLinks": 5,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "n8n item selection rules",
+        "width": 640,
+        "scrollWidth": 640,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "webhook-retries-duplicate-events",
+    "width": 320,
+    "title": "Why webhooks arrive twice: retries and duplicate events",
+    "overflow": false,
+    "sourceLinks": 5,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "Webhook retry policies by provider",
+        "width": 272,
+        "scrollWidth": 512,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "webhook-retries-duplicate-events",
+    "width": 390,
+    "title": "Why webhooks arrive twice: retries and duplicate events",
+    "overflow": false,
+    "sourceLinks": 5,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "Webhook retry policies by provider",
+        "width": 342,
+        "scrollWidth": 512,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "webhook-retries-duplicate-events",
+    "width": 768,
+    "title": "Why webhooks arrive twice: retries and duplicate events",
+    "overflow": false,
+    "sourceLinks": 5,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "Webhook retry policies by provider",
+        "width": 640,
+        "scrollWidth": 640,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "webhook-retries-duplicate-events",
+    "width": 1440,
+    "title": "Why webhooks arrive twice: retries and duplicate events",
+    "overflow": false,
+    "sourceLinks": 5,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "Webhook retry policies by provider",
+        "width": 640,
+        "scrollWidth": 640,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "cloudflare-ssl-modes-explained",
+    "width": 320,
+    "title": "Cloudflare SSL modes: Flexible, Full and Full (strict)",
+    "overflow": false,
+    "sourceLinks": 6,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "Cloudflare SSL mode comparison",
+        "width": 272,
+        "scrollWidth": 512,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "cloudflare-ssl-modes-explained",
+    "width": 390,
+    "title": "Cloudflare SSL modes: Flexible, Full and Full (strict)",
+    "overflow": false,
+    "sourceLinks": 6,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "Cloudflare SSL mode comparison",
+        "width": 342,
+        "scrollWidth": 512,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "cloudflare-ssl-modes-explained",
+    "width": 768,
+    "title": "Cloudflare SSL modes: Flexible, Full and Full (strict)",
+    "overflow": false,
+    "sourceLinks": 6,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "Cloudflare SSL mode comparison",
+        "width": 640,
+        "scrollWidth": 640,
+        "keyboardFocusable": true
+      }
+    ]
+  },
+  {
+    "slug": "cloudflare-ssl-modes-explained",
+    "width": 1440,
+    "title": "Cloudflare SSL modes: Flexible, Full and Full (strict)",
+    "overflow": false,
+    "sourceLinks": 6,
+    "research": "Researched explainer. Supporting documentation and research are linked in the article.",
+    "regions": [
+      {
+        "label": "Cloudflare SSL mode comparison",
+        "width": 640,
+        "scrollWidth": 640,
+        "keyboardFocusable": true
+      }
+    ]
+  }
+]

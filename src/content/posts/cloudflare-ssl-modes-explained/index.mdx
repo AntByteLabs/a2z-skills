@@ -1,0 +1,125 @@
+---
+title: 'Cloudflare SSL modes: Flexible, Full and Full (strict)'
+description: 'Compare Cloudflare Flexible, Full and Full (strict): which connections use HTTPS, which certificates are checked and what errors 525 and 526 mean.'
+pillar: 'websites-hosting'
+type: 'explainer'
+tags: ['cloudflare', 'ssl', 'tls', 'hosting']
+author: 'devchandra-shrestha'
+publishedAt: '2026-10-27'
+quickAnswer: 'For an HTTPS visitor, Flexible uses HTTP from Cloudflare to your origin. Full uses HTTPS there without validating the origin certificate. Full (strict) adds certificate validation. The browser-to-Cloudflare connection and the origin connection are separate.'
+faq:
+  - q: 'Does Full validate an expired or self-signed origin certificate?'
+    a: 'Full does not validate the origin certificate. Full (strict) checks certificate validity, a trusted issuer and the requested or target hostname. Cloudflare Origin CA certificates can also satisfy its trust requirement.'
+  - q: 'Why does my browser show HTTPS while the origin uses HTTP?'
+    a: 'The browser connects to Cloudflare, which makes a separate connection to the origin. In Flexible mode, that origin connection uses HTTP even when the visitor connection uses HTTPS.'
+  - q: 'Is a Cloudflare Origin CA certificate trusted directly by browsers?'
+    a: 'It is intended for Cloudflare-to-origin traffic. Cloudflare warns that pausing the proxy or accessing an Origin CA-only server directly can produce browser certificate warnings.'
+heroImage: './cover-illustration.webp'
+heroAlt: 'A laptop and server connected through a cloud, with a padlock on each connection and a certificate beside the server.'
+draft: false
+---
+
+A proxied website has two connections to consider: the visitor's connection to
+Cloudflare and Cloudflare's connection to the origin server. A working HTTPS
+connection in the browser describes the first of those connections. The origin
+leg has its own protocol and certificate behaviour.
+
+This explanation covers a website proxied through Cloudflare to an origin you
+or a hosting provider operates. The comparison below assumes a visitor requests
+an HTTPS URL. More hosting explanations are in
+[Websites & Hosting](/topics/websites-hosting/).
+
+## The differences in one table
+
+<div class="overflow-x-auto [&_table]:min-w-[32rem] [&_code]:whitespace-nowrap" tabindex="0" role="region" aria-label="Cloudflare SSL mode comparison">
+
+| Mode          | Visitor to Cloudflare, for an HTTPS request | Cloudflare to origin | Origin certificate validation                         |
+| ------------- | ------------------------------------------- | -------------------- | ----------------------------------------------------- |
+| Flexible      | HTTPS                                       | HTTP                 | No origin TLS certificate is used on that leg         |
+| Full          | HTTPS                                       | HTTPS                | Certificate is not validated                          |
+| Full (strict) | HTTPS                                       | HTTPS                | Certificate validity, issuer and hostname are checked |
+
+</div>
+
+Cloudflare's documentation for
+[Flexible](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/flexible/),
+[Full](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full/) and
+[Full (strict)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full-strict/)
+defines these behaviours. For Full, Cloudflare follows the visitor's requested
+scheme: an HTTP visitor can also result in HTTP to the origin. An encryption
+mode alone therefore does not mean every visitor requested HTTPS.
+
+## Flexible leaves the origin leg unencrypted
+
+Under Flexible, Cloudflare can accept an HTTPS request from a visitor while
+making an HTTP request to the origin. The origin does not need a TLS certificate
+for that HTTP connection. Data on that leg is carried without TLS encryption.
+
+The split also explains a documented redirect loop. An origin configured to
+redirect HTTP requests to HTTPS receives HTTP from Cloudflare. The visitor
+follows the HTTPS redirect, Cloudflare reaches the origin over HTTP again and
+the origin repeats its redirect. Cloudflare explicitly warns about this
+combination in its Flexible documentation.
+
+That behaviour is different from DNS cache delays. Waiting for a cached record
+to expire cannot correct a repeated application redirect. The caching mechanism
+is explained in [DNS propagation](/dns-propagation-explained/).
+
+## Full encrypts the origin leg without validating its certificate
+
+For an HTTPS visitor, Full establishes TLS between Cloudflare and the origin.
+Cloudflare's documentation says it does not validate the certificate presented
+there. An expired certificate, a self-signed certificate or one naming a different
+hostname can therefore be accepted in this mode.
+
+Encryption and certificate validation answer different questions. TLS encrypts
+the connection; validating the certificate helps establish the server's identity.
+The fact that a hostname loads under Full does not establish that its origin
+certificate meets Full (strict)'s requirements.
+
+Full still needs an origin capable of the required TLS connection. Disabling
+certificate validation does not make a closed HTTPS port or an incompatible TLS
+handshake work.
+
+## Full (strict) checks the origin certificate
+
+Cloudflare documents three requirements for the ordinary Full (strict) case:
+a certificate within its validity period, an issuer Cloudflare trusts and a
+Common Name or Subject Alternative Name matching the requested or target hostname.
+It accepts certificates issued by a publicly trusted certificate authority or
+by Cloudflare Origin CA.
+
+For example, a certificate naming one hypothetical hostname does not automatically
+cover every other hostname on the same server. The browser can have a valid
+connection to Cloudflare while Cloudflare rejects the separate origin certificate.
+
+Cloudflare recommends Full (strict) whenever possible. Moving to a mode that
+performs fewer checks changes the security properties of the connection. It does
+not renew an expired certificate or change the names written into it.
+
+## Origin CA trust is specific to the origin connection
+
+A [Cloudflare Origin CA certificate](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/)
+can be suitable for a server reached through Cloudflare's proxy. It is not a
+replacement for a publicly trusted browser certificate on a directly accessed
+site. Cloudflare warns that pausing its proxy or disabling proxying for such a
+hostname can expose visitors to certificate warnings.
+
+This matters when comparing a proxied request with a direct-origin request.
+They can reach the same application through different TLS connections and trust
+relationships. One result does not establish the behaviour of the other.
+
+## What 525 and 526 describe
+
+Cloudflare defines [error 525](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/)
+as a failed TLS handshake with the origin under Full or Full (strict). Its
+[error 526 reference](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/)
+describes an origin certificate that Cloudflare cannot validate in the ordinary
+proxied Full (strict) case. These describe different failure categories.
+
+A Cloudflare Workers Custom Domain is also a different deployment from a
+traditional proxied web server. The tested
+[Workers custom-domain guide](/cloudflare-workers-custom-domain-not-working/)
+covers that setup. Cloudflare's error 526 reference separately describes
+certificate validation for Workers' outgoing subrequests, so an origin-mode
+comparison should not be treated as a universal explanation for every Worker error.

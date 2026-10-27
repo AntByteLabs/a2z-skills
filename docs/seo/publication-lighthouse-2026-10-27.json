@@ -1,0 +1,50 @@
+[
+  {
+    "url": "http://localhost:57819/index.html",
+    "fetchTime": "2026-10-27T10:09:59.660Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1204.7488,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:57819/cloudflare-ssl-modes-explained/index.html",
+    "fetchTime": "2026-10-27T10:10:10.235Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1127.7007,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:57819/n8n-item-linking-explained/index.html",
+    "fetchTime": "2026-10-27T10:10:20.444Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1127.6536,
+    "cls": 0
+  },
+  {
+    "url": "http://localhost:57819/webhook-retries-duplicate-events/index.html",
+    "fetchTime": "2026-10-27T10:10:30.647Z",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 1128.8439,
+    "cls": 0
+  }
+]

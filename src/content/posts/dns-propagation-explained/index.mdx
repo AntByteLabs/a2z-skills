@@ -112,6 +112,10 @@ compare it with the answers seen by affected visitors. A correct DNS answer
 alone does not prove that the certificate, web server or application is working. If it returns the old
 value, the change did not save, and no amount of waiting will fix it.
 
+## HTTPS after the hostname resolves
+
+DNS caching and TLS validation describe different parts of a request. [Cloudflare SSL modes explained](/cloudflare-ssl-modes-explained/) covers the browser-to-proxy and proxy-to-origin connections, including why a working browser HTTPS connection does not establish the origin certificate’s validity.
+
 ## Sources
 
 - [Cloudflare: DNS record TTL](https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/)

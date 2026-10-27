@@ -1,0 +1,116 @@
+---
+title: 'n8n item linking: why .item and .first() behave differently'
+description: 'Understand n8n item linking, pairedItem metadata and why replacing .item with .first() can remove an expression error while selecting the wrong record.'
+pillar: 'automation'
+type: 'explainer'
+tags: ['n8n', 'expressions', 'item-linking', 'automation']
+author: 'devchandra-shrestha'
+publishedAt: '2026-10-27'
+quickAnswer: 'n8n item linking records which input produced each output. .item follows that relationship to an earlier node; .first() selects its first output. A missing or ambiguous link can break .item even when the earlier node contains data.'
+faq:
+  - q: 'Does paired item data unavailable mean the earlier node returned nothing?'
+    a: 'It can mean the relationship to the earlier item is missing or ambiguous. The earlier node may still contain records; retrieving one record and identifying the record that belongs to the current item are different operations.'
+  - q: 'Is .first() a safe replacement for .item?'
+    a: "Only when the first output is the record the workflow actually needs. It changes the selection rule and can give several downstream items the same customer's data."
+  - q: 'Does every Code node need pairedItem?'
+    a: 'No. n8n handles many links automatically, including single-input-item cases. Its documentation identifies multi-item scenarios involving new or returned items where explicit pairing may be needed.'
+heroImage: './cover-illustration.webp'
+heroAlt: 'Matching coloured record cards connected by threads, with one broken link above a blue laptop.'
+draft: false
+---
+
+An earlier node can contain the email address you need while an expression still
+cannot select it. In n8n, a reference to a matching item also depends on the path
+that connects that item to the current one.
+
+This article explains the documented behaviour. The examples describe data
+relationships; they are not a tested workflow download. More articles are in
+[Automation](/topics/automation/), alongside the tested
+[n8n setup on Coolify](/self-host-n8n-coolify/).
+
+## What item linking records
+
+A node receives items and produces items. n8n keeps metadata connecting an output
+to the input, or inputs, that produced it. Those connections let a later node
+trace a record back through the workflow. The
+[official item-linking overview](https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-concepts/)
+describes this chain, including the complications when nodes split or combine data.
+
+Consider a hypothetical customer list containing Asha and Ben. A later node
+removes Ben because his record does not match a filter. Asha's remaining record
+still belongs to Asha, even if its position within a list changes. Item linking
+preserves that relationship through the workflow. The business identifier in
+the record and the metadata used by n8n have different jobs: one identifies the
+customer, while the other describes how this output was produced.
+
+## .item selects by relationship; .first() selects by position
+
+The [node-output reference](https://docs.n8n.io/code/builtin/output-other-nodes/)
+defines `.item` as the matching item from a previous node, `.first()` as its
+first output and `.all()` as an array of its outputs.
+
+<div class="overflow-x-auto [&_table]:min-w-[32rem] [&_code]:whitespace-nowrap" tabindex="0" role="region" aria-label="n8n item selection rules">
+
+| Reference  | Selection rule                 | Meaning in a customer workflow                                       |
+| ---------- | ------------------------------ | -------------------------------------------------------------------- |
+| `.item`    | Follow the current item's link | The customer associated with this item                               |
+| `.first()` | Select the first output        | The customer at the start of the chosen output                       |
+| `.all()`   | Return the output array        | The collection, requiring a further choice if one customer is needed |
+
+</div>
+
+Suppose the hypothetical workflow now processes Ben's order. Selecting the first
+customer returns Asha if she occupies that position. The expression can return
+a valid email address while assigning the order to the wrong person.
+
+A single configuration record shared by every item is a different case. Selecting
+that first and only record can express the intended relationship. The workflow's
+data model determines whether positional selection makes sense.
+
+## Why a populated node can still produce a linking error
+
+n8n's [item-linking error reference](https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-errors/)
+distinguishes broken links, links pointing to multiple earlier items and references
+to a different branch. Its documented errors include “Info for expression missing
+from previous node” and “Multiple matching items for expression”.
+
+A broken link leaves n8n without enough information to identify the earlier item.
+An ambiguous link gives it several candidates. An output representing an entire
+customer group, for example, may legitimately originate from multiple people.
+A later request for one person's email then needs a selection rule that the group
+itself does not provide.
+
+That explains why swapping in `.first()` can remove an error without preserving
+the intended result. The new reference asks a simpler positional question.
+
+## Where the Code node changes the picture
+
+Most nodes handle pairing automatically. The
+[Code-node pairing documentation](https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-code-node/)
+identifies multi-item cases involving newly created or returned items where the
+code may need to supply `pairedItem` information. It also says n8n handles
+single-item linking automatically.
+
+Pairing describes the actual source of an output. If a transformation reorders
+records, the first output may have come from a later input. If it combines
+records, several inputs may be involved. Assigning every output to the first
+input would describe the wrong relationship, even if later expressions stopped
+reporting errors.
+
+The [Code-node itemMatching reference](https://docs.n8n.io/code/cookbook/builtin/itemmatching/)
+describes retrieving an earlier linked item using the current input's index.
+It is useful background for understanding the data path; the appropriate code
+depends on what a particular transformation creates.
+
+## What a meaningful verification would show
+
+A useful workflow test would contain distinguishable records and evidence that
+each result belongs to the intended source. A single-record example cannot expose
+a mistake that assigns every result to the first customer. For a published
+walkthrough, the test record would also need the n8n version and the actual node
+outputs.
+
+A workflow that completes with incorrect assignments belongs to the broader
+problem of [automations that fail silently](/automations-failing-silently/).
+Repeated deliveries have a separate explanation in
+[webhook retries and duplicate events](/webhook-retries-duplicate-events/).

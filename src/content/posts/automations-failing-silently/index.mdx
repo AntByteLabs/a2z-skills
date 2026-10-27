@@ -22,7 +22,7 @@ heroImage: "./cover-illustration.webp"
 # prettier-ignore
 heroAlt: "Connected workflow tiles ending at a gap before an empty receiving tray."
 draft: false
-updatedAt: '2026-10-26'
+updatedAt: '2026-10-27'
 ---
 
 The automations that cost you are not the ones that break. They are the ones
@@ -105,11 +105,15 @@ to measure. The expected result might be a saved record or a delivered message,
 not merely the absence of an execution error. An empty result can also be
 legitimate, so the workflow's purpose determines whether it needs attention.
 
-A [vendor-hosted n8n monitoring template](https://n8n.io/workflows/18914-monitor-empty-successful-workflows-via-the-n8n-api-data-tables-and-slack/)
-illustrates checks for successful but empty executions and missing runs. It is
-a research reference here, not a workflow we claim to have tested or supplied
-as a download. A published walkthrough of our own needs a named tester's
-record of the input, node outputs and destination result.
+The [official execution-history documentation](https://docs.n8n.io/workflows/executions/all-executions/)
+describes filtering runs by workflow, status and execution time. These records
+help establish which executions ran. Whether the intended record arrived or
+message was delivered still needs evidence from the destination. A published
+monitoring walkthrough would need a named tester's record of both sides.
+
+## Related data and delivery problems
+
+A successful expression can select the wrong person if a workflow replaces a matching-item reference with the first record. [n8n item linking](/n8n-item-linking-explained/) explains that distinction. [Webhook retries and duplicate events](/webhook-retries-duplicate-events/) covers a separate outcome problem: the same incoming notification causing work to happen again.
 
 ## Sources
 
