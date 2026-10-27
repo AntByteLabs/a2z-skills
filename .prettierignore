@@ -8,3 +8,6 @@ worker-configuration.d.ts
 
 # Generated research and reports, not source. Left exactly as written.
 docs
+
+# Local design-skill caches and evidence. Generated, never source.
+.impeccable

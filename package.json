@@ -15,6 +15,7 @@
     "validate": "tsx scripts/validate-content.ts",
     "links": "tsx scripts/check-links.ts",
     "suggest-links": "tsx scripts/internal-links.ts",
+    "gsc": "tsx scripts/gsc.ts",
     "stale": "tsx scripts/stale-posts.ts",
     "indexnow": "tsx scripts/indexnow.ts",
     "lint": "eslint . && prettier --check .",

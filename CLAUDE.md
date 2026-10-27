@@ -22,6 +22,7 @@ it — never fill the gap.
 | `npm test`                        | Playwright smoke tests against `dist/`                  |
 | `npm run suggest-links -- <slug>` | Older posts that should link to a new one               |
 | `npm run stale`                   | Posts past their re-test date                           |
+| `npm run gsc`                     | Search Console totals, queries and pages                |
 | `npm run icons`                   | Re-renders the PNG icons from `public/favicon.svg`      |
 | `npm run lhci`                    | Lighthouse budgets (needs `CHROME_PATH` locally)        |
 | `npm run check`                   | **All gates in one go. Nothing ships without it**       |
