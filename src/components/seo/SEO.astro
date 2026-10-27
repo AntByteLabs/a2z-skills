@@ -13,6 +13,8 @@ interface Props {
   publishedAt?: Date;
   updatedAt?: Date;
   ogType?: 'website' | 'article';
+  /** Path to a plain-text version of this page, when one is published. */
+  plainTextPath?: string;
 }
 
 const {
@@ -26,6 +28,7 @@ const {
   publishedAt,
   updatedAt,
   ogType = 'website',
+  plainTextPath,
 } = Astro.props;
 
 const SUFFIX = ` | ${site.name}`;
@@ -72,3 +75,13 @@ const robots = noindex
   title={`${site.name} — all posts`}
   href={absolute('/rss.xml')}
 />
+{/* The markup-free version. An answer engine that follows this gets the words
+    without the navigation, which is what [slug].txt.ts exists to serve. */}
+{plainTextPath && (
+  <link
+    rel="alternate"
+    type="text/plain"
+    title={`${title} — plain text`}
+    href={absolute(plainTextPath)}
+  />
+)}

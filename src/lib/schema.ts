@@ -90,11 +90,13 @@ export const blogPosting = (p: PostSchemaInput): WithContext<BlogPosting> => {
     mainEntityOfPage: { '@type': 'WebPage', '@id': absolute(p.path) },
     datePublished: p.publishedAt.toISOString(),
     dateModified: (p.updatedAt ?? p.publishedAt).toISOString(),
+    // url points at the profile page, which carries ProfilePage markup.
+    // sameAs is omitted rather than sent empty, as profilePage does below.
     author: {
       '@type': 'Person',
       name: p.author.name,
       url: absolute(p.author.path),
-      sameAs: p.author.sameAs,
+      ...(p.author.sameAs.length ? { sameAs: p.author.sameAs } : {}),
     },
     publisher: { '@id': ORG_ID },
     isPartOf: { '@id': SITE_ID },

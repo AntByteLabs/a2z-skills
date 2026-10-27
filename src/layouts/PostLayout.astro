@@ -101,6 +101,7 @@ const faq = data.faq.length > 0 ? faqPage({ path, questions: data.faq }) : undef
   ogType="article"
   searchable={true}
   activePillar={data.pillar}
+  plainTextPath={`/${post.id}.txt`}
 >
   <JsonLd data={article} slot="head" />
   <ReadingProgress />
