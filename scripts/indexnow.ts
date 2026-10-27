@@ -5,12 +5,13 @@
  *   tsx scripts/indexnow.ts --write-key      before the build, writes public/<key>.txt
  *   tsx scripts/indexnow.ts                  after deploy, submits changed URLs
  *   tsx scripts/indexnow.ts --all            submits every URL in the sitemap
+ *   tsx scripts/indexnow.ts --snapshot       before deploy, records the live sitemap
  *   tsx scripts/indexnow.ts --dry-run        prints what it would send
  *
  * The key is not a secret — it is served publicly so the engine can verify it —
  * but it is kept in an env var so it is not copied around in the repo.
  */
-import { writeFile, readFile } from 'node:fs/promises';
+import { writeFile, readFile, mkdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execSync } from 'node:child_process';
@@ -20,6 +21,9 @@ const ENDPOINT = 'https://api.indexnow.org/indexnow';
 const SITE = process.env.SITE_URL ?? 'https://a2zskillsewa.com';
 const HOST = new URL(SITE).host;
 const fallbackKey = join(ROOT, 'public/indexnow-key.txt');
+// Written before a deploy and read straight after it, so a release is still
+// submitted when the last commit touched only docs. Not committed.
+const SNAPSHOT = join(ROOT, 'node_modules/.cache/indexnow-previous.json');
 const KEY =
   process.env.INDEXNOW_KEY ??
   (existsSync(fallbackKey) ? (await readFile(fallbackKey, 'utf8')).trim() : '');
@@ -75,6 +79,30 @@ const sitemapUrls = async (): Promise<string[]> => {
   return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!);
 };
 
+/** The live sitemap's URLs, recorded before a deploy replaces them. */
+const takeSnapshot = async (): Promise<void> => {
+  const res = await fetch(`${SITE}/sitemap-0.xml`, {
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!res.ok) throw new Error(`sitemap: ${res.status} ${res.statusText}`);
+  const xml = await res.text();
+  const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!);
+  await mkdir(join(ROOT, 'node_modules/.cache'), { recursive: true });
+  await writeFile(SNAPSHOT, JSON.stringify(urls), 'utf8');
+  console.log(dim(`indexnow: recorded ${urls.length} live URL(s) before deploy.`));
+};
+
+/** URLs in the built sitemap that the live site did not have. */
+const addedSinceSnapshot = async (): Promise<string[]> => {
+  if (!existsSync(SNAPSHOT)) return [];
+  try {
+    const before = new Set<string>(JSON.parse(await readFile(SNAPSHOT, 'utf8')));
+    return (await sitemapUrls()).filter((u) => !before.has(u));
+  } catch {
+    return [];
+  }
+};
+
 const run = async () => {
   if (!KEY && has('optional')) {
     console.log('indexnow: no key configured; skipped.');
@@ -94,6 +122,11 @@ const run = async () => {
     process.exit(1);
   }
 
+  if (has('snapshot')) {
+    await takeSnapshot();
+    return;
+  }
+
   if (has('write-key')) {
     const path = join(ROOT, 'public', keyFileName());
     await writeFile(path, KEY, 'utf8');
@@ -101,8 +134,13 @@ const run = async () => {
     return;
   }
 
-  const urls = has('all') ? await sitemapUrls() : changedUrls();
+  // A release followed by a docs-only commit leaves the git diff empty, so the
+  // sitemap comparison is what actually catches the new posts.
+  const urls = has('all')
+    ? await sitemapUrls()
+    : [...new Set([...changedUrls(), ...(await addedSinceSnapshot())])];
   if (!urls.length) {
+    await rm(SNAPSHOT, { force: true });
     console.log(dim('indexnow: no changed URLs to submit.'));
     return;
   }
@@ -114,6 +152,10 @@ const run = async () => {
     console.log(yellow('dry run, nothing sent.'));
     return;
   }
+
+  // Consumed once it has been acted on, so a later deploy never compares
+  // against a stale list. A dry run leaves it alone.
+  await rm(SNAPSHOT, { force: true });
 
   const res = await fetch(ENDPOINT, {
     method: 'POST',

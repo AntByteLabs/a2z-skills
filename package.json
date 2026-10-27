@@ -31,7 +31,7 @@
     "image": "tsx scripts/add-image.ts",
     "test:unit": "node --import tsx --test tests/unit/*.test.ts",
     "check": "npm run lint && npm run check:worker && npm run test:unit && npm run build && npm run links && npm test",
-    "deploy": "npm run check && wrangler deploy && tsx scripts/indexnow.ts --optional",
+    "deploy": "npm run check && tsx scripts/indexnow.ts --snapshot --optional && wrangler deploy && tsx scripts/indexnow.ts --optional",
     "mcp:deploy": "wrangler deploy --config mcp/wrangler.json",
     "mcp:dev": "wrangler dev --config mcp/wrangler.json --port 8799",
     "backup": "bash scripts/backup-d1.sh"
