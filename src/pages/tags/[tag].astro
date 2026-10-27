@@ -50,10 +50,17 @@ const description =
       {posts.length} {posts.length === 1 ? 'guide' : 'guides'}, each listing what it was
       tested on.
     </p>
-    <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {posts.map((p) => (
-        <PostCard post={p} showPillar={true} />
-      ))}
-    </div>
+    {/* PostCard renders an h3, so the grid needs an h2 above it or the page
+        jumps h1 to h3. The heading would only restate the h1 on screen. */}
+    <section class="mt-5" aria-labelledby="tagged">
+      <h2 id="tagged" class="sr-only">
+        {posts.length} {posts.length === 1 ? 'guide' : 'guides'} tagged {tag}
+      </h2>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((p) => (
+          <PostCard post={p} showPillar={true} />
+        ))}
+      </div>
+    </section>
   </div>
 </BaseLayout>
